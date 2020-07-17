@@ -48,9 +48,7 @@ public class SendSterile_DocListDetailAdapter extends ArrayAdapter {
     }
 
     @Override
-    public int getCount() {
-        return listData.size();
-    }
+    public int getCount() { return listData.size(); }
 
     @Override
     public Object getItem(int position) {
