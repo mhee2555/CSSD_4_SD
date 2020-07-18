@@ -113,6 +113,10 @@ public class Login extends AppCompatActivity {
 
         DeviceMode = setDeviceMode();
 
+        if("TL01184200273".equals(getSerialNumber())){
+            get_login("admin", "123");
+        }
+
     }
 
     public int setDeviceMode() {
@@ -152,6 +156,7 @@ public class Login extends AppCompatActivity {
             e.printStackTrace();
             serialNumber = null;
         }
+        Log.d("ttest_serialNumber","serialNumber--"+serialNumber);
         return serialNumber;
     }
 

@@ -684,7 +684,7 @@
             android:layout_toRightOf="@id/txt_caption"
             android:layoutDirection="rtl"
             android:switchPadding="8dp"
-            android:text="แก้ไขเอกสาร"
+            android:text="ย้ายรายการในเครื่องล้าง-ฆ่าเชื้อ"
             android:textColor="@color/colorwhite"
             android:textOff="แก้ไขข้อมูลล้าง-ฆ่าเชื้อ"
             android:textOn="แก้ไขเอกสาร" />
