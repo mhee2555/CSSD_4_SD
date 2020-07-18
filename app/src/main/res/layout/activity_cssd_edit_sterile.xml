@@ -55,236 +55,244 @@
                             android:gravity="center_vertical"
                             android:text="เอกสารเดิม"
                             android:textColor="#FFFFFF"
-                            android:textStyle="bold"
-                            android:textSize="18dp" />
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/M"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_marginBottom="8dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="100dp"
+                                android:layout_height="45dp"
+                                android:text="วันที่"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18dp" />
+
+                            <RelativeLayout
+                                android:layout_width="250dp"
+                                android:layout_height="45dp"
+                                android:layout_marginEnd="4dp"
+                                android:orientation="horizontal">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="35dp"
+                                    android:layout_alignParentTop="true"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/txt_date_1"
+                                        android:layout_width="250dp"
+                                        android:layout_height="35dp"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_alignParentTop="true"
+                                        android:background="@drawable/text_edit"
+                                        android:paddingLeft="15dp"
+                                        android:paddingTop="10dp" />
+
+                                    <Button
+                                        android:id="@+id/btn_date_1"
+                                        android:layout_width="26dp"
+                                        android:layout_height="28dp"
+                                        android:layout_alignParentTop="true"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginTop="1dp"
+                                        android:layout_marginEnd="18dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/calendar01"
+                                        android:textSize="20sp"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintHorizontal_bias="0.561"
+                                        app:layout_constraintStart_toEndOf="@+id/editName"
+                                        app:layout_constraintTop_toBottomOf="@+id/button_search"
+                                        app:layout_constraintVertical_bias="0.109" />
+                                </RelativeLayout>
+
+                            </RelativeLayout>
+
+                            <Spinner
+                                android:id="@+id/spinner_document_1"
+                                style="@style/spinner_style_register"
+                                android:layout_width="250dp"
+                                android:layout_height="35dp"
+                                android:layout_marginLeft="8dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="100dp"
+                                android:layout_height="35dp"
+                                android:gravity="center_vertical"
+                                android:text="เครื่อง"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/txt_machine_1"
+                                android:layout_width="175dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_line"
+                                android:gravity="center_vertical"
+                                android:text="-"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="35dp"
+                                android:layout_marginRight="5dp"
+                                android:text="รอบ"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/txt_round_1"
+                                android:layout_width="65dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_line"
+                                android:gravity="center_vertical|center"
+                                android:text="-"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="35dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:text="โปรแกรม"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/txt_program_1"
+                                android:layout_width="155dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_line"
+                                android:gravity="center_vertical"
+                                android:text="-"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="100dp"
+                                android:layout_height="35dp"
+                                android:gravity="center_vertical"
+                                android:text="การทดสอบ"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/txt_test_program_1"
+                                android:layout_width="145dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_line"
+                                android:gravity="center_vertical"
+                                android:text="-"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/txt_label_wash_type_1"
+                                android:layout_width="125dp"
+                                android:layout_height="35dp"
+                                android:text="ประเภทการล้าง"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/txt_wash_type_1"
+                                android:layout_width="0dp"
+                                android:layout_height="35dp"
+                                android:layout_marginLeft="4dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/shape_line"
+                                android:gravity="center_vertical"
+                                android:maxLines="1"
+                                android:text="-"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txt_label_usr_prepare_1"
+                                android:layout_width="100dp"
+                                android:layout_height="35dp"
+                                android:text="ผู้เตรียม"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/txt_usr_prepare_1"
+                                android:layout_width="175dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/shape_line"
+                                android:gravity="center_vertical"
+                                android:text="-"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/txt_label_usr_approve_1"
+                                android:layout_width="75dp"
+                                android:layout_height="35dp"
+                                android:text="ผู้ตรวจ"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18dp" />
+
+                            <TextView
+                                android:id="@+id/txt_usr_approve_1"
+                                android:layout_width="0dp"
+                                android:layout_height="35dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/shape_line"
+                                android:gravity="center_vertical"
+                                android:text="-"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18dp" />
+
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
                     <!-- Row 2-->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_height="35dp"
-                        android:layout_width="match_parent"
-                        android:layout_marginBottom="8dp"
-                        >
-
-                        <TextView
-                            android:layout_width="100dp"
-                            android:layout_height="45dp"
-                            android:text="วันที่"
-                            android:textColor="#FFFFFF"
-                            android:textSize="18dp" />
-
-                        <RelativeLayout
-                            android:layout_width="250dp"
-                            android:layout_height="45dp"
-                            android:layout_marginEnd="4dp"
-                            android:orientation="horizontal">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="35dp"
-                                android:layout_alignParentTop="true"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/txt_date_1"
-                                    android:layout_width="250dp"
-                                    android:layout_height="35dp"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_alignParentTop="true"
-                                    android:background="@drawable/text_edit"
-                                    android:paddingLeft="15dp"
-                                    android:paddingTop="10dp" />
-
-                                <Button
-                                    android:id="@+id/btn_date_1"
-                                    android:layout_width="26dp"
-                                    android:layout_height="28dp"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_alignParentTop="true"
-                                    android:layout_marginEnd="18dp"
-                                    android:layout_marginTop="1dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/calendar01"
-                                    android:textSize="20sp"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintHorizontal_bias="0.561"
-                                    app:layout_constraintStart_toEndOf="@+id/editName"
-                                    app:layout_constraintTop_toBottomOf="@+id/button_search"
-                                    app:layout_constraintVertical_bias="0.109" />
-                            </RelativeLayout>
-
-                        </RelativeLayout>
-
-                        <Spinner
-                            android:id="@+id/spinner_document_1"
-                            style="@style/spinner_style_register"
-                            android:layout_width="250dp"
-                            android:layout_height="35dp"
-                            android:layout_marginLeft="8dp"/>
-
-                    </LinearLayout>
 
                     <!-- Row 3-->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_height="35dp"
-                        android:layout_width="match_parent"
-                        >
-
-                        <TextView
-                            android:layout_width="100dp"
-                            android:layout_height="35dp"
-                            android:text="เครื่อง"
-                            android:gravity="center_vertical"
-                            android:textColor="#FFFFFF"
-                            android:textSize="18dp" />
-
-                        <TextView
-                            android:id="@+id/txt_machine_1"
-                            android:layout_width="175dp"
-                            android:layout_height="35dp"
-                            android:text="-"
-                            android:gravity="center_vertical"
-                            android:textColor="#FFFFFF"
-                            android:background="@drawable/shape_line"
-                            android:textSize="18dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="35dp"
-                            android:text="รอบ"
-                            android:textColor="#FFFFFF"
-                            android:layout_marginRight="5dp"
-                            android:textSize="18dp" />
-
-                        <TextView
-                            android:id="@+id/txt_round_1"
-                            android:layout_width="65dp"
-                            android:layout_height="35dp"
-                            android:text="-"
-                            android:gravity="center_vertical|center"
-                            android:textColor="#FFFFFF"
-                            android:background="@drawable/shape_line"
-                            android:textSize="18dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="35dp"
-                            android:text="โปรแกรม"
-                            android:textColor="#FFFFFF"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:textSize="18dp" />
-
-                        <TextView
-                            android:id="@+id/txt_program_1"
-                            android:layout_width="155dp"
-                            android:layout_height="35dp"
-                            android:text="-"
-                            android:gravity="center_vertical"
-                            android:textColor="#FFFFFF"
-                            android:background="@drawable/shape_line"
-                            android:textSize="18dp" />
-
-                    </LinearLayout>
 
                     <!-- Row 4-->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_height="35dp"
-                        android:layout_width="match_parent"
-                        >
-
-                        <TextView
-                            android:layout_width="100dp"
-                            android:layout_height="35dp"
-                            android:text="การทดสอบ"
-                            android:gravity="center_vertical"
-                            android:textColor="#FFFFFF"
-                            android:textSize="18dp" />
-
-                        <TextView
-                            android:id="@+id/txt_test_program_1"
-                            android:layout_width="145dp"
-                            android:layout_height="35dp"
-                            android:text="-"
-                            android:gravity="center_vertical"
-                            android:textColor="#FFFFFF"
-                            android:background="@drawable/shape_line"
-                            android:textSize="18dp" />
-
-                        <TextView
-                            android:id="@+id/txt_label_wash_type_1"
-                            android:layout_width="125dp"
-                            android:layout_height="35dp"
-                            android:text="ประเภทการล้าง"
-                            android:textColor="#FFFFFF"
-                            android:textSize="18dp" />
-
-                        <TextView
-                            android:id="@+id/txt_wash_type_1"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="35dp"
-                            android:text="-"
-                            android:gravity="center_vertical"
-                            android:textColor="#FFFFFF"
-                            android:background="@drawable/shape_line"
-                            android:maxLines="1"
-                            android:layout_marginLeft="4dp"
-                            android:textSize="18dp" />
-
-                    </LinearLayout>
 
                     <!-- Row 5-->
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_height="35dp"
-                        android:layout_width="match_parent"
-                        >
-
-                        <TextView
-                            android:id="@+id/txt_label_usr_prepare_1"
-                            android:layout_width="100dp"
-                            android:layout_height="35dp"
-                            android:text="ผู้เตรียม"
-                            android:textColor="#FFFFFF"
-                            android:textSize="18dp" />
-
-                        <TextView
-                            android:id="@+id/txt_usr_prepare_1"
-                            android:layout_width="175dp"
-                            android:layout_height="35dp"
-                            android:text="-"
-                            android:gravity="center_vertical"
-                            android:textColor="#FFFFFF"
-                            android:background="@drawable/shape_line"
-                            android:textSize="18dp" />
-
-                        <TextView
-                            android:id="@+id/txt_label_usr_approve_1"
-                            android:layout_width="75dp"
-                            android:layout_height="35dp"
-                            android:text="ผู้ตรวจ"
-                            android:textColor="#FFFFFF"
-                            android:textSize="18dp" />
-
-                        <TextView
-                            android:id="@+id/txt_usr_approve_1"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="35dp"
-                            android:text="-"
-                            android:gravity="center_vertical"
-                            android:textColor="#FFFFFF"
-                            android:background="@drawable/shape_line"
-                            android:layout_marginRight="10dp"
-                            android:textSize="18dp" />
-
-
-                    </LinearLayout>
 
                     <!-- Row 6-->
                     <LinearLayout
@@ -636,6 +644,7 @@
 
 
             </LinearLayout>
+
         </LinearLayout>
 
 
@@ -664,6 +673,21 @@
             android:textColor="#FFFFFF"
             android:textSize="24dp"
             android:textStyle="bold"></TextView>
+
+        <Switch
+            android:id="@+id/switch_sterile_doc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/txt_caption"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="-5dp"
+            android:layout_toRightOf="@id/txt_caption"
+            android:layoutDirection="rtl"
+            android:switchPadding="8dp"
+            android:text="ย้ายรายการในเครื่องล้าง-ฆ่าเชื้อ"
+            android:textColor="@color/colorwhite"
+            android:textOff="แก้ไขข้อมูลล้าง-ฆ่าเชื้อ"
+            android:textOn="แก้ไขเอกสาร" />
 
         <RelativeLayout
             android:layout_width="200dp"

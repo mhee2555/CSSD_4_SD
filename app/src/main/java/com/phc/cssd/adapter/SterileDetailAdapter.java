@@ -2,6 +2,7 @@ package com.phc.cssd.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +77,10 @@ public class SterileDetailAdapter extends ArrayAdapter<ModelSterileDetail> {
             viewHolder.imv_remove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.d("ttest_data","ImportID - "+viewHolder.ImportID);
+                    Log.d("ttest_data","ItemStockID - "+viewHolder.ItemStockID);
+                    Log.d("ttest_data","ID - "+viewHolder.ID);
+
                     ((CssdSterile)context).removeSterileDetail(
                             viewHolder.ImportID,
                             viewHolder.ID,

@@ -166,7 +166,7 @@ public class Payout_CreateNewDocActivity extends Activity {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                // loading.dismiss();
+                // loading.dismiss();vv
                 try {
                     Response_Aux newsData;
                     JSONObject jsonObj = new JSONObject(s);

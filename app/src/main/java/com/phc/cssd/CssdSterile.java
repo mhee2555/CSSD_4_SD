@@ -232,6 +232,7 @@ public class CssdSterile extends AppCompatActivity {
     private Button bt_report_print;
     private String ProgramTest;
     boolean Print = true;
+    private Button button_basket;
 
     public void onDestroy() {
         super.onDestroy();
@@ -1533,6 +1534,14 @@ public class CssdSterile extends AppCompatActivity {
         txt_caption.bringToFront();
         group_choices.bringToFront();
         switch_mode.bringToFront();
+
+        button_basket = (Button) findViewById(R.id.button_basket);
+        button_basket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
      /*   spinner_report.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

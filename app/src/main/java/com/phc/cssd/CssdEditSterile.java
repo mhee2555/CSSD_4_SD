@@ -1,13 +1,16 @@
 package com.phc.cssd;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,11 +27,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.phc.core.connect.HTTPConnect;
+import com.phc.core.data.AsonData;
 import com.phc.core.string.Cons;
 
+import com.phc.cssd.adapter.ImportWashDetailAdapter;
+import com.phc.cssd.adapter.ImportWashDetailBigSizeAdapter;
+import com.phc.cssd.adapter.ImportWashDetailGridViewAdapter;
 import com.phc.cssd.adapter.ListEdit_L_Adapter;
 import com.phc.cssd.adapter.ListEdit_R_Adapter;
 import com.phc.cssd.data.Master;
+import com.phc.cssd.model.ModelImportWashDetail;
 import com.phc.cssd.model.ModelItemStock;
 
 import com.phc.cssd.url.Url;
@@ -57,6 +65,9 @@ public class CssdEditSterile extends Activity {
     ArrayList<String> doc_no_2 = new ArrayList<String>();
     ArrayList<String> doc_no_2_data = new ArrayList<String>();
 
+    private List<ModelImportWashDetail> MODEL_IMPORT_WASH_DETAIL = null;
+
+    private HashMap<String, String> ImportID = new HashMap<String,String>();
 
     private ImageView imageBack;
     private Button btn_qr;
@@ -110,6 +121,9 @@ public class CssdEditSterile extends Activity {
     String ProgramID = "";
 
     boolean IsWash = true;
+    private Switch switch_sterile_doc;
+
+    String B_ID = "1";
 
 
     @Override
@@ -204,8 +218,22 @@ public class CssdEditSterile extends Activity {
             }
         });
 
-        // 1
-        txt_machine_1 = (TextView) findViewById(R.id.txt_machine_1);
+        switch_sterile_doc = (Switch) findViewById(R.id.switch_sterile_doc);
+        switch_sterile_doc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(isChecked){
+                    switch_sterile_doc.setText("เพิ่มรายการในเครื่องล้าง-ฆ่าเชื้อ");
+                }else{
+                    switch_sterile_doc.setText("ย้ายรายการในเครื่องล้าง-ฆ่าเชื้อ");
+                }
+
+                switch_sterile_doc(isChecked);
+            }
+        });
+
+                // 1
+                txt_machine_1 = (TextView) findViewById(R.id.txt_machine_1);
         txt_round_1 = (TextView) findViewById(R.id.txt_round_1);
         txt_usr_prepare_1 = (TextView) findViewById(R.id.txt_usr_prepare_1);
         txt_usr_approve_1 = (TextView) findViewById(R.id.txt_usr_approve_1);
@@ -271,9 +299,12 @@ public class CssdEditSterile extends Activity {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
 
-                    checkQR(txt_qr.getText().toString());
-
-                    clearForm1();
+                    if(switch_sterile_doc.isChecked()&&bt_switch.isChecked()){
+                        getItemToMac(txt_qr.getText().toString());
+                    }else{
+                        clearForm1();
+                        checkQR(txt_qr.getText().toString());
+                    }
 
                     return true;
                 }
@@ -358,6 +389,22 @@ public class CssdEditSterile extends Activity {
 
     }
 
+    public void switch_sterile_doc(boolean c){
+
+        clearForm1();
+
+        int vis = View.VISIBLE;
+        if(c){
+            vis = View.GONE;
+            displayWashDetail();
+        }
+
+        findViewById(R.id.M).setVisibility(vis);
+
+
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -412,6 +459,7 @@ public class CssdEditSterile extends Activity {
         txt_usr_prepare_2.setVisibility(!IsWash ? View.VISIBLE : View.GONE);
         txt_label_usr_approve_2.setVisibility(!IsWash ? View.VISIBLE : View.GONE);
         txt_usr_approve_2.setVisibility(!IsWash ? View.VISIBLE : View.GONE);
+        switch_sterile_doc.setVisibility(!IsWash ? View.VISIBLE : View.GONE);
     }
 
     public void focus() {
@@ -636,7 +684,7 @@ public class CssdEditSterile extends Activity {
                 try {
                     JSONObject jsonObj = new JSONObject(result);
                     rs = jsonObj.getJSONArray(TAG_RESULTS);
-
+                    ImportID.clear();
                     for(int i=0;i<rs.length();i++){
                         JSONObject c = rs.getJSONObject(i);
 
@@ -653,6 +701,10 @@ public class CssdEditSterile extends Activity {
                                     )
 
                             );
+
+                            if(!IsWash){
+                                ImportID.put(c.getString("ID"),c.getString("ImportID"));
+                            }
                         }
                     }
 
@@ -666,7 +718,7 @@ public class CssdEditSterile extends Activity {
                     list_document_1.setAdapter(adapter);
                 }else if(lv.equals("R")){
                     ArrayAdapter<ModelItemStock> adapter;
-                    adapter = new ListEdit_R_Adapter(CssdEditSterile.this, list);
+                    adapter = new ListEdit_R_Adapter(CssdEditSterile.this, list,switch_sterile_doc.isChecked());
                     list_document_2.setAdapter(adapter);
                 }
 
@@ -738,6 +790,7 @@ public class CssdEditSterile extends Activity {
 
         if(DocNo_1.equals("") || DocNo_2.equals("")){
             Toast.makeText(CssdEditSterile.this, Cons.WARNING_SELECT_DOC, Toast.LENGTH_SHORT).show();
+            return false;
         }
 
         try {
@@ -862,7 +915,331 @@ public class CssdEditSterile extends Activity {
         ru.execute();
     }
 
+    public void getItemToMac(String usagecode) {
+        txt_qr.setText("");
+        if(usagecode.length()>=5){
+            String itemcode = usagecode.substring(0,5).toUpperCase();
 
+            Log.d("ttest_getToMac","itemcode - "+itemcode);
+            for(int i =0;i<MODEL_IMPORT_WASH_DETAIL.size();i++){
+
+                Log.d("ttest_getToMac","M-itemcode - "+MODEL_IMPORT_WASH_DETAIL.get(i).getI_id());
+                if(MODEL_IMPORT_WASH_DETAIL.get(i).getI_id().equals(itemcode)){
+                    importWashDetail(
+                            MODEL_IMPORT_WASH_DETAIL.get(i).getI_id(),
+                            MODEL_IMPORT_WASH_DETAIL.get(i).getI_program_id() ,
+                            MODEL_IMPORT_WASH_DETAIL.get(i).getI_program(),
+                            MODEL_IMPORT_WASH_DETAIL.get(i).getPackingMatID(),
+                            "0",
+                            usagecode
+                    );
+                    return;
+                }
+            }
+        }
+
+        Toast.makeText(CssdEditSterile.this, "สถานะรหัสใช้งานไม่ตรงตามเงื่อนไข", Toast.LENGTH_SHORT).show();
+    }
+
+    public void displayWashDetail() {
+
+        class DisplayWashDetail extends AsyncTask<String, Void, String> {
+
+            //------------------------------------------------
+            // Background Worker Process Variable
+            private boolean Success = false;
+            private ArrayList<String> data = null;
+            private int size = 0;
+            //------------------------------------------------
+
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                AsonData ason = new AsonData(result);
+
+                Success = ason.isSuccess();
+                size = ason.getSize();
+                data = ason.getASONData();
+
+                if(Success && data != null) {
+
+                    try {
+
+                        MODEL_IMPORT_WASH_DETAIL = getImportWashDetail();
+
+
+                        try {
+                            ArrayAdapter<ModelImportWashDetail> adapter;
+
+                            adapter = new ImportWashDetailAdapter(CssdEditSterile.this, MODEL_IMPORT_WASH_DETAIL,2);
+                            list_document_1.setAdapter(adapter);
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return;
+                    }
+
+                }else{
+                    list_document_1.setAdapter(null);
+
+                    MODEL_IMPORT_WASH_DETAIL = null;
+                }
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("p_Mode", "1");
+                String result = null;
+
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_import_wash_detail_all.php", data);
+                    Log.d("BANKFH",data+"");
+                    Log.d("BANKFH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+                return result;
+            }
+
+            public List<ModelImportWashDetail> getImportWashDetail() throws Exception{
+
+                List<ModelImportWashDetail> list = new ArrayList<>();
+
+                try {
+                    int index = 0;
+
+                    for(int i=0;i<data.size();i+=size){
+
+                        list.add(
+                                new ModelImportWashDetail(
+                                        index,
+                                        false,
+                                        data.get(i),
+                                        data.get(i + 1),
+                                        data.get(i + 2),
+                                        data.get(i + 3),
+                                        data.get(i + 4),
+                                        data.get(i + 5),
+                                        data.get(i + 6),
+                                        data.get(i + 7),
+                                        data.get(i + 8),
+                                        data.get(i + 9),
+                                        data.get(i + 10),
+                                        data.get(i + 11),
+                                        data.get(i + 12),
+                                        data.get(i + 13)
+                                )
+                        );
+
+                        index++;
+                    }
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+                return list;
+            }
+
+
+            // =========================================================================================
+        }
+
+        DisplayWashDetail obj = new DisplayWashDetail();
+        obj.execute();
+    }
+
+    public void importWashDetail(String Id, String SterileProgramID, String SterileProgramName, String PackingMatID,String gQty,String usagecode){
+        Log.d("ttest_DocNo",DocNo_1+"--1");
+        Log.d("ttest_DocNo",DocNo_2+"--2");
+        onImport(Id, SterileProgramID, SterileProgramName, PackingMatID, gQty,usagecode);
+    }
+
+    private void onImport(String Id, String SterileProgramID, String SterileProgramName, String PackingMatID, String gQty,String usagecode){
+
+        // Check Machine Active
+        if (DocNo_2==""||DocNo_2==null){
+            Toast.makeText(CssdEditSterile.this, "ยังไม่ได้เลือกเครื่องฆ่าเชื้อ!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        addSterileDetail(DocNo_2, Id, PackingMatID,gQty,userid,usagecode);
+
+    }
+
+    public void addSterileDetail(final String p_docno, final String p_data, final String p_PackingMatID,final String p_Qty,final String usercode,final String usagecode) {
+
+        class AddSterileDetail extends AsyncTask<String, Void, String> {
+
+
+            private ProgressDialog dialog = new ProgressDialog(CssdEditSterile.this);
+
+            //------------------------------------------------
+            // Background Worker Process Variable
+            private boolean Success = false;
+            private ArrayList<String> data = null;
+            private int size = 0;
+            //------------------------------------------------
+
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                this.dialog.setMessage(Cons.WAIT_FOR_PROCESS);
+                this.dialog.setCancelable(false);
+                this.dialog.show();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+
+                    for(int i=0;i<rs.length();i++){
+                        JSONObject c = rs.getJSONObject(i);
+                        Log.d("OOOO","result :: "+c.getString("result"));
+                        if(c.getString("result").equals("A")) {
+                            // Display Sterile Detail
+                            onDisplayDetail(DocNo_2, "R", null);
+                            // Display Import Wash Detail
+                            displayWashDetail();
+                        }else{
+                            Toast.makeText(CssdEditSterile.this, "ไม่พบรายการ !!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }finally{
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+
+                data.put("p_data", p_data);
+                data.put("p_docno", p_docno);
+                data.put("p_Qty", p_Qty);
+
+                if(p_PackingMatID != null) {
+                    data.put("p_PackingMatID", p_PackingMatID);
+                }
+
+                if(usagecode != null) {
+                    data.put("p_UsageCode", usagecode);
+                }
+                data.put("Admincode", usercode);
+                if(B_ID != null){
+                    data.put("p_bid", B_ID);
+                }
+                data.put("p_is_status", "1");
+
+                Log.d("OOOO","data :: "+data);
+                String result = httpConnect.sendPostRequest(Url.URL + "cssd_add_sterile_detail_json.php", data);
+                Log.d("OOOO","result :: "+result);
+                return result;
+            }
+
+            // =========================================================================================
+        }
+
+        AddSterileDetail obj = new AddSterileDetail();
+        obj.execute();
+    }
+
+    public void removeSterileDetail(final String ID,String LIST_ITEM_STOCK_ID) {
+
+        final String p_data = ID + "@" + ImportID.get(ID) + "@" + LIST_ITEM_STOCK_ID + "@";
+
+        class RemoveSterileDetail extends AsyncTask<String, Void, String> {
+
+            private ProgressDialog dialog = new ProgressDialog(CssdEditSterile.this);
+
+            //------------------------------------------------
+            // Background Worker Process Variable
+            private boolean Success = false;
+            private ArrayList<String> data = null;
+            private int size = 0;
+            //------------------------------------------------
+
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+                this.dialog.setMessage(Cons.WAIT_FOR_PROCESS);
+                this.dialog.show();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                AsonData ason = new AsonData(result);
+
+                Success = ason.isSuccess();
+                size = ason.getSize();
+                data = ason.getASONData();
+
+                if(Success && data != null) {
+                    // Display Sterile Detail
+                    onDisplayDetail(DocNo_2, "R", null);
+                    // Display Import Wash Detail
+                    displayWashDetail();
+
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+
+                }else{
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+
+                data.put("p_data", p_data);
+
+                if(B_ID != null){
+                    data.put("p_bid", B_ID);
+                }
+
+                String result = httpConnect.sendPostRequest(Url.URL + "cssd_remove_sterile_detail.php", data);
+                Log.d("LJDLJDL",data+"");
+                return result;
+            }
+
+            // =========================================================================================
+        }
+
+        RemoveSterileDetail obj = new RemoveSterileDetail();
+        obj.execute();
+    }
 
 }
 
