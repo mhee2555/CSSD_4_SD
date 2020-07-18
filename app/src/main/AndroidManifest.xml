@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".PairItemToSterileBasket"></activity>
         <activity
             android:name=".dialog_remark_sendsterile"
             android:screenOrientation="sensorLandscape"
