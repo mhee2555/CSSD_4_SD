@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -42,14 +43,13 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
     private EditText txt_search;
     private TextView txt_caption_21;
     private TextView txt_caption_22;
-
     private ImageView img_item;
     private ImageView img_item_all;
-
-
     private List<ModelPreviewItemSterile>  MODEL_ITEM_STERILE;
-
     private HTTPConnect httpConnect = new HTTPConnect();
+    private List<ModelItemDetail>  ItemDetail;
+
+    private int CountScan = 0;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,15 +89,52 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
         txt_caption_21.setText("ชื่อเซ็ท : ");
         txt_caption_22.setText("รายการในเซ็ท " + 0 + " รายการ   จำนวนทั้งหมด "+ 0 + " ชิ้น");
 
-        txt_search.addTextChangedListener(new TextWatcher() {
+//        txt_search.addTextChangedListener(new TextWatcher() {
+//            public void afterTextChanged(Editable s) {
+//                Log.d("LFJFLDJ",CountScan+"");
+//                if (CountScan == 0){
+//                    displayItemSterile();
+//                }else {
+//                    displayItemSet(txt_search.getText().toString());
+//                    CountScan ++;
+//                }
+//            }
+//
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+//
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+//        });
 
-            public void afterTextChanged(Editable s) {
-                displayItemSterile();
+        txt_search.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode) {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+                            if (CountScan == 0){
+                                displayItemSterile();
+                            }else {
+                                for (int i = 0 ; i < ItemDetail.size() ; i ++){
+                                    Log.d("LFJFLDJ",ItemDetail.get(0).getItemcode()+"");
+                                    ItemDetail.get(i).getItemcode();
+                                    String Itemcode;
+                                    Itemcode = txt_search.getText().toString().substring(0,5);
+                                    Log.d("LFJFLDJ",Itemcode+"");
+                                    if (Itemcode.equals(ItemDetail.get(i).getItemcode())){
+                                        ItemDetail.get(i).setIsChk(2);
+                                        ArrayAdapter<ModelItemDetail> adapter = new CssdPreviewItemSterile_List_ItemSet_Adapter(CssdPreviewItemSterile.this, ItemDetail);
+                                        list_set_item.setAdapter(adapter);
+                                    }
+                                }
+                                CountScan ++;
+                            }
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+                return false;
             }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
 
         list_item_sterile.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -208,27 +245,24 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
                 AsonData ason = new AsonData(result);
-
                 Success = ason.isSuccess();
                 size = ason.getSize();
                 data = ason.getASONData();
-
                 if(Success && data != null) {
                     try {
-
                         MODEL_ITEM_STERILE = getModelItems();
-
                         try {
 
                             ArrayAdapter<ModelPreviewItemSterile> adapter;
 
                             adapter = new CssdPreviewItemSterile_List_ItemSterile_Adapter(CssdPreviewItemSterile.this, MODEL_ITEM_STERILE);
                             list_item_sterile.setAdapter(adapter);
-
+                            if (MODEL_ITEM_STERILE.get(0).getIsSet().equals("1")){
+                                CountScan = 1;
+                                displayItemSet(txt_search.getText().toString());
+                            }
                             clearForm();
-                            
 
                         } catch (Exception e) {
                             list_item_sterile.setAdapter(null);
@@ -274,7 +308,8 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
                                         data.get(i + 3),
                                         data.get(i + 4),
                                         data.get(i + 5),
-                                        data.get(i + 6)
+                                        data.get(i + 6),
+                                        data.get(i + 7)
                                 )
                         );
 
@@ -290,7 +325,7 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
                 return list;
             }
 
-            private ModelPreviewItemSterile getItems( String itemid, String itemcode, String itemname, String picture_1, String picture_2, String set_count, String set_qty) {
+            private ModelPreviewItemSterile getItems( String itemid, String itemcode, String itemname, String picture_1, String picture_2, String set_count, String set_qty, String IsSet) {
                 return new ModelPreviewItemSterile(
                         itemid,
                         itemcode,
@@ -298,7 +333,8 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
                         picture_1,
                         picture_2,
                         set_count,
-                        set_qty
+                        set_qty,
+                        IsSet
                 );
             }
 
@@ -342,7 +378,8 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
 
                 if(Success && data != null) {
                     try {
-                        ArrayAdapter<ModelItemDetail> adapter = new CssdPreviewItemSterile_List_ItemSet_Adapter(CssdPreviewItemSterile.this, getItemDetailModel());
+                        ItemDetail=getItemDetailModel();
+                        ArrayAdapter<ModelItemDetail> adapter = new CssdPreviewItemSterile_List_ItemSet_Adapter(CssdPreviewItemSterile.this, ItemDetail);
                         list_set_item.setAdapter(adapter);
                     } catch (Exception e) {
                         list_set_item.setAdapter(null);
@@ -361,7 +398,8 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
 
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_display_item_set.php", data);
 
-                System.out.println("URL = " + result);
+                Log.d("VM:VM:",data+"");
+                Log.d("VM:VM:",result);
 
                 return result;
             }
@@ -396,7 +434,8 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
                                         data.get(i + 12),
                                         data.get(i + 13),
                                         data.get(i + 14),
-                                        data.get(i + 15)
+                                        data.get(i + 15),
+                                        1
                                 )
                         );
 
@@ -412,7 +451,7 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
                 return list;
             }
 
-            private ModelItemDetail getItemSet(int index, String ID, String itemcode, String itemname, String alternatename, String barcode, String setCount, String unitName, String ID_set, String itemDetailID, String qty, String itemcode_set, String itemname_set, String alternatename_set, String barcode_set, String picture_set, String picture_detail) {
+            private ModelItemDetail getItemSet(int index, String ID, String itemcode, String itemname, String alternatename, String barcode, String setCount, String unitName, String ID_set, String itemDetailID, String qty, String itemcode_set, String itemname_set, String alternatename_set, String barcode_set, String picture_set, String picture_detail,int isChk) {
                 return new ModelItemDetail(
                         index,
                         ID,
@@ -430,7 +469,8 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
                         alternatename_set,
                         barcode_set,
                         picture_set,
-                        picture_detail
+                        picture_detail,
+                        isChk
                 );
             }
 

@@ -9,8 +9,9 @@ public class ModelPreviewItemSterile {
     private String Picture_2;
     private String set_count;
     private String set_qty;
+    private String IsSet;
 
-    public ModelPreviewItemSterile(String itemid, String itemcode, String itemname, String picture_1, String picture_2, String set_count, String set_qty) {
+    public ModelPreviewItemSterile(String itemid, String itemcode, String itemname, String picture_1, String picture_2, String set_count, String set_qty, String IsSet) {
         this.itemid = itemid;
         this.itemcode = itemcode;
         this.itemname = itemname;
@@ -18,7 +19,12 @@ public class ModelPreviewItemSterile {
         Picture_2 = picture_2;
         this.set_count = set_count;
         this.set_qty = set_qty;
+        this.IsSet = IsSet;
     }
+
+    public String getIsSet() { return IsSet; }
+
+    public void setIsSet(String isSet) { IsSet = isSet; }
 
     public String getItemid() {
         return itemid;

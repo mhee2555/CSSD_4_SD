@@ -1,6 +1,7 @@
 package com.phc.cssd.adapter;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,11 @@ public class CssdPreviewItemSterile_List_ItemSet_Adapter extends ArrayAdapter<Mo
 
         // =========================================================================================
         final ViewHolder holder = (ViewHolder) view.getTag();
+        if (DATA_MODEL.get(position).getIsChk() == 2){
+            holder.txt_name.setTextColor(Color.BLACK);
+        }else {
+            holder.txt_name.setTextColor(Color.RED);
+        }
         holder.txt_name.setText(DATA_MODEL.get(position).getItemname());
         holder.txt_code.setText(DATA_MODEL.get(position).getItemcode_set());
         holder.txt_qty.setText(DATA_MODEL.get(position).getQty() + " " + DATA_MODEL.get(position).getUnitName());

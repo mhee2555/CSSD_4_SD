@@ -20,8 +20,7 @@ public class ModelItemDetail {
     private String Barcode_set;
     private String Picture_set;
     private String Picture_detail;
-
-
+    private int IsChk;
 
     public ModelItemDetail(int index, String ID, String itemcode, String itemname, String alternatename, String barcode, String setCount, String unitName, String ID_set, String itemDetailID, String qty, String itemcode_set, String itemname_set, String alternatename_set, String barcode_set) {
         this.index = index;
@@ -42,6 +41,26 @@ public class ModelItemDetail {
 
     }
 
+    public ModelItemDetail(int index, String ID, String itemcode, String itemname, String alternatename, String barcode, String setCount, String unitName, String ID_set, String itemDetailID, String qty, String itemcode_set, String itemname_set, String alternatename_set, String barcode_set, String picture_set, String picture_detail,int IsChk) {
+        this.index = index;
+        this.ID = ID;
+        this.itemcode = itemcode;
+        this.itemname = itemname;
+        Alternatename = alternatename;
+        Barcode = barcode;
+        SetCount = setCount;
+        UnitName = unitName;
+        this.ID_set = ID_set;
+        this.itemDetailID = itemDetailID;
+        Qty = qty;
+        this.itemcode_set = itemcode_set;
+        this.itemname_set = itemname_set;
+        Alternatename_set = alternatename_set;
+        Barcode_set = barcode_set;
+        Picture_set = picture_set;
+        IsChk = IsChk;
+    }
+
     public ModelItemDetail(int index, String ID, String itemcode, String itemname, String alternatename, String barcode, String setCount, String unitName, String ID_set, String itemDetailID, String qty, String itemcode_set, String itemname_set, String alternatename_set, String barcode_set, String picture_set, String picture_detail) {
         this.index = index;
         this.ID = ID;
@@ -60,7 +79,13 @@ public class ModelItemDetail {
         Barcode_set = barcode_set;
         Picture_set = picture_set;
         Picture_detail = picture_detail;
+        this.itemname_set = itemname_set;
     }
+
+
+    public int getIsChk() { return IsChk; }
+
+    public void setIsChk(int isChk) { IsChk = isChk; }
 
     public String getPicture_detail() {
         return Picture_detail;

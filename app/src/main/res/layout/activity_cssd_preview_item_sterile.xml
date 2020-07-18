@@ -37,50 +37,89 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginLeft="8dp">
 
-                <TextView
-                    android:layout_width="75dp"
-                    android:layout_height="30dp"
-                    android:textSize="16dp"
-                    android:gravity="center|center_vertical"
-                    android:maxLines="1"
-                    android:text="ค้นหารายการ"
-                    android:textColor="@color/form_label"
-                    android:layout_marginRight="1dp"
-                    >
-                </TextView>
-
                 <RelativeLayout
-                    android:id="@+id/relativeLayoutSearch"
                     android:layout_width="fill_parent"
-                    android:layout_height="55dp"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:gravity="center_vertical"
-                    >
+                    android:layout_height="80dp">
 
-                    <EditText
-                        android:id="@+id/txt_search"
-                        android:layout_width="fill_parent"
+                    <TextView
+                        android:layout_width="95dp"
                         android:layout_height="30dp"
-                        android:gravity="center_vertical"
-                        android:paddingRight="2dp"
-                        android:background="@drawable/text_dropdown"
-                        android:color="#111111"
-                        android:paddingLeft="12dp"
-                        android:singleLine="true"
                         android:textSize="16dp"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentStart="true" />
+                        android:gravity="center|center_vertical"
+                        android:maxLines="1"
+                        android:text="Scan : QR"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/form_label"
+                        android:layout_marginRight="1dp">
+                    </TextView>
 
-                    <Button
-                        android:id="@+id/btn_search"
-                        android:layout_width="30dp"
+                    <Switch
+                        android:layout_width="50dp"
                         android:layout_height="30dp"
-                        android:layout_marginLeft="0.0dip"
-                        android:background="@drawable/search"
-                        android:layout_alignBottom="@+id/txt_search"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignTop="@+id/txt_search" />
+                        android:layout_marginLeft="100dp">
+
+                    </Switch>
+
+                    <TextView
+                        android:layout_width="40dp"
+                        android:layout_height="30dp"
+                        android:textSize="16dp"
+                        android:gravity="center|center_vertical"
+                        android:maxLines="1"
+                        android:text="DPM"
+                        android:layout_marginLeft="150dp"
+                        android:textColor="@color/form_label"
+                        android:layout_marginRight="1dp">
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="95dp"
+                        android:layout_height="30dp"
+                        android:textSize="16dp"
+                        android:gravity="center|center_vertical"
+                        android:maxLines="1"
+                        android:text="ค้นหารายการ"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="37dp"
+                        android:textColor="@color/form_label"
+                        android:layout_marginRight="1dp">
+                    </TextView>
+
+                    <RelativeLayout
+                        android:id="@+id/relativeLayoutSearch"
+                        android:layout_width="fill_parent"
+                        android:layout_height="45dp"
+                        android:paddingLeft="8dp"
+                        android:layout_marginTop="30dp"
+                        android:paddingRight="8dp"
+                        android:gravity="center_vertical">
+
+                        <EditText
+                            android:id="@+id/txt_search"
+                            android:layout_width="300dp"
+                            android:layout_height="30dp"
+                            android:gravity="center_vertical"
+                            android:paddingRight="2dp"
+                            android:background="@drawable/text_dropdown"
+                            android:color="#111111"
+                            android:paddingLeft="12dp"
+                            android:layout_marginLeft="100dp"
+                            android:singleLine="true"
+                            android:textSize="16dp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentStart="true" />
+
+                        <Button
+                            android:id="@+id/btn_search"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginRight="12dp"
+                            android:background="@drawable/search"
+                            android:layout_alignBottom="@+id/txt_search"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignTop="@+id/txt_search" />
+
+                    </RelativeLayout>
 
                 </RelativeLayout>
 
