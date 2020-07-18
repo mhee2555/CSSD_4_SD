@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.phc.cssd.CssdEditSterile;
+import com.phc.cssd.CssdSterile;
 import com.phc.cssd.R;
 import com.phc.cssd.model.ModelItemStock;
 
@@ -19,11 +20,13 @@ public class ListEdit_R_Adapter extends ArrayAdapter<ModelItemStock> {
 
     private final List<ModelItemStock> DATA_MODEL;
     private final Activity context;
+    boolean mode;
 
-    public ListEdit_R_Adapter(Activity context, List<ModelItemStock> DATA_MODEL) {
+    public ListEdit_R_Adapter(Activity context, List<ModelItemStock> DATA_MODEL,boolean mode) {
         super(context, R.layout.activity_list_edit_r, DATA_MODEL);
         this.context = context;
         this.DATA_MODEL = DATA_MODEL;
+        this.mode = mode;
     }
 
     @Override
@@ -44,7 +47,14 @@ public class ListEdit_R_Adapter extends ArrayAdapter<ModelItemStock> {
             viewHolder.imv_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ((CssdEditSterile) context).toL(viewHolder.ID);
+                        if(!mode){
+                            ((CssdEditSterile) context).toL(viewHolder.ID);
+                        }else{
+                            ((CssdEditSterile)context).removeSterileDetail(
+                                    viewHolder.ID,
+                                    viewHolder.RowID
+                            );
+                        }
                     }
                 });
 

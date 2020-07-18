@@ -6,6 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/button_basket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="620dp"
+        android:layout_marginTop="35dp"
+        android:text="ตะกร้าฆ่าเชื้อ" />
+
     <ImageView
         android:id="@+id/imv_mc_1"
         android:layout_width="112dp"
@@ -121,10 +129,10 @@
         android:layout_alignTop="@+id/imv_mc_5"
         android:layout_marginTop="0dp"
         android:gravity="center|center_vertical"
-        android:textStyle="bold"
+        android:text=""
         android:textColor="@color/colorWhite"
         android:textSize="18dp"
-        android:text="" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txt_mn_1"

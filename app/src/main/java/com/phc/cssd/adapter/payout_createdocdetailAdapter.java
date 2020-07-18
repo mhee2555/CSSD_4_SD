@@ -110,6 +110,9 @@ public class payout_createdocdetailAdapter extends ArrayAdapter {
                     {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
+                            if(etxt_num_po.getText().toString().equals("0")){
+                                etxt_num_po.setText("1");
+                            }
                             Log.d("onKey: ", "DocNo:"+listData.get(position).getFields6()+" QTY:"+etxt_num_po.getText()+" ItemStock :"+listData.get(position).getFields7());
                             Update_PayoutDetail(listData.get(position).getFields6(),etxt_num_po.getText()+"",listData.get(position).getFields7());
                             //searchbox.requestFocus();
