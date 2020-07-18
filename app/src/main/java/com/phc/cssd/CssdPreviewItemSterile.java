@@ -115,15 +115,14 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
                                 displayItemSterile();
                             }else {
                                 for (int i = 0 ; i < ItemDetail.size() ; i ++){
-                                    Log.d("LFJFLDJ",ItemDetail.get(0).getItemcode()+"");
                                     ItemDetail.get(i).getItemcode();
                                     String Itemcode;
                                     Itemcode = txt_search.getText().toString().substring(0,5);
-                                    Log.d("LFJFLDJ",Itemcode+"");
                                     if (Itemcode.equals(ItemDetail.get(i).getItemcode())){
                                         ItemDetail.get(i).setIsChk(2);
                                         ArrayAdapter<ModelItemDetail> adapter = new CssdPreviewItemSterile_List_ItemSet_Adapter(CssdPreviewItemSterile.this, ItemDetail);
                                         list_set_item.setAdapter(adapter);
+                                        txt_search.setText("");
                                     }
                                 }
                                 CountScan ++;
@@ -261,6 +260,7 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
                             if (MODEL_ITEM_STERILE.get(0).getIsSet().equals("1")){
                                 CountScan = 1;
                                 displayItemSet(txt_search.getText().toString());
+                                txt_search.setText("");
                             }
                             clearForm();
 

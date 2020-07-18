@@ -10,7 +10,6 @@ public class ModelPreviewItemSterile {
     private String set_count;
     private String set_qty;
     private String IsSet;
-    private String UsageCode;
 
     public ModelPreviewItemSterile(String itemid, String itemcode, String itemname, String picture_1, String picture_2, String set_count, String set_qty, String IsSet) {
         this.itemid = itemid;
@@ -22,11 +21,6 @@ public class ModelPreviewItemSterile {
         this.set_qty = set_qty;
         this.IsSet = IsSet;
     }
-
-
-    public String getUsageCode() { return UsageCode; }
-
-    public void setUsageCode(String usageCode) { UsageCode = usageCode; }
 
     public String getIsSet() { return IsSet; }
 
