@@ -1539,7 +1539,18 @@ public class CssdSterile extends AppCompatActivity {
         button_basket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (STERILE_PROCESS_NUMBER_ACTIVE == 0){
+                    Toast.makeText(CssdSterile.this, "ยังไม่ได้เลือกวิธีฆ่าเชื้อ!!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                // Check Machine Active
+                if (STERILE_MACHINE_NUMBER_ACTIVE == 0){
+                    Toast.makeText(CssdSterile.this, "ยังไม่ได้เลือกเครื่องฆ่าเชื้อ!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
+                Intent intent = new Intent(CssdSterile.this,PairItemToSterileBasket.class);
+                startActivity(intent);
             }
         });
 
