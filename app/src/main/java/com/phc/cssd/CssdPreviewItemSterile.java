@@ -556,7 +556,28 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
                     rs = jsonObj.getJSONArray(TAG_RESULTS);
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
-
+                        if (c.getString("finish").equals("1")){
+                            AlertDialog.Builder builder = new AlertDialog.Builder(CssdPreviewItemSterile.this);
+                            builder.setCancelable(true);
+                            builder.setTitle("ยืนยัน");
+                            builder.setMessage("ต้องการเปลี่ยนรายการจัดเซ็ตใช่หรือไม่ ?");
+                            builder.setPositiveButton("ยืนยัน",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            CountScan = 0;
+                                            displayItemSterile(txt_search.getText().toString());
+                                        }
+                                    });
+                            builder.setNegativeButton("ไม่ยืนยัน", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            });
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
