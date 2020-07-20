@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,6 +33,7 @@ import com.phc.cssd.adapter.CssdPreviewItemSterile_List_ItemSterile_Adapter;
 import com.phc.cssd.model.ModelItemDetail;
 import com.phc.cssd.model.ModelPreviewItemSterile;
 import com.phc.cssd.url.Url;
+import com.phc.cssd.url.getUrl;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -39,6 +43,7 @@ import java.util.List;
 public class CssdPreviewItemSterile extends AppCompatActivity {
 
     private ImageView imageBack;
+    private Button bt_report_print;
     private ListView list_item_sterile;
     private ListView list_set_item;
     private EditText txt_search;
@@ -78,7 +83,28 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
         Intent intent = getIntent();
     }
 
+    private void GetReport(String Itemcode) {
+        String url = "";
+        url = getUrl.xUrl+"report/Report_checklist_sterile.php?Itemcode="+Itemcode;
+        Log.d("FKHKDHD",url);
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
+//        for (int a = 0 ; a < ItemDetail.size() ; a ++){
+//            ItemDetail.get(a).setIsChk(1);
+//            ArrayAdapter<ModelItemDetail> adapter = new CssdPreviewItemSterile_List_ItemSet_Adapter(CssdPreviewItemSterile.this, ItemDetail);
+//            list_set_item.setAdapter(adapter);
+//        }
+    }
+
     private void byWidget() {
+        bt_report_print= ( Button ) findViewById(R.id.bt_report_print);
+        bt_report_print.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String Itemcode = MODEL_ITEM_STERILE.get(0).getItemcode();
+                GetReport(Itemcode);
+            }
+        });
         list_item_sterile = (ListView)findViewById(R.id.list_item_sterile);
         list_set_item = (ListView)findViewById(R.id.list_set_item);
         img_item = (ImageView)findViewById(R.id.img_item);
@@ -91,59 +117,49 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
         txt_caption_21.setText("ชื่อเซ็ท : ");
         txt_caption_22.setText("รายการในเซ็ท " + 0 + " รายการ   จำนวนทั้งหมด "+ 0 + " ชิ้น");
 
-//        txt_search.addTextChangedListener(new TextWatcher() {
-//            public void afterTextChanged(Editable s) {
-//                Log.d("LFJFLDJ",CountScan+"");
-//                if (CountScan == 0){
-//                    displayItemSterile();
-//                }else {
-//                    displayItemSet(txt_search.getText().toString());
-//                    CountScan ++;
-//                }
-//            }
-//
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-//
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-//        });
-
         txt_search.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                    switch (keyCode) {
-                        case KeyEvent.KEYCODE_DPAD_CENTER:
-                        case KeyEvent.KEYCODE_ENTER:
-                            if (CountScan == 0){
-                                displayItemSterile(txt_search.getText().toString());
-                            }else {
-                                for (int i = 0 ; i < ItemDetail.size() ; i ++){
-                                    ItemDetail.get(i).getItemcode();
-                                    String Itemcode;
-                                    Itemcode = txt_search.getText().toString().toUpperCase().substring(0,5);
-                                    if (Itemcode.equals(ItemDetail.get(i).getItemcode())){
-                                        ItemDetail.get(i).setIsChk(2);
-                                        ArrayAdapter<ModelItemDetail> adapter = new CssdPreviewItemSterile_List_ItemSet_Adapter(CssdPreviewItemSterile.this, ItemDetail);
-                                        list_set_item.setAdapter(adapter);
-                                        //Image 2
-                                        try {
-                                            URL url = new URL(Url.getImageURL() + Itemcode+"_pic1.PNG");
-                                            Log.d("FIFPFIF",url+"");
-                                            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                                            img_item_all.setImageBitmap(bmp);
-                                        }catch(Exception e){
-                                            e.printStackTrace();
-                                            img_item_all.setImageResource(R.drawable.ic_preview);
+                try {
+                    txt_search.requestFocus();
+                    if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                        switch (keyCode) {
+                            case KeyEvent.KEYCODE_DPAD_CENTER:
+                            case KeyEvent.KEYCODE_ENTER:
+                                if (CountScan == 0){
+                                    displayItemSterile(txt_search.getText().toString());
+                                }else {
+                                    for (int i = 0 ; i < ItemDetail.size() ; i ++){
+                                        ItemDetail.get(i).getItemcode();
+                                        String Itemcode;
+                                        Itemcode = txt_search.getText().toString().toUpperCase().substring(0,5);
+                                        if (Itemcode.equals(ItemDetail.get(i).getItemcode())){
+                                            ItemDetail.get(i).setIsChk(2);
+                                            ArrayAdapter<ModelItemDetail> adapter = new CssdPreviewItemSterile_List_ItemSet_Adapter(CssdPreviewItemSterile.this, ItemDetail);
+                                            list_set_item.setAdapter(adapter);
+                                            try {
+                                                URL url = new URL(Url.getImageURL() + Itemcode+"_pic1.PNG");
+                                                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                                                img_item_all.setImageBitmap(bmp);
+                                            }catch(Exception e){
+                                                e.printStackTrace();
+                                                img_item_all.setImageResource(R.drawable.ic_preview);
+                                            }
+                                            ScanItem();
                                         }
                                     }
+                                    CountScan ++;
                                 }
-                                CountScan ++;
-                            }
-                            txt_search.setText("");
-                            txt_search.requestFocus();
-                            return true;
-                        default:
-                            break;
+                                return true;
+                            default:
+                                txt_search.requestFocus();
+                                break;
+                        }
+                    }else {
+                        txt_search.requestFocus();
+                        return true;
                     }
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
                 return false;
             }
@@ -218,6 +234,11 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
             }
         });
         imageBack.bringToFront();
+    }
+
+    public void ScanItem(){
+        txt_search.setText("");
+        txt_search.requestFocus();
     }
 
     public  void clearForm(){

@@ -82,22 +82,30 @@ public class SendSterile_DocListDetailAdapter extends ArrayAdapter {
         });
 
         checkBoxsub.setChecked(true);
+
+//        if (!listData.get(position).getRemarkAdmin().equals("0")){
+//            checkBoxsub.setChecked(false);
+//            txtitemname.setTextColor(Color.RED);
+//            txtxqty.setTextColor(Color.RED);
+//            textView49.setTextColor(Color.RED);
+//        }else {
+//            checkBoxsub.setChecked(true);
+//            txtitemname.setTextColor(Color.BLACK);
+//            txtxqty.setTextColor(Color.BLACK);
+//            textView49.setTextColor(Color.BLACK);
+//        }
+
         if (CheckAll == CheckAllAd) {
-            checkBoxsub.setChecked(true);
+            if (!listData.get(position).getRemarkAdmin().equals("0")){
+                checkBoxsub.setChecked(false);
+                txtitemname.setTextColor(Color.RED);
+                txtxqty.setTextColor(Color.RED);
+                textView49.setTextColor(Color.RED);
+            }else {
+                checkBoxsub.setChecked(true);
+            }
         } else {
             checkBoxsub.setChecked(false);
-        }
-
-        if (!listData.get(position).getRemarkAdmin().equals("0")){
-            checkBoxsub.setChecked(false);
-            txtitemname.setTextColor(Color.RED);
-            txtxqty.setTextColor(Color.RED);
-            textView49.setTextColor(Color.RED);
-        }else {
-            checkBoxsub.setChecked(true);
-            txtitemname.setTextColor(Color.BLACK);
-            txtxqty.setTextColor(Color.BLACK);
-            textView49.setTextColor(Color.BLACK);
         }
 
         checkBoxsub.setOnClickListener(new View.OnClickListener() {

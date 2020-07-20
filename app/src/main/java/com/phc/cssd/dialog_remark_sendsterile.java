@@ -2,7 +2,9 @@ package com.phc.cssd;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.phc.core.connect.HTTPConnect;
+import com.phc.cssd.data.Master;
 import com.phc.cssd.url.Url;
 
 import org.json.JSONArray;
@@ -192,7 +195,29 @@ public class dialog_remark_sendsterile extends Activity {
         cancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                if (!userdep.getText().toString().equals("")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(dialog_remark_sendsterile.this);
+                    builder.setCancelable(true);
+                    builder.setTitle("ยืนยัน");
+                    builder.setMessage("ยืนยันการยกเลิกRemarkหรือไม่ !!");
+                    builder.setPositiveButton("ยืนยัน",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    CancelRemark(datacheck,text_remark.getText().toString(),DocNoSend,Usagecode,Itemname,DepID);
+                                }
+                            });
+                    builder.setNegativeButton("ไม่ยืนยัน", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }else {
+                    finish();
+                }
             }
         });
 
@@ -253,6 +278,58 @@ public class dialog_remark_sendsterile extends Activity {
             // =========================================================================================
         }
         SaveRemark obj = new SaveRemark();
+        obj.execute();
+    }
+
+    public void CancelRemark(final String remarkselect, final String noteremark, final String senddocno, final String usagecode, final String itemname, final String depname) {
+        class CancelRemark extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        if (c.getString("finish").equals("true")){
+                            finish();
+                            Toast.makeText(dialog_remark_sendsterile.this, "บันทึกสำเร็จ", Toast.LENGTH_SHORT).show();
+                            IsSave = "1";
+                        }else {
+                            Toast.makeText(dialog_remark_sendsterile.this, "บันทึกไม่สำเร็จ", Toast.LENGTH_SHORT).show();
+                            IsSave = "0";
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("usagecode",usagecode);
+                data.put("itemname",itemname);
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_delete_remark_send.php", data);
+                    Log.d("DHKDHKD",data+"");
+                    Log.d("DHKDHKD",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        CancelRemark obj = new CancelRemark();
         obj.execute();
     }
 
