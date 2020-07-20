@@ -197,7 +197,6 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
             }
         });
 
-
         b_Back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 ClosePage();

@@ -1,6 +1,8 @@
 package com.phc.cssd;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -35,6 +37,10 @@ import com.phc.cssd.model.ModelPreviewItemSterile;
 import com.phc.cssd.url.Url;
 import com.phc.cssd.url.getUrl;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,7 +49,7 @@ import java.util.List;
 public class CssdPreviewItemSterile extends AppCompatActivity {
 
     private ImageView imageBack;
-    private Button bt_report_print;
+    private Button bt_report_print,bt_clear;
     private ListView list_item_sterile;
     private ListView list_set_item;
     private EditText txt_search;
@@ -55,6 +61,8 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
     private HTTPConnect httpConnect = new HTTPConnect();
     private List<ModelItemDetail>  ItemDetail;
 
+    private String TAG_RESULTS = "result";
+    private JSONArray rs = null;
     private int CountScan = 0;
     private Object view;
 
@@ -90,19 +98,29 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);
-//        for (int a = 0 ; a < ItemDetail.size() ; a ++){
-//            ItemDetail.get(a).setIsChk(1);
-//            ArrayAdapter<ModelItemDetail> adapter = new CssdPreviewItemSterile_List_ItemSet_Adapter(CssdPreviewItemSterile.this, ItemDetail);
-//            list_set_item.setAdapter(adapter);
-//        }
+        for (int a = 0 ; a < ItemDetail.size() ; a ++){
+            ItemDetail.get(a).setIsChk(1);
+            ArrayAdapter<ModelItemDetail> adapter = new CssdPreviewItemSterile_List_ItemSet_Adapter(CssdPreviewItemSterile.this, ItemDetail);
+            list_set_item.setAdapter(adapter);
+        }
     }
 
     private void byWidget() {
+        bt_clear= ( Button ) findViewById(R.id.bt_clear);
+        bt_clear.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                for (int a = 0 ; a < ItemDetail.size() ; a ++){
+                    ItemDetail.get(a).setIsChk(1);
+                    ArrayAdapter<ModelItemDetail> adapter = new CssdPreviewItemSterile_List_ItemSet_Adapter(CssdPreviewItemSterile.this, ItemDetail);
+                    list_set_item.setAdapter(adapter);
+                }
+            }
+        });
         bt_report_print= ( Button ) findViewById(R.id.bt_report_print);
         bt_report_print.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String Itemcode = MODEL_ITEM_STERILE.get(0).getItemcode();
-                GetReport(Itemcode);
+//                String Itemcode = MODEL_ITEM_STERILE.get(0).getItemcode();
+//                GetReport(Itemcode);
             }
         });
         list_item_sterile = (ListView)findViewById(R.id.list_item_sterile);
@@ -128,6 +146,7 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
                                 if (CountScan == 0){
                                     displayItemSterile(txt_search.getText().toString());
                                 }else {
+                                    CheckItemIsSet(txt_search.getText().toString());
                                     for (int i = 0 ; i < ItemDetail.size() ; i ++){
                                         ItemDetail.get(i).getItemcode();
                                         String Itemcode;
@@ -286,13 +305,15 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
                             ArrayAdapter<ModelPreviewItemSterile> adapter;
                             adapter = new CssdPreviewItemSterile_List_ItemSterile_Adapter(CssdPreviewItemSterile.this, MODEL_ITEM_STERILE);
                             list_item_sterile.setAdapter(adapter);
-                            if (MODEL_ITEM_STERILE.get(0).getIsSet().equals("1")){
-                                CountScan = 1;
-                                displayItemSet(itemcode);
-                                txt_search.setText("");
-                                txt_search.requestFocus();
-                                txt_caption_21.setText("ชื่อเซ็ท : " + MODEL_ITEM_STERILE.get(0).getItemname());
-                                txt_caption_22.setText("รายการในเซ็ท " + MODEL_ITEM_STERILE.get(0).getSet_count() + " รายการ   จำนวนทั้งหมด "+ MODEL_ITEM_STERILE.get(0).getSet_qty() + " ชิ้น");
+                            if (CountScan == 0){
+                                if (MODEL_ITEM_STERILE.get(0).getIsSet().equals("1")){
+                                    CountScan = 1;
+                                    displayItemSet(itemcode);
+                                    txt_search.setText("");
+                                    txt_search.requestFocus();
+                                    txt_caption_21.setText("ชื่อเซ็ท : " + MODEL_ITEM_STERILE.get(0).getItemname());
+                                    txt_caption_22.setText("รายการในเซ็ท " + MODEL_ITEM_STERILE.get(0).getSet_count() + " รายการ   จำนวนทั้งหมด "+ MODEL_ITEM_STERILE.get(0).getSet_qty() + " ชิ้น");
+                                }
                             }
                             clearForm();
 
@@ -513,13 +534,55 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
                         isChk
                 );
             }
-
             // =========================================================================================
         }
-
         DisplayItemSet obj = new DisplayItemSet();
         obj.execute();
     }
-    
+
+    public void CheckItemIsSet(final String Usagecode) {
+        class CheckItemIsSet extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("Usagecode",Usagecode);
+
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_check_item_isset.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        CheckItemIsSet obj = new CheckItemIsSet();
+        obj.execute();
+    }
     
 }

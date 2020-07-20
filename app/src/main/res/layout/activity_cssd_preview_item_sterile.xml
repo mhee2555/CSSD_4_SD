@@ -14,7 +14,6 @@
         android:layout_width="fill_parent"
         tools:context=".CssdPreviewItemSterile">
 
-        <!-- west -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="fill_parent"
@@ -364,6 +363,16 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_clear"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="445dp"
+        android:layout_marginBottom="11dp"
+        android:background="@drawable/ic_refresh" />
 
     <Button
         android:id="@+id/bt_report_print"
