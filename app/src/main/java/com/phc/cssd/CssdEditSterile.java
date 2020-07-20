@@ -222,18 +222,18 @@ public class CssdEditSterile extends Activity {
         switch_sterile_doc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if(isChecked){
-                    switch_sterile_doc.setText("เพิ่มรายการในเครื่องล้าง-ฆ่าเชื้อ");
+                if(!isChecked){
+                    switch_sterile_doc.setText("แก้ไขเอกสาร");
                 }else{
-                    switch_sterile_doc.setText("ย้ายรายการในเครื่องล้าง-ฆ่าเชื้อ");
+                    switch_sterile_doc.setText("แก้ไขข้อมูลล้าง-ฆ่าเชื้อ");
                 }
 
                 switch_sterile_doc(isChecked);
             }
         });
 
-                // 1
-                txt_machine_1 = (TextView) findViewById(R.id.txt_machine_1);
+        // 1
+        txt_machine_1 = (TextView) findViewById(R.id.txt_machine_1);
         txt_round_1 = (TextView) findViewById(R.id.txt_round_1);
         txt_usr_prepare_1 = (TextView) findViewById(R.id.txt_usr_prepare_1);
         txt_usr_approve_1 = (TextView) findViewById(R.id.txt_usr_approve_1);
@@ -300,6 +300,7 @@ public class CssdEditSterile extends Activity {
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
 
                     if(switch_sterile_doc.isChecked()&&bt_switch.isChecked()){
+                        Log.d("ttest_qr","txt_qr--"+txt_qr.getText().toString().substring(0,5));
                         getItemToMac(txt_qr.getText().toString());
                     }else{
                         clearForm1();
@@ -917,28 +918,25 @@ public class CssdEditSterile extends Activity {
 
     public void getItemToMac(String usagecode) {
         txt_qr.setText("");
-        if(usagecode.length()>=5){
-            String itemcode = usagecode.substring(0,5).toUpperCase();
+        String itemcode = usagecode.substring(0,5).toUpperCase();
 
-            Log.d("ttest_getToMac","itemcode - "+itemcode);
-            for(int i =0;i<MODEL_IMPORT_WASH_DETAIL.size();i++){
+        Log.d("ttest_getToMac","itemcode - "+itemcode);
+        for(int i =0;i<MODEL_IMPORT_WASH_DETAIL.size();i++){
 
-                Log.d("ttest_getToMac","M-itemcode - "+MODEL_IMPORT_WASH_DETAIL.get(i).getI_id());
-                if(MODEL_IMPORT_WASH_DETAIL.get(i).getI_id().equals(itemcode)){
-                    importWashDetail(
-                            MODEL_IMPORT_WASH_DETAIL.get(i).getI_id(),
-                            MODEL_IMPORT_WASH_DETAIL.get(i).getI_program_id() ,
-                            MODEL_IMPORT_WASH_DETAIL.get(i).getI_program(),
-                            MODEL_IMPORT_WASH_DETAIL.get(i).getPackingMatID(),
-                            "0",
-                            usagecode
-                    );
-                    return;
-                }
+            Log.d("ttest_getToMac","M-itemcode - "+MODEL_IMPORT_WASH_DETAIL.get(i).getI_id());
+            if(MODEL_IMPORT_WASH_DETAIL.get(i).getI_id().equals(itemcode)){
+                importWashDetail(
+                        MODEL_IMPORT_WASH_DETAIL.get(i).getI_id(),
+                        MODEL_IMPORT_WASH_DETAIL.get(i).getI_program_id() ,
+                        MODEL_IMPORT_WASH_DETAIL.get(i).getI_program(),
+                        MODEL_IMPORT_WASH_DETAIL.get(i).getPackingMatID(),
+                        "0",
+                        usagecode
+                );
+                return;
             }
         }
-
-        Toast.makeText(CssdEditSterile.this, "สถานะรหัสใช้งานไม่ตรงตามเงื่อนไข", Toast.LENGTH_SHORT).show();
+        Toast.makeText(CssdEditSterile.this, "สถานะรหัสใช้งำนไม่ตรงตำมเงื่อนไข", Toast.LENGTH_SHORT).show();
     }
 
     public void displayWashDetail() {

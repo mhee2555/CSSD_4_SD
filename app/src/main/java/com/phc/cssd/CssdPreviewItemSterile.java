@@ -50,7 +50,8 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
     private List<ModelItemDetail>  ItemDetail;
 
     private int CountScan = 0;
-    
+    private Object view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +69,7 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
 
         byIntent();
 
-        displayItemSterile();
+        displayItemSterile("");
     }
 
     private void byIntent(){
@@ -112,21 +113,32 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
                             if (CountScan == 0){
-                                displayItemSterile();
+                                displayItemSterile(txt_search.getText().toString());
                             }else {
                                 for (int i = 0 ; i < ItemDetail.size() ; i ++){
                                     ItemDetail.get(i).getItemcode();
                                     String Itemcode;
-                                    Itemcode = txt_search.getText().toString().substring(0,5);
+                                    Itemcode = txt_search.getText().toString().toUpperCase().substring(0,5);
                                     if (Itemcode.equals(ItemDetail.get(i).getItemcode())){
                                         ItemDetail.get(i).setIsChk(2);
                                         ArrayAdapter<ModelItemDetail> adapter = new CssdPreviewItemSterile_List_ItemSet_Adapter(CssdPreviewItemSterile.this, ItemDetail);
                                         list_set_item.setAdapter(adapter);
-                                        txt_search.setText("");
+                                        //Image 2
+                                        try {
+                                            URL url = new URL(Url.getImageURL() + Itemcode+"_pic1.PNG");
+                                            Log.d("FIFPFIF",url+"");
+                                            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                                            img_item_all.setImageBitmap(bmp);
+                                        }catch(Exception e){
+                                            e.printStackTrace();
+                                            img_item_all.setImageResource(R.drawable.ic_preview);
+                                        }
                                     }
                                 }
                                 CountScan ++;
                             }
+                            txt_search.setText("");
+                            txt_search.requestFocus();
                             return true;
                         default:
                             break;
@@ -136,69 +148,66 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
             }
         });
 
-        list_item_sterile.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//        list_item_sterile.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                String code = ((TextView)((RelativeLayout)((LinearLayout) view).getChildAt(0)).getChildAt(0)).getText().toString();
+//                String name = ((TextView)((RelativeLayout)((LinearLayout) view).getChildAt(0)).getChildAt(1)).getText().toString();
+//                String set_count = ((TextView)((RelativeLayout)((LinearLayout) view).getChildAt(0)).getChildAt(2)).getText().toString();
+//                String set_qty = ((TextView)((RelativeLayout)((LinearLayout) view).getChildAt(0)).getChildAt(3)).getText().toString();
+//                String pic_1 = ((TextView)((RelativeLayout)((LinearLayout) view).getChildAt(0)).getChildAt(4)).getText().toString();
+//                String pic_2 = ((TextView)((RelativeLayout)((LinearLayout) view).getChildAt(0)).getChildAt(5)).getText().toString();
+//
+//                // Display
+//                txt_caption_21.setText("ชื่อเซ็ท : " + name);
+//                txt_caption_22.setText("รายการในเซ็ท " + set_count + " รายการ   จำนวนทั้งหมด "+ set_qty + " ชิ้น");
+//
+//                //Image 1
+//                try {
+//                    //System.out.println(Url.getImageURL() + pic_1);
+//                    URL url = new URL(Url.getImageURL() + pic_1);
+//                    Log.d("FIFPFIF",url+"");
+//                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+//                    img_item.setImageBitmap(bmp);
+//                }catch(Exception e){
+//                    e.printStackTrace();
+//                    img_item.setImageResource(R.drawable.ic_preview);
+//                }
+//
+//                //Image 2
+//                try {
+//                    //System.out.println(Url.getImageURL() + pic_2);
+//                    URL url = new URL(Url.getImageURL() + pic_2);
+//                    Log.d("FIFPFIF",url+"");
+//                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+//                    img_item_all.setImageBitmap(bmp);
+//                }catch(Exception e){
+//                    e.printStackTrace();
+//                    img_item_all.setImageResource(R.drawable.ic_preview);
+//                }
+//
+//                // Display Item Set
+//                displayItemSet(code);
+//
+//            }
+//        });
 
-                String code = ((TextView)((RelativeLayout)((LinearLayout) view).getChildAt(0)).getChildAt(0)).getText().toString();
-                String name = ((TextView)((RelativeLayout)((LinearLayout) view).getChildAt(0)).getChildAt(1)).getText().toString();
-                String set_count = ((TextView)((RelativeLayout)((LinearLayout) view).getChildAt(0)).getChildAt(2)).getText().toString();
-                String set_qty = ((TextView)((RelativeLayout)((LinearLayout) view).getChildAt(0)).getChildAt(3)).getText().toString();
-                String pic_1 = ((TextView)((RelativeLayout)((LinearLayout) view).getChildAt(0)).getChildAt(4)).getText().toString();
-                String pic_2 = ((TextView)((RelativeLayout)((LinearLayout) view).getChildAt(0)).getChildAt(5)).getText().toString();
-
-                // Display
-                txt_caption_21.setText("ชื่อเซ็ท : " + name);
-                txt_caption_22.setText("รายการในเซ็ท " + set_count + " รายการ   จำนวนทั้งหมด "+ set_qty + " ชิ้น");
-
-                //Image 1
-                try {
-                    //System.out.println(Url.getImageURL() + pic_1);
-                    URL url = new URL(Url.getImageURL() + pic_1);
-                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                    img_item.setImageBitmap(bmp);
-                }catch(Exception e){
-                    e.printStackTrace();
-                    img_item.setImageResource(R.drawable.ic_preview);
-                }
-
-                //Image 2
-                try {
-                    //System.out.println(Url.getImageURL() + pic_2);
-                    URL url = new URL(Url.getImageURL() + pic_2);
-                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                    img_item_all.setImageBitmap(bmp);
-                }catch(Exception e){
-                    e.printStackTrace();
-                    img_item_all.setImageResource(R.drawable.ic_preview);
-                }
-
-                // Display Item Set
-                displayItemSet(code);
-
-            }
-        });
-
-        list_set_item.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                String pic_2 = ((TextView)((LinearLayout) view).getChildAt(4)).getText().toString();
-
-                System.out.println(pic_2);
-
-                //Image 2
-                try {
-                    //System.out.println(Url.getImageURL() + pic_2);
-                    URL url = new URL(Url.getImageURL() + pic_2);
-                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                    img_item_all.setImageBitmap(bmp);
-                }catch(Exception e){
-                    //e.printStackTrace();
-                    img_item_all.setImageResource(R.drawable.ic_preview);
-                }
-
-
-            }
-        });
+//        list_set_item.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String pic_2 = ((TextView)((LinearLayout) view).getChildAt(4)).getText().toString();
+//                System.out.println(pic_2);
+//                //Image 2
+//                try {
+//                    //System.out.println(Url.getImageURL() + pic_2);
+//                    URL url = new URL(Url.getImageURL() + pic_2);
+//                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+//                    img_item_all.setImageBitmap(bmp);
+//                }catch(Exception e){
+//                    //e.printStackTrace();
+//                    img_item_all.setImageResource(R.drawable.ic_preview);
+//                }
+//            }
+//        });
 
         imageBack = (ImageView) findViewById(R.id.imageBack);
         imageBack.setOnClickListener(new View.OnClickListener() {
@@ -224,7 +233,7 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
     // -- Display Item Sterile
     // =============================================================================================
 
-    public void displayItemSterile() {
+    public void displayItemSterile(final String itemcode) {
 
         class DisplayItemSterile extends AsyncTask<String, Void, String> {
 
@@ -252,15 +261,14 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
                     try {
                         MODEL_ITEM_STERILE = getModelItems();
                         try {
-
                             ArrayAdapter<ModelPreviewItemSterile> adapter;
-
                             adapter = new CssdPreviewItemSterile_List_ItemSterile_Adapter(CssdPreviewItemSterile.this, MODEL_ITEM_STERILE);
                             list_item_sterile.setAdapter(adapter);
                             if (MODEL_ITEM_STERILE.get(0).getIsSet().equals("1")){
                                 CountScan = 1;
-                                displayItemSet(txt_search.getText().toString());
+                                displayItemSet(itemcode);
                                 txt_search.setText("");
+                                txt_search.requestFocus();
                             }
                             clearForm();
 
@@ -282,7 +290,7 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
-                data.put("p_filter", txt_search.getText().toString());
+                data.put("p_filter", itemcode);
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_display_item_sterile.php", data);
                 Log.d("LJHDDL",data+"");
                 Log.d("LJHDDL",result);
@@ -381,6 +389,15 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
                         ItemDetail=getItemDetailModel();
                         ArrayAdapter<ModelItemDetail> adapter = new CssdPreviewItemSterile_List_ItemSet_Adapter(CssdPreviewItemSterile.this, ItemDetail);
                         list_set_item.setAdapter(adapter);
+                        try {
+                            URL url = new URL(Url.getImageURL() + "I0001_pic.PNG");
+                            Log.d("FIFPFIF",url+"");
+                            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                            img_item.setImageBitmap(bmp);
+                        }catch(Exception e){
+                            e.printStackTrace();
+                            img_item.setImageResource(R.drawable.ic_preview);
+                        }
                     } catch (Exception e) {
                         list_set_item.setAdapter(null);
                         e.printStackTrace();

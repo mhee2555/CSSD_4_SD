@@ -179,7 +179,6 @@
                     android:divider="@null"
                     android:background="@color/colorWhite"
                     android:layout_marginLeft="4dp"
-                    android:listSelector="@android:color/holo_red_light"
                     android:layout_marginRight="4dp"></ListView>
 
             </LinearLayout>
@@ -315,7 +314,6 @@
                     android:layout_height="match_parent"
                     android:divider="@null"
                     android:background="@color/colorWhite"
-                    android:listSelector="@android:color/holo_orange_light"
                     android:layout_marginRight="4dp"
                     android:layout_marginLeft="4dp"></ListView>
 
