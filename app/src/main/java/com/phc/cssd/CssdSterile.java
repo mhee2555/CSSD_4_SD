@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -40,17 +41,20 @@ import com.phc.core.date.CountDownTime;
 import com.phc.core.date.DateTime;
 import com.phc.core.string.Cons;
 import com.phc.core.string.Text2Digit;
+import com.phc.cssd.adapter.BasketAdapter;
 import com.phc.cssd.adapter.ImportWashDetailAdapter;
 import com.phc.cssd.adapter.ImportWashDetailBigSizeAdapter;
 import com.phc.cssd.adapter.ImportWashDetailGridViewAdapter;
 import com.phc.cssd.adapter.SterileDetailAdapter;
 import com.phc.cssd.adapter.SterileDetailBigSizeAdapter;
 import com.phc.cssd.adapter.SterileDetailGridViewAdapter;
+import com.phc.cssd.adapter.WashDetailBasketAdapter;
 import com.phc.cssd.config.ConfigProgram;
 import com.phc.cssd.config.CssdSetting;
 import com.phc.cssd.config.Setting;
 import com.phc.cssd.data.Master;
 import com.phc.cssd.data.PreviewSticker;
+import com.phc.cssd.model.Model;
 import com.phc.cssd.model.ModelImportWashDetail;
 import com.phc.cssd.model.ModelSterile;
 import com.phc.cssd.model.ModelSterileDetail;
@@ -89,6 +93,8 @@ public class CssdSterile extends AppCompatActivity {
     private EditText OccupancyRate_Sterile;
     private String OccupancyRate_Text_Sterile;
     private boolean IsAdmin = false;
+
+    private List<Model> MODEL;
 
     PrintSticker PSK = new PrintSticker();
     String DocNo;
@@ -1549,8 +1555,59 @@ public class CssdSterile extends AppCompatActivity {
                     return;
                 }
 
-                Intent intent = new Intent(CssdSterile.this,PairItemToSterileBasket.class);
-                startActivity(intent);
+                final Dialog dialog = new Dialog(CssdSterile.this, R.style.DialogCustomTheme);
+
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+                dialog.setContentView(R.layout.dialog_item_stock_detail_basket);
+
+                dialog.setCancelable(true);
+
+                dialog.setTitle("");
+
+                final ListView list_basket = (ListView) dialog.findViewById(R.id.list_basket);
+                final ListView list = (ListView) dialog.findViewById(R.id.list);
+
+                final Button btn_save = (Button) dialog.findViewById(R.id.btn_save);
+                final Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
+                final Button btn_remove = (Button) dialog.findViewById(R.id.btn_remove);
+                final EditText edt_basket_code = (EditText) dialog.findViewById(R.id.edt_basket_code);
+
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                edt_basket_code.setOnKeyListener(new View.OnKeyListener()
+                {
+                    public boolean onKey(View v, int keyCode, KeyEvent event)
+                    {
+                        if (event.getAction() == KeyEvent.ACTION_DOWN)
+                        {
+                            switch (keyCode)
+                            {
+                                case KeyEvent.KEYCODE_DPAD_CENTER:
+                                case KeyEvent.KEYCODE_ENTER:
+
+                                    selectBasket(edt_basket_code.getText().toString(), list_basket, edt_basket_code);
+
+                                    return true;
+                                default:
+                                    break;
+                            }
+                        }
+
+                        return false;
+
+                    }
+
+
+                });
+
+                list.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL));
+
+                dialog.show();
             }
         });
 
@@ -6934,5 +6991,92 @@ public class CssdSterile extends AppCompatActivity {
         startActivityForResult(i, 1035);
 
     }
+
+    public void selectBasket(final String BasketCode, final ListView list_basket, final EditText edt_basket_code) {
+
+
+        class Basket extends AsyncTask<String, Void, String> {
+
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+
+                    //List<Model> list = new ArrayList<>();
+
+                    for(int i=0;i<rs.length();i++){
+                        JSONObject c = rs.getJSONObject(i);
+
+                        if(c.getString("result").equals("A")) {
+
+                            if(MODEL != null) {
+                                Iterator li = MODEL.iterator();
+
+                                while (li.hasNext()) {
+
+                                    Model m = (Model) li.next();
+
+                                    if (c.getString("BasketCode").equals(m.getCode())) {
+                                        Toast.makeText(CssdSterile.this, "มีตะกร้าอยู่แล้ว !!", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                }
+                            }else{
+                                MODEL = new ArrayList<>();
+                            }
+
+                            MODEL.add(
+                                    new Model(
+                                            0,
+                                            c.getString("ID"),
+                                            c.getString("BasketCode"),
+                                            c.getString("BasketName")
+                                    )
+                            );
+
+                            list_basket.setAdapter(new BasketAdapter(CssdSterile.this, MODEL));
+
+                        }else{
+                            Toast.makeText(CssdSterile.this, "ไม่พบตะกร้า !!", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }finally {
+                    edt_basket_code.setText("");
+
+                    edt_basket_code.requestFocus();
+                }
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+
+                data.put("BasketCode", BasketCode);
+
+                String result = httpConnect.sendPostRequest(Url.URL + "cssd_select_basket.php", data);
+
+                return result;
+            }
+
+            // =========================================================================================
+        }
+
+        Basket obj = new Basket();
+        obj.execute();
+    }
+
 }
 

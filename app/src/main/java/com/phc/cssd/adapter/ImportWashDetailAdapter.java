@@ -131,7 +131,7 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                     }
                 });
 
-            }else{
+            }else if(mode==2){
                 viewHolder.imv_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -143,6 +143,20 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                                 "0",
                                 null
                         );
+                    }
+                });
+            }else{
+                viewHolder.imv_add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                        ((CssdSterile)context).importWashDetail(
+//                                viewHolder.txt_item_code.getText().toString(),
+//                                viewHolder.txt_item_program_id.getText().toString() ,
+//                                viewHolder.item_program,
+//                                viewHolder.PackingMatID,
+//                                "0",
+//                                null
+//                        );
                     }
                 });
             }
