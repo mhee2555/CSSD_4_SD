@@ -45,18 +45,18 @@ public class ListEdit_R_Adapter extends ArrayAdapter<ModelItemStock> {
             viewHolder.imv_add = (ImageView) view.findViewById(R.id.imv_add);
 
             viewHolder.imv_add.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(!mode){
-                            ((CssdEditSterile) context).toL(viewHolder.ID);
-                        }else{
-                            ((CssdEditSterile)context).removeSterileDetail(
-                                    viewHolder.ID,
-                                    viewHolder.RowID
-                            );
-                        }
+                @Override
+                public void onClick(View v) {
+                    if(!mode){
+                        ((CssdEditSterile) context).toL(viewHolder.ID);
+                    }else{
+                        ((CssdEditSterile)context).removeSterileDetail(
+                                viewHolder.ID,
+                                viewHolder.RowID
+                        );
                     }
-                });
+                }
+            });
 
 
 
