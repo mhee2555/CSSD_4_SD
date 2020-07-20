@@ -100,7 +100,7 @@
                             android:layout_height="30dp"
                             android:gravity="center_vertical"
                             android:paddingRight="2dp"
-                            android:background="@drawable/text_dropdown"
+                            android:background="@drawable/text_edit"
                             android:color="#111111"
                             android:paddingLeft="12dp"
                             android:layout_marginLeft="100dp"
@@ -365,6 +365,16 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/bt_report_print"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="815dp"
+        android:layout_marginBottom="11dp"
+        android:background="@drawable/ic_popup_print_green" />
+
     <ImageView
         android:id="@+id/imageBack"
         android:layout_width="161dp"
@@ -372,7 +382,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="2dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="10dp"
         android:src="@drawable/bt_back" />
 
 </RelativeLayout>
