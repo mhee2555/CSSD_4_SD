@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.phc.core.connect.HTTPConnect;
 import com.phc.core.data.AsonData;
@@ -225,8 +226,8 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
 
         list_set_item.setAdapter(null);
 
-        txt_caption_21.setText("ชื่อเซ็ท : ");
-        txt_caption_22.setText("รายการในเซ็ท " + 0 + " รายการ   จำนวนทั้งหมด "+ 0 + " ชิ้น");
+//        txt_caption_21.setText("ชื่อเซ็ท : ");
+//        txt_caption_22.setText("รายการในเซ็ท " + 0 + " รายการ   จำนวนทั้งหมด "+ 0 + " ชิ้น");
     }
 
     // =============================================================================================
@@ -269,6 +270,8 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
                                 displayItemSet(itemcode);
                                 txt_search.setText("");
                                 txt_search.requestFocus();
+                                txt_caption_21.setText("ชื่อเซ็ท : " + MODEL_ITEM_STERILE.get(0).getItemname());
+                                txt_caption_22.setText("รายการในเซ็ท " + MODEL_ITEM_STERILE.get(0).getSet_count() + " รายการ   จำนวนทั้งหมด "+ MODEL_ITEM_STERILE.get(0).getSet_qty() + " ชิ้น");
                             }
                             clearForm();
 
@@ -390,8 +393,7 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
                         ArrayAdapter<ModelItemDetail> adapter = new CssdPreviewItemSterile_List_ItemSet_Adapter(CssdPreviewItemSterile.this, ItemDetail);
                         list_set_item.setAdapter(adapter);
                         try {
-                            URL url = new URL(Url.getImageURL() + "I0001_pic.PNG");
-                            Log.d("FIFPFIF",url+"");
+                            URL url = new URL(Url.getImageURL() + p_itemcode.substring(0,5).toUpperCase()+"_pic1.PNG");
                             Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                             img_item.setImageBitmap(bmp);
                         }catch(Exception e){
