@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.phc.cssd.CssdEditSterile;
 import com.phc.cssd.CssdSterile;
+import com.phc.cssd.CssdWash;
 import com.phc.cssd.R;
 import com.phc.cssd.model.ModelImportWashDetail;
 
@@ -87,29 +88,35 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
 
                         button1.setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
-
                                 String xQty = viewHolder.txt_qty.getText().toString();
                                 String  gQty = editQty.getText().toString();
-
-                                if (Integer.parseInt(gQty) <= Integer.parseInt(xQty)) {
-                                    if (Integer.parseInt(gQty) > Integer.parseInt(xQty)) {
-                                        Toast toast = Toast.makeText(context, (Integer.parseInt(gQty) - Integer.parseInt(xQty)), Toast.LENGTH_SHORT);
-                                        toast.setMargin(50, 50);
-                                        toast.show();
-                                    } else {
-                                        (( CssdSterile ) context).importWashDetail(
-                                                viewHolder.txt_item_code.getText().toString(),
-                                                viewHolder.txt_item_program_id.getText().toString(),
-                                                viewHolder.item_program,
-                                                viewHolder.PackingMatID,
-                                                gQty
-                                        );
-                                    }
-                                    dialog.cancel();
-                                }else if ((Integer.parseInt(gQty) > Integer.parseInt(xQty))){
+                                if (gQty.equals("")){
                                     Toast.makeText(context, "กรุณากรอกจำนวนตามที่มี !!", Toast.LENGTH_SHORT).show();
+                                }else {
+                                    if (Integer.parseInt(gQty) <= Integer.parseInt(xQty)) {
+                                        if (Integer.parseInt(gQty) == 0){
+                                            Toast.makeText(context, "กรุณากรอกจำนวนตามที่มี !!", Toast.LENGTH_SHORT).show();
+                                            editQty.setText("");
+                                        }else {
+                                            if (Integer.parseInt(gQty) > Integer.parseInt(xQty)) {
+                                                Toast toast = Toast.makeText(context, (Integer.parseInt(gQty) - Integer.parseInt(xQty)), Toast.LENGTH_SHORT);
+                                                toast.setMargin(50, 50);
+                                                toast.show();
+                                            } else {
+                                                (( CssdSterile ) context).importWashDetail(
+                                                        viewHolder.txt_item_code.getText().toString(),
+                                                        viewHolder.txt_item_program_id.getText().toString(),
+                                                        viewHolder.item_program,
+                                                        viewHolder.PackingMatID,
+                                                        gQty
+                                                );
+                                            }
+                                            dialog.cancel();
+                                        }
+                                    }else if ((Integer.parseInt(gQty) > Integer.parseInt(xQty))){
+                                        Toast.makeText(context, "กรุณากรอกจำนวนตามที่มี !!", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-
                             }
                         });
 

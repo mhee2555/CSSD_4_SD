@@ -188,11 +188,12 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
         b_Refresh.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 ListMachineCount( gDate );
+                lv1 = (GridView) findViewById(R.id.ListView02);
                 lv1.setAdapter(null);
-                textViewProgram.setText( "" );
-                textViewTime.setText( "" );
-                textViewDocNo.setText( "" );
-                textViewRoundNumber.setText( "" );
+                textViewProgram.setText("");
+                textViewTime.setText("");
+                textViewDocNo.setText("");
+                textViewRoundNumber.setText("");
             }
         });
 

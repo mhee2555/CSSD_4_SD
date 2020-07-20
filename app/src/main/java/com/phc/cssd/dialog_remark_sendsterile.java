@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ public class dialog_remark_sendsterile extends Activity {
     CheckBox check1,check2,check3,check4,check5,check6;
     EditText text_remark,userdep;
     Button summit,cancle;
+    ImageView close;
 
     String Itemname,Usagecode,DepID,DocNoSend;
     String datacheck,EmpCode,Type;
@@ -82,6 +84,13 @@ public class dialog_remark_sendsterile extends Activity {
         check4 = (CheckBox) findViewById(R.id.check4);
         check5 = (CheckBox) findViewById(R.id.check5);
         check6 = (CheckBox) findViewById(R.id.check6);
+        close = (ImageView) findViewById(R.id.close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         check1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
