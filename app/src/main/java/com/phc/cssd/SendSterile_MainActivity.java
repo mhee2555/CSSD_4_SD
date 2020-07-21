@@ -1166,8 +1166,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     public void getlistdata(String department_id, String Date, String sreach) {
         class getlistdata extends AsyncTask<String, Void, String> {
 
-            //private ProgressDialog dialog = new ProgressDialog(SendSterile_MainActivity.this);
-            // variable
+
+
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();

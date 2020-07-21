@@ -2785,7 +2785,7 @@ public class CssdSterile extends AppCompatActivity {
 
             AlertDialog.Builder quitDialog = new AlertDialog.Builder(CssdSterile.this);
             quitDialog.setTitle(Cons.TITLE);
-            quitDialog.setMessage(Cons.CONFIRM_DELETE);
+            quitDialog.setMessage(Cons.CONFIRM_REMOVE);
 
             quitDialog.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
 
