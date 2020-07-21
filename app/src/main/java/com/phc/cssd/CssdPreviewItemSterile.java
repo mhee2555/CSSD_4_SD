@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,6 +56,7 @@ import java.util.List;
 public class CssdPreviewItemSterile extends AppCompatActivity {
 
     private ImageView imageBack;
+    private Switch Sw_Scan;
     private Button bt_report_print,bt_clear;
     private ListView list_item_sterile;
     private ListView list_set_item;
@@ -65,6 +73,9 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
     private JSONArray rs = null;
     private int CountScan = 0;
     private Object view;
+    private boolean chk = true;
+    private boolean end = false;
+    final Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +117,21 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
     }
 
     private void byWidget() {
+        Sw_Scan = ( Switch ) findViewById(R.id.Sw_Scan);
+        Sw_Scan.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (Sw_Scan.isChecked()) {
+                    Toast.makeText(getApplicationContext(),
+                            "MkCode", Toast.LENGTH_SHORT).show();
+                    ScanQr();
+                }else {
+                    Toast.makeText(getApplicationContext(),
+                            "QrCode", Toast.LENGTH_SHORT).show();
+                    ScanMK();
+                }
+            }
+        });
+
         bt_clear= ( Button ) findViewById(R.id.bt_clear);
         bt_clear.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -163,8 +189,18 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
                                                 e.printStackTrace();
                                                 img_item_all.setImageResource(R.drawable.ic_preview);
                                             }
-                                            ScanItem();
+                                            chk = true;
                                         }
+                                    }
+                                    if (chk == true){
+                                        Toast.makeText(CssdPreviewItemSterile.this, "นำเข้าสำเร็จ", Toast.LENGTH_SHORT).show();
+                                        chk = false;
+                                        txt_search.setText("");
+                                        txt_search.requestFocus();
+                                    }else {
+                                        Toast.makeText(CssdPreviewItemSterile.this, "นำเข้าไม่สำเร็จ", Toast.LENGTH_SHORT).show();
+                                        txt_search.setText("");
+                                        txt_search.requestFocus();
                                     }
                                     CountScan ++;
                                 }
@@ -255,9 +291,62 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
         imageBack.bringToFront();
     }
 
-    public void ScanItem(){
-        txt_search.setText("");
-        txt_search.requestFocus();
+    private void ScanQr(){
+        txt_search.setEnabled(false);
+    }
+
+    private void ScanMK(){
+        txt_search.setEnabled(true);
+        startServerSocket();
+    }
+
+    private void startServerSocket() {
+        Thread thread = new Thread(new Runnable() {
+            private String stringData = null;
+            @Override
+            public void run() {
+                try {
+                    ServerSocket ss = new ServerSocket(9002);
+                    while (!end) {
+                        //Server is waiting for client here, if needed
+                        Socket s = ss.accept();
+                        BufferedReader input = new BufferedReader(new InputStreamReader(s.getInputStream()));
+                        PrintWriter output = new PrintWriter(s.getOutputStream());
+                        stringData = input.readLine();
+                        output.println("FROM SERVER - " + stringData.toUpperCase());
+                        output.flush();
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        updateUI(stringData);
+                        if (stringData.equalsIgnoreCase("STOP")) {
+                            end = true;
+                            output.close();
+                            s.close();
+                            break;
+                        }
+                        output.close();
+                        s.close();
+                    }
+                    ss.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        });
+        thread.start();
+    }
+
+    private void updateUI(final String stringData) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                txt_search.setText( stringData );
+            }
+        });
     }
 
     public  void clearForm(){
@@ -471,12 +560,7 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
 
                 try {
                     int index = 0;
-
-                    //System.out.println("data.size() = " + data.size());
-                    //System.out.println("size = " + size);
-
                     for(int i=0;i<data.size();i+=size){
-
                         list.add(
                                 getItemSet(
                                         index,

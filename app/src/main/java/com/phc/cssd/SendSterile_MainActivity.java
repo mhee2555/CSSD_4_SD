@@ -1599,7 +1599,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         ru.execute(DocNo, RowID, date, UserCode, dept, QTY);
     }
 
-    public void InsertDetail2(String DocNo, String RowID, final String date, String UserCode, String dept, String QTY) {
+    public void InsertDetail2(String DocNo, final String RowID, final String date, String UserCode, String dept, String QTY) {
         class InsertDetail2 extends AsyncTask<String, Void, String> {
             // variable
             @Override
@@ -1654,7 +1654,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     getlistcreate(txtDocno, "");
                     if (bo.equals("true")) {
                         Toast.makeText(SendSterile_MainActivity.this, "นำเข้าอุปกรณ์สำเร็จ", Toast.LENGTH_SHORT).show();
-                        CheckUsageContScanToInsert(txt_get_ucode.getText().toString().toLowerCase());
+                        CheckUsageContScanToInsert(RowID);
                         txt_get_ucode.setText("");
                         txt_get_ucode.requestFocus();
                     }
