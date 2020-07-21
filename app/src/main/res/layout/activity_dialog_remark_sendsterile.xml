@@ -84,7 +84,6 @@
                         android:textColor="@color/colorBlack"
                         android:layout_toEndOf="@+id/text"
                         android:textSize="20dp"
-                        android:hint=" หมายเหตุ..."
                         android:gravity="left|top"
                         android:paddingLeft="15dp"
                         android:paddingTop="5dp"
