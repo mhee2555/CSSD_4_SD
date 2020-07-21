@@ -94,7 +94,7 @@ public class CssdSterile extends AppCompatActivity {
     private String OccupancyRate_Text_Sterile;
     private boolean IsAdmin = false;
 
-    private List<Model> MODEL;
+    private List<Model> MODEL= new ArrayList<>();
 
     PrintSticker PSK = new PrintSticker();
     String DocNo;
@@ -1559,7 +1559,7 @@ public class CssdSterile extends AppCompatActivity {
 
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-                dialog.setContentView(R.layout.dialog_item_stock_detail_basket);
+                dialog.setContentView(R.layout.dialog_item_stock_detail_basket_sterile);
 
                 dialog.setCancelable(true);
 
@@ -6404,8 +6404,9 @@ public class CssdSterile extends AppCompatActivity {
                                         data.get(i + 9),
                                         data.get(i + 10),
                                         data.get(i + 11),
-                                        data.get(i + 12),
-                                        data.get(i + 13)
+                                        data.get(i + 13),
+                                        data.get(i + 14),
+                                        data.get(i + 15)
                                 )
                         );
 
@@ -7016,27 +7017,11 @@ public class CssdSterile extends AppCompatActivity {
                     for(int i=0;i<rs.length();i++){
                         JSONObject c = rs.getJSONObject(i);
 
-                        if(c.getString("result").equals("A")) {
-
-                            if(MODEL != null) {
-                                Iterator li = MODEL.iterator();
-
-                                while (li.hasNext()) {
-
-                                    Model m = (Model) li.next();
-
-                                    if (c.getString("BasketCode").equals(m.getCode())) {
-                                        Toast.makeText(CssdSterile.this, "มีตะกร้าอยู่แล้ว !!", Toast.LENGTH_SHORT).show();
-                                        return;
-                                    }
-                                }
-                            }else{
-                                MODEL = new ArrayList<>();
-                            }
-
+                        if(c.getString("result").equals("A")&&c.getString("BasketType").equals("1")) {
+                            MODEL.clear();
                             MODEL.add(
                                     new Model(
-                                            0,
+                                                0,
                                             c.getString("ID"),
                                             c.getString("BasketCode"),
                                             c.getString("BasketName")

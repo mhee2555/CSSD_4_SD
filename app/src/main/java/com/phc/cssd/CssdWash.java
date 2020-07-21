@@ -3607,7 +3607,7 @@ public class CssdWash extends AppCompatActivity {
                     for(int i=0;i<rs.length();i++){
                         JSONObject c = rs.getJSONObject(i);
 
-                        if(c.getString("result").equals("A")) {
+                        if(c.getString("result").equals("A")&&c.getString("BasketType").equals("0")) {
 
                             if(MODEL != null) {
                                 Iterator li = MODEL.iterator();

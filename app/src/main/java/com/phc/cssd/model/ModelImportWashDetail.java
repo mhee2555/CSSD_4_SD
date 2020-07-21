@@ -17,7 +17,8 @@ public class ModelImportWashDetail {
             Shelflife,
             PackingMatID,
             BasketName,
-            IsRemarkExpress;
+            IsRemarkExpress,
+            i_UsageCode;
 
     private int index = -1;
 
@@ -40,6 +41,34 @@ public class ModelImportWashDetail {
         IsCheck = isCheck;
         this.BasketName = BasketName;
         this.IsRemarkExpress = IsRemarkExpress;
+    }
+
+    public ModelImportWashDetail(int index, boolean isCheck, String i_id, String i_code, String i_name, String i_alt_name, String i_barcode, String i_qty, String i_program, String i_program2, String i_program_id, String PackingMat, String Shelflife, String PackingMatID, String BasketName, String IsRemarkExpress,String i_UsageCode) {
+        this.i_id = i_id;
+        this.i_code = i_code;
+        this.i_name = i_name;
+        this.i_alt_name = i_alt_name;
+        this.i_barcode = i_barcode;
+        this.i_qty = i_qty;
+        this.i_program = i_program;
+        this.i_program2 = i_program2;
+        this.i_program_id = i_program_id;
+        this.PackingMat = PackingMat;
+        this.Shelflife = Shelflife;
+        this.PackingMatID = PackingMatID;
+        this.index = index;
+        IsCheck = isCheck;
+        this.BasketName = BasketName;
+        this.IsRemarkExpress = IsRemarkExpress;
+        this.i_UsageCode = i_UsageCode;
+    }
+
+    public String getI_UsageCode() {
+        return i_UsageCode;
+    }
+
+    public void setI_UsageCode(String i_UsageCode) {
+        this.i_UsageCode = i_UsageCode;
     }
 
     public String getIsRemarkExpress() { return IsRemarkExpress; }
