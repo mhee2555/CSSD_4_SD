@@ -9,16 +9,17 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.phc.cssd.R;
+import com.phc.cssd.model.ModelLinenDetail;
 import com.phc.cssd.properties.Response_Item_sterileprogram;
 
 import java.util.ArrayList;
 
 public class ListStockLinenDetailAdapter extends ArrayAdapter {
 
-    private ArrayList<Response_Item_sterileprogram> listData ;
+    private ArrayList<ModelLinenDetail> listData ;
     private Context context;
 
-    public ListStockLinenDetailAdapter(AppCompatActivity aActivity, ArrayList<Response_Item_sterileprogram> listData) {
+    public ListStockLinenDetailAdapter(AppCompatActivity aActivity, ArrayList<ModelLinenDetail> listData) {
         super(aActivity, 0, listData);
         this.context = aActivity;
         this.listData = listData;
@@ -42,10 +43,6 @@ public class ListStockLinenDetailAdapter extends ArrayAdapter {
         TextView tFields1 = (TextView) v.findViewById(R.id.tItemCode);
         TextView tFields2 = (TextView) v.findViewById(R.id.tName);
         TextView tFields3 = (TextView) v.findViewById(R.id.tLife);
-
-        tFields1.setText( listData.get(position).gettItemCode() );
-        tFields2.setText( listData.get(position).gettName() );
-        tFields3.setText( listData.get(position).gettLife() );
 
         return v;
     }
