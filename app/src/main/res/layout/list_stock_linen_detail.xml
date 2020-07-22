@@ -11,6 +11,7 @@
             android:id="@+id/chk"
             android:layout_width="30dp"
             android:layout_height="50dp"
+            style="@style/CheckBox"
             android:layout_marginLeft="20dp">
 
         </CheckBox>
@@ -71,7 +72,7 @@
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:text="13 วัน"
-            android:gravity="center|left"
+            android:gravity="center"
             android:textColor="@color/colorBlack"
             android:textSize="16dp"
             android:layout_toEndOf="@+id/exp">

@@ -12,13 +12,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import com.phc.core.connect.HTTPConnect;
 import com.phc.core.string.Cons;
 import com.phc.cssd.R;
+import com.phc.cssd.adapter.CssdPreviewItemSterile_List_ItemSet_Adapter;
 import com.phc.cssd.adapter.ListStockLinenDetailAdapter;
+import com.phc.cssd.model.ModelItemDetail;
 import com.phc.cssd.model.ModelLinenDetail;
 import com.phc.cssd.url.Url;
 
@@ -37,6 +40,8 @@ public class dialog_linen_detail extends Activity {
     CheckBox chk_all;
     ListView item;
 
+    String CheckAll = "0";
+
     private JSONArray rs = null;
     private String TAG_RESULTS="result";
     private HTTPConnect httpConnect = new HTTPConnect();
@@ -49,15 +54,48 @@ public class dialog_linen_detail extends Activity {
 
         initialize();
 
+        getlistdata();
+
     }
 
     private void initialize(){
         back = (Button) findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         save = (Button) findViewById(R.id.save);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         search_name = (EditText) findViewById(R.id.search_name);
         search_scan = (EditText) findViewById(R.id.search_scan);
-        chk_all = (CheckBox) findViewById(R.id.chk_all);
         item = (ListView) findViewById(R.id.item);
+        chk_all = (CheckBox) findViewById(R.id.chk_all);
+        chk_all.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    for (int a = 0 ; a < Model_Linen.size() ; a ++){
+                        Model_Linen.get(a).setChk("1");
+                        ArrayAdapter<ModelLinenDetail> adapter;
+                        adapter = new ListStockLinenDetailAdapter(dialog_linen_detail.this, Model_Linen);
+                        item.setAdapter(adapter);
+                    }
+                }else {
+                    for (int a = 0 ; a < Model_Linen.size() ; a ++){
+                        Model_Linen.get(a).setChk("0");
+                        ArrayAdapter<ModelLinenDetail> adapter;
+                        adapter = new ListStockLinenDetailAdapter(dialog_linen_detail.this, Model_Linen);
+                        item.setAdapter(adapter);
+                    }
+                }
+            }
+        });
     }
 
     public void getlistdata() {
@@ -83,11 +121,12 @@ public class dialog_linen_detail extends Activity {
                         JSONObject c = rs.getJSONObject(i);
                         list.add(
                                 get(
-                                        c.getString("Itemname"),
+                                        c.getString("itemname"),
                                         c.getString("UsageCode"),
                                         c.getString("PackDate"),
                                         c.getString("ExpireDate"),
-                                        c.getString("Date")
+                                        c.getString("date"),
+                                        "0"
                                 )
                         );
                     }
@@ -109,21 +148,21 @@ public class dialog_linen_detail extends Activity {
                 HashMap<String, String> data = new HashMap<String,String>();
                 String result = null;
                 try {
-                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_spore_doc.php", data);
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_linen_detail.php", data);
                     Log.d("BFGDH",result);
-                    Log.d("BFGDH",data+"");
                 }catch(Exception e){
                     e.printStackTrace();
                 }
                 return result;
             }
-            private ModelLinenDetail get(String Itemname, String UsageCode, String PackDate, String ExpireDate, String Date) {
+            private ModelLinenDetail get(String Itemname, String UsageCode, String PackDate, String ExpireDate, String Date, String Chk) {
                 return new ModelLinenDetail(
                         Itemname,
                         UsageCode,
                         PackDate,
                         ExpireDate,
-                        Date);
+                        Date,
+                        Chk);
             }
             // =========================================================================================
         }

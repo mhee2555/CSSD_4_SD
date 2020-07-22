@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.phc.cssd.R;
@@ -39,9 +40,24 @@ public class ListStockLinenDetailAdapter extends ArrayAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View v = inflater.inflate(R.layout.list_stock_linen_detail, parent, false);
 
-        TextView tFields1 = (TextView) v.findViewById(R.id.tItemCode);
-        TextView tFields2 = (TextView) v.findViewById(R.id.tName);
-        TextView tFields3 = (TextView) v.findViewById(R.id.tLife);
+        TextView itemname = (TextView) v.findViewById(R.id.itemname);
+        TextView usage = (TextView) v.findViewById(R.id.usage);
+        TextView pack = (TextView) v.findViewById(R.id.pack);
+        TextView exp = (TextView) v.findViewById(R.id.exp);
+        TextView day_exp = (TextView) v.findViewById(R.id.day_exp);
+        CheckBox chk = (CheckBox) v.findViewById(R.id.chk);
+
+        itemname.setText(listData.get(position).getItemname());
+        usage.setText(listData.get(position).getUsageCode());
+        pack.setText(listData.get(position).getPackDate());
+        exp.setText(listData.get(position).getExpireDate());
+        day_exp.setText(listData.get(position).getDate()+" วัน");
+
+        if (listData.get(position).getChk().equals("0")){
+            chk.setChecked(false);
+        }else {
+            chk.setChecked(true);
+        }
 
         return v;
     }
