@@ -73,7 +73,7 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
     private JSONArray rs = null;
     private int CountScan = 0;
     private Object view;
-    private boolean chk = true;
+    private String chk = "0";
     private boolean end = false;
     final Handler handler = new Handler();
 
@@ -178,27 +178,35 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
                                         String Itemcode;
                                         Itemcode = txt_search.getText().toString().toUpperCase().substring(0,5);
                                         if (Itemcode.equals(ItemDetail.get(i).getItemcode())){
-                                            ItemDetail.get(i).setIsChk(2);
-                                            ArrayAdapter<ModelItemDetail> adapter = new CssdPreviewItemSterile_List_ItemSet_Adapter(CssdPreviewItemSterile.this, ItemDetail);
-                                            list_set_item.setAdapter(adapter);
-                                            try {
-                                                URL url = new URL(Url.getImageURL() + Itemcode+"_pic1.PNG");
-                                                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                                                img_item_all.setImageBitmap(bmp);
-                                            }catch(Exception e){
-                                                e.printStackTrace();
-                                                img_item_all.setImageResource(R.drawable.ic_preview);
+                                            if (ItemDetail.get(i).getIsChk() == 2){
+                                                chk = "2";
+                                            }else {
+                                                ItemDetail.get(i).setIsChk(2);
+                                                ArrayAdapter<ModelItemDetail> adapter = new CssdPreviewItemSterile_List_ItemSet_Adapter(CssdPreviewItemSterile.this, ItemDetail);
+                                                list_set_item.setAdapter(adapter);
+                                                try {
+                                                    URL url = new URL(Url.getImageURL() + Itemcode+"_pic1.PNG");
+                                                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                                                    img_item_all.setImageBitmap(bmp);
+                                                }catch(Exception e){
+                                                    e.printStackTrace();
+                                                    img_item_all.setImageResource(R.drawable.ic_preview);
+                                                }
+                                                chk = "1";
                                             }
-                                            chk = true;
                                         }
                                     }
-                                    if (chk == true){
+                                    if (chk.equals("1")){
                                         Toast.makeText(CssdPreviewItemSterile.this, "นำเข้าสำเร็จ", Toast.LENGTH_SHORT).show();
-                                        chk = false;
+                                        chk.equals("0");
                                         txt_search.setText("");
                                         txt_search.requestFocus();
-                                    }else {
+                                    }else if (chk.equals("0")){
                                         Toast.makeText(CssdPreviewItemSterile.this, "นำเข้าไม่สำเร็จ", Toast.LENGTH_SHORT).show();
+                                        txt_search.setText("");
+                                        txt_search.requestFocus();
+                                    }else if (chk.equals("2")){
+                                        Toast.makeText(CssdPreviewItemSterile.this, "รายการซ้ำ", Toast.LENGTH_SHORT).show();
                                         txt_search.setText("");
                                         txt_search.requestFocus();
                                     }
