@@ -26,6 +26,18 @@
             android:textStyle="bold" />
 
         <Button
+            android:id="@+id/bt_linen"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="106dp"
+            android:layout_marginTop="75dp"
+            android:background="@drawable/bt_print_linen"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <Button
             android:id="@+id/button_search"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -293,11 +305,14 @@
 
                 <ListView
                     android:id="@+id/list_search"
+                    tools:listitem="@layout/list_data_search_only"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
             </LinearLayout>
+
         </LinearLayout>
+
     </RelativeLayout>
 
 </LinearLayout>

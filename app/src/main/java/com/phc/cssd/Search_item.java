@@ -41,6 +41,7 @@ public class Search_item extends AppCompatActivity {
     ListView list_search;
     Button button_search;
     Button button_import;
+    Button bt_linen;
     Button button_edit;
     EditText txtsearch;
     EditText txtcode;
@@ -72,6 +73,7 @@ public class Search_item extends AppCompatActivity {
         initialize();
 
         DeptID = "21";
+
         ListData("","1","","");
     }
 
@@ -81,6 +83,13 @@ public class Search_item extends AppCompatActivity {
     }
 
     private void initialize(){
+        bt_linen = (Button) findViewById(R.id.bt_linen);
+        bt_linen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         getBundleuser();
         allbox = (CheckBox) findViewById(R.id.allchkbox);
         allbox.setChecked(true);
