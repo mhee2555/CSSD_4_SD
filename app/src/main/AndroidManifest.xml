@@ -17,6 +17,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".dialog_linen_detail"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/myDialog"
+            tools:ignore="LockedOrientationActivity" />
         <activity android:name=".PairItemToSterileBasket"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar" />
         <activity
