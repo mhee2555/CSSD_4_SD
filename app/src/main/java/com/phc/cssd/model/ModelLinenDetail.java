@@ -7,6 +7,14 @@ public class ModelLinenDetail {
     private String ExpireDate;
     private String Date;
 
+    public ModelLinenDetail(String Itemname, String UsageCode, String PackDate, String ExpireDate, String Date) {
+        this.Itemname = Itemname;
+        this.UsageCode = UsageCode;
+        this.PackDate = PackDate;
+        this.ExpireDate = ExpireDate;
+        this.Date = Date;
+    }
+
     public String getItemname() {
         return Itemname;
     }

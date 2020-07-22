@@ -1,83 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/tItemCode"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="15dp"
+        android:text="TextView" />
 
-        <CheckBox
-            android:id="@+id/chk"
-            android:layout_width="30dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="20dp">
+    <TextView
+        android:id="@+id/tName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="15dp"
+        android:text="TextView" />
 
-        </CheckBox>
-
-        <TextView
-            android:id="@+id/itemname"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:text="ผ้าช่องตาใหญ่"
-            android:paddingStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:gravity="center|left"
-            android:textSize="18dp"
-            android:textColor="@color/colorBlack"
-            android:layout_toEndOf="@+id/chk">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/usage"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:text="I00592060001"
-            android:gravity="center|left"
-            android:textColor="@color/colorBlack"
-            android:textSize="16dp"
-            android:layout_toEndOf="@+id/itemname">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/pack"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:text="2020-06-24"
-            android:gravity="center|left"
-            android:textColor="@color/colorBlack"
-            android:textSize="16dp"
-            android:layout_toEndOf="@+id/usage">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/exp"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:text="2020-06-24"
-            android:gravity="center|left"
-            android:textColor="@color/colorBlack"
-            android:textSize="16dp"
-            android:layout_toEndOf="@+id/pack">
-
-        </TextView>
-
-        <TextView
-            android:id="@+id/day_exp"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:text="13 วัน"
-            android:gravity="center|left"
-            android:textColor="@color/colorBlack"
-            android:textSize="16dp"
-            android:layout_toEndOf="@+id/exp">
-
-        </TextView>
-
-    </RelativeLayout>
-
+    <TextView
+        android:id="@+id/tLife"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="15dp"
+        android:text="TextView" />
 </LinearLayout>
