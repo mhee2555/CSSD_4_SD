@@ -6,7 +6,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.phc.core.connect.HTTPConnect;
 import com.phc.core.string.Cons;
@@ -54,7 +58,7 @@ public class dialog_linen_detail extends Activity {
 
         initialize();
 
-        getlistdata();
+        getlistdata("","0");
 
     }
 
@@ -74,7 +78,32 @@ public class dialog_linen_detail extends Activity {
             }
         });
         search_name = (EditText) findViewById(R.id.search_name);
+        search_name.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) { }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                getlistdata(search_name.getText().toString(),"0");
+            }
+        });
         search_scan = (EditText) findViewById(R.id.search_scan);
+        search_scan.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode) {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+                            getlistdata(search_scan.getText().toString(),"1");
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
         item = (ListView) findViewById(R.id.item);
         chk_all = (CheckBox) findViewById(R.id.chk_all);
         chk_all.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -98,7 +127,7 @@ public class dialog_linen_detail extends Activity {
         });
     }
 
-    public void getlistdata() {
+    public void getlistdata(final String key,final String type) {
         class getlistdata extends AsyncTask<String, Void, String> {
             private ProgressDialog dialog = new ProgressDialog(dialog_linen_detail.this);
             // variable
@@ -119,16 +148,36 @@ public class dialog_linen_detail extends Activity {
                     List<ModelLinenDetail> list = new ArrayList<>();
                     for(int i=0;i<rs.length();i++){
                         JSONObject c = rs.getJSONObject(i);
-                        list.add(
-                                get(
-                                        c.getString("itemname"),
-                                        c.getString("UsageCode"),
-                                        c.getString("PackDate"),
-                                        c.getString("ExpireDate"),
-                                        c.getString("date"),
-                                        "0"
-                                )
-                        );
+                        if (!c.getString("itemname").equals("")){
+                            if (type.equals("0")){
+                                list.add(
+                                        get(
+                                                c.getString("itemname"),
+                                                c.getString("UsageCode"),
+                                                c.getString("PackDate"),
+                                                c.getString("ExpireDate"),
+                                                c.getString("date"),
+                                                "0"
+                                        )
+                                );
+                            }else {
+                                list.add(
+                                        get(
+                                                c.getString("itemname"),
+                                                c.getString("UsageCode"),
+                                                c.getString("PackDate"),
+                                                c.getString("ExpireDate"),
+                                                c.getString("date"),
+                                                "1"
+                                        )
+                                );
+                            }
+                        }else {
+                            search_name.requestFocus();
+                            search_scan.setText("");
+                            search_scan.setHint("สแกนเช็ครายการ");
+                            Toast.makeText(dialog_linen_detail.this, "ไม่พบข้อมูล !!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                     Model_Linen = list;
                     ArrayAdapter<ModelLinenDetail> adapter;
@@ -146,6 +195,7 @@ public class dialog_linen_detail extends Activity {
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
+                data.put("key", key);
                 String result = null;
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_display_linen_detail.php", data);

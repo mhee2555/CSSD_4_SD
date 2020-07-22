@@ -18,7 +18,7 @@
 
         <TextView
             android:id="@+id/itemname"
-            android:layout_width="150dp"
+            android:layout_width="200dp"
             android:layout_height="50dp"
             android:text="ผ้าช่องตาใหญ่"
             android:paddingStart="10dp"
@@ -32,11 +32,10 @@
 
         <TextView
             android:id="@+id/usage"
-            android:layout_width="150dp"
+            android:layout_width="190dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
             android:text="I00592060001"
-            android:gravity="center|left"
+            android:gravity="center"
             android:textColor="@color/colorBlack"
             android:textSize="16dp"
             android:layout_toEndOf="@+id/itemname">
@@ -48,7 +47,7 @@
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:text="2020-06-24"
-            android:gravity="center|left"
+            android:gravity="center"
             android:textColor="@color/colorBlack"
             android:textSize="16dp"
             android:layout_toEndOf="@+id/usage">
@@ -60,7 +59,7 @@
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:text="2020-06-24"
-            android:gravity="center|left"
+            android:gravity="center"
             android:textColor="@color/colorBlack"
             android:textSize="16dp"
             android:layout_toEndOf="@+id/pack">
