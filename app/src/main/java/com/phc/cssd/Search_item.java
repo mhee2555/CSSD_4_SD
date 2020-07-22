@@ -87,7 +87,8 @@ public class Search_item extends AppCompatActivity {
         bt_linen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(Search_item.this,dialog_linen_detail.class);
+                startActivity(intent);
             }
         });
         getBundleuser();
