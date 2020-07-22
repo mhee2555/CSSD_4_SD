@@ -53,6 +53,7 @@ public class Search_item extends AppCompatActivity {
     String DeptID;
     String UserID;
     String B_ID = null;
+    String EmpCode = "";
     TextView labeldept;
     ImageView backbtn;
 
@@ -80,6 +81,7 @@ public class Search_item extends AppCompatActivity {
     private void byIntent(){
         Intent intent = getIntent();
         B_ID = intent.getStringExtra("B_ID");
+        EmpCode = intent.getStringExtra("EmpCode");
     }
 
     private void initialize(){
@@ -88,6 +90,7 @@ public class Search_item extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Search_item.this,dialog_linen_detail.class);
+                intent.putExtra("EmpCode",EmpCode);
                 startActivity(intent);
             }
         });

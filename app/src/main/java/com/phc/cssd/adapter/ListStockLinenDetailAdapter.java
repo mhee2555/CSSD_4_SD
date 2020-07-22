@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.phc.cssd.R;
+import com.phc.cssd.SendSterile_MainActivity;
 import com.phc.cssd.dialog_linen_detail;
 import com.phc.cssd.model.ModelLinenDetail;
 
@@ -36,7 +37,7 @@ public class ListStockLinenDetailAdapter extends ArrayAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View v = inflater.inflate(R.layout.list_stock_linen_detail, parent, false);
 
@@ -55,9 +56,18 @@ public class ListStockLinenDetailAdapter extends ArrayAdapter {
 
         if (listData.get(position).getChk().equals("0")){
             chk.setChecked(false);
+            ((dialog_linen_detail)context).DelAll(listData.get(position).getUsageCode(),listData.get(position).getUsageCode(),"1");
         }else {
             chk.setChecked(true);
+            ((dialog_linen_detail)context).DelAll(listData.get(position).getUsageCode(),listData.get(position).getUsageCode(),"0");
         }
+
+        chk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                (( dialog_linen_detail ) context).DelAll(listData.get(position).getUsageCode(), listData.get(position).getUsageCode(),"0");
+            }
+        });
 
         return v;
     }
