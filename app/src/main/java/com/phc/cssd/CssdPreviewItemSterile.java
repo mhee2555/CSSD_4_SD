@@ -299,6 +299,10 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
         imageBack.bringToFront();
     }
 
+    private void ScanUsageCode(final String Usagecode){
+
+    }
+
     private void ScanQr(){
         txt_search.setEnabled(false);
     }
@@ -500,22 +504,18 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
     // =============================================================================================
 
     public void displayItemSet(final String p_itemcode) {
-
         class DisplayItemSet extends AsyncTask<String, Void, String> {
-
             //------------------------------------------------
             // Background Worker Process Variable
             private boolean Success = false;
             private ArrayList<String> data = null;
             private int size = 0;
             //------------------------------------------------
-
             // variable
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
             }
-
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
@@ -697,5 +697,86 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
         CheckItemIsSet obj = new CheckItemIsSet();
         obj.execute();
     }
-    
+
+//    public void ScanUsagecode(final String usagecode) {
+//        class ScanUsagecode extends AsyncTask<String, Void, String> {
+//            @Override
+//            protected void onPreExecute() {
+//                super.onPreExecute();
+//            }
+//
+//            @Override
+//            protected void onPostExecute(String result) {
+//                super.onPostExecute(result);
+//
+//                try {
+//                    JSONObject jsonObj = new JSONObject(result);
+//                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+//                    String Itemcode = "";
+//                    for(int i=0;i<rs.length();i++) {
+//                        JSONObject c = rs.getJSONObject(i);
+//                        Itemcode = c.getString("ItemCode");
+//                    }
+//                    for (int i = 0 ; i < ItemDetail.size() ; i ++){
+//                        ItemDetail.get(i).getItemcode();
+//                        if (Itemcode.equals(ItemDetail.get(i).getItemcode())){
+//                            if (ItemDetail.get(i).getIsChk() == 2){
+//                                chk = "2";
+//                            }else {
+//                                ItemDetail.get(i).setIsChk(2);
+//                                ArrayAdapter<ModelItemDetail> adapter = new CssdPreviewItemSterile_List_ItemSet_Adapter(CssdPreviewItemSterile.this, ItemDetail);
+//                                list_set_item.setAdapter(adapter);
+//                                try {
+//                                    URL url = new URL(Url.getImageURL() + Itemcode+"_pic1.PNG");
+//                                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+//                                    img_item_all.setImageBitmap(bmp);
+//                                }catch(Exception e){
+//                                    e.printStackTrace();
+//                                    img_item_all.setImageResource(R.drawable.ic_preview);
+//                                }
+//                                chk = "1";
+//                            }
+//                        }
+//                    }
+//                    if (chk.equals("1")){
+//                        Toast.makeText(CssdPreviewItemSterile.this, "นำเข้าสำเร็จ", Toast.LENGTH_SHORT).show();
+//                        chk.equals("0");
+//                        txt_search.setText("");
+//                        txt_search.requestFocus();
+//                    }else if (chk.equals("0")){
+//                        Toast.makeText(CssdPreviewItemSterile.this, "นำเข้าไม่สำเร็จ", Toast.LENGTH_SHORT).show();
+//                        txt_search.setText("");
+//                        txt_search.requestFocus();
+//                    }else if (chk.equals("2")){
+//                        Toast.makeText(CssdPreviewItemSterile.this, "รายการซ้ำ", Toast.LENGTH_SHORT).show();
+//                        txt_search.setText("");
+//                        txt_search.requestFocus();
+//                    }
+//                    CountScan ++;
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @SuppressLint("WrongThread")
+//            @Override
+//            protected String doInBackground(String... params) {
+//                HashMap<String, String> data = new HashMap<String,String>();
+//                data.put("usagecode",usagecode);
+//                String result = null;
+//                try {
+//                    result = httpConnect.sendPostRequest(Url.URL + "cssd_scan_usagecode_checklist.php", data);
+//                    Log.d("FKJDHJKDH",data+"");
+//                    Log.d("FKJDHJKDH",result+"");
+//                }catch(Exception e){
+//                    e.printStackTrace();
+//                }
+//                return result;
+//            }
+//            // =========================================================================================
+//        }
+//        ScanUsagecode obj = new ScanUsagecode();
+//        obj.execute();
+//    }
+
 }

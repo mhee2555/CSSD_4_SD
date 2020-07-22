@@ -595,8 +595,13 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
                             IsImport++;
                         }
                     }
-                    tImport.setText( IsImport+" รายการ" );
-                    tOcc.setText( IsOcc+" รายการ" );
+                    if (resultssteriledetail.get(0).getFields1().equals("")){
+                        tImport.setText(" 0 รายการ" );
+                        tOcc.setText(" 0 รายการ" );
+                    }else {
+                        tImport.setText( IsImport+" รายการ" );
+                        tOcc.setText( IsOcc+" รายการ" );
+                    }
                     Log.d("ttest","in ListSterileDocDetail : "+xDocNo+"-"+resultssteriledetail.size());
 
                 } catch (JSONException e) {
