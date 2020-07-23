@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,6 +56,7 @@ import java.util.List;
 public class CssdPreviewItemSterile extends AppCompatActivity {
 
     private ImageView imageBack;
+    private Switch Sw_Scan;
     private Button bt_report_print,bt_clear;
     private ListView list_item_sterile;
     private ListView list_set_item;
@@ -65,6 +73,9 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
     private JSONArray rs = null;
     private int CountScan = 0;
     private Object view;
+    private String chk = "0";
+    private boolean end = false;
+    final Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +117,21 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
     }
 
     private void byWidget() {
+        Sw_Scan = ( Switch ) findViewById(R.id.Sw_Scan);
+        Sw_Scan.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (Sw_Scan.isChecked()) {
+                    Toast.makeText(getApplicationContext(),
+                            "MkCode", Toast.LENGTH_SHORT).show();
+                    ScanQr();
+                }else {
+                    Toast.makeText(getApplicationContext(),
+                            "QrCode", Toast.LENGTH_SHORT).show();
+                    ScanMK();
+                }
+            }
+        });
+
         bt_clear= ( Button ) findViewById(R.id.bt_clear);
         bt_clear.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -152,19 +178,37 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
                                         String Itemcode;
                                         Itemcode = txt_search.getText().toString().toUpperCase().substring(0,5);
                                         if (Itemcode.equals(ItemDetail.get(i).getItemcode())){
-                                            ItemDetail.get(i).setIsChk(2);
-                                            ArrayAdapter<ModelItemDetail> adapter = new CssdPreviewItemSterile_List_ItemSet_Adapter(CssdPreviewItemSterile.this, ItemDetail);
-                                            list_set_item.setAdapter(adapter);
-                                            try {
-                                                URL url = new URL(Url.getImageURL() + Itemcode+"_pic1.PNG");
-                                                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                                                img_item_all.setImageBitmap(bmp);
-                                            }catch(Exception e){
-                                                e.printStackTrace();
-                                                img_item_all.setImageResource(R.drawable.ic_preview);
+                                            if (ItemDetail.get(i).getIsChk() == 2){
+                                                chk = "2";
+                                            }else {
+                                                ItemDetail.get(i).setIsChk(2);
+                                                ArrayAdapter<ModelItemDetail> adapter = new CssdPreviewItemSterile_List_ItemSet_Adapter(CssdPreviewItemSterile.this, ItemDetail);
+                                                list_set_item.setAdapter(adapter);
+                                                try {
+                                                    URL url = new URL(Url.getImageURL() + Itemcode+"_pic1.PNG");
+                                                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                                                    img_item_all.setImageBitmap(bmp);
+                                                }catch(Exception e){
+                                                    e.printStackTrace();
+                                                    img_item_all.setImageResource(R.drawable.ic_preview);
+                                                }
+                                                chk = "1";
                                             }
-                                            ScanItem();
                                         }
+                                    }
+                                    if (chk.equals("1")){
+                                        Toast.makeText(CssdPreviewItemSterile.this, "นำเข้าสำเร็จ", Toast.LENGTH_SHORT).show();
+                                        chk.equals("0");
+                                        txt_search.setText("");
+                                        txt_search.requestFocus();
+                                    }else if (chk.equals("0")){
+                                        Toast.makeText(CssdPreviewItemSterile.this, "นำเข้าไม่สำเร็จ", Toast.LENGTH_SHORT).show();
+                                        txt_search.setText("");
+                                        txt_search.requestFocus();
+                                    }else if (chk.equals("2")){
+                                        Toast.makeText(CssdPreviewItemSterile.this, "รายการซ้ำ", Toast.LENGTH_SHORT).show();
+                                        txt_search.setText("");
+                                        txt_search.requestFocus();
                                     }
                                     CountScan ++;
                                 }
@@ -255,9 +299,66 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
         imageBack.bringToFront();
     }
 
-    public void ScanItem(){
-        txt_search.setText("");
-        txt_search.requestFocus();
+    private void ScanUsageCode(final String Usagecode){
+
+    }
+
+    private void ScanQr(){
+        txt_search.setEnabled(false);
+    }
+
+    private void ScanMK(){
+        txt_search.setEnabled(true);
+        startServerSocket();
+    }
+
+    private void startServerSocket() {
+        Thread thread = new Thread(new Runnable() {
+            private String stringData = null;
+            @Override
+            public void run() {
+                try {
+                    ServerSocket ss = new ServerSocket(9002);
+                    while (!end) {
+                        //Server is waiting for client here, if needed
+                        Socket s = ss.accept();
+                        BufferedReader input = new BufferedReader(new InputStreamReader(s.getInputStream()));
+                        PrintWriter output = new PrintWriter(s.getOutputStream());
+                        stringData = input.readLine();
+                        output.println("FROM SERVER - " + stringData.toUpperCase());
+                        output.flush();
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        updateUI(stringData);
+                        if (stringData.equalsIgnoreCase("STOP")) {
+                            end = true;
+                            output.close();
+                            s.close();
+                            break;
+                        }
+                        output.close();
+                        s.close();
+                    }
+                    ss.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        });
+        thread.start();
+    }
+
+    private void updateUI(final String stringData) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                txt_search.setText( stringData );
+            }
+        });
     }
 
     public  void clearForm(){
@@ -403,22 +504,18 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
     // =============================================================================================
 
     public void displayItemSet(final String p_itemcode) {
-
         class DisplayItemSet extends AsyncTask<String, Void, String> {
-
             //------------------------------------------------
             // Background Worker Process Variable
             private boolean Success = false;
             private ArrayList<String> data = null;
             private int size = 0;
             //------------------------------------------------
-
             // variable
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
             }
-
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
@@ -471,12 +568,7 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
 
                 try {
                     int index = 0;
-
-                    //System.out.println("data.size() = " + data.size());
-                    //System.out.println("size = " + size);
-
                     for(int i=0;i<data.size();i+=size){
-
                         list.add(
                                 getItemSet(
                                         index,
@@ -605,5 +697,86 @@ public class CssdPreviewItemSterile extends AppCompatActivity {
         CheckItemIsSet obj = new CheckItemIsSet();
         obj.execute();
     }
-    
+
+//    public void ScanUsagecode(final String usagecode) {
+//        class ScanUsagecode extends AsyncTask<String, Void, String> {
+//            @Override
+//            protected void onPreExecute() {
+//                super.onPreExecute();
+//            }
+//
+//            @Override
+//            protected void onPostExecute(String result) {
+//                super.onPostExecute(result);
+//
+//                try {
+//                    JSONObject jsonObj = new JSONObject(result);
+//                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+//                    String Itemcode = "";
+//                    for(int i=0;i<rs.length();i++) {
+//                        JSONObject c = rs.getJSONObject(i);
+//                        Itemcode = c.getString("ItemCode");
+//                    }
+//                    for (int i = 0 ; i < ItemDetail.size() ; i ++){
+//                        ItemDetail.get(i).getItemcode();
+//                        if (Itemcode.equals(ItemDetail.get(i).getItemcode())){
+//                            if (ItemDetail.get(i).getIsChk() == 2){
+//                                chk = "2";
+//                            }else {
+//                                ItemDetail.get(i).setIsChk(2);
+//                                ArrayAdapter<ModelItemDetail> adapter = new CssdPreviewItemSterile_List_ItemSet_Adapter(CssdPreviewItemSterile.this, ItemDetail);
+//                                list_set_item.setAdapter(adapter);
+//                                try {
+//                                    URL url = new URL(Url.getImageURL() + Itemcode+"_pic1.PNG");
+//                                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+//                                    img_item_all.setImageBitmap(bmp);
+//                                }catch(Exception e){
+//                                    e.printStackTrace();
+//                                    img_item_all.setImageResource(R.drawable.ic_preview);
+//                                }
+//                                chk = "1";
+//                            }
+//                        }
+//                    }
+//                    if (chk.equals("1")){
+//                        Toast.makeText(CssdPreviewItemSterile.this, "นำเข้าสำเร็จ", Toast.LENGTH_SHORT).show();
+//                        chk.equals("0");
+//                        txt_search.setText("");
+//                        txt_search.requestFocus();
+//                    }else if (chk.equals("0")){
+//                        Toast.makeText(CssdPreviewItemSterile.this, "นำเข้าไม่สำเร็จ", Toast.LENGTH_SHORT).show();
+//                        txt_search.setText("");
+//                        txt_search.requestFocus();
+//                    }else if (chk.equals("2")){
+//                        Toast.makeText(CssdPreviewItemSterile.this, "รายการซ้ำ", Toast.LENGTH_SHORT).show();
+//                        txt_search.setText("");
+//                        txt_search.requestFocus();
+//                    }
+//                    CountScan ++;
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @SuppressLint("WrongThread")
+//            @Override
+//            protected String doInBackground(String... params) {
+//                HashMap<String, String> data = new HashMap<String,String>();
+//                data.put("usagecode",usagecode);
+//                String result = null;
+//                try {
+//                    result = httpConnect.sendPostRequest(Url.URL + "cssd_scan_usagecode_checklist.php", data);
+//                    Log.d("FKJDHJKDH",data+"");
+//                    Log.d("FKJDHJKDH",result+"");
+//                }catch(Exception e){
+//                    e.printStackTrace();
+//                }
+//                return result;
+//            }
+//            // =========================================================================================
+//        }
+//        ScanUsagecode obj = new ScanUsagecode();
+//        obj.execute();
+//    }
+
 }

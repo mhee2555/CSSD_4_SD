@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
@@ -26,6 +27,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.phc.core.string.Cons;
 import com.phc.cssd.adapter.ListApproveAdapter;
 import com.phc.cssd.adapter.SpinnerListAdapter;
 import com.phc.core.connect.HTTPConnect;
@@ -187,13 +189,7 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
 
         b_Refresh.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ListMachineCount( gDate );
-                lv1 = (GridView) findViewById(R.id.ListView02);
-                lv1.setAdapter(null);
-                textViewProgram.setText("");
-                textViewTime.setText("");
-                textViewDocNo.setText("");
-                textViewRoundNumber.setText("");
+                ListSterileDocDetail(textViewDocNo.getText().toString());
             }
         });
 
@@ -558,11 +554,13 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
 
     public void ListSterileDocDetail(final String xDocNo) {
         class ListSterileDocDetail extends AsyncTask<String, Void, String> {
-            // ProgressDialog loading;
+            private ProgressDialog dialog = new ProgressDialog(SterileSeachActivity.this);
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-//                loadingDialog = ProgressDialog.show(SterileSeachActivity.this, "", "Loading...", true, false);
+                this.dialog.setMessage(Cons.WAIT_FOR_PROCESS);
+                this.dialog.setCancelable(false);
+                this.dialog.show();
             }
             @Override
             protected void onPostExecute(String s) {
@@ -586,18 +584,8 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
                         newsData.setFields15(c.getString("IsRemarkExpress"));
                         resultssteriledetail.add( newsData );
                     }
-
                     lv1 = (GridView) findViewById(R.id.ListView02);
                     lv1.setAdapter(new SterileDetailForSearchAdapter( SterileSeachActivity.this, resultssteriledetail,xIsStatus,userid,DocNo,xQty));
-//                    lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                        @Override
-//                        public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-//                            Object o = lv1.getItemAtPosition(position);
-//                            Response_Aux newsData = (Response_Aux) o;
-//                            //Log.d("OOOO","Status : " + xIsStatus);
-//                            //eSearch.setText( newsData.getFields1() );
-//                        }
-//                    });
                     int IsOcc = 0;
                     int IsImport = 0;
                     for(int n=0;n<resultssteriledetail.size();n++){
@@ -607,23 +595,36 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
                             IsImport++;
                         }
                     }
-
-                    tImport.setText( IsImport+" รายการ" );
-                    tOcc.setText( IsOcc+" รายการ" );
+                    if (resultssteriledetail.get(0).getFields1().equals("")){
+                        tImport.setText(" 0 รายการ");
+                        tOcc.setText(" 0 รายการ");
+                    }else {
+                        tImport.setText(IsImport+" รายการ");
+                        tOcc.setText(IsOcc+" รายการ");
+                    }
                     Log.d("ttest","in ListSterileDocDetail : "+xDocNo+"-"+resultssteriledetail.size());
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }
+                }finally {
+                    if (dialog.isShowing()){
+                        Handler handler = new Handler();
+                        Runnable runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                            }
+                        };
+                        handler.postDelayed(runnable, 500);
 
-//                loadingDialog.dismiss();
+                    }
+                }
             }
 
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
                 data.put("xDocNo",params[0]);
-//                if(B_ID!=null){data.put("B_ID",B_ID);}
                 String result = ruc.sendPostRequest(iFt.getsteriledocdetail(),data);
                 Log.d("DJKHDK",data+"");
                 Log.d("DJKHDK",result+"");

@@ -41,6 +41,7 @@ public class Search_item extends AppCompatActivity {
     ListView list_search;
     Button button_search;
     Button button_import;
+    Button bt_linen;
     Button button_edit;
     EditText txtsearch;
     EditText txtcode;
@@ -52,6 +53,7 @@ public class Search_item extends AppCompatActivity {
     String DeptID;
     String UserID;
     String B_ID = null;
+    String EmpCode = "";
     TextView labeldept;
     ImageView backbtn;
 
@@ -72,15 +74,26 @@ public class Search_item extends AppCompatActivity {
         initialize();
 
         DeptID = "21";
+
         ListData("","1","","");
     }
 
     private void byIntent(){
         Intent intent = getIntent();
         B_ID = intent.getStringExtra("B_ID");
+        EmpCode = intent.getStringExtra("EmpCode");
     }
 
     private void initialize(){
+        bt_linen = (Button) findViewById(R.id.bt_linen);
+        bt_linen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Search_item.this,dialog_linen_detail.class);
+                intent.putExtra("EmpCode",EmpCode);
+                startActivity(intent);
+            }
+        });
         getBundleuser();
         allbox = (CheckBox) findViewById(R.id.allchkbox);
         allbox.setChecked(true);

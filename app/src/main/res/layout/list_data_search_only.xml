@@ -2,9 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="30dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:descendantFocusability="blocksDescendants">
-
-
 
     <TextView
         android:id="@+id/tFields3"
@@ -13,7 +12,7 @@
         android:layout_weight="1"
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
-        android:text="TextView"
+        tools:text="@tools:sample/full_names"
         android:textAlignment="textStart"
         android:textColor="@android:color/black"
         android:textSize="14dp" />
@@ -25,7 +24,7 @@
         android:layout_weight="1"
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
-        android:text="TextView"
+        tools:text="@tools:sample/full_names"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="14dp" />
@@ -37,7 +36,7 @@
         android:layout_weight="1"
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
-        android:text="TextView"
+        tools:text="@tools:sample/full_names"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="14dp" />
@@ -49,7 +48,7 @@
         android:layout_weight="1"
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
-        android:text="TextView"
+        tools:text="@tools:sample/full_names"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="14dp" />
@@ -61,7 +60,7 @@
         android:layout_weight="1"
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
-        android:text="TextView"
+        tools:text="@tools:sample/full_names"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="14dp" />
@@ -73,7 +72,7 @@
         android:layout_weight="0.9"
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
-        android:text="TextView"
+        tools:text="@tools:sample/full_names"
         android:gravity="center"
         android:textColor="@android:color/black"
         android:textSize="14dp" />

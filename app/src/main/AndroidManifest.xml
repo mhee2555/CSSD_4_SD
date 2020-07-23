@@ -11,6 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".dialog_linen_detail"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/myDialog1"
+            tools:ignore="LockedOrientationActivity" />
         <activity android:name=".PairItemToSterileBasket"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar" />
         <activity
@@ -41,7 +52,8 @@
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog1"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".adapter.ListUsageEms" />
+        <activity android:name=".adapter.ListUsageEms"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".dialog_usagecode_ems"
             android:screenOrientation="sensorLandscape"
@@ -52,13 +64,15 @@
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".adapter.ListApproveSterileAdapter" />
+        <activity android:name=".adapter.ListApproveSterileAdapter"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".dialog_approve_sterile"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".adapter.ListUsageCount" />
+        <activity android:name=".adapter.ListUsageCount"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".dialog_itemstock"
             android:screenOrientation="sensorLandscape"
@@ -72,8 +86,10 @@
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog1"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".adapter.BasketAdapter" />
-        <activity android:name=".adapter.WashDetailBasketAdapter" />
+        <activity android:name=".adapter.BasketAdapter"
+            tools:ignore="Instantiatable" />
+        <activity android:name=".adapter.WashDetailBasketAdapter"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".SearchItem_SendSterile_New"
             android:colorBackgroundCacheHint="@null"
@@ -83,11 +99,13 @@
             android:name=".CheckNoWashType"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity android:name=".adapter.AdapterItemdetaill" />
+        <activity android:name=".adapter.AdapterItemdetaill"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".Itemdetail_Recall_Activity"
             android:theme="@style/myDialog" />
-        <activity android:name=".adapter.AdapterRecallNew" />
+        <activity android:name=".adapter.AdapterRecallNew"
+            tools:ignore="Instantiatable" />
         <activity android:name=".Export_database" />
         <activity
             android:name=".CssdEditSterile"
@@ -107,14 +125,8 @@
             android:name=".SettingExprieActivity"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity android:name=".adapter.sendsterile_washdocdetail_adapte_2" />
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".adapter.sendsterile_washdocdetail_adapte_2"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".MasterData_2Field"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
@@ -406,7 +418,6 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
     <uses-sdk android:maxSdkVersion="28" />
 
 </manifest>

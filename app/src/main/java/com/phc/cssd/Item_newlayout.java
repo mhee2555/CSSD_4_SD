@@ -776,36 +776,33 @@ public class Item_newlayout extends AppCompatActivity {
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (s.toString().length() > 0) {
                         checkstep2 = true;
-
                         if (checkStep2True())
                             save_im.setBackgroundResource(R.drawable.bt_save_newitem_new);
-                        btn_open_wash_program_item.setBackgroundResource(R.drawable.ss_bt_program_wash);
-                        btn_open_sterile_program_item.setBackgroundResource(R.drawable.ss_bt_program);
-                        btn_create_item_stock.setBackgroundResource(R.drawable.bt_stock_enable2);
-                        bt_step.setImageResource(R.drawable.ss_ic_step2_enable);
-                        bt_step2.setImageResource(R.drawable.ss_ic_step3_enable);
-                        bt_step3.setImageResource(R.drawable.ss_ic_step4_enable_new);
-                        btn_open_sterile_program_item.setTextColor(Color.WHITE);
-                        btn_open_wash_program_item.setTextColor(Color.WHITE);
-                        btn_create_item_stock.setTextColor(Color.WHITE);
-                    } else {
-                        checkstep2 = false;
-                        save_im.setBackgroundResource(R.drawable.bt_save_newitem_disable_new);
-                        btn_open_wash_program_item.setBackgroundResource(R.drawable.ss_bt_program_wash2);
-                        btn_open_sterile_program_item.setBackgroundResource(R.drawable.ss_bt_program_disable);
-                        btn_create_item_stock.setBackgroundResource(R.drawable.bt_stock_disable2);
-                        bt_step.setImageResource(R.drawable.ss_ic_step2_disable);
-                        bt_step2.setImageResource(R.drawable.ss_ic_step3_disable);
-                        bt_step3.setImageResource(R.drawable.ss_ic_step4_disable_new);
-                        btn_open_sterile_program_item.setTextColor(Color.BLACK);
-                        btn_open_wash_program_item.setTextColor(Color.BLACK);
-                        btn_create_item_stock.setTextColor(Color.BLACK);
+                            btn_open_wash_program_item.setBackgroundResource(R.drawable.ss_bt_program_wash);
+                            btn_open_sterile_program_item.setBackgroundResource(R.drawable.ss_bt_program);
+                            btn_create_item_stock.setBackgroundResource(R.drawable.bt_stock_enable2);
+                            bt_step.setImageResource(R.drawable.ss_ic_step2_enable);
+                            bt_step2.setImageResource(R.drawable.ss_ic_step3_enable);
+                            bt_step3.setImageResource(R.drawable.ss_ic_step4_enable_new);
+                            btn_open_sterile_program_item.setTextColor(Color.WHITE);
+                            btn_open_wash_program_item.setTextColor(Color.WHITE);
+                            btn_create_item_stock.setTextColor(Color.WHITE);
+                        } else {
+                            checkstep2 = false;
+                            save_im.setBackgroundResource(R.drawable.bt_save_newitem_disable_new);
+                            btn_open_wash_program_item.setBackgroundResource(R.drawable.ss_bt_program_wash2);
+                            btn_open_sterile_program_item.setBackgroundResource(R.drawable.ss_bt_program_disable);
+                            btn_create_item_stock.setBackgroundResource(R.drawable.bt_stock_disable2);
+                            bt_step.setImageResource(R.drawable.ss_ic_step2_disable);
+                            bt_step2.setImageResource(R.drawable.ss_ic_step3_disable);
+                            bt_step3.setImageResource(R.drawable.ss_ic_step4_disable_new);
+                            btn_open_sterile_program_item.setTextColor(Color.BLACK);
+                            btn_open_wash_program_item.setTextColor(Color.BLACK);
+                            btn_create_item_stock.setTextColor(Color.BLACK);
+                        }
                     }
-                }
-
                 @Override
                 public void afterTextChanged(Editable s) {
-
 
                 }
             });
@@ -1840,7 +1837,7 @@ public class Item_newlayout extends AppCompatActivity {
                     ByteArrayOutputStream stream1 = new ByteArrayOutputStream();
                     bitmap1 = (( BitmapDrawable ) img_item1.getDrawable()).getBitmap();
                     bitmap1 = Bitmap.createScaledBitmap(bitmap1,width,height, true);
-                    bitmap1.compress(Bitmap.CompressFormat.JPEG,100, stream1); //compress to which format you want.
+                    bitmap1.compress(Bitmap.CompressFormat.JPEG,50, stream1); //compress to which format you want.
                     byte[] byte_arr1 = stream1.toByteArray();
                     String image_str1 = Base64.encodeToString(byte_arr1, Base64.DEFAULT);
 
@@ -1850,7 +1847,7 @@ public class Item_newlayout extends AppCompatActivity {
                         ByteArrayOutputStream stream2 = new ByteArrayOutputStream();
                         bitmap2 = (( BitmapDrawable ) img_item1.getDrawable()).getBitmap();
                         bitmap2 = Bitmap.createScaledBitmap(bitmap2, width, height, true);
-                        bitmap2.compress(Bitmap.CompressFormat.JPEG, 100, stream2); //compress to which format you want.
+                        bitmap2.compress(Bitmap.CompressFormat.JPEG, 50, stream2); //compress to which format you want.
                         byte[] byte_arr2 = stream2.toByteArray();
                         image_str2 = Base64.encodeToString(byte_arr2, Base64.DEFAULT);
                     }

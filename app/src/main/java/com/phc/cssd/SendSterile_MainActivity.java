@@ -187,6 +187,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     String condition1 = "";
     String condition2 = "";
     String condition3 = "";
+    String condition4 = "";
     CheckBox checkBoxall;
     String CheckAll = "0";
     String Usagecode = "";
@@ -1165,8 +1166,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     public void getlistdata(String department_id, String Date, String sreach) {
         class getlistdata extends AsyncTask<String, Void, String> {
 
-            //private ProgressDialog dialog = new ProgressDialog(SendSterile_MainActivity.this);
-            // variable
+
+
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -1598,7 +1599,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         ru.execute(DocNo, RowID, date, UserCode, dept, QTY);
     }
 
-    public void InsertDetail2(String DocNo, String RowID, final String date, String UserCode, String dept, String QTY) {
+    public void InsertDetail2(String DocNo, final String RowID, final String date, String UserCode, String dept, String QTY) {
         class InsertDetail2 extends AsyncTask<String, Void, String> {
             // variable
             @Override
@@ -1653,7 +1654,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     getlistcreate(txtDocno, "");
                     if (bo.equals("true")) {
                         Toast.makeText(SendSterile_MainActivity.this, "นำเข้าอุปกรณ์สำเร็จ", Toast.LENGTH_SHORT).show();
-                        CheckUsageContScanToInsert(txt_get_ucode.getText().toString().toLowerCase());
+                        CheckUsageContScanToInsert(RowID);
                         txt_get_ucode.setText("");
                         txt_get_ucode.requestFocus();
                     }
@@ -2893,6 +2894,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 }
             }
 
+            @SuppressLint("WrongThread")
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
@@ -2995,9 +2997,10 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         condition1 = c.getString("condition1");
                         condition2 = c.getString("condition2");
                         condition3 = c.getString("condition3");
+                        condition4 = c.getString("condition4");
                     }
 
-                    if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0")){
+                    if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0")){
                         Intent intent = new Intent(SendSterile_MainActivity.this, dialog_check_usage_count.class);
                         intent.putExtra("UsageCode", UsageCode);
                         intent.putExtra("cnt", Cnt);
@@ -3007,6 +3010,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         intent.putExtra("condition1",condition1);
                         intent.putExtra("condition2",condition2);
                         intent.putExtra("condition3",condition3);
+                        intent.putExtra("condition4",condition4);
                         startActivity(intent);
                     }
 
@@ -3067,8 +3071,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         condition1 = c.getString("condition1");
                         condition2 = c.getString("condition2");
                         condition3 = c.getString("condition3");
+                        condition4 = c.getString("condition4");
                     }
-                    if (condition1 != "0" || condition2 != "0" || condition3 != "0"){
+                    if (condition1 != "0" || condition2 != "0" || condition3 != "0" || condition4 != "0"){
                         if (!ED_Dept.equals("") && !ED_Dept.equals("0")) {
                             if (txt_get_ucode.getText().toString().length() == 12 && !etxt_docno.getText().toString().equals("")) {
                                 CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
@@ -3169,12 +3174,14 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         condition1 = c.getString("condition1");
                         condition2 = c.getString("condition2");
                         condition3 = c.getString("condition3");
+                        condition4 = c.getString("condition4");
                     }
-                    if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0")){
+                    if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0")){
                         Intent intent = new Intent(SendSterile_MainActivity.this, dialog_check_usage_count.class);
                         intent.putExtra("condition1",condition1);
                         intent.putExtra("condition2",condition2);
                         intent.putExtra("condition3",condition3);
+                        intent.putExtra("condition4",condition4);
                         startActivity(intent);
                     }
                 } catch (JSONException e) {
