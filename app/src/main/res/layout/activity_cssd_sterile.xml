@@ -422,7 +422,7 @@
                 <ListView
                     android:id="@+id/list_wash_detail"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginTop="0dp"
@@ -899,7 +899,7 @@
                     <ListView
                         android:id="@+id/list_sterile_detail"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginTop="0dp"

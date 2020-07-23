@@ -2,7 +2,7 @@ package com.phc.cssd.model;
 
 import com.phc.cssd.R;
 
-public class ModelImportWashDetail {
+public class ModelImportWashDetail implements Cloneable {
 
     private String i_id,
             i_code,
@@ -18,7 +18,8 @@ public class ModelImportWashDetail {
             PackingMatID,
             BasketName,
             IsRemarkExpress,
-            i_UsageCode;
+            i_UsageCode,
+            BasketCode;
 
     private int index = -1;
 
@@ -43,7 +44,7 @@ public class ModelImportWashDetail {
         this.IsRemarkExpress = IsRemarkExpress;
     }
 
-    public ModelImportWashDetail(int index, boolean isCheck, String i_id, String i_code, String i_name, String i_alt_name, String i_barcode, String i_qty, String i_program, String i_program2, String i_program_id, String PackingMat, String Shelflife, String PackingMatID, String BasketName, String IsRemarkExpress,String i_UsageCode) {
+    public ModelImportWashDetail(int index, boolean isCheck, String i_id, String i_code, String i_name, String i_alt_name, String i_barcode, String i_qty, String i_program, String i_program2, String i_program_id, String PackingMat, String Shelflife, String PackingMatID, String BasketName, String IsRemarkExpress,String i_UsageCode,String BasketCode) {
         this.i_id = i_id;
         this.i_code = i_code;
         this.i_name = i_name;
@@ -59,8 +60,17 @@ public class ModelImportWashDetail {
         this.index = index;
         IsCheck = isCheck;
         this.BasketName = BasketName;
+        this.BasketCode = BasketCode;
         this.IsRemarkExpress = IsRemarkExpress;
         this.i_UsageCode = i_UsageCode;
+    }
+
+    public String getBasketCode() {
+        return BasketCode;
+    }
+
+    public void setBasketCode(String basketCode) {
+        BasketCode = basketCode;
     }
 
     public String getI_UsageCode() {
@@ -201,5 +211,17 @@ public class ModelImportWashDetail {
         IsCheck = check;
     }
 
+    public void setI_qty_plus(int qty) {
+        this.i_qty = (Integer.parseInt(this.i_qty)+qty)+"";
+    }
 
+    @Override
+    public Object clone() {
+        try {
+            return (ModelImportWashDetail) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="650dp"
+    android:layout_width="750dp"
     android:layout_height="655dp"
     android:background="@drawable/popup_approve">
 
@@ -19,11 +19,24 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/bastek_name"
+        android:layout_width="183dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="60dp"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorBlack"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="521dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="37dp"
         android:gravity="center"
         android:orientation="vertical">
@@ -45,8 +58,8 @@
                 android:id="@+id/list_basket"
                 android:layout_width="0dp"
                 android:layout_height="420dp"
-                android:layout_weight="1"
-                android:layout_marginStart="0dp" />
+                android:layout_marginStart="0dp"
+                android:layout_weight="1" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -54,41 +67,31 @@
         android:id="@+id/btn_cancel"
         android:layout_width="114dp"
         android:layout_height="50dp"
-        android:background="@drawable/btn_cancel"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="250dp"
-        android:layout_marginBottom="20dp"/>
-
-    <Button
-        android:id="@+id/btn_remove"
-        android:layout_width="114dp"
-        android:layout_height="50dp"
-        android:background="@drawable/btn_delete"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="140dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/btn_cancel" />
 
     <Button
         android:id="@+id/btn_save"
         android:layout_width="114dp"
         android:layout_height="50dp"
-        android:background="@drawable/btn_save"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="25dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/btn_save" />
 
     <RelativeLayout
         android:id="@+id/linear_layout_search"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="52dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="16dp">
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical">
 
         <EditText
             android:id="@+id/edt_basket_code"
@@ -101,19 +104,19 @@
             android:background="@drawable/text_dropdown"
             android:color="@color/form_label"
             android:gravity="center_vertical"
-            android:paddingLeft="14dp"
             android:hint="ยิงรหัสผูกตะกร้า"
-            android:textSize="14dp"
-            android:singleLine="true" />
+            android:paddingLeft="14dp"
+            android:singleLine="true"
+            android:textSize="14dp" />
 
         <Button
             android:id="@+id/btn_search_item"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:layout_marginEnd="5dp"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="5dp"
             android:background="@drawable/ic_qrcode2" />
 
     </RelativeLayout>

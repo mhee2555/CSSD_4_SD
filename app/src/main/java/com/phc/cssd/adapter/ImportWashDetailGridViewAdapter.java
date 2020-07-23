@@ -48,7 +48,9 @@ public class ImportWashDetailGridViewAdapter extends ArrayAdapter<ModelImportWas
             viewHolder.imv_add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((CssdSterile)context).importWashDetail( viewHolder.txt_item_code.getText().toString(), viewHolder.txt_item_program_id.getText().toString() , viewHolder.item_program, viewHolder.PackingMatID,"0");
+                    ((CssdSterile)context).importWashDetail( viewHolder.txt_item_code.getText().toString(), viewHolder.txt_item_program_id.getText().toString() ,
+                            viewHolder.item_program, viewHolder.PackingMatID,"0"
+                    ,viewHolder.basket);
                 }
             });
 
@@ -84,6 +86,7 @@ public class ImportWashDetailGridViewAdapter extends ArrayAdapter<ModelImportWas
     }
 
     static class ViewHolder {
+        public String basket;
         int index;
         TextView txt_item_code;
         TextView txt_no;

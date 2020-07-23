@@ -2,6 +2,7 @@ package com.phc.cssd.adapter;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +22,7 @@ import com.phc.cssd.CssdWash;
 import com.phc.cssd.R;
 import com.phc.cssd.model.ModelImportWashDetail;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail> {
@@ -27,17 +30,32 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
     private final List<ModelImportWashDetail> DATA_MODEL;
     private final Activity context;
     public int mode = 1 ;
+    public HashMap <String ,List<ModelImportWashDetail>>MODEL_IMPORT_WASH_DETAIL_SUB;
 
     public ImportWashDetailAdapter(Activity context, List<ModelImportWashDetail> DATA_MODEL) {
         super(context, R.layout.activity_list_import_wash_detail, DATA_MODEL);
         this.context = context;
         this.DATA_MODEL = DATA_MODEL;
+
+        for(int i=0;i<DATA_MODEL.size();i++){
+
+            Log.d("ttest_DATA_MODEL","DATA_MODEL = "+DATA_MODEL.get(i).getBasketCode()+"--"+i+"--"+DATA_MODEL.get(i).getI_name());
+
+        }
     }
 
     public ImportWashDetailAdapter(Activity context, List<ModelImportWashDetail> DATA_MODEL,int mode) {
         super(context, R.layout.activity_list_import_wash_detail, DATA_MODEL);
         this.context = context;
         this.DATA_MODEL = DATA_MODEL;
+        this.mode=mode;
+    }
+
+    public ImportWashDetailAdapter(Activity context, List<ModelImportWashDetail> DATA_MODEL,HashMap<String ,List<ModelImportWashDetail>> MODEL_IMPORT_WASH_DETAIL_SUB,int mode) {
+        super(context, R.layout.activity_list_import_wash_detail, DATA_MODEL);
+        this.context = context;
+        this.DATA_MODEL = DATA_MODEL;
+        this.MODEL_IMPORT_WASH_DETAIL_SUB = MODEL_IMPORT_WASH_DETAIL_SUB;
         this.mode=mode;
     }
 
@@ -62,6 +80,9 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
             viewHolder.txt_packingmat = (TextView) view.findViewById(R.id.txt_packingmat);
             viewHolder.txt_basket = (TextView) view.findViewById(R.id.txt_basket);
             viewHolder.txt_IsRemarkems = (ImageView) view.findViewById(R.id.txt_IsRemarkems);
+
+            viewHolder.sub_item = (ListView) view.findViewById(R.id.sub_item);
+            viewHolder.sub_item.setVisibility(View.GONE);
 
             if(mode==1){
                 viewHolder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
@@ -108,7 +129,8 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                                                         viewHolder.txt_item_program_id.getText().toString(),
                                                         viewHolder.item_program,
                                                         viewHolder.PackingMatID,
-                                                        gQty
+                                                        gQty,
+                                                        viewHolder.basket
                                                 );
                                             }
                                             dialog.cancel();
@@ -133,12 +155,14 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                                 viewHolder.txt_item_program_id.getText().toString() ,
                                 viewHolder.item_program,
                                 viewHolder.PackingMatID,
-                                "0"
+                                viewHolder.txt_qty.getText().toString(),
+                                viewHolder.basket
+
                         );
                     }
                 });
-
-            }else if(mode==2){
+            }
+            else if(mode==2){
                 viewHolder.imv_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -152,23 +176,135 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                         );
                     }
                 });
-            }else{
-                viewHolder.imv_add.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-//                        ((CssdSterile)context).importWashDetail(
-//                                viewHolder.txt_item_code.getText().toString(),
-//                                viewHolder.txt_item_program_id.getText().toString() ,
-//                                viewHolder.item_program,
-//                                viewHolder.PackingMatID,
-//                                "0",
-//                                null
-//                        );
-                    }
-                });
             }
+            else if(mode == 3){
+                if(DATA_MODEL.get(position).isCheck()) {
+                    String basket = DATA_MODEL.get(position).getBasketCode();
+                    final List<ModelImportWashDetail> DETAIL_SUB = MODEL_IMPORT_WASH_DETAIL_SUB.get(basket);
 
+//                    Log.d("ttest","DETAIL_SUB = "+basket+"--"+x+"--");
 
+                    viewHolder.sub_item.setAdapter(new ImportWashDetailAdapter((CssdSterile) context, DETAIL_SUB));
+
+                    final float scale = getContext().getResources().getDisplayMetrics().density;
+                    int pixels = (int) (44 * scale + 0.5f);
+
+                    viewHolder.sub_item.getLayoutParams().height = pixels * DETAIL_SUB.size();
+
+                    viewHolder.txt_packingmat.setVisibility(View.GONE);
+                    viewHolder.txt_basket.setVisibility(View.GONE);
+
+                    viewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (viewHolder.sub_item.getVisibility() == View.GONE) {
+                                viewHolder.sub_item.setVisibility(View.VISIBLE);
+                            } else {
+                                viewHolder.sub_item.setVisibility(View.GONE);
+                            }
+
+                        }
+                    });
+
+                    viewHolder.imv_add.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            for (int i = 0; i < DETAIL_SUB.size(); i++) {
+
+                                ModelImportWashDetail x = DETAIL_SUB.get(i);
+
+                                ((CssdSterile) context).importWashDetail(
+                                        x.getI_code(),
+                                        x.getI_program_id(),
+                                        x.getI_program(),
+                                        x.getPackingMatID(),
+                                        x.getI_qty(),
+                                        x.getBasketCode()
+                                );
+                            }
+                        }
+                    });
+                }else {
+                    viewHolder.imv_add.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ((CssdSterile)context).importWashDetail(
+                                    viewHolder.txt_item_code.getText().toString(),
+                                    viewHolder.txt_item_program_id.getText().toString() ,
+                                    viewHolder.item_program,
+                                    viewHolder.PackingMatID,
+                                    viewHolder.txt_qty.getText().toString(),
+                                    viewHolder.basket
+
+                                );
+                            }
+                        });
+                    }
+            }
+            else if(mode == 4){
+                if(DATA_MODEL.get(position).isCheck()) {
+                    String basket = DATA_MODEL.get(position).getBasketCode();
+                    final List<ModelImportWashDetail> DETAIL_SUB = MODEL_IMPORT_WASH_DETAIL_SUB.get(basket);
+
+//                    Log.d("ttest","DETAIL_SUB = "+basket+"--"+x+"--");
+
+                    viewHolder.sub_item.setAdapter(new ImportWashDetailAdapter((CssdSterile) context, DETAIL_SUB));
+
+                    final float scale = getContext().getResources().getDisplayMetrics().density;
+                    int pixels = (int) (44 * scale + 0.5f);
+
+                    viewHolder.sub_item.getLayoutParams().height = pixels * DETAIL_SUB.size();
+
+                    viewHolder.txt_packingmat.setVisibility(View.GONE);
+                    viewHolder.txt_basket.setVisibility(View.GONE);
+
+                    viewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (viewHolder.sub_item.getVisibility() == View.GONE) {
+                                viewHolder.sub_item.setVisibility(View.VISIBLE);
+                            } else {
+                                viewHolder.sub_item.setVisibility(View.GONE);
+                            }
+
+                        }
+                    });
+
+                    viewHolder.imv_add.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            for (int i = 0; i < DETAIL_SUB.size(); i++) {
+
+                                ModelImportWashDetail x = DETAIL_SUB.get(i);
+
+                                ((CssdSterile) context).importWashDetailToBasket(
+                                        x.getI_code(),
+                                        x.getI_program_id(),
+                                        x.getI_program(),
+                                        x.getPackingMatID(),
+                                        x.getI_qty(),
+                                        x.getBasketCode()
+                                );
+                            }
+                        }
+                    });
+                }else {
+                    viewHolder.imv_add.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ((CssdSterile)context).importWashDetailToBasket(
+                                    viewHolder.txt_item_code.getText().toString(),
+                                    viewHolder.txt_item_program_id.getText().toString() ,
+                                    viewHolder.item_program,
+                                    viewHolder.PackingMatID,
+                                    viewHolder.txt_qty.getText().toString(),
+                                    viewHolder.basket
+
+                            );
+                        }
+                    });
+                }
+            }
 
             view.setTag(viewHolder);
 
@@ -180,7 +316,8 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
         final ImportWashDetailAdapter.ViewHolder holder = (ImportWashDetailAdapter.ViewHolder) view.getTag();
         holder.txt_item_code.setText( DATA_MODEL.get(position).getI_id());
         holder.txt_packingmat.setText( "( " + DATA_MODEL.get(position).getPackingMat() + " : " + DATA_MODEL.get(position).getShelflife() + " วัน )");
-        holder.txt_no.setText( DATA_MODEL.get(position).getI_no() + ".");
+//        holder.txt_no.setText( DATA_MODEL.get(position).getI_no() + ".");
+        holder.txt_no.setText(position+1 + ".");
         holder.txt_item_program_id.setText( DATA_MODEL.get(position).getI_program_id());
         holder.txt_basket.setText(DATA_MODEL.get(position).getBasketName());
         holder.txt_item_name.setText(DATA_MODEL.get(position).getI_name());
@@ -189,6 +326,7 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
         holder.index = (DATA_MODEL.get(position).getIndex());
         holder.PackingMatID = DATA_MODEL.get(position).getPackingMatID();
         holder.item_program = DATA_MODEL.get(position).getI_program();
+        holder.basket = DATA_MODEL.get(position).getBasketCode();
 
         if (!DATA_MODEL.get(position).getIsRemarkExpress().equals("0")){
             holder.txt_IsRemarkems.setVisibility(View.VISIBLE);
@@ -203,6 +341,7 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
     }
 
     static class ViewHolder {
+        public String basket;
         int index;
         TextView txt_item_code;
         TextView txt_no;
@@ -217,6 +356,7 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
         RelativeLayout relativeLayout;
         String item_program;
         String PackingMatID;
+        ListView sub_item;
 
     }
 

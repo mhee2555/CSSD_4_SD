@@ -3838,6 +3838,8 @@ public class CssdWash extends AppCompatActivity {
 
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_pair_basket.php", data);
 
+                Log.d("ttest_pair_basket",data+"");
+
                 return result;
             }
 

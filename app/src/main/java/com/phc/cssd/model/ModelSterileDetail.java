@@ -2,7 +2,7 @@ package com.phc.cssd.model;
 
 import com.phc.cssd.R;
 
-public class ModelSterileDetail {
+public class ModelSterileDetail implements Cloneable {
 
     String ID;
     String DocNo;
@@ -40,6 +40,8 @@ public class ModelSterileDetail {
     String ItemSetData;
     String PackingMatID;
     String BasketName = "-";
+    String BasketCode;
+    boolean IsBasket = false;
     String IsRemarkExpress;
 
     private int index = -1;
@@ -198,6 +200,61 @@ public class ModelSterileDetail {
         this.index = index;
         this.BasketName = BasketName;
         this.IsRemarkExpress = IsRemarkExpress;
+    }
+
+    public ModelSterileDetail(String ID, String docNo, String itemStockID, String qty, String itemname, String itemcode, String usageCode, String age, String importID, String sterileDate, String expireDate, String isStatus, String occuranceQty, String depName, String depName2, String labelID, String usr_sterile, String usr_prepare, String usr_approve, String sterileRoundNumber, String machineName, String price, String time, String sterileProcessID, String qty_Print, String printer, String usageCount, String itemSetData, String BasketName, String  IsRemarkExpress,int index,String BasketCode) {
+        this.ID = ID;
+        DocNo = docNo;
+        ItemStockID = itemStockID;
+        Qty = qty;
+        this.itemname = itemname;
+        this.itemcode = itemcode;
+        UsageCode = usageCode;
+        this.age = age;
+        ImportID = importID;
+        SterileDate = sterileDate;
+        ExpireDate = expireDate;
+        IsStatus = isStatus;
+        OccuranceQty = occuranceQty;
+        DepName = depName;
+        DepName2 = depName2;
+        LabelID = labelID;
+        this.usr_sterile = usr_sterile;
+        this.usr_prepare = usr_prepare;
+        this.usr_approve = usr_approve;
+        SterileRoundNumber = sterileRoundNumber;
+        MachineName = machineName;
+        Price = price;
+        Time = time;
+        SterileProcessID = sterileProcessID;
+        Qty_Print = qty_Print;
+        Printer = printer;
+        UsageCount = usageCount;
+        ItemSetData = itemSetData;
+        this.index = index;
+        this.BasketName = BasketName;
+        this.BasketCode = BasketCode;
+        this.IsRemarkExpress = IsRemarkExpress;
+    }
+
+    public boolean getIsBasket() {
+        return IsBasket;
+    }
+
+    public void setIsBasket(boolean isBasket) {
+        IsBasket = isBasket;
+    }
+
+    public void setBasketName(String basketName) {
+        BasketName = basketName;
+    }
+
+    public String getBasketCode() {
+        return BasketCode;
+    }
+
+    public void setBasketCode(String basketCode) {
+        BasketCode = basketCode;
     }
 
     public String getIsRemarkExpress() {
@@ -504,5 +561,15 @@ public class ModelSterileDetail {
 
     public void setQty_Print(String qty_Print) {
         Qty_Print = qty_Print;
+    }
+
+    @Override
+    public Object clone() {
+        try {
+            return (ModelSterileDetail) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
