@@ -7,16 +7,22 @@ public class ModelLinenDetail {
     private String ExpireDate;
     private String Date;
     private String Chk;
+    private int index;
 
-    public ModelLinenDetail(String Itemname, String UsageCode, String PackDate, String ExpireDate, String Date, String Chk) {
+    public ModelLinenDetail(String Itemname, String UsageCode, String PackDate, String ExpireDate, String Date, String Chk, int index) {
         this.Itemname = Itemname;
         this.UsageCode = UsageCode;
         this.PackDate = PackDate;
         this.ExpireDate = ExpireDate;
         this.Date = Date;
         this.Chk = Chk;
+        this.index = index;
     }
 
+
+    public int getIndex() { return index; }
+
+    public void setIndex(int index) { this.index = index; }
 
     public String getChk() { return Chk; }
 
