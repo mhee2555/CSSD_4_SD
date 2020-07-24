@@ -102,9 +102,10 @@ public class dialog_linen_detail extends Activity {
             @Override
             public void onClick(View v) {
                 int cnt=0;
-                for (String key : DelAlldata.keySet()) {
-                    if (DelAlldata.get(key) == "0")
+                for (int i = 0 ; i < Model_Linen.size() ; i ++) {
+                    if (Model_Linen.get(i).getChk().equals("0")){
                         cnt++;
+                    }
                 }
                 if (cnt != 0) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(dialog_linen_detail.this);
@@ -115,9 +116,10 @@ public class dialog_linen_detail extends Activity {
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    for (String key : DelAlldata.keySet()) {
-                                        if (DelAlldata.get(key) == "0")
-                                            DelRowId.add(key);
+                                    for (int i = 0 ; i < Model_Linen.size() ; i ++) {
+                                        if (Model_Linen.get(i).getChk().equals("0")){
+                                            DelRowId.add(Model_Linen.get(i).getUsageCode());
+                                        }
                                     }
                                     SaveLinen(String.valueOf(DelRowId));
                                     DelRowId.clear();
@@ -171,12 +173,12 @@ public class dialog_linen_detail extends Activity {
                                     }
                                 }
                                 if (chk.equals("1")){
-                                    Toast.makeText(dialog_linen_detail.this, "นำเข้าสำเร็จ", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(dialog_linen_detail.this, "ถูกต้อง", Toast.LENGTH_SHORT).show();
                                     chk.equals("0");
                                     search_scan.setText("");
                                     search_scan.requestFocus();
                                 }else if (chk.equals("0")){
-                                    Toast.makeText(dialog_linen_detail.this, "นำเข้าไม่สำเร็จ", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(dialog_linen_detail.this, "รหัสใช้งานไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
                                     search_scan.setText("");
                                     search_scan.requestFocus();
                                 }else if (chk.equals("2")){
@@ -346,9 +348,11 @@ public class dialog_linen_detail extends Activity {
                         if (c.getString("flag").equals("true")){
                             Toast.makeText(dialog_linen_detail.this, "บันทึกสำเร็จ", Toast.LENGTH_SHORT).show();
                             getlistdata("","0");
+                            ClearCheck = false;
                         }else {
                             Toast.makeText(dialog_linen_detail.this, "บันทึกไม่สำเร็จ", Toast.LENGTH_SHORT).show();
                             getlistdata("","0");
+                            ClearCheck = false;
                         }
                     }
                 } catch (JSONException e) {
@@ -406,11 +410,9 @@ public class dialog_linen_detail extends Activity {
                     x="0";
                 }
                 DelAlldata.put(DelRowid, x);
-                Log.d("LFHLKD",DelAlldata+"");
             }else {
                 DelAlldata.clear();
                 DelRowId.clear();
-                Log.d("LFHLKD",DelAlldata+"");
             }
         }else {
             if (!Type.equals("1")){
@@ -419,11 +421,9 @@ public class dialog_linen_detail extends Activity {
                     x="1";
                 }
                 DelAlldata.put(DelRowid, x);
-                Log.d("LFHLKD",DelAlldata+"");
             }else {
                 DelAlldata.clear();
                 DelRowId.clear();
-                Log.d("LFHLKD",DelAlldata+"");
             }
         }
     }
