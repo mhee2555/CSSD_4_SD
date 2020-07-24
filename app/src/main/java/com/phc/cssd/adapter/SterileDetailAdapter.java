@@ -215,7 +215,7 @@ public class SterileDetailAdapter extends ArrayAdapter<ModelSterileDetail> {
                             for(int i=0;i<MODEL_SUB.size();i++){
 
                                 ((CssdSterile)context).onRemoveBasket(
-                                        MODEL_SUB.get(position).getImportID()
+                                        MODEL_SUB.get(i).getImportID()
                                 );
 
                                 ((CssdSterile)context).removeSterileDetail(

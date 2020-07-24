@@ -1586,7 +1586,9 @@ public class CssdSterile extends AppCompatActivity {
                 final EditText edt_basket_code = (EditText) dialog.findViewById(R.id.edt_basket_code);
                 final TextView basket_name = (TextView) dialog.findViewById(R.id.bastek_name);
 
-                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                btn_cancel.setVisibility(View.GONE);
+
+                btn_save.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         dialog.dismiss();
                     }
@@ -1602,7 +1604,26 @@ public class CssdSterile extends AppCompatActivity {
                                 case KeyEvent.KEYCODE_DPAD_CENTER:
                                 case KeyEvent.KEYCODE_ENTER:
 
-                                    selectBasket(edt_basket_code.getText().toString(), basket_name, edt_basket_code);
+                                    if(basket_Code.equals("")){
+                                        selectBasket(edt_basket_code.getText().toString(), basket_name, edt_basket_code);
+                                    }else{
+                                        AlertDialog.Builder builder =
+                                                new AlertDialog.Builder(CssdSterile.this);
+                                        builder.setTitle("บันทึกเพื่อเปลี่ยนไปจับคู่ตะกร้าใหม่");
+                                        builder.setMessage("บันทึกการจับคู่ตะกร้านี้หรือไม่?");
+                                        builder.setPositiveButton("บันทึกและเปลี่ยนตะกร้า", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                selectBasket(edt_basket_code.getText().toString(), basket_name, edt_basket_code);
+                                            }
+                                        });
+                                        builder.setNegativeButton("อยู่ต่อ", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                //dialog.dismiss();
+                                            }
+                                        });
+                                        builder.show();
+                                    }
                                     return true;
                                 default:
                                     break;
