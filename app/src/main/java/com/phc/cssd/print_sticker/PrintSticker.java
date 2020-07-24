@@ -115,7 +115,7 @@ public class PrintSticker {
             case 1:
                 if (Print) {
                     Print = false;
-                    xData = StickerCase20_1(Sel, PRINTER_IP, sterile);
+                    xData = StickerCase01_SIRIRAJ(Sel, PRINTER_IP, sterile);
                 }
                 break;
             //==================================================================================================================================
@@ -124,7 +124,7 @@ public class PrintSticker {
             case 2:
                 if (Print) {
                     Print = false;
-                    xData = StickerCase07_New_IN(Sel, PRINTER_IP, sterile);
+                    xData = StickerCase02_SIRIRAJ(Sel, PRINTER_IP, sterile);
                 }
                 break;
             //==================================================================================================================================
@@ -133,7 +133,7 @@ public class PrintSticker {
             case 3:
                 if (Print) {
                     Print = false;
-                    xData = StickerCase07_New(Sel, PRINTER_IP, sterile);
+                    xData = StickerCase03_SIRIRAJ(Sel, PRINTER_IP, sterile);
                 }
                 break;
             //==================================================================================================================================
@@ -142,13 +142,12 @@ public class PrintSticker {
             case 4:
                 if (Print) {
                     Print = false;
-                    xData = StickerCase13(Sel, PRINTER_IP, sterile);
+                    xData = StickerCase04_SIRIRAJ(Sel, PRINTER_IP, sterile);
                 }
                 break;
         }
         setData(xData);
     }
-
     private void xPrintB_1(Activity aActivity, int Sel, List<ModelSterileDetail> sterile, ArrayList<String> PRINTER_IP,String B_ID){
         String xData = "";
         if(sterile == null || sterile.size() == 0){
@@ -186,7 +185,7 @@ public class PrintSticker {
             case 4:
                 if (Print) {
                     Print = false;
-                    xData = StickerCase13(Sel, PRINTER_IP, sterile);
+                    //xData = StickerCase13(Sel, PRINTER_IP, sterile);
                 }
                 break;
         }
@@ -195,6 +194,262 @@ public class PrintSticker {
     //==============================================================================================
     // -- Function Case Sticker
     //==============================================================================================
+    private String StickerCase01_SIRIRAJ(int Sel, ArrayList<String> PRINTER_IP ,List<ModelSterileDetail> DATA_MODEL){
+        TscWifi Tsc = new TscWifi();
+        String getID="";
+        String Age1 = "";
+        boolean PMachine = p.isPMachine();
+        boolean PPrice = p.isPPrice();
+        boolean PRound = p.isPRound();
+        boolean PDept = p.isPDept();
+        boolean PEmp1 = p.isPEmp1();
+        boolean PEmp2 = p.isPEmp2();
+        boolean PEmp3 = p.isPEmp3();
+        int PSpeed = p.getPSpeed();
+        int PDensity = p.getPDensity();
+        String POption = p.getPOption();
+        ArrayList <String> Data = getData(Sel-1,PRINTER_IP);
+        String PrinterIP = Data.get(0);
+        int Heigth = Integer.parseInt(Data.get(1));
+        int Width = Integer.parseInt(Data.get(2));
+        Tsc.openport(PrinterIP, 9100);
+        Iterator li = DATA_MODEL.iterator();
+        while (li.hasNext()) {
+            Tsc.setup(Width, Heigth, PSpeed, PDensity, 0, 2, 1);
+            Tsc.sendcommand("DIRECTION 1,0\r\n");
+            Tsc.clearbuffer();
+            try {
+
+                //sticker สีฟ้า
+                ModelSterileDetail m = (ModelSterileDetail) li.next();
+
+                Tsc.setup(50, 26, PSpeed, PDensity, 0, 2, 1);
+                Tsc.sendcommand("DIRECTION 1,0\r\n");
+                Tsc.clearbuffer();
+
+                String Itemname[] = TextTwoLine.make2line(m.getItemname());
+
+                Tsc.sendpicture(10, 3, TextAsBitmap.getTextBitmap1(Itemname[0], 26));
+                //QR_Code
+                Tsc.qrcode(280, 50, "H", "5", "A", "0", "M2", "S1", m.getUsageCode());
+
+                Tsc.sendpicture(10, 44, TextAsBitmap.getTextBitmap1(m.getUsageCode(), 20));
+
+                //เครื่อง
+                if (PMachine || PRound) {
+                    Tsc.sendpicture(190, 44, TextAsBitmap.getTextBitmap1(m.getMachineName()+"/" + m.getSterileRoundNumber(), 20));
+                }
+                //วันแพค
+
+                String yy1 = (Integer.parseInt(m.getSterileDate().substring(6, 10)) + 543) + "";
+                String mfc1 = m.getSterileDate().substring(0, 2) + "/" + m.getSterileDate().substring(3, 5) + "/" + yy1.substring(2, 4);
+                Tsc.sendpicture(10, 76, TextAsBitmap.getTextBitmap1("ผลิต " + mfc1 + " ( " + m.getAgeDay() + " วัน " + ")", 20));
+
+
+                //วันหมดอายุ
+                String yy2 = (Integer.parseInt( m.getExpireDate().substring(6,10) )+543)+"";
+                String mfc2 =" หมดอายุ " + m.getExpireDate().substring(0,2) +"/"+m.getExpireDate().substring(3,5)+"/"+ yy2.substring(2,4);
+                Tsc.sendpicture(7, 103, TextAsBitmap.getTextBitmap1(mfc2 , 30));
+
+                Tsc.sendpicture(10, 136, TextAsBitmap.getTextBitmap1(m.getUsr_prepare()+" เตรียม / "
+                        +m.getUsr_approve()+" ตรวจ ",18));
+
+                if(pQty > Integer.parseInt( m.getQty() ))
+                    Tsc.sendcommand("PRINT 1," + pQty + "\r\n");
+                else
+                    Tsc.sendcommand("PRINT 1," + m.getQty() + "\r\n");
+                getID += m.getID() + "@";
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+        Print = true;
+        Tsc.closeport();
+        return getID;
+    }
+
+    private String StickerCase02_SIRIRAJ(int Sel, ArrayList<String> PRINTER_IP ,List<ModelSterileDetail> DATA_MODEL){
+        TscWifi Tsc = new TscWifi();
+        String getID="";
+        boolean PMachine = p.isPMachine();
+        boolean PPrice = p.isPPrice();
+        boolean PRound = p.isPRound();
+        boolean PDept = p.isPDept();
+        boolean PEmp1 = p.isPEmp1();
+        boolean PEmp2 = p.isPEmp2();
+        boolean PEmp3 = p.isPEmp3();
+        int PSpeed = p.getPSpeed();
+        int PDensity = p.getPDensity();
+        String POption = p.getPOption();
+        ArrayList <String> Data = getData(Sel-1,PRINTER_IP);
+        String PrinterIP = Data.get(0);
+        int Heigth = Integer.parseInt(Data.get(1));
+        int Width = Integer.parseInt(Data.get(2));
+        Tsc.openport(PrinterIP, 9100);
+        Iterator li = DATA_MODEL.iterator();
+        while (li.hasNext()) {
+            Tsc.setup(Width, Heigth, PSpeed, PDensity, 0, 2, 1);
+            Tsc.sendcommand("DIRECTION 1,0\r\n");
+            Tsc.clearbuffer();
+            try {
+                ModelSterileDetail m = (ModelSterileDetail) li.next();
+                String Itemname[] = TextTwoLine.make2line(m.getItemname());
+                Tsc.sendpicture(25, 30, TextAsBitmap.getTextBitmap1(Itemname[0], 27));
+                Tsc.sendpicture(25, 80, TextAsBitmap.getTextBitmap(m.getUsageCode(), 26));
+                Tsc.sendpicture(25, 125, TextAsBitmap.getTextBitmap(m.getUsr_prepare()+" - เตรียม ", 26));
+                Tsc.sendpicture(25, 170, TextAsBitmap.getTextBitmap(m.getUsr_approve()+" - ตรวจ ", 26));
+                Tsc.qrcode(25, 275, "H", "5", "A", "0", "M2", "S1", m.getUsageCode());
+                String yy1 = (Integer.parseInt( m.getSterileDate().substring(6,10) )+543)+"";
+                String mfc1 = m.getSterileDate().substring(0,2) +"/"+m.getSterileDate().substring(3,5)+"/"+ yy1.substring(2,4);
+                Tsc.sendpicture(160, 300, TextAsBitmap.getTextBitmap("MFG "+mfc1+" ("+ m.getAgeDay() +"วัน"+")", 24));
+                String yy2 = (Integer.parseInt( m.getExpireDate().substring(6,10) )+543)+"";
+                String mfc2 = m.getExpireDate().substring(0,2) +"/"+m.getExpireDate().substring(3,5)+"/"+ yy2.substring(2,4);
+                Tsc.sendpicture(160, 330, TextAsBitmap.getTextBitmap1( "EXP "+ mfc2 , 32));
+                Tsc.sendpicture(160, 265, TextAsBitmap.getTextBitmap("เครื่อง : "+m.getMachineName() + "  รอบ :" + m.getSterileRoundNumber(), 24));
+                //----------------------------------------------------------------
+                // Footer
+                //----------------------------------------------------------------
+                Tsc.sendpicture(35, 430, TextAsBitmap.getTextBitmap1(Itemname[0], 26));
+                String Dep = m.getDepName2();
+                Tsc.sendpicture(160, 470, TextAsBitmap.getTextBitmap(m.getUsageCode(),20));
+                String DepName[] = TextTwoLine.make2line1(Dep);
+                Tsc.sendpicture(160, 500, TextAsBitmap.getTextBitmap("MFG "+mfc1+" ("+ m.getAgeDay() +"วัน"+")", 23));
+                Tsc.qrcode(35, 470, "H", "4", "A", "0", "M2", "S1", m.getUsageCode());
+                Tsc.sendpicture(160, 527, TextAsBitmap.getTextBitmap1( "EXP "+ mfc2 , 32));
+                if(pQty > Integer.parseInt( m.getQty() ))
+                    Tsc.sendcommand("PRINT 1," + pQty + "\r\n");
+                else
+                    Tsc.sendcommand("PRINT 1," + m.getQty() + "\r\n");
+                getID += m.getID() + "@";
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        Tsc.closeport();
+        return getID;
+    }
+
+    private String StickerCase03_SIRIRAJ(int Sel, ArrayList<String> PRINTER_IP ,List<ModelSterileDetail> DATA_MODEL){
+        TscWifi Tsc = new TscWifi();
+        String getID="";
+        boolean PMachine = p.isPMachine();
+        boolean PPrice = p.isPPrice();
+        boolean PRound = p.isPRound();
+        boolean PDept = p.isPDept();
+        boolean PEmp1 = p.isPEmp1();
+        boolean PEmp2 = p.isPEmp2();
+        boolean PEmp3 = p.isPEmp3();
+        int PSpeed = p.getPSpeed();
+        int PDensity = p.getPDensity();
+        String POption = p.getPOption();
+        ArrayList <String> Data = getData(Sel-1,PRINTER_IP);
+        String PrinterIP = Data.get(0);
+        int Heigth = Integer.parseInt(Data.get(1));
+        int Width = Integer.parseInt(Data.get(2));
+        Tsc.openport(PrinterIP, 9100);
+        Iterator li = DATA_MODEL.iterator();
+        while (li.hasNext()) {
+            Tsc.setup(Width, Heigth, PSpeed, PDensity, 0, 2, 1);
+            Tsc.sendcommand("DIRECTION 1,0\r\n");
+            Tsc.clearbuffer();
+            try {
+                ModelSterileDetail m = (ModelSterileDetail) li.next();
+                String Itemname[] = TextTwoLine.make2line(m.getItemname());
+                Tsc.sendpicture(25, 30, TextAsBitmap.getTextBitmap1(Itemname[0], 27));
+                Tsc.sendpicture(25, 80, TextAsBitmap.getTextBitmap(m.getUsageCode(), 26));
+                Tsc.sendpicture(25, 125, TextAsBitmap.getTextBitmap(m.getUsr_prepare()+" - เตรียม ", 26));
+                Tsc.sendpicture(25, 170, TextAsBitmap.getTextBitmap(m.getUsr_approve()+" - ตรวจ ", 26));
+                Tsc.qrcode(25, 275, "H", "5", "A", "0", "M2", "S1", m.getUsageCode());
+                String yy1 = (Integer.parseInt( m.getSterileDate().substring(6,10) )+543)+"";
+                String mfc1 = m.getSterileDate().substring(0,2) +"/"+m.getSterileDate().substring(3,5)+"/"+ yy1.substring(2,4);
+                Tsc.sendpicture(160, 300, TextAsBitmap.getTextBitmap("MFG "+mfc1+" ("+ m.getAgeDay() +"วัน"+")", 24));
+                String yy2 = (Integer.parseInt( m.getExpireDate().substring(6,10) )+543)+"";
+                String mfc2 = m.getExpireDate().substring(0,2) +"/"+m.getExpireDate().substring(3,5)+"/"+ yy2.substring(2,4);
+                Tsc.sendpicture(160, 330, TextAsBitmap.getTextBitmap1( "EXP "+ mfc2 , 32));
+                Tsc.sendpicture(160, 265, TextAsBitmap.getTextBitmap("เครื่อง : "+m.getMachineName() + "  รอบ :" + m.getSterileRoundNumber(), 24));
+                //----------------------------------------------------------------
+                // Footer
+                //----------------------------------------------------------------
+                Tsc.sendpicture(35, 430, TextAsBitmap.getTextBitmap1(Itemname[0], 26));
+                String Dep = m.getDepName2();
+                Tsc.sendpicture(160, 470, TextAsBitmap.getTextBitmap(m.getUsageCode(),20));
+                String DepName[] = TextTwoLine.make2line1(Dep);
+                Tsc.sendpicture(160, 500, TextAsBitmap.getTextBitmap("MFG "+mfc1+" ("+ m.getAgeDay() +"วัน"+")", 23));
+                Tsc.qrcode(35, 470, "H", "4", "A", "0", "M2", "S1", m.getUsageCode());
+                Tsc.sendpicture(160, 527, TextAsBitmap.getTextBitmap1( "EXP "+ mfc2 , 32));
+                if(pQty > Integer.parseInt( m.getQty() ))
+                    Tsc.sendcommand("PRINT 1," + pQty + "\r\n");
+                else
+                    Tsc.sendcommand("PRINT 1," + m.getQty() + "\r\n");
+                getID += m.getID() + "@";
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        Tsc.closeport();
+        return getID;
+    }
+
+    private String StickerCase04_SIRIRAJ(int Sel, ArrayList<String> PRINTER_IP, List<ModelSterileDetail> DATA_MODEL){
+        TscWifi Tsc = new TscWifi();
+        String getID="";
+        String Age1 = "";
+        boolean PMachine = p.isPMachine();
+        boolean PPrice = p.isPPrice();
+        boolean PRound = p.isPRound();
+        boolean PDept = p.isPDept();
+        boolean PEmp1 = p.isPEmp1();
+        boolean PEmp2 = p.isPEmp2();
+        boolean PEmp3 = p.isPEmp3();
+        int PSpeed = p.getPSpeed();
+        int PDensity = p.getPDensity();
+        String POption = p.getPOption();
+        ArrayList <String> Data = getData(Sel-1,PRINTER_IP);
+        String PrinterIP = Data.get(0);
+        int Heigth = Integer.parseInt(Data.get(1));
+        int Width = Integer.parseInt(Data.get(2));
+        Log.d("BANKRT77",Sel+"");
+        Log.d("BANKRT77",PRINTER_IP+"");
+        Log.d("BANKRT77",B_ID+"");
+        //Tsc.openport(getPrinterIP(Sel,PRINTER_IP), 9100);
+        Tsc.openport(PrinterIP, 9100);
+        Iterator li = DATA_MODEL.iterator();
+        while (li.hasNext()) {
+            Tsc.setup(Width, Heigth, PSpeed, PDensity, 0, 2, 1);
+            Tsc.sendcommand("DIRECTION 1,0\r\n");
+            Tsc.clearbuffer();
+            try {
+                ModelSterileDetail m = (ModelSterileDetail) li.next();
+                String Itemname[] = TextTwoLine.make2line(m.getItemname());
+                Tsc.sendpicture(20, 10, TextAsBitmap.getTextBitmap(Itemname[0], 30));
+                Tsc.sendpicture(20, 55, TextAsBitmap.getTextBitmap(m.getUsageCode(), 26));
+                Tsc.sendpicture(20, 95, TextAsBitmap.getTextBitmap("เครื่อง :" + m.getMachineName()+"    รอบ :"+ m.getSterileRoundNumber(), 26));
+                Tsc.sendpicture(20, 135, TextAsBitmap.getTextBitmap(m.getUsr_prepare()+"- เตรียม", 26));
+                Tsc.sendpicture(20, 175, TextAsBitmap.getTextBitmap(m.getUsr_approve()+"- ตรวจ", 26));
+                Tsc.qrcode(20, 240, "H", "5", "A", "0", "M2", "S1", m.getUsageCode());
+                String yy1 = (Integer.parseInt( m.getSterileDate().substring(6,10) )+543)+"";
+                String mfc1 = m.getSterileDate().substring(0,2) +"/"+m.getSterileDate().substring(3,5)+"/"+ yy1.substring(2,4);
+                Tsc.sendpicture(160, 240, TextAsBitmap.getTextBitmap("MFG : " + mfc1 + " ( " + m.getAgeDay() + " วัน " + ")", 20));
+                String yy2 = (Integer.parseInt( m.getExpireDate().substring(6,10) )+543)+"";
+                String mfc2 = m.getExpireDate().substring(0,2) +"/"+m.getExpireDate().substring(3,5)+"/"+ yy2.substring(2,4);
+                Tsc.sendpicture(170, 270, TextAsBitmap.getTextBitmap("EXP : " + mfc2, 32));
+                if(pQty > Integer.parseInt( m.getQty() ))
+                    Tsc.sendcommand("PRINT 1," + pQty + "\r\n");
+                else
+                    Tsc.sendcommand("PRINT 1," + m.getQty() + "\r\n");
+                getID += m.getID() + "@";
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        Tsc.closeport();
+        return getID;
+    }
+
     private String StickerCase01(int Sel, ArrayList<String> PRINTER_IP, List<ModelSterileDetail> DATA_MODEL){
         TscWifi Tsc = new TscWifi();
         String getID="";
@@ -840,6 +1095,144 @@ public class PrintSticker {
         return getID;
     }
 
+    private String StickerCase11(int Sel, ArrayList<String> PRINTER_IP, List<ModelSterileDetail> DATA_MODEL){
+        TscWifi Tsc = new TscWifi();
+        String getID="";
+        String Age1 = "";
+        boolean PMachine = p.isPMachine();
+        boolean PPrice = p.isPPrice();
+        boolean PRound = p.isPRound();
+        boolean PDept = p.isPDept();
+        boolean PEmp1 = p.isPEmp1();
+        boolean PEmp2 = p.isPEmp2();
+        boolean PEmp3 = p.isPEmp3();
+        int PSpeed = p.getPSpeed();
+        int PDensity = p.getPDensity();
+        String POption = p.getPOption();
+        System.out.println("Sel"+ Sel);
+        System.out.println("Printer"+PRINTER_IP.size());
+
+        ArrayList <String> Data = getData(Sel-1,PRINTER_IP);
+
+        String PrinterIP = Data.get(0);
+        int Heigth = Integer.parseInt(Data.get(1));
+        int Width = Integer.parseInt(Data.get(2));
+
+        System.out.println("PrinterIP = " + PrinterIP);
+        System.out.println("Heigth = " + Heigth);
+        System.out.println("Width = " + Width);
+
+        //Tsc.openport(getPrinterIP(Sel,PRINTER_IP), 9100);
+
+        Tsc.openport(PrinterIP, 9100);
+
+        Iterator li = DATA_MODEL.iterator();
+        while (li.hasNext()) {
+            Tsc.setup(Width, Heigth, PSpeed, PDensity, 0, 2, 1);
+            Tsc.sendcommand("DIRECTION 0,0\r\n");
+            try {
+                ModelSterileDetail m = (ModelSterileDetail) li.next();
+                String Itemname[] = TextTwoLine.make2line(m.getItemname());
+
+                int Page = 0;
+                int row = 0;
+                int itemCnt = 24;
+                int last_row_count = 0;
+                String[] arrOfStr = null;
+                //================
+                //    Count Page
+                //================
+                try {
+                    arrOfStr = m.getItemSetData().split("%");
+                    Page = (arrOfStr.length / itemCnt);
+                    last_row_count = (arrOfStr.length % itemCnt);
+                }catch (Exception e){
+                    Page = 0;
+                    last_row_count = 0;
+                }
+                if( last_row_count > 0 ) Page++;
+
+                for(int z=1;z<(Page+1);z++) {
+                    Tsc.clearbuffer();
+                    int row_y = 0;
+
+                    Tsc.sendpicture(45, 40, TextAsBitmap.getTextBitmap(Itemname[0], 26));
+
+                    //วันแพค
+                    String yy1 = (Integer.parseInt( m.getSterileDate().substring(6,10) )+543)+"";
+                    String mfc1 = m.getSterileDate().substring(0,2) +"/"+m.getSterileDate().substring(3,5)+"/"+ yy1.substring(2,4);
+                    Tsc.sendpicture(40, 415, TextAsBitmap.getTextBitmap("ผลิต : " + mfc1 + " ( " + m.getAgeDay() + " วัน " + ")", 26));
+                    //วันหมดอายุ
+                    String yy2 = (Integer.parseInt( m.getExpireDate().substring(6,10) )+543)+"";
+                    String mfc2 = m.getExpireDate().substring(0,2) +"/"+m.getExpireDate().substring(3,5)+"/"+ yy2.substring(2,4);
+                    Tsc.sendpicture(40, 445, TextAsBitmap.getTextBitmap( "หมดอายุ ", 32));
+                    Tsc.sendpicture(200, 445, TextAsBitmap.getTextBitmap(mfc2 , 40));
+
+                    //QR_Code
+                    Tsc.qrcode(40, 500, "H", "3.5", "A", "0", "M2", "S1", m.getUsageCode());
+                    //Item_Code
+                    Tsc.sendpicture(135, 490, TextAsBitmap.getTextBitmap("No."+m.getUsageCode()+"", 20));
+                    //เครื่อง
+                    Tsc.sendpicture(300, 490, TextAsBitmap.getTextBitmap("ตู้ :" + m.getMachineName()+"/" + m.getSterileRoundNumber(), 20));
+                    Tsc.sendpicture(135, 515, TextAsBitmap.getTextBitmap(m.getUsr_prepare()+" -เตรียม", 20));
+                    Tsc.sendpicture(135, 540, TextAsBitmap.getTextBitmap(m.getUsr_approve()+" -ตรวจ", 18));
+//                    Tsc.sendpicture(45, 490, TextAsBitmap.getTextBitmap(m.getUsr_sterile()+"-ฆ่าเชื้อ", 18));
+
+
+                    // Print Item Detail
+                    int row_cnt = (z*itemCnt);
+                    if(z==Page) row_cnt = ((Page-1)*itemCnt)+last_row_count;
+
+//                    Log.d("OOOO",z +" == "+Page);
+//                    Log.d("OOOO",row_cnt+"");
+//                    Log.d("OOOO",row+"");
+
+                    for (int l = row; l < row_cnt; l+=2) {
+                        //Log.d("OOOO",l+"/"+z+" :: "+arrOfStr[l]+"");
+
+                        try {
+                            if(arrOfStr[l].length() > 0) {
+                                String[] vb1 = arrOfStr[l].split("#");
+                                //Log.d("OOOO",vb1[0]+" :: "+vb1[0].length());
+                                Tsc.sendpicture(40, 80 + (row_y * 27), TextAsBitmap.getTextBitmap(vb1[0].substring(0, vb1[0].length()<12?vb1[0].length():12) + "...", 18));
+                                String[] pp = vb1[1].split(" ");
+                                Tsc.sendpicture(185, 80 + (row_y * 27), TextAsBitmap.getTextBitmap(pp[0], 18));
+                            }
+                        }catch (Exception e){}
+                        //Log.d("OOOO",(l+1)+"/"+z+" :: "+arrOfStr[(l+1)]+"");
+                        try {
+                            if(arrOfStr[(l+1)].length() > 0) {
+                                String[] vb2 = arrOfStr[(l+1)].split("#");
+                                //Log.d("OOOO",vb2[0]+" :: "+vb2[0].length());
+                                Tsc.sendpicture(215, 80 + (row_y * 27), TextAsBitmap.getTextBitmap(vb2[0].substring(0, vb2[0].length()<12?vb2[0].length():12) + "...", 18));
+                                String[] pp2 = vb2[1].split(" ");
+                                Tsc.sendpicture(365, 80 + (row_y * 27), TextAsBitmap.getTextBitmap(pp2[0], 18));
+                            }
+                        }catch (Exception e){}
+
+                        row_y++;
+                    }
+
+
+                    if(pQty > Integer.parseInt( m.getQty() ))
+                        Tsc.sendcommand("PRINT 1," + pQty + "\r\n");
+                    else
+                        Tsc.sendcommand("PRINT 1," + m.getQty() + "\r\n");
+                    row = (z*itemCnt);
+                }
+
+                getID += m.getID() + "@";
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        Tsc.closeport();
+        return getID;
+    }
+
     private String StickerCase11_2(int Sel, ArrayList<String> PRINTER_IP,List<ModelSterileDetail> DATA_MODEL){
         TscWifi Tsc = new TscWifi();
         String getID="";
@@ -980,7 +1373,129 @@ public class PrintSticker {
         return getID ;
     }
 
-    private String StickerCase11_2_1(int Sel, ArrayList<String> PRINTER_IP,List<ModelSterileDetail> DATA_MODEL){
+    private String StickerCase11_3(int Sel, ArrayList<String> PRINTER_IP,List<ModelSterileDetail> DATA_MODEL){
+        TscWifi Tsc = new TscWifi();
+        String getID="";
+        boolean PMachine = p.isPMachine();
+        boolean PPrice = p.isPPrice();
+        boolean PRound = p.isPRound();
+        boolean PDept = p.isPDept();
+        boolean PEmp1 = p.isPEmp1();
+        boolean PEmp2 = p.isPEmp2();
+        boolean PEmp3 = p.isPEmp3();
+        int PSpeed = p.getPSpeed();
+        int PDensity = p.getPDensity();
+        String POption = p.getPOption();
+
+        System.out.println("Sel"+ Sel);
+        System.out.println("Printer"+PRINTER_IP.size());
+
+        ArrayList <String> Data = getData(Sel-1,PRINTER_IP);
+
+        String PrinterIP = Data.get(0);
+        int Heigth = Integer.parseInt(Data.get(1));
+        int Width = Integer.parseInt(Data.get(2));
+
+        System.out.println("PrinterIP = " + PrinterIP);
+        System.out.println("Heigth = " + Heigth);
+        System.out.println("Width = " + Width);
+
+        Tsc.openport(PrinterIP, 9100);
+
+        Iterator li = DATA_MODEL.iterator();
+
+        while (li.hasNext()) {
+            Tsc.setup(Width, Heigth, PSpeed, PDensity, 0, 3, 1);
+            Tsc.sendcommand("DIRECTION 1,0\r\n");
+            try {
+                ModelSterileDetail m = (ModelSterileDetail) li.next();
+                String Itemname[] = TextTwoLine.make2line(m.getItemname());
+
+                String[] arrOfStr = m.getItemSetData().split("%");
+
+                //=============================================================
+                int xCpoy = 0;
+                if (pQty > Integer.parseInt(m.getQty()))
+                    xCpoy = pQty ;
+                else
+                    xCpoy = Integer.parseInt( m.getQty() );
+
+                for(int xQ = 0; xQ < xCpoy ; xQ++) {
+
+                    //================
+                    //    Count Page
+                    int Page = (arrOfStr.length / 24);
+                    int last_row_count = (arrOfStr.length % 24);
+                    if (last_row_count > 0) Page++;
+                    int row = 0;
+                    //================
+                    for (int p = 1; p < (Page + 1); p++) {
+                        Tsc.clearbuffer();
+                        int row_y = 0;
+
+                        Tsc.sendpicture(95, 60, TextAsBitmap.getTextBitmap(Itemname[0], 30));
+
+                        Tsc.sendpicture(95, 95, TextAsBitmap.getTextBitmap("No." + m.getUsageCode() + "", 26));
+
+                        Tsc.sendpicture(95, 445, TextAsBitmap.getTextBitmap(m.getUsr_prepare() + " - เตรียม / " + m.getUsr_approve() + " - ตรวจ", 19));
+                        //Tsc.sendpicture(225, 435, TextAsBitmap.getTextBitmap(m.getUsr_approve()+" -ตรวจ ", 19));
+
+                        Tsc.sendpicture(95, 475, TextAsBitmap.getTextBitmap("ตู้ : " + m.getMachineName() + "/" + m.getSterileRoundNumber(), 20));
+
+                        //QR_Code
+                        Tsc.qrcode(30, 510, "H", "5", "A", "0", "M2", "S1", m.getUsageCode());
+
+                        //วันแพค
+                        String yy1 = (Integer.parseInt(m.getSterileDate().substring(6, 10)) + 543) + "";
+                        String mfc1 = m.getSterileDate().substring(0, 2) + "/" + m.getSterileDate().substring(3, 5) + "/" + yy1.substring(2, 4);
+                        Tsc.sendpicture(170, 510, TextAsBitmap.getTextBitmap("ผลิต " + mfc1 + " (" + m.getAgeDay() + "วัน" + ")", 24));
+
+
+                        //วันหมดอายุ
+                        String yy2 = (Integer.parseInt(m.getExpireDate().substring(6, 10)) + 543) + "";
+                        String mfc2 = m.getExpireDate().substring(0, 2) + "/" + m.getExpireDate().substring(3, 5) + "/" + yy2.substring(2, 4);
+                        Tsc.sendpicture(170, 547, TextAsBitmap.getTextBitmap("หมดอายุ ", 28));
+                        Tsc.sendpicture(280, 547, TextAsBitmap.getTextBitmap(mfc2, 28));
+
+                        // Print Item Detail
+                        int row_cnt = (p * 24);
+                        if (p == Page)
+                            if (arrOfStr.length != 24) row_cnt = ((Page - 1) * 24) + last_row_count;
+                        for (int l = row; l < row_cnt; l++) {
+                            String[] vb = arrOfStr[l].split("#");
+
+                            if (!arrOfStr[l].equals("-")) {
+                                Tsc.sendpicture(+95, +130 + (row_y * 25), TextAsBitmap.getTextBitmap(vb[0].substring(0, vb[0].length() < 12 ? vb[0].length() : 12) + "...", 18));
+                                String[] pp = vb[1].split(" ");
+                                Log.d("BANKMUI",pp+"");
+                                Tsc.sendpicture(240, 130 + (row_y * 25), TextAsBitmap.getTextBitmap(pp[0], 20));
+                                row_y++;
+                            } else {
+                                Tsc.sendpicture(+95, +130 + (row_y * 25), TextAsBitmap.getTextBitmap("", 18));
+                                row_y++;
+                            }
+
+                            //Log.d("BANKMUI",vb[0]+"");
+                            //Log.d("BANKMUI",vb[1]+"");
+                            //Log.d("BANKMUI",arrOfStr[l]+"");
+
+                        }
+                        Tsc.sendcommand("PRINT 1\r\n");
+                        row = (p * 24);
+                    }
+                }
+
+                getID += m.getID() + "@";
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        Tsc.closeport();
+        return getID ;
+    }
+
+    private String StickerCase11_4(int Sel, ArrayList<String> PRINTER_IP,List<ModelSterileDetail> DATA_MODEL){
         TscWifi Tsc = new TscWifi();
         String getID="";
         boolean PMachine = p.isPMachine();
@@ -1112,144 +1627,6 @@ public class PrintSticker {
         Print = true;
         Tsc.closeport();
         return getID ;
-    }
-
-    private String StickerCase11(int Sel, ArrayList<String> PRINTER_IP, List<ModelSterileDetail> DATA_MODEL){
-        TscWifi Tsc = new TscWifi();
-        String getID="";
-        String Age1 = "";
-        boolean PMachine = p.isPMachine();
-        boolean PPrice = p.isPPrice();
-        boolean PRound = p.isPRound();
-        boolean PDept = p.isPDept();
-        boolean PEmp1 = p.isPEmp1();
-        boolean PEmp2 = p.isPEmp2();
-        boolean PEmp3 = p.isPEmp3();
-        int PSpeed = p.getPSpeed();
-        int PDensity = p.getPDensity();
-        String POption = p.getPOption();
-        System.out.println("Sel"+ Sel);
-        System.out.println("Printer"+PRINTER_IP.size());
-
-        ArrayList <String> Data = getData(Sel-1,PRINTER_IP);
-
-        String PrinterIP = Data.get(0);
-        int Heigth = Integer.parseInt(Data.get(1));
-        int Width = Integer.parseInt(Data.get(2));
-
-        System.out.println("PrinterIP = " + PrinterIP);
-        System.out.println("Heigth = " + Heigth);
-        System.out.println("Width = " + Width);
-
-        //Tsc.openport(getPrinterIP(Sel,PRINTER_IP), 9100);
-
-        Tsc.openport(PrinterIP, 9100);
-
-        Iterator li = DATA_MODEL.iterator();
-        while (li.hasNext()) {
-            Tsc.setup(Width, Heigth, PSpeed, PDensity, 0, 2, 1);
-            Tsc.sendcommand("DIRECTION 0,0\r\n");
-            try {
-                ModelSterileDetail m = (ModelSterileDetail) li.next();
-                String Itemname[] = TextTwoLine.make2line(m.getItemname());
-
-                int Page = 0;
-                int row = 0;
-                int itemCnt = 24;
-                int last_row_count = 0;
-                String[] arrOfStr = null;
-                //================
-                //    Count Page
-                //================
-                try {
-                    arrOfStr = m.getItemSetData().split("%");
-                    Page = (arrOfStr.length / itemCnt);
-                    last_row_count = (arrOfStr.length % itemCnt);
-                }catch (Exception e){
-                    Page = 0;
-                    last_row_count = 0;
-                }
-                if( last_row_count > 0 ) Page++;
-
-                for(int z=1;z<(Page+1);z++) {
-                    Tsc.clearbuffer();
-                    int row_y = 0;
-
-                    Tsc.sendpicture(45, 40, TextAsBitmap.getTextBitmap(Itemname[0], 26));
-
-                    //วันแพค
-                    String yy1 = (Integer.parseInt( m.getSterileDate().substring(6,10) )+543)+"";
-                    String mfc1 = m.getSterileDate().substring(0,2) +"/"+m.getSterileDate().substring(3,5)+"/"+ yy1.substring(2,4);
-                    Tsc.sendpicture(40, 415, TextAsBitmap.getTextBitmap("ผลิต : " + mfc1 + " ( " + m.getAgeDay() + " วัน " + ")", 26));
-                    //วันหมดอายุ
-                    String yy2 = (Integer.parseInt( m.getExpireDate().substring(6,10) )+543)+"";
-                    String mfc2 = m.getExpireDate().substring(0,2) +"/"+m.getExpireDate().substring(3,5)+"/"+ yy2.substring(2,4);
-                    Tsc.sendpicture(40, 445, TextAsBitmap.getTextBitmap( "หมดอายุ ", 32));
-                    Tsc.sendpicture(200, 445, TextAsBitmap.getTextBitmap(mfc2 , 40));
-
-                    //QR_Code
-                    Tsc.qrcode(40, 500, "H", "3.5", "A", "0", "M2", "S1", m.getUsageCode());
-                    //Item_Code
-                    Tsc.sendpicture(135, 490, TextAsBitmap.getTextBitmap("No."+m.getUsageCode()+"", 20));
-                    //เครื่อง
-                    Tsc.sendpicture(300, 490, TextAsBitmap.getTextBitmap("ตู้ :" + m.getMachineName()+"/" + m.getSterileRoundNumber(), 20));
-                    Tsc.sendpicture(135, 515, TextAsBitmap.getTextBitmap(m.getUsr_prepare()+" -เตรียม", 20));
-                    Tsc.sendpicture(135, 540, TextAsBitmap.getTextBitmap(m.getUsr_approve()+" -ตรวจ", 18));
-//                    Tsc.sendpicture(45, 490, TextAsBitmap.getTextBitmap(m.getUsr_sterile()+"-ฆ่าเชื้อ", 18));
-
-
-                    // Print Item Detail
-                    int row_cnt = (z*itemCnt);
-                    if(z==Page) row_cnt = ((Page-1)*itemCnt)+last_row_count;
-
-//                    Log.d("OOOO",z +" == "+Page);
-//                    Log.d("OOOO",row_cnt+"");
-//                    Log.d("OOOO",row+"");
-
-                    for (int l = row; l < row_cnt; l+=2) {
-                        //Log.d("OOOO",l+"/"+z+" :: "+arrOfStr[l]+"");
-
-                        try {
-                            if(arrOfStr[l].length() > 0) {
-                                String[] vb1 = arrOfStr[l].split("#");
-                                //Log.d("OOOO",vb1[0]+" :: "+vb1[0].length());
-                                Tsc.sendpicture(40, 80 + (row_y * 27), TextAsBitmap.getTextBitmap(vb1[0].substring(0, vb1[0].length()<12?vb1[0].length():12) + "...", 18));
-                                String[] pp = vb1[1].split(" ");
-                                Tsc.sendpicture(185, 80 + (row_y * 27), TextAsBitmap.getTextBitmap(pp[0], 18));
-                            }
-                        }catch (Exception e){}
-                        //Log.d("OOOO",(l+1)+"/"+z+" :: "+arrOfStr[(l+1)]+"");
-                        try {
-                            if(arrOfStr[(l+1)].length() > 0) {
-                                String[] vb2 = arrOfStr[(l+1)].split("#");
-                                //Log.d("OOOO",vb2[0]+" :: "+vb2[0].length());
-                                Tsc.sendpicture(215, 80 + (row_y * 27), TextAsBitmap.getTextBitmap(vb2[0].substring(0, vb2[0].length()<12?vb2[0].length():12) + "...", 18));
-                                String[] pp2 = vb2[1].split(" ");
-                                Tsc.sendpicture(365, 80 + (row_y * 27), TextAsBitmap.getTextBitmap(pp2[0], 18));
-                            }
-                        }catch (Exception e){}
-
-                        row_y++;
-                    }
-
-
-                    if(pQty > Integer.parseInt( m.getQty() ))
-                        Tsc.sendcommand("PRINT 1," + pQty + "\r\n");
-                    else
-                        Tsc.sendcommand("PRINT 1," + m.getQty() + "\r\n");
-                    row = (z*itemCnt);
-                }
-
-                getID += m.getID() + "@";
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        Tsc.closeport();
-        return getID;
     }
 
     private String StickerCase12_2(int Sel, ArrayList<String> PRINTER_IP, List<ModelSterileDetail> DATA_MODEL){
@@ -1448,78 +1825,6 @@ public class PrintSticker {
         return getID;
     }
 
-    private String StickerCase13(int Sel, ArrayList<String> PRINTER_IP, List<ModelSterileDetail> DATA_MODEL){
-        TscWifi Tsc = new TscWifi();
-        String getID="";
-        String Age1 = "";
-        boolean PMachine = p.isPMachine();
-        boolean PPrice = p.isPPrice();
-        boolean PRound = p.isPRound();
-        boolean PDept = p.isPDept();
-        boolean PEmp1 = p.isPEmp1();
-        boolean PEmp2 = p.isPEmp2();
-        boolean PEmp3 = p.isPEmp3();
-        int PSpeed = p.getPSpeed();
-        int PDensity = p.getPDensity();
-        String POption = p.getPOption();
-
-        ArrayList <String> Data = getData(Sel-1,PRINTER_IP);
-
-        String PrinterIP = Data.get(0);
-        int Heigth = Integer.parseInt(Data.get(1));
-        int Width = Integer.parseInt(Data.get(2));
-
-        Log.d("BANKRT77",Sel+"");
-        Log.d("BANKRT77",PRINTER_IP+"");
-        Log.d("BANKRT77",B_ID+"");
-
-        //Tsc.openport(getPrinterIP(Sel,PRINTER_IP), 9100);
-
-        Tsc.openport(PrinterIP, 9100);
-
-        Iterator li = DATA_MODEL.iterator();
-        while (li.hasNext()) {
-            Tsc.setup(Width, Heigth, PSpeed, PDensity, 0, 2, 1);
-            Tsc.sendcommand("DIRECTION 1,0\r\n");
-            Tsc.clearbuffer();
-            try {
-
-                ModelSterileDetail m = (ModelSterileDetail) li.next();
-
-                String Itemname[] = TextTwoLine.make2line(m.getItemname());
-
-                Tsc.sendpicture(40, 95, TextAsBitmap.getTextBitmap(Itemname[0], 26));
-
-                Tsc.qrcode(40, 200, "H", "3", "A", "0", "M2", "S1", m.getUsageCode());
-                String yy1 = (Integer.parseInt( m.getSterileDate().substring(6,10) )+543)+"";
-                String mfc1 = m.getSterileDate().substring(0,2) +"/"+m.getSterileDate().substring(3,5)+"/"+ yy1.substring(2,4);
-                Tsc.sendpicture(40, 150, TextAsBitmap.getTextBitmap("ผลิต : " + mfc1 + " ( " + m.getAgeDay() + " วัน " + ")", 16));
-                //วันหมดอายุ
-                String yy2 = (Integer.parseInt( m.getExpireDate().substring(6,10) )+543)+"";
-                String mfc2 = m.getExpireDate().substring(0,2) +"/"+m.getExpireDate().substring(3,5)+"/"+ yy2.substring(2,4);
-                Tsc.sendpicture(40, 170, TextAsBitmap.getTextBitmap("หมดอายุ" , 22));
-                Tsc.sendpicture(125, 170, TextAsBitmap.getTextBitmap(mfc2 , 22));
-
-                Tsc.sendpicture(125, 210, TextAsBitmap.getTextBitmap("" + m.getUsageCode(), 18));
-                Tsc.sendpicture(125, 230, TextAsBitmap.getTextBitmap("ตู้ " + m.getMachineName()+"/"+ m.getSterileRoundNumber(), 18));
-                Tsc.sendpicture(125, 250, TextAsBitmap.getTextBitmap(m.getUsr_prepare()+"-เตรียม", 16));
-
-                if(pQty > Integer.parseInt( m.getQty() ))
-                    Tsc.sendcommand("PRINT 1," + pQty + "\r\n");
-                else
-                    Tsc.sendcommand("PRINT 1," + m.getQty() + "\r\n");
-                getID += m.getID() + "@";
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        Tsc.closeport();
-        return getID;
-    }
-
     private String StickerCase14(int Sel, ArrayList<String> PRINTER_IP, List<ModelSterileDetail> DATA_MODEL){
         TscWifi Tsc = new TscWifi();
         String getID="";
@@ -1640,300 +1945,6 @@ public class PrintSticker {
         Tsc.openport(getPrinterIP(Sel,PRINTER_IP), 9100);
         Iterator li = DATA_MODEL.iterator();
 
-        return getID;
-    }
-    // =============================================================================================
-    // -- Add Sterile Detail
-    // =============================================================================================
-
-    public void Get_label_sticker(String xID) {
-        class Get_label_sticker extends AsyncTask<String, Void, String> {
-            // variable
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                try{
-                    JSONObject jsonObj = new JSONObject(s);
-                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
-                    for(int i=0;i<setRs.length();i++) {
-                        JSONObject c = setRs.getJSONObject(i);
-                        xItemname1=c.getInt("xItemname1");
-                        yItemname1=c.getInt("yItemname1");
-                        xUsagecode1=c.getInt("xUsagecode1");
-                        yUasgecode1=c.getInt("yUasgecode1");
-                        xPrice=c.getInt("xPrice");
-                        yPrice=c.getInt("yPrice");
-                        xDept1=c.getInt("xDept1");
-                        yDept1=c.getInt("yDept1");
-                        xMachine=c.getInt("xMachine");
-                        yMahcine=c.getInt("yMahcine");
-                        xRound=c.getInt("xRound");
-                        yRound=c.getInt("yRound");
-                        xPackdate=c.getInt("xPackdate");
-                        yPackdate=c.getInt("yPackdate");
-                        xExp=c.getInt("xExp");
-                        yExp=c.getInt("yExp");
-                        xEmp1=c.getInt("xEmp1");
-                        yEmp1=c.getInt("yEmp1");
-                        xEmp2=c.getInt("xEmp2");
-                        yEmp2=c.getInt("yEmp2");
-                        xItemname2=c.getInt("xItemname2");
-                        yItemname2=c.getInt("yItemname2");
-                        xDept2=c.getInt("xDept2");
-                        yDept2=c.getInt("yDept2=");
-                        xUsagecode2=c.getInt("xUsagecode2");
-                        yUsagecode2=c.getInt("yUsagecode2");
-                        xQrcode1=c.getInt("xQrcode1");
-                        yQrcode1=c.getInt("yQrcode1");
-                        xQrcode2=c.getInt("xQrcode2");
-                        yQrcode2=c.getInt("yQrcode2");
-                        xPackdate2=c.getInt("xPackdate2");
-                        yPackdate2=c.getInt("yPackdate2");
-                        xExp2=c.getInt("xExp2");
-                        yExp2=c.getInt("yExp2");
-                        xEmp3=c.getInt("xEmp3");
-                        yEmp3=c.getInt("yEmp3");
-                        Log.d("ED_DEPTNAME",c.getString("ED_DepName") );
-                    }
-                    //etxt_dept.setText(ED_DeptName);
-                    //getlistdata(deptsp_id,edittext.getText().toString(),"");
-                }catch (JSONException e){
-                    Log.d("XXX", "Error on get dept" );
-                }
-            }
-            //class connect php RegisterUserClass important !!!!!!!
-            @Override
-            protected String doInBackground(String... params) {
-                HashMap<String, String> data = new HashMap<String,String>();
-                data.put("xID",params[0]);
-                String result = ruc.sendPostRequest(getUrl.xUrl+"p/sticker/get_label_stickerXY.php",data);
-                return result;
-            }
-        }
-        Get_label_sticker ru = new Get_label_sticker();
-        ru.execute(xID);
-    }
-
-    private String getPrinterIP(int Label,ArrayList<String> PRINTER_IP){
-        if(PRINTER_IP == null || PRINTER_IP.size() == 0) {
-            return null;
-        }else {
-            return PRINTER_IP.get(Label - 1);
-        }
-    }
-
-    private ArrayList <String> getData (int Index,ArrayList<String> PRINTER_IP){
-        if(PRINTER_IP == null || PRINTER_IP.size() == 0) {
-            return null;
-        }else {
-            ArrayList <String> Data = new ArrayList<>();
-            Data.add(PRINTER_IP.get(Index * 3));
-            Data.add(PRINTER_IP.get((Index * 3)+1));
-            Data.add(PRINTER_IP.get((Index * 3)+2));
-            return Data;
-        }
-    }
-
-    private String StickerCase11_3(int Sel, ArrayList<String> PRINTER_IP,List<ModelSterileDetail> DATA_MODEL){
-        TscWifi Tsc = new TscWifi();
-        String getID="";
-        boolean PMachine = p.isPMachine();
-        boolean PPrice = p.isPPrice();
-        boolean PRound = p.isPRound();
-        boolean PDept = p.isPDept();
-        boolean PEmp1 = p.isPEmp1();
-        boolean PEmp2 = p.isPEmp2();
-        boolean PEmp3 = p.isPEmp3();
-        int PSpeed = p.getPSpeed();
-        int PDensity = p.getPDensity();
-        String POption = p.getPOption();
-
-        System.out.println("Sel"+ Sel);
-        System.out.println("Printer"+PRINTER_IP.size());
-
-        ArrayList <String> Data = getData(Sel-1,PRINTER_IP);
-
-        String PrinterIP = Data.get(0);
-        int Heigth = Integer.parseInt(Data.get(1));
-        int Width = Integer.parseInt(Data.get(2));
-
-        System.out.println("PrinterIP = " + PrinterIP);
-        System.out.println("Heigth = " + Heigth);
-        System.out.println("Width = " + Width);
-
-        Tsc.openport(PrinterIP, 9100);
-
-        Iterator li = DATA_MODEL.iterator();
-
-        while (li.hasNext()) {
-            Tsc.setup(Width, Heigth, PSpeed, PDensity, 0, 3, 1);
-            Tsc.sendcommand("DIRECTION 1,0\r\n");
-            try {
-                ModelSterileDetail m = (ModelSterileDetail) li.next();
-                String Itemname[] = TextTwoLine.make2line(m.getItemname());
-
-                String[] arrOfStr = m.getItemSetData().split("%");
-
-                //=============================================================
-                int xCpoy = 0;
-                if (pQty > Integer.parseInt(m.getQty()))
-                    xCpoy = pQty ;
-                else
-                    xCpoy = Integer.parseInt( m.getQty() );
-
-                for(int xQ = 0; xQ < xCpoy ; xQ++) {
-
-                    //================
-                    //    Count Page
-                    int Page = (arrOfStr.length / 24);
-                    int last_row_count = (arrOfStr.length % 24);
-                    if (last_row_count > 0) Page++;
-                    int row = 0;
-                    //================
-                    for (int p = 1; p < (Page + 1); p++) {
-                        Tsc.clearbuffer();
-                        int row_y = 0;
-
-                        Tsc.sendpicture(95, 60, TextAsBitmap.getTextBitmap(Itemname[0], 30));
-
-                        Tsc.sendpicture(95, 95, TextAsBitmap.getTextBitmap("No." + m.getUsageCode() + "", 26));
-
-                        Tsc.sendpicture(95, 445, TextAsBitmap.getTextBitmap(m.getUsr_prepare() + " - เตรียม / " + m.getUsr_approve() + " - ตรวจ", 19));
-                        //Tsc.sendpicture(225, 435, TextAsBitmap.getTextBitmap(m.getUsr_approve()+" -ตรวจ ", 19));
-
-                        Tsc.sendpicture(95, 475, TextAsBitmap.getTextBitmap("ตู้ : " + m.getMachineName() + "/" + m.getSterileRoundNumber(), 20));
-
-                        //QR_Code
-                        Tsc.qrcode(30, 510, "H", "5", "A", "0", "M2", "S1", m.getUsageCode());
-
-                        //วันแพค
-                        String yy1 = (Integer.parseInt(m.getSterileDate().substring(6, 10)) + 543) + "";
-                        String mfc1 = m.getSterileDate().substring(0, 2) + "/" + m.getSterileDate().substring(3, 5) + "/" + yy1.substring(2, 4);
-                        Tsc.sendpicture(170, 510, TextAsBitmap.getTextBitmap("ผลิต " + mfc1 + " (" + m.getAgeDay() + "วัน" + ")", 24));
-
-
-                        //วันหมดอายุ
-                        String yy2 = (Integer.parseInt(m.getExpireDate().substring(6, 10)) + 543) + "";
-                        String mfc2 = m.getExpireDate().substring(0, 2) + "/" + m.getExpireDate().substring(3, 5) + "/" + yy2.substring(2, 4);
-                        Tsc.sendpicture(170, 547, TextAsBitmap.getTextBitmap("หมดอายุ ", 28));
-                        Tsc.sendpicture(280, 547, TextAsBitmap.getTextBitmap(mfc2, 28));
-
-                        // Print Item Detail
-                        int row_cnt = (p * 24);
-                        if (p == Page)
-                            if (arrOfStr.length != 24) row_cnt = ((Page - 1) * 24) + last_row_count;
-                        for (int l = row; l < row_cnt; l++) {
-                            String[] vb = arrOfStr[l].split("#");
-
-                                if (!arrOfStr[l].equals("-")) {
-                                    Tsc.sendpicture(+95, +130 + (row_y * 25), TextAsBitmap.getTextBitmap(vb[0].substring(0, vb[0].length() < 12 ? vb[0].length() : 12) + "...", 18));
-                                    String[] pp = vb[1].split(" ");
-                                    Log.d("BANKMUI",pp+"");
-                                    Tsc.sendpicture(240, 130 + (row_y * 25), TextAsBitmap.getTextBitmap(pp[0], 20));
-                                    row_y++;
-                                } else {
-                                    Tsc.sendpicture(+95, +130 + (row_y * 25), TextAsBitmap.getTextBitmap("", 18));
-                                    row_y++;
-                                }
-
-                            //Log.d("BANKMUI",vb[0]+"");
-                            //Log.d("BANKMUI",vb[1]+"");
-                            //Log.d("BANKMUI",arrOfStr[l]+"");
-
-                        }
-                        Tsc.sendcommand("PRINT 1\r\n");
-                        row = (p * 24);
-                    }
-                }
-
-                getID += m.getID() + "@";
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        Tsc.closeport();
-        return getID ;
-    }
-
-    private String StickerCase20_1(int Sel, ArrayList<String> PRINTER_IP ,List<ModelSterileDetail> DATA_MODEL){
-        TscWifi Tsc = new TscWifi();
-        String getID="";
-        String Age1 = "";
-        boolean PMachine = p.isPMachine();
-        boolean PPrice = p.isPPrice();
-        boolean PRound = p.isPRound();
-        boolean PDept = p.isPDept();
-        boolean PEmp1 = p.isPEmp1();
-        boolean PEmp2 = p.isPEmp2();
-        boolean PEmp3 = p.isPEmp3();
-        int PSpeed = p.getPSpeed();
-        int PDensity = p.getPDensity();
-        String POption = p.getPOption();
-        ArrayList <String> Data = getData(Sel-1,PRINTER_IP);
-        String PrinterIP = Data.get(0);
-        int Heigth = Integer.parseInt(Data.get(1));
-        int Width = Integer.parseInt(Data.get(2));
-        Tsc.openport(PrinterIP, 9100);
-        Iterator li = DATA_MODEL.iterator();
-        while (li.hasNext()) {
-            Tsc.setup(Width, Heigth, PSpeed, PDensity, 0, 2, 1);
-            Tsc.sendcommand("DIRECTION 1,0\r\n");
-            Tsc.clearbuffer();
-            try {
-
-                //sticker สีฟ้า
-                ModelSterileDetail m = (ModelSterileDetail) li.next();
-
-                Tsc.setup(50, 26, PSpeed, PDensity, 0, 2, 1);
-                Tsc.sendcommand("DIRECTION 1,0\r\n");
-                Tsc.clearbuffer();
-
-                String Itemname[] = TextTwoLine.make2line(m.getItemname());
-
-                Tsc.sendpicture(10, 3, TextAsBitmap.getTextBitmap1(Itemname[0], 26));
-                //QR_Code
-                Tsc.qrcode(280, 50, "H", "5", "A", "0", "M2", "S1", m.getUsageCode());
-
-                Tsc.sendpicture(10, 44, TextAsBitmap.getTextBitmap1(m.getUsageCode(), 20));
-
-                //เครื่อง
-                if (PMachine || PRound) {
-                    Tsc.sendpicture(190, 44, TextAsBitmap.getTextBitmap1(m.getMachineName()+"/" + m.getSterileRoundNumber(), 20));
-                }
-                //วันแพค
-
-                String yy1 = (Integer.parseInt(m.getSterileDate().substring(6, 10)) + 543) + "";
-                String mfc1 = m.getSterileDate().substring(0, 2) + "/" + m.getSterileDate().substring(3, 5) + "/" + yy1.substring(2, 4);
-                Tsc.sendpicture(10, 76, TextAsBitmap.getTextBitmap1("ผลิต " + mfc1 + " ( " + m.getAgeDay() + " วัน " + ")", 20));
-
-
-                //วันหมดอายุ
-                String yy2 = (Integer.parseInt( m.getExpireDate().substring(6,10) )+543)+"";
-                String mfc2 =" หมดอายุ " + m.getExpireDate().substring(0,2) +"/"+m.getExpireDate().substring(3,5)+"/"+ yy2.substring(2,4);
-                Tsc.sendpicture(7, 103, TextAsBitmap.getTextBitmap1(mfc2 , 30));
-
-                Tsc.sendpicture(10, 136, TextAsBitmap.getTextBitmap1(m.getUsr_prepare()+" เตรียม / "
-                        +m.getUsr_approve()+" ตรวจ ",18));
-
-                if(pQty > Integer.parseInt( m.getQty() ))
-                    Tsc.sendcommand("PRINT 1," + pQty + "\r\n");
-                else
-                    Tsc.sendcommand("PRINT 1," + m.getQty() + "\r\n");
-                getID += m.getID() + "@";
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-        Print = true;
-        Tsc.closeport();
         return getID;
     }
 
@@ -2139,129 +2150,99 @@ public class PrintSticker {
         Tsc.closeport();
         return getID;
     }
+    // =============================================================================================
+    // -- Add Sterile Detail
+    // =============================================================================================
+    public void Get_label_sticker(String xID) {
+        class Get_label_sticker extends AsyncTask<String, Void, String> {
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
 
-    private String StickerCase07_New_IN(int Sel, ArrayList<String> PRINTER_IP ,List<ModelSterileDetail> DATA_MODEL){
-        TscWifi Tsc = new TscWifi();
-        String getID="";
-        boolean PMachine = p.isPMachine();
-        boolean PPrice = p.isPPrice();
-        boolean PRound = p.isPRound();
-        boolean PDept = p.isPDept();
-        boolean PEmp1 = p.isPEmp1();
-        boolean PEmp2 = p.isPEmp2();
-        boolean PEmp3 = p.isPEmp3();
-        int PSpeed = p.getPSpeed();
-        int PDensity = p.getPDensity();
-        String POption = p.getPOption();
-        ArrayList <String> Data = getData(Sel-1,PRINTER_IP);
-        String PrinterIP = Data.get(0);
-        int Heigth = Integer.parseInt(Data.get(1));
-        int Width = Integer.parseInt(Data.get(2));
-        Tsc.openport(PrinterIP, 9100);
-        Iterator li = DATA_MODEL.iterator();
-        while (li.hasNext()) {
-            Tsc.setup(Width, Heigth, PSpeed, PDensity, 0, 2, 1);
-            Tsc.sendcommand("DIRECTION 1,0\r\n");
-            Tsc.clearbuffer();
-            try {
-                ModelSterileDetail m = (ModelSterileDetail) li.next();
-                String Itemname[] = TextTwoLine.make2line(m.getItemname());
-                Tsc.sendpicture(25, 30, TextAsBitmap.getTextBitmap1(Itemname[0], 27));
-                Tsc.sendpicture(25, 80, TextAsBitmap.getTextBitmap(m.getUsageCode(), 26));
-                Tsc.sendpicture(25, 125, TextAsBitmap.getTextBitmap(m.getUsr_prepare()+" - เตรียม ", 26));
-                Tsc.sendpicture(25, 170, TextAsBitmap.getTextBitmap(m.getUsr_approve()+" - ตรวจ ", 26));
-                Tsc.qrcode(25, 275, "H", "5", "A", "0", "M2", "S1", m.getUsageCode());
-                String yy1 = (Integer.parseInt( m.getSterileDate().substring(6,10) )+543)+"";
-                String mfc1 = m.getSterileDate().substring(0,2) +"/"+m.getSterileDate().substring(3,5)+"/"+ yy1.substring(2,4);
-                Tsc.sendpicture(160, 300, TextAsBitmap.getTextBitmap("MFG "+mfc1+" ("+ m.getAgeDay() +"วัน"+")", 24));
-                String yy2 = (Integer.parseInt( m.getExpireDate().substring(6,10) )+543)+"";
-                String mfc2 = m.getExpireDate().substring(0,2) +"/"+m.getExpireDate().substring(3,5)+"/"+ yy2.substring(2,4);
-                Tsc.sendpicture(160, 330, TextAsBitmap.getTextBitmap1( "EXP "+ mfc2 , 32));
-                Tsc.sendpicture(160, 265, TextAsBitmap.getTextBitmap("เครื่อง : "+m.getMachineName() + "  รอบ :" + m.getSterileRoundNumber(), 24));
-                //----------------------------------------------------------------
-                // Footer
-                //----------------------------------------------------------------
-                Tsc.sendpicture(35, 430, TextAsBitmap.getTextBitmap1(Itemname[0], 26));
-                String Dep = m.getDepName2();
-                Tsc.sendpicture(160, 470, TextAsBitmap.getTextBitmap(m.getUsageCode(),20));
-                String DepName[] = TextTwoLine.make2line1(Dep);
-                Tsc.sendpicture(160, 500, TextAsBitmap.getTextBitmap("MFG "+mfc1+" ("+ m.getAgeDay() +"วัน"+")", 23));
-                Tsc.qrcode(35, 470, "H", "4", "A", "0", "M2", "S1", m.getUsageCode());
-                Tsc.sendpicture(160, 527, TextAsBitmap.getTextBitmap1( "EXP "+ mfc2 , 32));
-                if(pQty > Integer.parseInt( m.getQty() ))
-                    Tsc.sendcommand("PRINT 1," + pQty + "\r\n");
-                else
-                    Tsc.sendcommand("PRINT 1," + m.getQty() + "\r\n");
-                getID += m.getID() + "@";
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                try{
+                    JSONObject jsonObj = new JSONObject(s);
+                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
+                    for(int i=0;i<setRs.length();i++) {
+                        JSONObject c = setRs.getJSONObject(i);
+                        xItemname1=c.getInt("xItemname1");
+                        yItemname1=c.getInt("yItemname1");
+                        xUsagecode1=c.getInt("xUsagecode1");
+                        yUasgecode1=c.getInt("yUasgecode1");
+                        xPrice=c.getInt("xPrice");
+                        yPrice=c.getInt("yPrice");
+                        xDept1=c.getInt("xDept1");
+                        yDept1=c.getInt("yDept1");
+                        xMachine=c.getInt("xMachine");
+                        yMahcine=c.getInt("yMahcine");
+                        xRound=c.getInt("xRound");
+                        yRound=c.getInt("yRound");
+                        xPackdate=c.getInt("xPackdate");
+                        yPackdate=c.getInt("yPackdate");
+                        xExp=c.getInt("xExp");
+                        yExp=c.getInt("yExp");
+                        xEmp1=c.getInt("xEmp1");
+                        yEmp1=c.getInt("yEmp1");
+                        xEmp2=c.getInt("xEmp2");
+                        yEmp2=c.getInt("yEmp2");
+                        xItemname2=c.getInt("xItemname2");
+                        yItemname2=c.getInt("yItemname2");
+                        xDept2=c.getInt("xDept2");
+                        yDept2=c.getInt("yDept2=");
+                        xUsagecode2=c.getInt("xUsagecode2");
+                        yUsagecode2=c.getInt("yUsagecode2");
+                        xQrcode1=c.getInt("xQrcode1");
+                        yQrcode1=c.getInt("yQrcode1");
+                        xQrcode2=c.getInt("xQrcode2");
+                        yQrcode2=c.getInt("yQrcode2");
+                        xPackdate2=c.getInt("xPackdate2");
+                        yPackdate2=c.getInt("yPackdate2");
+                        xExp2=c.getInt("xExp2");
+                        yExp2=c.getInt("yExp2");
+                        xEmp3=c.getInt("xEmp3");
+                        yEmp3=c.getInt("yEmp3");
+                        Log.d("ED_DEPTNAME",c.getString("ED_DepName") );
+                    }
+                    //etxt_dept.setText(ED_DeptName);
+                    //getlistdata(deptsp_id,edittext.getText().toString(),"");
+                }catch (JSONException e){
+                    Log.d("XXX", "Error on get dept" );
+                }
+            }
+            //class connect php RegisterUserClass important !!!!!!!
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("xID",params[0]);
+                String result = ruc.sendPostRequest(getUrl.xUrl+"p/sticker/get_label_stickerXY.php",data);
+                return result;
             }
         }
-        Tsc.closeport();
-        return getID;
+        Get_label_sticker ru = new Get_label_sticker();
+        ru.execute(xID);
     }
 
-    private String StickerCase07_New(int Sel, ArrayList<String> PRINTER_IP ,List<ModelSterileDetail> DATA_MODEL){
-        TscWifi Tsc = new TscWifi();
-        String getID="";
-        boolean PMachine = p.isPMachine();
-        boolean PPrice = p.isPPrice();
-        boolean PRound = p.isPRound();
-        boolean PDept = p.isPDept();
-        boolean PEmp1 = p.isPEmp1();
-        boolean PEmp2 = p.isPEmp2();
-        boolean PEmp3 = p.isPEmp3();
-        int PSpeed = p.getPSpeed();
-        int PDensity = p.getPDensity();
-        String POption = p.getPOption();
-        ArrayList <String> Data = getData(Sel-1,PRINTER_IP);
-        String PrinterIP = Data.get(0);
-        int Heigth = Integer.parseInt(Data.get(1));
-        int Width = Integer.parseInt(Data.get(2));
-        Tsc.openport(PrinterIP, 9100);
-        Iterator li = DATA_MODEL.iterator();
-        while (li.hasNext()) {
-            Tsc.setup(Width, Heigth, PSpeed, PDensity, 0, 2, 1);
-            Tsc.sendcommand("DIRECTION 1,0\r\n");
-            Tsc.clearbuffer();
-            try {
-                ModelSterileDetail m = (ModelSterileDetail) li.next();
-                String Itemname[] = TextTwoLine.make2line(m.getItemname());
-                Tsc.sendpicture(25, 30, TextAsBitmap.getTextBitmap1(Itemname[0], 27));
-                Tsc.sendpicture(25, 80, TextAsBitmap.getTextBitmap(m.getUsageCode(), 26));
-                Tsc.sendpicture(25, 125, TextAsBitmap.getTextBitmap(m.getUsr_prepare()+" - เตรียม ", 26));
-                Tsc.sendpicture(25, 170, TextAsBitmap.getTextBitmap(m.getUsr_approve()+" - ตรวจ ", 26));
-                Tsc.qrcode(25, 275, "H", "5", "A", "0", "M2", "S1", m.getUsageCode());
-                String yy1 = (Integer.parseInt( m.getSterileDate().substring(6,10) )+543)+"";
-                String mfc1 = m.getSterileDate().substring(0,2) +"/"+m.getSterileDate().substring(3,5)+"/"+ yy1.substring(2,4);
-                Tsc.sendpicture(160, 300, TextAsBitmap.getTextBitmap("MFG "+mfc1+" ("+ m.getAgeDay() +"วัน"+")", 24));
-                String yy2 = (Integer.parseInt( m.getExpireDate().substring(6,10) )+543)+"";
-                String mfc2 = m.getExpireDate().substring(0,2) +"/"+m.getExpireDate().substring(3,5)+"/"+ yy2.substring(2,4);
-                Tsc.sendpicture(160, 330, TextAsBitmap.getTextBitmap1( "EXP "+ mfc2 , 32));
-                Tsc.sendpicture(160, 265, TextAsBitmap.getTextBitmap("เครื่อง : "+m.getMachineName() + "  รอบ :" + m.getSterileRoundNumber(), 24));
-                //----------------------------------------------------------------
-                // Footer
-                //----------------------------------------------------------------
-                Tsc.sendpicture(35, 430, TextAsBitmap.getTextBitmap1(Itemname[0], 26));
-                String Dep = m.getDepName2();
-                Tsc.sendpicture(160, 470, TextAsBitmap.getTextBitmap(m.getUsageCode(),20));
-                String DepName[] = TextTwoLine.make2line1(Dep);
-                Tsc.sendpicture(160, 500, TextAsBitmap.getTextBitmap("MFG "+mfc1+" ("+ m.getAgeDay() +"วัน"+")", 23));
-                Tsc.qrcode(35, 470, "H", "4", "A", "0", "M2", "S1", m.getUsageCode());
-                Tsc.sendpicture(160, 527, TextAsBitmap.getTextBitmap1( "EXP "+ mfc2 , 32));
-                if(pQty > Integer.parseInt( m.getQty() ))
-                    Tsc.sendcommand("PRINT 1," + pQty + "\r\n");
-                else
-                    Tsc.sendcommand("PRINT 1," + m.getQty() + "\r\n");
-                getID += m.getID() + "@";
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    private String getPrinterIP(int Label,ArrayList<String> PRINTER_IP){
+        if(PRINTER_IP == null || PRINTER_IP.size() == 0) {
+            return null;
+        }else {
+            return PRINTER_IP.get(Label - 1);
         }
-        Tsc.closeport();
-        return getID;
     }
 
+    private ArrayList <String> getData (int Index,ArrayList<String> PRINTER_IP){
+        if(PRINTER_IP == null || PRINTER_IP.size() == 0) {
+            return null;
+        }else {
+            ArrayList <String> Data = new ArrayList<>();
+            Data.add(PRINTER_IP.get(Index * 3));
+            Data.add(PRINTER_IP.get((Index * 3)+1));
+            Data.add(PRINTER_IP.get((Index * 3)+2));
+            return Data;
+        }
+    }
 }

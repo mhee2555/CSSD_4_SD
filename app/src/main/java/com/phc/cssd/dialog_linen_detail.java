@@ -159,12 +159,14 @@ public class dialog_linen_detail extends Activity {
                                 for (int i = 0 ; i < Model_Linen.size() ; i ++){
                                     Model_Linen.get(i).getUsageCode();
                                     String Itemcode;
-                                    Itemcode = search_scan.getText().toString().toUpperCase().substring(0,12);
+                                    Itemcode = search_scan.getText().toString().toUpperCase();
+                                    Log.d("FJFLFJO",Itemcode);
+                                    Log.d("FJFLFJO",Model_Linen.get(i).getUsageCode());
                                     if (Itemcode.equals(Model_Linen.get(i).getUsageCode())){
-                                        if (Model_Linen.get(i).getChk().equals("1")){
+                                        if (Model_Linen.get(i).getChk().equals("0")){
                                             chk = "2";
                                         }else {
-                                            Model_Linen.get(i).setChk("1");
+                                            Model_Linen.get(i).setChk("0");
                                             ArrayAdapter<ModelLinenDetail> adapter;
                                             adapter = new ListStockLinenDetailAdapter(dialog_linen_detail.this, Model_Linen);
                                             item.setAdapter(adapter);
@@ -172,9 +174,9 @@ public class dialog_linen_detail extends Activity {
                                         }
                                     }
                                 }
+
                                 if (chk.equals("1")){
                                     Toast.makeText(dialog_linen_detail.this, "ถูกต้อง", Toast.LENGTH_SHORT).show();
-                                    chk.equals("0");
                                     search_scan.setText("");
                                     search_scan.requestFocus();
                                 }else if (chk.equals("0")){
@@ -186,6 +188,7 @@ public class dialog_linen_detail extends Activity {
                                     search_scan.setText("");
                                     search_scan.requestFocus();
                                 }
+                                chk = "0";
                                 return true;
                             default:
                                 search_scan.requestFocus();
@@ -252,6 +255,7 @@ public class dialog_linen_detail extends Activity {
                     rs = jsonObj.getJSONArray(TAG_RESULTS);
                     List<ModelLinenDetail> list = new ArrayList<>();
                     Datasize = rs.length();
+                    int index=1;
                     for(int i=0;i<rs.length();i++){
                         JSONObject c = rs.getJSONObject(i);
                         if (!c.getString("itemname").equals("")){
@@ -263,7 +267,8 @@ public class dialog_linen_detail extends Activity {
                                                 c.getString("PackDate"),
                                                 c.getString("ExpireDate"),
                                                 c.getString("date"),
-                                                "1"
+                                                "1",
+                                                index
                                         )
                                 );
                             }else {
@@ -274,11 +279,13 @@ public class dialog_linen_detail extends Activity {
                                                 c.getString("PackDate"),
                                                 c.getString("ExpireDate"),
                                                 c.getString("date"),
-                                                "0"
+                                                "0",
+                                                index
                                         )
                                 );
                                 Toast.makeText(dialog_linen_detail.this, "ถูกต้อง", Toast.LENGTH_SHORT).show();
                             }
+                            index++;
                         }else {
                             search_name.requestFocus();
                             search_scan.setText("");
@@ -312,14 +319,15 @@ public class dialog_linen_detail extends Activity {
                 }
                 return result;
             }
-            private ModelLinenDetail get(String Itemname, String UsageCode, String PackDate, String ExpireDate, String Date, String Chk) {
+            private ModelLinenDetail get(String Itemname, String UsageCode, String PackDate, String ExpireDate, String Date, String Chk, int index) {
                 return new ModelLinenDetail(
                         Itemname,
                         UsageCode,
                         PackDate,
                         ExpireDate,
                         Date,
-                        Chk);
+                        Chk,
+                        index);
             }
             // =========================================================================================
         }

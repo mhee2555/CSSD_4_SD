@@ -40,7 +40,7 @@ public class getUrl {
         */
 //        return "http://poseintelligence.dyndns.biz:8181/cssd_test_itemcode/";
 //        return "http://poseintelligence.dyndns.biz:8181/cssd_siriraj/";
-        return "http://poseintelligence.dyndns.biz:8181/cssd_siriraj_dev/";
+        return "http://poseintelligence.dyndns.biz:8181/cssd_siriraj/";
 //        return "http://poseintelligence.dyndns.biz:8181/cssd_siriraj_test/";
 //        return "http://poseintelligence.dyndns.biz:8181/cssd_vcy_test/";
 //        return "http://192.168.14.48/cssd_vch/";

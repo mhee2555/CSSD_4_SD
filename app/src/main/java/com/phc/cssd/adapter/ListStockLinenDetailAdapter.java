@@ -49,8 +49,10 @@ public class ListStockLinenDetailAdapter extends ArrayAdapter {
         final TextView pack = (TextView) v.findViewById(R.id.pack);
         final TextView exp = (TextView) v.findViewById(R.id.exp);
         final TextView day_exp = (TextView) v.findViewById(R.id.day_exp);
+        final TextView index = (TextView) v.findViewById(R.id.index);
         final CheckBox chk = (CheckBox) v.findViewById(R.id.chk);
 
+        index.setText(listData.get(position).getIndex()+".");
         itemname.setText(listData.get(position).getItemname());
         usage.setText(listData.get(position).getUsageCode());
         pack.setText(listData.get(position).getPackDate());

@@ -1318,6 +1318,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 data.put("UsageCode", UsageCode);
                 data.put("B_ID",B_ID);
                 String result = ruc.sendPostRequest(iFt.getitemdetail_sendsterile1(), data);
+                Log.d("YUYU",data+"");
+                Log.d("YUYU",result);
                 return result;
             }
         }
