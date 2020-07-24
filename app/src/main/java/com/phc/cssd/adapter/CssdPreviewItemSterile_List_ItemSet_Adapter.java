@@ -57,10 +57,10 @@ public class CssdPreviewItemSterile_List_ItemSet_Adapter extends ArrayAdapter<Mo
             holder.txt_qty.setTextColor(Color.BLACK);
             holder.txt_code.setTextColor(Color.BLACK);
         }else {
-            holder.txt_name.setTextColor(Color.RED);
-            holder.txt_no.setTextColor(Color.RED);
-            holder.txt_qty.setTextColor(Color.RED);
-            holder.txt_code.setTextColor(Color.RED);
+            holder.txt_name.setTextColor(Color.BLACK);
+            holder.txt_no.setTextColor(Color.BLACK);
+            holder.txt_qty.setTextColor(Color.BLACK);
+            holder.txt_code.setTextColor(Color.BLACK);
         }
 
         holder.txt_name.setText(DATA_MODEL.get(position).getItemname());

@@ -159,7 +159,9 @@ public class dialog_linen_detail extends Activity {
                                 for (int i = 0 ; i < Model_Linen.size() ; i ++){
                                     Model_Linen.get(i).getUsageCode();
                                     String Itemcode;
-                                    Itemcode = search_scan.getText().toString().toUpperCase().substring(0,12);
+                                    Itemcode = search_scan.getText().toString().toUpperCase();
+                                    Log.d("FJFLFJO",Itemcode);
+                                    Log.d("FJFLFJO",Model_Linen.get(i).getUsageCode());
                                     if (Itemcode.equals(Model_Linen.get(i).getUsageCode())){
                                         if (Model_Linen.get(i).getChk().equals("0")){
                                             chk = "2";
@@ -172,9 +174,9 @@ public class dialog_linen_detail extends Activity {
                                         }
                                     }
                                 }
+
                                 if (chk.equals("1")){
                                     Toast.makeText(dialog_linen_detail.this, "ถูกต้อง", Toast.LENGTH_SHORT).show();
-                                    chk.equals("0");
                                     search_scan.setText("");
                                     search_scan.requestFocus();
                                 }else if (chk.equals("0")){
@@ -186,6 +188,8 @@ public class dialog_linen_detail extends Activity {
                                     search_scan.setText("");
                                     search_scan.requestFocus();
                                 }
+                                chk = "0";
+                                Log.d("FJFLFJO",chk);
                                 return true;
                             default:
                                 search_scan.requestFocus();
