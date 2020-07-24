@@ -189,7 +189,6 @@ public class dialog_linen_detail extends Activity {
                                     search_scan.requestFocus();
                                 }
                                 chk = "0";
-                                Log.d("FJFLFJO",chk);
                                 return true;
                             default:
                                 search_scan.requestFocus();
