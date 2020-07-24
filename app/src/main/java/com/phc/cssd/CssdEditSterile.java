@@ -298,7 +298,7 @@ public class CssdEditSterile extends Activity {
                 // If the event is a key-down event on the "enter" button
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
-
+                    Log.d("ttest_qr","txt_qr--"+(switch_sterile_doc.isChecked()&&bt_switch.isChecked()));
                     if(switch_sterile_doc.isChecked()&&bt_switch.isChecked()){
                         Log.d("ttest_qr","txt_qr--"+txt_qr.getText().toString().substring(0,5));
                         getItemToMac(txt_qr.getText().toString());
