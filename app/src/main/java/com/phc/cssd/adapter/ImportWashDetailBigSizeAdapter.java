@@ -51,7 +51,8 @@ public class ImportWashDetailBigSizeAdapter extends ArrayAdapter<ModelImportWash
                 @Override
                 public void onClick(View v) {
                     ((CssdSterile)context).importWashDetail( viewHolder.txt_item_code.getText().toString(), viewHolder.txt_item_program_id.getText().toString() , viewHolder.item_program, viewHolder.PackingMatID,"0",
-                            viewHolder.basket);
+                            viewHolder.basket,
+                            viewHolder.usageCode);
                 }
             });
 
@@ -81,6 +82,7 @@ public class ImportWashDetailBigSizeAdapter extends ArrayAdapter<ModelImportWash
         //holder.chk.setChecked(DATA_MODEL.get(position).isCheck());
         holder.index = (DATA_MODEL.get(position).getIndex());
         holder.PackingMatID = DATA_MODEL.get(position).getPackingMatID();
+        holder.usageCode =DATA_MODEL.get(position).getI_UsageCode();
         // =========================================================================================
 
         return view;
@@ -101,6 +103,7 @@ public class ImportWashDetailBigSizeAdapter extends ArrayAdapter<ModelImportWash
         String item_program;
         TextView txt_packingmat;
         String PackingMatID;
+        String usageCode;
     }
 
 }

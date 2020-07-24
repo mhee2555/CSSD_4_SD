@@ -1,96 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="750dp"
-    android:layout_height="655dp"
-    android:background="@drawable/popup_approve">
+    android:layout_width="250dp"
+    android:layout_height="100dp"
+    android:background="@drawable/popup_approve"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView14"
-        android:layout_width="183dp"
+        android:id="@+id/textView190"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="12dp"
-        android:text="จับคู่ตะกร้า"
-        android:textAlignment="viewStart"
-        android:textColor="@color/colorWhite"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/bastek_name"
-        android:layout_width="183dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="60dp"
-        android:textAlignment="viewStart"
+        android:text="ยิงรหัสผูกตะกร้า"
         android:textColor="@color/colorBlack"
         android:textSize="18sp"
         android:textStyle="bold" />
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="521dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="37dp"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:orientation="horizontal">
-
-            <ListView
-                android:id="@+id/list"
-                android:layout_width="380dp"
-                android:layout_height="420dp"
-                android:layout_marginStart="0dp" />
-
-            <ListView
-                android:id="@+id/list_basket"
-                android:layout_width="0dp"
-                android:layout_height="420dp"
-                android:layout_marginStart="0dp"
-                android:layout_weight="1" />
-        </LinearLayout>
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/btn_cancel"
-        android:layout_width="114dp"
-        android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="140dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/btn_cancel" />
-
-    <Button
-        android:id="@+id/btn_save"
-        android:layout_width="114dp"
-        android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/btn_save" />
-
-    <RelativeLayout
         android:id="@+id/linear_layout_search"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="16dp"
         android:gravity="center_vertical">
 
         <EditText
@@ -121,4 +50,4 @@
 
     </RelativeLayout>
 
-</RelativeLayout>
+</LinearLayout>

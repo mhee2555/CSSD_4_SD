@@ -972,6 +972,9 @@ public class CssdEditSterile extends Activity {
 
                         MODEL_IMPORT_WASH_DETAIL = getImportWashDetail();
 
+                        for(int i=0;i<MODEL_IMPORT_WASH_DETAIL.size();i++){
+
+                        }
 
                         try {
                             ArrayAdapter<ModelImportWashDetail> adapter;
