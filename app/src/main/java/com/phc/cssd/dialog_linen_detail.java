@@ -6,6 +6,8 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -37,6 +39,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,11 +55,15 @@ public class dialog_linen_detail extends Activity {
     String EmpCode = "";
     String CheckAll = "0";
     String x = "0";
+    int Datasize = 0;
+    int CheckItem = 0;
 
+    boolean ClearCheck = false;
     Intent intent;
 
     HashMap<String, String> DelAlldata = new HashMap<String,String>();
     getUrl iFt = new getUrl();
+    private String chk = "0";
 
     public ArrayList<String> DelRowId = new ArrayList<String>();
     private JSONArray rs = null;
@@ -95,9 +102,10 @@ public class dialog_linen_detail extends Activity {
             @Override
             public void onClick(View v) {
                 int cnt=0;
-                for (String key : DelAlldata.keySet()) {
-                    if (DelAlldata.get(key) == "0")
+                for (int i = 0 ; i < Model_Linen.size() ; i ++) {
+                    if (Model_Linen.get(i).getChk().equals("0")){
                         cnt++;
+                    }
                 }
                 if (cnt != 0) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(dialog_linen_detail.this);
@@ -108,9 +116,10 @@ public class dialog_linen_detail extends Activity {
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    for (String key : DelAlldata.keySet()) {
-                                        if (DelAlldata.get(key) == "0")
-                                            DelRowId.add(key);
+                                    for (int i = 0 ; i < Model_Linen.size() ; i ++) {
+                                        if (Model_Linen.get(i).getChk().equals("0")){
+                                            DelRowId.add(Model_Linen.get(i).getUsageCode());
+                                        }
                                     }
                                     SaveLinen(String.valueOf(DelRowId));
                                     DelRowId.clear();
@@ -141,38 +150,83 @@ public class dialog_linen_detail extends Activity {
         search_scan = (EditText) findViewById(R.id.search_scan);
         search_scan.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                    switch (keyCode) {
-                        case KeyEvent.KEYCODE_DPAD_CENTER:
-                        case KeyEvent.KEYCODE_ENTER:
-                            getlistdata(search_scan.getText().toString(),"1");
-                            return true;
-                        default:
-                            break;
+                try {
+                    search_scan.requestFocus();
+                    if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                        switch (keyCode) {
+                            case KeyEvent.KEYCODE_DPAD_CENTER:
+                            case KeyEvent.KEYCODE_ENTER:
+                                for (int i = 0 ; i < Model_Linen.size() ; i ++){
+                                    Model_Linen.get(i).getUsageCode();
+                                    String Itemcode;
+                                    Itemcode = search_scan.getText().toString().toUpperCase().substring(0,12);
+                                    if (Itemcode.equals(Model_Linen.get(i).getUsageCode())){
+                                        if (Model_Linen.get(i).getChk().equals("1")){
+                                            chk = "2";
+                                        }else {
+                                            Model_Linen.get(i).setChk("1");
+                                            ArrayAdapter<ModelLinenDetail> adapter;
+                                            adapter = new ListStockLinenDetailAdapter(dialog_linen_detail.this, Model_Linen);
+                                            item.setAdapter(adapter);
+                                            chk = "1";
+                                        }
+                                    }
+                                }
+                                if (chk.equals("1")){
+                                    Toast.makeText(dialog_linen_detail.this, "ถูกต้อง", Toast.LENGTH_SHORT).show();
+                                    chk.equals("0");
+                                    search_scan.setText("");
+                                    search_scan.requestFocus();
+                                }else if (chk.equals("0")){
+                                    Toast.makeText(dialog_linen_detail.this, "รหัสใช้งานไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
+                                    search_scan.setText("");
+                                    search_scan.requestFocus();
+                                }else if (chk.equals("2")){
+                                    Toast.makeText(dialog_linen_detail.this, "รายการซ้ำ", Toast.LENGTH_SHORT).show();
+                                    search_scan.setText("");
+                                    search_scan.requestFocus();
+                                }
+                                return true;
+                            default:
+                                search_scan.requestFocus();
+                                break;
+                        }
+                    }else {
+                        search_scan.requestFocus();
+                        return true;
                     }
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
                 return false;
             }
         });
+
         item = (ListView) findViewById(R.id.item);
         chk_all = (CheckBox) findViewById(R.id.chk_all);
         chk_all.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    for (int a = 0 ; a < Model_Linen.size() ; a ++){
-                        Model_Linen.get(a).setChk("1");
-                        ArrayAdapter<ModelLinenDetail> adapter;
-                        adapter = new ListStockLinenDetailAdapter(dialog_linen_detail.this, Model_Linen);
-                        item.setAdapter(adapter);
+                Log.d("FLJDL",ClearCheck+"");
+                if (ClearCheck != true){
+                    if (isChecked){
+                        CheckItem = Model_Linen.size();
+                        for (int a = 0 ; a < Model_Linen.size() ; a ++){
+                            Model_Linen.get(a).setChk("0");
+                            ArrayAdapter<ModelLinenDetail> adapter;
+                            adapter = new ListStockLinenDetailAdapter(dialog_linen_detail.this, Model_Linen);
+                            item.setAdapter(adapter);
+                        }
+                    }else {
+                        CheckItem = 0;
+                        DelAll1();
+                        for (int a = 0 ; a < Model_Linen.size() ; a ++){
+                            Model_Linen.get(a).setChk("1");
+                            ArrayAdapter<ModelLinenDetail> adapter;
+                            adapter = new ListStockLinenDetailAdapter(dialog_linen_detail.this, Model_Linen);
+                            item.setAdapter(adapter);
+                        }
                     }
-                }else {
-                    DelAll1();
-                    for (int a = 0 ; a < Model_Linen.size() ; a ++){
-                        Model_Linen.get(a).setChk("0");
-                        ArrayAdapter<ModelLinenDetail> adapter;
-                        adapter = new ListStockLinenDetailAdapter(dialog_linen_detail.this, Model_Linen);
-                        item.setAdapter(adapter);
-                    }
+                    ClearCheck = false;
                 }
             }
         });
@@ -197,6 +251,7 @@ public class dialog_linen_detail extends Activity {
                     JSONObject jsonObj = new JSONObject(result);
                     rs = jsonObj.getJSONArray(TAG_RESULTS);
                     List<ModelLinenDetail> list = new ArrayList<>();
+                    Datasize = rs.length();
                     for(int i=0;i<rs.length();i++){
                         JSONObject c = rs.getJSONObject(i);
                         if (!c.getString("itemname").equals("")){
@@ -208,7 +263,7 @@ public class dialog_linen_detail extends Activity {
                                                 c.getString("PackDate"),
                                                 c.getString("ExpireDate"),
                                                 c.getString("date"),
-                                                "0"
+                                                "1"
                                         )
                                 );
                             }else {
@@ -219,15 +274,16 @@ public class dialog_linen_detail extends Activity {
                                                 c.getString("PackDate"),
                                                 c.getString("ExpireDate"),
                                                 c.getString("date"),
-                                                "1"
+                                                "0"
                                         )
                                 );
+                                Toast.makeText(dialog_linen_detail.this, "ถูกต้อง", Toast.LENGTH_SHORT).show();
                             }
                         }else {
                             search_name.requestFocus();
                             search_scan.setText("");
                             search_scan.setHint("สแกนเช็ครายการ");
-                            Toast.makeText(dialog_linen_detail.this, "ไม่พบข้อมูล !!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(dialog_linen_detail.this, "รหัสใช้งานไม่ถูกต้อง !!", Toast.LENGTH_SHORT).show();
                         }
                     }
                     Model_Linen = list;
@@ -292,9 +348,11 @@ public class dialog_linen_detail extends Activity {
                         if (c.getString("flag").equals("true")){
                             Toast.makeText(dialog_linen_detail.this, "บันทึกสำเร็จ", Toast.LENGTH_SHORT).show();
                             getlistdata("","0");
+                            ClearCheck = false;
                         }else {
                             Toast.makeText(dialog_linen_detail.this, "บันทึกไม่สำเร็จ", Toast.LENGTH_SHORT).show();
                             getlistdata("","0");
+                            ClearCheck = false;
                         }
                     }
                 } catch (JSONException e) {
@@ -324,6 +382,26 @@ public class dialog_linen_detail extends Activity {
         x = "0";
     }
 
+    public void CheckItem(String chk){
+        ClearCheck = true;
+        if (chk.equals("0")){
+            if (Datasize == CheckItem){
+                chk_all.setChecked(true);
+                ClearCheck = false;
+            }else {
+                chk_all.setChecked(false);
+                CheckItem ++;
+                if (Datasize == CheckItem){
+                    chk_all.setChecked(true);
+                    ClearCheck = false;
+                }
+            }
+        }else {
+            chk_all.setChecked(false);
+            CheckItem --;
+        }
+    }
+
     public void DelAll (String DelDocno, String DelRowid, String Type){
         if (chk_all.isChecked()){
             if (!Type.equals("1")){
@@ -332,11 +410,9 @@ public class dialog_linen_detail extends Activity {
                     x="0";
                 }
                 DelAlldata.put(DelRowid, x);
-                Log.d("LFHLKD",DelAlldata+"");
             }else {
                 DelAlldata.clear();
                 DelRowId.clear();
-                Log.d("LFHLKD",DelAlldata+"");
             }
         }else {
             if (!Type.equals("1")){
@@ -345,11 +421,9 @@ public class dialog_linen_detail extends Activity {
                     x="1";
                 }
                 DelAlldata.put(DelRowid, x);
-                Log.d("LFHLKD",DelAlldata+"");
             }else {
                 DelAlldata.clear();
                 DelRowId.clear();
-                Log.d("LFHLKD",DelAlldata+"");
             }
         }
     }
