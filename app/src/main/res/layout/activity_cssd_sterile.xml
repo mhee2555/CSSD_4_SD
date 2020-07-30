@@ -720,42 +720,41 @@
                                 android:paddingBottom="1dp">
 
                                 <TextView
-                                    android:layout_width="0dp"
+                                    android:layout_width="130dp"
                                     android:layout_height="20dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_weight="3"
                                     android:maxLines="1"
                                     android:text="ผู้เตรียม"
                                     android:textColor="@color/colorWhite"
                                     android:textSize="14dp"></TextView>
 
                                 <TextView
-                                    android:layout_width="0dp"
+                                    android:layout_width="100dp"
                                     android:layout_height="20dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_weight="2.5"
                                     android:gravity="center_vertical"
                                     android:maxLines="1"
                                     android:text="ผู้ตรวจ"
+                                    android:layout_marginLeft="10dp"
                                     android:textColor="@color/colorWhite"
                                     android:textSize="14dp"></TextView>
 
                                 <TextView
-                                    android:layout_width="0dp"
+                                    android:layout_width="100dp"
                                     android:layout_height="20dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_weight="3"
                                     android:gravity="center_vertical"
                                     android:maxLines="1"
                                     android:text="การทดสอบ"
+                                    android:layout_marginLeft="30dp"
                                     android:textColor="@color/colorWhite"
                                     android:textSize="14dp"></TextView>
 
                                 <TextView
-                                    android:layout_width="0dp"
+                                    android:layout_width="110dp"
                                     android:layout_height="20dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_weight="3"
+                                    android:layout_marginLeft="30dp"
                                     android:gravity="center_vertical"
                                     android:maxLines="1"
                                     android:text="อัตราเต็มตู้ต่อรอบ"
@@ -767,9 +766,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="2" />
 
-
                             </LinearLayout>
-
 
                             <RelativeLayout
                                 android:layout_width="match_parent"

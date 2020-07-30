@@ -53,6 +53,8 @@ public class SterileDetailItemSet {
                                 data[i + 25],
                                 data[i + 26],
                                 data[i + 27],
+                                "",
+                                "",
                                 index
                         )
                 );
@@ -101,6 +103,8 @@ public class SterileDetailItemSet {
             String Printer,
             String UsageCount,
             String ItemSetData,
+            String BasketName,
+            String IsRemarkExpress,
             int index
     ){
         return new ModelSterileDetail(
@@ -137,6 +141,8 @@ public class SterileDetailItemSet {
                 Printer,
                 UsageCount,
                 ItemSetData,
+                BasketName,
+                IsRemarkExpress,
                 index
         );
     }

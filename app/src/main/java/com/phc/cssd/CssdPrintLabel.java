@@ -165,6 +165,8 @@ public class CssdPrintLabel extends Activity {
                                         data.get(i + 25),
                                         data.get(i + 26),
                                         data.get(i + 27),
+                                        "",
+                                        "",
                                         index
                                 )
                         );
@@ -310,6 +312,8 @@ public class CssdPrintLabel extends Activity {
                                     m.getPrinter(),
                                     m.getUsageCount(),
                                     m.getItemSetData(),
+                                    m.getBasketName(),
+                                    m.getIsRemarkExpress(),
                                     m.getIndex()
                             )
                     );
@@ -358,6 +362,8 @@ public class CssdPrintLabel extends Activity {
             String Printer,
             String UsageCount,
             String ItemSetData,
+            String BasketName,
+            String IsRemarkExpress,
             int index
     ){
         return new ModelSterileDetail(
@@ -394,6 +400,8 @@ public class CssdPrintLabel extends Activity {
                 Printer,
                 UsageCount,
                 ItemSetData,
+                BasketName,
+                IsRemarkExpress,
                 index
         );
     }

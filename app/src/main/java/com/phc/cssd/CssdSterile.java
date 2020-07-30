@@ -951,22 +951,6 @@ public class CssdSterile extends AppCompatActivity {
                     }
                 }
             });
-//            OccupancyRate_Sterile.setVisibility(View.VISIBLE);
-//            OccupancyRate_Sterile.setOnKeyListener(new View.OnKeyListener() {
-//                public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                    if (event.getAction() == KeyEvent.ACTION_DOWN) {
-//                        switch (keyCode) {
-//                            case KeyEvent.KEYCODE_DPAD_CENTER:
-//                            case KeyEvent.KEYCODE_ENTER:
-//                                OccupancyRate_Text_Sterile = OccupancyRate_Sterile.getText().toString();
-//                                return true;
-//                            default:
-//                                break;
-//                        }
-//                    }
-//                    return false;
-//                }
-//            });
         }else {
             OccupancyRate_Sterile.setVisibility(View.INVISIBLE);
         }
@@ -1744,71 +1728,50 @@ public class CssdSterile extends AppCompatActivity {
     // 0n Click
     private void clickMachine(int Machine_Number) {
         STERILE_MACHINE_NUMBER_ACTIVE = Machine_Number;
-
-        ////System.out.println("Click STERILE_MACHINE_NUMBER_ACTIVE = " + STERILE_MACHINE_NUMBER_ACTIVE);
-
         clearForm();
-
+        getOccupancyRate(getDocNo());
         if(Machine_Number == 1) {
-
             displayTabMachine(true, false, false, false, false);
-
             if(MACHINE_1.get(i).getDocNo() != null && !MACHINE_1.get(i).getDocNo().equals("-")){
                 onDisplay( MACHINE_1.get(i).getDocNo() );
             }
-
             if(MACHINE_1.get(i).isActive()){
                 alertMachineBusy( MACHINE_1.get(i).getMachineName() );
             }
-
         }else if(Machine_Number == 2) {
-
             displayTabMachine(false, true, false, false, false);
-
             if(MACHINE_2.get(i).getDocNo() != null && !MACHINE_2.get(i).getDocNo().equals("-")){
                 onDisplay( MACHINE_2.get(i).getDocNo() );
             }
-
             if(MACHINE_2.get(i).isActive()){
                 alertMachineBusy( MACHINE_2.get(i).getMachineName() );
             }
         }else if(Machine_Number == 3) {
-
             displayTabMachine(false, false, true, false, false);
-
             if(MACHINE_3.get(i).getDocNo() != null && !MACHINE_3.get(i).getDocNo().equals("-")){
                 onDisplay( MACHINE_3.get(i).getDocNo() );
             }
-
             if(MACHINE_3.get(i).isActive()){
                 alertMachineBusy( MACHINE_3.get(i).getMachineName() );
             }
         }else if(Machine_Number == 4) {
-
             displayTabMachine(false, false, false, true, false);
-
             if( MACHINE_4.get(i).getDocNo() != null && !MACHINE_4.get(i).getDocNo().equals("-")){
                 onDisplay( MACHINE_4.get(i).getDocNo() );
             }
-
             if(MACHINE_4.get(i).isActive()){
                 alertMachineBusy( MACHINE_4.get(i).getMachineName() );
             }
         }else if(Machine_Number == 5) {
-
             displayTabMachine(false, false, false, false, true);
-
             if(MACHINE_5.get(i).getDocNo() != null && !MACHINE_5.get(i).getDocNo().equals("-")){
                 onDisplay( MACHINE_5.get(i).getDocNo() );
             }
-
             if(MACHINE_5.get(i).isActive()){
                 alertMachineBusy( MACHINE_5.get(i).getMachineName() );
             }
         }
-
         //clearForm();
-
     }
 
     final String[] option = new String[]{"จบการทำงาน", "เริ่มใหม่", "หยุดการทำงาน", "ออก"};
@@ -3280,6 +3243,12 @@ public class CssdSterile extends AppCompatActivity {
                     Log.d("BANK",txt_doc_no.getText().toString());
                 }
 
+            }else if (resultCode == 28) {
+                OccupancyRate_Sterile.setText(RETURN_DATA);
+//                occupancy_rate.setContentDescription(RETURN_VALUE);
+
+//                updateWash(Master.occupancy_rate, RETURN_VALUE, getDocNo());
+
             }else if (resultCode == Master.user_aprrove) {
                 txt_usr_approve.setText(RETURN_DATA);
                 txt_usr_approve.setContentDescription(RETURN_VALUE);
@@ -3656,6 +3625,8 @@ public class CssdSterile extends AppCompatActivity {
             String Printer,
             String UsageCount,
             String ItemSetData,
+            String BasketName,
+            String IsRemarkExpress,
             int index
     ){
         return new ModelSterileDetail(
@@ -3692,6 +3663,8 @@ public class CssdSterile extends AppCompatActivity {
                 Printer,
                 UsageCount,
                 ItemSetData,
+                BasketName,
+                IsRemarkExpress,
                 index
         );
     }
@@ -3747,6 +3720,8 @@ public class CssdSterile extends AppCompatActivity {
                                     m.getPrinter(),
                                     m.getUsageCount(),
                                     m.getItemSetData(),
+                                    m.getBasketName(),
+                                    m.getIsRemarkExpress(),
                                     m.getIndex()
                             )
                     );
@@ -6232,8 +6207,8 @@ public class CssdSterile extends AppCompatActivity {
                                         data.get(i + 27),
                                         data.get(i + 28),
                                         data.get(i + 31),
-                                        index,
-                                        data.get(i + 29)
+                                        data.get(i + 29),
+                                        index
                                 )
                         );
                         index++;
@@ -7341,8 +7316,8 @@ public class CssdSterile extends AppCompatActivity {
                                         data.get(i + 27),
                                         data.get(i + 30),
                                         data.get(i + 31),
-                                        index,
-                                        data.get(i + 29)
+                                        data.get(i + 29),
+                                        index
                                 )
                         );
                         index++;
@@ -7523,40 +7498,80 @@ public class CssdSterile extends AppCompatActivity {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
                 try {
                     JSONObject jsonObj = new JSONObject(result);
                     rs = jsonObj.getJSONArray(TAG_RESULTS);
 
                     for(int i=0;i<rs.length();i++){
                         JSONObject c = rs.getJSONObject(i);
-
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
-
                 data.put("p_wash_detail_id", p_wash_detail_id);
-
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_remove_basket.php", data);
                 Log.d("LFHKFS",data+"");
                 Log.d("LFHKFS",result+"");
 
                 return result;
             }
+            // =========================================================================================
+        }
+        RemoveBasket obj = new RemoveBasket();
+        obj.execute();
+    }
 
+    public void getOccupancyRate(final String DocNo) {
+        class getOccupancyRate extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        OccupancyRate_Text_Sterile = c.getString("OccupancyRate");
+                        OccupancyRate_Sterile.setText(OccupancyRate_Text_Sterile + " %");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("DocNo",DocNo);
+                data.put("B_ID",B_ID);
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_occupancyrate_sterile.php", data);
+                    Log.d("BANKHG",data+"");
+                    Log.d("BANKHG",result);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+                return result;
+            }
             // =========================================================================================
         }
 
-        RemoveBasket obj = new RemoveBasket();
+        getOccupancyRate obj = new getOccupancyRate();
         obj.execute();
-
     }
 
 }

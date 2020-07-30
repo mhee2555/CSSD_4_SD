@@ -329,6 +329,8 @@ public class CssdSearchSterile extends AppCompatActivity {
                                     m.getPrinter(),
                                     m.getUsageCount(),
                                     m.getItemSetData(),
+                                    m.getBasketName(),
+                                    m.getIsRemarkExpress(),
                                     m.getIndex()
                             )
                     );
@@ -583,8 +585,9 @@ public class CssdSearchSterile extends AppCompatActivity {
                     data.put("p_bid", B_ID);
                 }
 
-                String result = httpConnect.sendPostRequest(Url.URL + "cssd_display_sterile_detail.php", data);
-
+                String result = httpConnect.sendPostRequest(Url.URL + "cssd_display_sterile_detail_seaech.php", data);
+                Log.d("BANKFH",data+"");
+                Log.d("BANKFH",result+"");
                 return result;
             }
 
@@ -627,6 +630,9 @@ public class CssdSearchSterile extends AppCompatActivity {
                                         data.get(i + 25),
                                         data.get(i + 26),
                                         data.get(i + 27),
+                                        "",
+                                        "",
+                                        "",
                                         index
                                 )
                         );
@@ -677,6 +683,9 @@ public class CssdSearchSterile extends AppCompatActivity {
                     String Printer,
                     String UsageCount,
                     String ItemSetData,
+                    String BasketName,
+                    String BasketCode,
+                    String IsRemarkExpress,
                     int index
             ){
                 return new ModelSterileDetail(
@@ -713,6 +722,9 @@ public class CssdSearchSterile extends AppCompatActivity {
                         Printer,
                         UsageCount,
                         ItemSetData,
+                        BasketName,
+                        BasketCode,
+                        IsRemarkExpress,
                         index
                 );
             }
@@ -758,6 +770,8 @@ public class CssdSearchSterile extends AppCompatActivity {
             String Printer,
             String UsageCount,
             String ItemSetData,
+            String BasketName,
+            String IsRemarkExpress,
             int index
     ){
         return new ModelSterileDetail(
@@ -794,6 +808,8 @@ public class CssdSearchSterile extends AppCompatActivity {
                 Printer,
                 UsageCount,
                 ItemSetData,
+                BasketName,
+                IsRemarkExpress,
                 index
         );
     }
