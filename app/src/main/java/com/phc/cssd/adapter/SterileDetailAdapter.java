@@ -1,6 +1,7 @@
 package com.phc.cssd.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -68,96 +69,324 @@ public class SterileDetailAdapter extends ArrayAdapter<ModelSterileDetail> {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        View view = null;
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View view = inflater.inflate(R.layout.activity_list_sterile_detail_data, parent, false);
 
-        if (convertView == null) {
-            LayoutInflater inflator = context.getLayoutInflater();
-            view = inflator.inflate(R.layout.activity_list_sterile_detail_data, null);
+        final int index;
+        final TextView txt_id;
+        final TextView txt_item_name;
+        final TextView txt_usage_code;
+        final TextView txt_qty;
+        final TextView txt_age;
+        final ImageView imv_remove;
+        final ImageView imv_print;
+        final TextView txt_basket;
+        final CheckBox chk;
+        final RelativeLayout relativeLayout;
 
-            final ViewHolder viewHolder = new ViewHolder();
+        final String ID;
+        final String DocNo;
+        final String ItemStockID;
+        final String Qty;
+        final String itemname;
 
-            viewHolder.txt_id = (TextView) view.findViewById(R.id.txt_id);
-            //viewHolder.txt_department = (TextView) view.findViewById(R.id.txt_department);
-            viewHolder.txt_item_name = (TextView) view.findViewById(R.id.txt_item_name);
-            viewHolder.txt_usage_code = (TextView) view.findViewById(R.id.txt_usage_code);
-            viewHolder.txt_qty = (TextView) view.findViewById(R.id.txt_qty);
-            viewHolder.txt_age = (TextView) view.findViewById(R.id.txt_age);
-            //viewHolder.chk = (ImageView) view.findViewById(R.id.chk);
-            viewHolder.imv_remove = (ImageView) view.findViewById(R.id.imv_remove);
-            viewHolder.imv_print = (ImageView) view.findViewById(R.id.imv_print);
-            viewHolder.chk = (CheckBox) view.findViewById(R.id.chk);
-            viewHolder.txt_basket = (TextView) view.findViewById(R.id.txt_basket);
-            viewHolder.relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
-            viewHolder.txt_IsRemarkems = (ImageView) view.findViewById(R.id.txt_IsRemarkems);
-            viewHolder.list_sub = (ListView) view.findViewById(R.id.list_sub);
+        final String itemcode;
+        final String UsageCode;
+        final String age;
+        final String ImportID;
+        final String SterileDate;
 
-            viewHolder.list_sub.setVisibility(View.GONE);
+        final String ExpireDate;
+        final String IsStatus;
+        final String OccuranceQty;
+        final String DepName;
+        final String DepName2;
 
-            if(mode==1){
-                viewHolder.chk.setOnClickListener(new View.OnClickListener() {
+        final String LabelID;
+        final String usr_sterile;
+        final String usr_prepare;
+        final String usr_approve;
+        final String SterileRoundNumber;
+
+        final String MachineName;
+        final String Price;
+        final String Time;
+
+        final String Qty_Print;
+        final String ItemSetData;
+        final ImageView txt_IsRemarkems;
+
+        final ListView list_sub;
+
+        txt_id = (TextView) view.findViewById(R.id.txt_id);
+        //txt_department = (TextView) view.findViewById(R.id.txt_department);
+        txt_item_name = (TextView) view.findViewById(R.id.txt_item_name);
+        txt_usage_code = (TextView) view.findViewById(R.id.txt_usage_code);
+        txt_qty = (TextView) view.findViewById(R.id.txt_qty);
+        txt_age = (TextView) view.findViewById(R.id.txt_age);
+        //chk = (ImageView) view.findViewById(R.id.chk);
+        imv_remove = (ImageView) view.findViewById(R.id.imv_remove);
+        imv_print = (ImageView) view.findViewById(R.id.imv_print);
+        chk = (CheckBox) view.findViewById(R.id.chk);
+        txt_basket = (TextView) view.findViewById(R.id.txt_basket);
+        relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
+        txt_IsRemarkems = (ImageView) view.findViewById(R.id.txt_IsRemarkems);
+        list_sub = (ListView) view.findViewById(R.id.list_sub);
+
+        list_sub.setVisibility(View.GONE);
+
+        // =========================================================================================
+        txt_id.setText(DATA_MODEL.get(position).getID());
+        //txt_department.setText(DATA_MODEL.get(position).getDepName2());
+        txt_item_name.setText(DATA_MODEL.get(position).getItemname()); // + " - " + DATA_MODEL.get(position).getUsageCount());
+        txt_usage_code.setText(DATA_MODEL.get(position).getUsageCode());
+        txt_qty.setText(DATA_MODEL.get(position).getQty());
+        txt_age.setText(DATA_MODEL.get(position).getAge());
+
+        if(mode==3){
+            txt_basket.setText(DATA_MODEL.get(position).getUsageCode());
+        }else{
+            txt_basket.setText(DATA_MODEL.get(position).getBasketName());
+        }
+        // chk.setImageResource(DATA_MODEL.get(position).getCheck() );
+        chk.setChecked(DATA_MODEL.get(position).isCheck());
+        index = position;
+        imv_print.setImageResource(DATA_MODEL.get(position).getPrintStatus() );
+        imv_remove.setImageResource( IsActive ? R.drawable.ic_left_grey : R.drawable.ic_left_blue );
+
+        ID = DATA_MODEL.get(position).getID();
+        DocNo = DATA_MODEL.get(position).getDocNo();
+        ItemStockID = DATA_MODEL.get(position).getItemStockID();
+        Qty = DATA_MODEL.get(position).getQty();
+        itemname = DATA_MODEL.get(position).getItemname();
+
+        itemcode = DATA_MODEL.get(position).getItemcode();
+        UsageCode = DATA_MODEL.get(position).getUsageCode();
+        age = DATA_MODEL.get(position).getAge();
+        ImportID = DATA_MODEL.get(position).getImportID();
+        SterileDate = DATA_MODEL.get(position).getSterileDate();
+
+        ExpireDate = DATA_MODEL.get(position).getExpireDate();
+        IsStatus = DATA_MODEL.get(position).getIsStatus();
+        OccuranceQty = DATA_MODEL.get(position).getOccuranceQty();
+        DepName = DATA_MODEL.get(position).getDepName();
+        DepName2 = DATA_MODEL.get(position).getDepName2();
+
+        LabelID = DATA_MODEL.get(position).getLabelID();
+        usr_sterile = DATA_MODEL.get(position).getUsr_sterile();
+        usr_prepare = DATA_MODEL.get(position).getUsr_prepare();
+        usr_approve = DATA_MODEL.get(position).getUsr_approve();
+        SterileRoundNumber = DATA_MODEL.get(position).getSterileRoundNumber();
+
+        MachineName = DATA_MODEL.get(position).getMachineName();
+        Price = DATA_MODEL.get(position).getPrice();
+        Time = DATA_MODEL.get(position).getTime();
+
+        Qty_Print = DATA_MODEL.get(position).getQty_Print();
+        ItemSetData = DATA_MODEL.get(position).getItemSetData();
+
+        if (!DATA_MODEL.get(position).getIsRemarkExpress().equals("0")){
+            txt_IsRemarkems.setVisibility(View.VISIBLE);
+        }else {
+            txt_IsRemarkems.setVisibility(View.GONE);
+        }
+        // =========================================================================================
+
+        if(mode==1){// show sub
+            chk.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        DATA_MODEL.get(index).setCheck( ! DATA_MODEL.get(index).IsCheck );
+                        //chk.setImageResource( DATA_MODEL.get(position).getCheck() );
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            imv_remove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("ttest_data","ImportID - "+ImportID);
+                    Log.d("ttest_data","ItemStockID - "+ItemStockID);
+                    Log.d("ttest_data","ID - "+ID);
+
+                    ((CssdSterile)context).onRemoveBasket(
+                            DATA_MODEL.get(position).getImportID()
+                    );
+
+                    ((CssdSterile)context).removeSterileDetail(
+                            ImportID,
+                            ID,
+                            ItemStockID
+                    );
+                }
+            });
+
+            relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
+                public boolean onLongClick(View v) {
+                    Intent intent = new Intent(context, CssdPrintSterile.class);
+                    intent.putExtra("ID", ID);
+                    intent.putExtra("DocNo",  DocNo);
+                    intent.putExtra("ItemStockID",  ItemStockID);
+                    intent.putExtra("Qty",  Qty);
+                    intent.putExtra("itemname",  itemname);
+
+                    intent.putExtra("itemcode",  itemcode);
+                    intent.putExtra("UsageCode",  UsageCode);
+                    intent.putExtra("age",  age);
+                    intent.putExtra("ImportID",  ImportID);
+                    intent.putExtra("SterileDate",  SterileDate);
+
+                    intent.putExtra("ExpireDate",  ExpireDate);
+                    intent.putExtra("IsStatus",  IsStatus);
+                    intent.putExtra("OccuranceQty",  OccuranceQty);
+                    intent.putExtra("DepName",  DepName);
+                    intent.putExtra("DepName2",  DepName2);
+
+                    intent.putExtra("LabelID",  LabelID);
+                    intent.putExtra("usr_sterile",  usr_sterile);
+                    intent.putExtra("usr_prepare",  usr_prepare);
+                    intent.putExtra("usr_approve",  usr_approve);
+                    intent.putExtra("SterileRoundNumber",  SterileRoundNumber);
+
+                    intent.putExtra("MachineName",  MachineName);
+                    intent.putExtra("Price",  Price);
+                    intent.putExtra("Time",  Time);
+
+                    intent.putExtra("Qty_Print",  Qty_Print);
+                    intent.putExtra("ItemSetData",  ItemSetData);
+
+                    intent.putExtra("B_ID",B_ID);
+                    intent.putExtra("Width",Width);
+                    intent.putExtra("Heigth",Heigth);
+
+                    context.startActivity(intent);
+
+                    return false;
+                }
+            });
+
+            relativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        DATA_MODEL.get(index).setCheck( ! DATA_MODEL.get(index).IsCheck );
+                        //chk.setImageResource( DATA_MODEL.get(position).getCheck() );
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+        else if(mode==2){// show main
+            ModelSterileDetail x = DATA_MODEL.get(position);
+            if(x.getIsBasket()){
+                final List<ModelSterileDetail> MODEL_SUB = MAP_MODEL_STERILE_DETAIL_GROUP_BASKET.get(x.getBasketCode());
+                list_sub.setAdapter(new SterileDetailAdapter((CssdSterile)context, MODEL_SUB, IsActive,B_ID,Width,Heigth));
+
+                txt_qty.setText(MODEL_SUB.size()+"");
+                txt_age.setVisibility(View.GONE);
+                txt_basket.setVisibility(View.GONE);
+
+                final float scale = getContext().getResources().getDisplayMetrics().density;
+                int pixels = (int) (45 * scale + 0.5f);
+
+                list_sub.getLayoutParams().height = (pixels * MODEL_SUB.size());
+
+                relativeLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (list_sub.getVisibility() == View.GONE) {
+                            list_sub.setVisibility(View.VISIBLE);
+                        } else {
+                            list_sub.setVisibility(View.GONE);
+                        }
+
+                    }
+                });
+
+                imv_remove.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        for(int i=0;i<MODEL_SUB.size();i++){
+
+                            ((CssdSterile)context).onRemoveBasket(
+                                    MODEL_SUB.get(i).getImportID()
+                            );
+
+                            ((CssdSterile)context).removeSterileDetail(
+                                    MODEL_SUB.get(i).getImportID(),
+                                    MODEL_SUB.get(i).getID(),
+                                    MODEL_SUB.get(i).getItemStockID()
+                            );
+                        }
+                    }
+                });
+
+            }else{
+                chk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         try {
-                            DATA_MODEL.get(viewHolder.index).setCheck( ! DATA_MODEL.get(viewHolder.index).IsCheck );
-                            //viewHolder.chk.setImageResource( DATA_MODEL.get(position).getCheck() );
+                            DATA_MODEL.get(index).setCheck( ! DATA_MODEL.get(index).IsCheck );
+                            //chk.setImageResource( DATA_MODEL.get(position).getCheck() );
                         }catch(Exception e){
                             e.printStackTrace();
                         }
                     }
                 });
 
-                viewHolder.imv_remove.setOnClickListener(new View.OnClickListener() {
+                imv_remove.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.d("ttest_data","ImportID - "+viewHolder.ImportID);
-                        Log.d("ttest_data","ItemStockID - "+viewHolder.ItemStockID);
-                        Log.d("ttest_data","ID - "+viewHolder.ID);
-
-                        ((CssdSterile)context).onRemoveBasket(
-                                DATA_MODEL.get(position).getImportID()
-                        );
+                        Log.d("ttest_data","ImportID - "+ImportID);
+                        Log.d("ttest_data","ItemStockID - "+ItemStockID);
+                        Log.d("ttest_data","ID - "+ID);
 
                         ((CssdSterile)context).removeSterileDetail(
-                                viewHolder.ImportID,
-                                viewHolder.ID,
-                                viewHolder.ItemStockID
+                                ImportID,
+                                ID,
+                                ItemStockID
                         );
                     }
                 });
 
-                viewHolder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
+                relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
                     public boolean onLongClick(View v) {
                         Intent intent = new Intent(context, CssdPrintSterile.class);
-                        intent.putExtra("ID", viewHolder.ID);
-                        intent.putExtra("DocNo",  viewHolder.DocNo);
-                        intent.putExtra("ItemStockID",  viewHolder.ItemStockID);
-                        intent.putExtra("Qty",  viewHolder.Qty);
-                        intent.putExtra("itemname",  viewHolder.itemname);
+                        intent.putExtra("ID", ID);
+                        intent.putExtra("DocNo",  DocNo);
+                        intent.putExtra("ItemStockID",  ItemStockID);
+                        intent.putExtra("Qty",  Qty);
+                        intent.putExtra("itemname",  itemname);
 
-                        intent.putExtra("itemcode",  viewHolder.itemcode);
-                        intent.putExtra("UsageCode",  viewHolder.UsageCode);
-                        intent.putExtra("age",  viewHolder.age);
-                        intent.putExtra("ImportID",  viewHolder.ImportID);
-                        intent.putExtra("SterileDate",  viewHolder.SterileDate);
+                        intent.putExtra("itemcode",  itemcode);
+                        intent.putExtra("UsageCode",  UsageCode);
+                        intent.putExtra("age",  age);
+                        intent.putExtra("ImportID",  ImportID);
+                        intent.putExtra("SterileDate",  SterileDate);
 
-                        intent.putExtra("ExpireDate",  viewHolder.ExpireDate);
-                        intent.putExtra("IsStatus",  viewHolder.IsStatus);
-                        intent.putExtra("OccuranceQty",  viewHolder.OccuranceQty);
-                        intent.putExtra("DepName",  viewHolder.DepName);
-                        intent.putExtra("DepName2",  viewHolder.DepName2);
+                        intent.putExtra("ExpireDate",  ExpireDate);
+                        intent.putExtra("IsStatus",  IsStatus);
+                        intent.putExtra("OccuranceQty",  OccuranceQty);
+                        intent.putExtra("DepName",  DepName);
+                        intent.putExtra("DepName2",  DepName2);
 
-                        intent.putExtra("LabelID",  viewHolder.LabelID);
-                        intent.putExtra("usr_sterile",  viewHolder.usr_sterile);
-                        intent.putExtra("usr_prepare",  viewHolder.usr_prepare);
-                        intent.putExtra("usr_approve",  viewHolder.usr_approve);
-                        intent.putExtra("SterileRoundNumber",  viewHolder.SterileRoundNumber);
+                        intent.putExtra("LabelID",  LabelID);
+                        intent.putExtra("usr_sterile",  usr_sterile);
+                        intent.putExtra("usr_prepare",  usr_prepare);
+                        intent.putExtra("usr_approve",  usr_approve);
+                        intent.putExtra("SterileRoundNumber",  SterileRoundNumber);
 
-                        intent.putExtra("MachineName",  viewHolder.MachineName);
-                        intent.putExtra("Price",  viewHolder.Price);
-                        intent.putExtra("Time",  viewHolder.Time);
+                        intent.putExtra("MachineName",  MachineName);
+                        intent.putExtra("Price",  Price);
+                        intent.putExtra("Time",  Time);
 
-                        intent.putExtra("Qty_Print",  viewHolder.Qty_Print);
-                        intent.putExtra("ItemSetData",  viewHolder.ItemSetData);
+                        intent.putExtra("Qty_Print",  Qty_Print);
+                        intent.putExtra("ItemSetData",  ItemSetData);
 
                         intent.putExtra("B_ID",B_ID);
                         intent.putExtra("Width",Width);
@@ -169,322 +398,44 @@ public class SterileDetailAdapter extends ArrayAdapter<ModelSterileDetail> {
                     }
                 });
 
-                viewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+                relativeLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         try {
-                            DATA_MODEL.get(viewHolder.index).setCheck( ! DATA_MODEL.get(viewHolder.index).IsCheck );
-                            //viewHolder.chk.setImageResource( DATA_MODEL.get(position).getCheck() );
+                            DATA_MODEL.get(index).setCheck( ! DATA_MODEL.get(index).IsCheck );
+                            //chk.setImageResource( DATA_MODEL.get(position).getCheck() );
                         }catch(Exception e){
                             e.printStackTrace();
                         }
                     }
                 });
             }
-            else if(mode==2){
-                ModelSterileDetail x = DATA_MODEL.get(position);
-                if(x.getIsBasket()){
-                    final List<ModelSterileDetail> MODEL_SUB = MAP_MODEL_STERILE_DETAIL_GROUP_BASKET.get(x.getBasketCode());
-                    viewHolder.list_sub.setAdapter(new SterileDetailAdapter((CssdSterile)context, MODEL_SUB, IsActive,B_ID,Width,Heigth));
+        }
+        else if(mode==3){ //Pair Basket
+            txt_usage_code.setVisibility(View.GONE);
+            txt_age.setVisibility(View.GONE);
+            txt_qty.setVisibility(View.GONE);
+            imv_print.setVisibility(View.GONE);
 
-                    x.setQty(MODEL_SUB.size()+"");
-                    viewHolder.txt_age.setVisibility(View.GONE);
-                    viewHolder.txt_basket.setVisibility(View.GONE);
+            imv_remove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                    final float scale = getContext().getResources().getDisplayMetrics().density;
-                    int pixels = (int) (45 * scale + 0.5f);
+                    ((CssdSterile)context).onRemoveBasket(
+                            DATA_MODEL.get(position).getImportID()
+                    );
 
-                    viewHolder.list_sub.getLayoutParams().height = (pixels * MODEL_SUB.size());
+                    ((CssdSterile)context).removeSterileDetail(
+                            ImportID,
+                            ID,
+                            ItemStockID
+                    );
 
-                    viewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (viewHolder.list_sub.getVisibility() == View.GONE) {
-                                viewHolder.list_sub.setVisibility(View.VISIBLE);
-                            } else {
-                                viewHolder.list_sub.setVisibility(View.GONE);
-                            }
-
-                        }
-                    });
-
-                    viewHolder.imv_remove.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            for(int i=0;i<MODEL_SUB.size();i++){
-
-                                ((CssdSterile)context).onRemoveBasket(
-                                        MODEL_SUB.get(i).getImportID()
-                                );
-
-                                ((CssdSterile)context).removeSterileDetail(
-                                        MODEL_SUB.get(i).getImportID(),
-                                        MODEL_SUB.get(i).getID(),
-                                        MODEL_SUB.get(i).getItemStockID()
-                                );
-                            }
-                        }
-                    });
-
-                }else{
-                    viewHolder.chk.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            try {
-                                DATA_MODEL.get(viewHolder.index).setCheck( ! DATA_MODEL.get(viewHolder.index).IsCheck );
-                                //viewHolder.chk.setImageResource( DATA_MODEL.get(position).getCheck() );
-                            }catch(Exception e){
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-
-                    viewHolder.imv_remove.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Log.d("ttest_data","ImportID - "+viewHolder.ImportID);
-                            Log.d("ttest_data","ItemStockID - "+viewHolder.ItemStockID);
-                            Log.d("ttest_data","ID - "+viewHolder.ID);
-
-                            ((CssdSterile)context).removeSterileDetail(
-                                    viewHolder.ImportID,
-                                    viewHolder.ID,
-                                    viewHolder.ItemStockID
-                            );
-                        }
-                    });
-
-                    viewHolder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
-                        public boolean onLongClick(View v) {
-                            Intent intent = new Intent(context, CssdPrintSterile.class);
-                            intent.putExtra("ID", viewHolder.ID);
-                            intent.putExtra("DocNo",  viewHolder.DocNo);
-                            intent.putExtra("ItemStockID",  viewHolder.ItemStockID);
-                            intent.putExtra("Qty",  viewHolder.Qty);
-                            intent.putExtra("itemname",  viewHolder.itemname);
-
-                            intent.putExtra("itemcode",  viewHolder.itemcode);
-                            intent.putExtra("UsageCode",  viewHolder.UsageCode);
-                            intent.putExtra("age",  viewHolder.age);
-                            intent.putExtra("ImportID",  viewHolder.ImportID);
-                            intent.putExtra("SterileDate",  viewHolder.SterileDate);
-
-                            intent.putExtra("ExpireDate",  viewHolder.ExpireDate);
-                            intent.putExtra("IsStatus",  viewHolder.IsStatus);
-                            intent.putExtra("OccuranceQty",  viewHolder.OccuranceQty);
-                            intent.putExtra("DepName",  viewHolder.DepName);
-                            intent.putExtra("DepName2",  viewHolder.DepName2);
-
-                            intent.putExtra("LabelID",  viewHolder.LabelID);
-                            intent.putExtra("usr_sterile",  viewHolder.usr_sterile);
-                            intent.putExtra("usr_prepare",  viewHolder.usr_prepare);
-                            intent.putExtra("usr_approve",  viewHolder.usr_approve);
-                            intent.putExtra("SterileRoundNumber",  viewHolder.SterileRoundNumber);
-
-                            intent.putExtra("MachineName",  viewHolder.MachineName);
-                            intent.putExtra("Price",  viewHolder.Price);
-                            intent.putExtra("Time",  viewHolder.Time);
-
-                            intent.putExtra("Qty_Print",  viewHolder.Qty_Print);
-                            intent.putExtra("ItemSetData",  viewHolder.ItemSetData);
-
-                            intent.putExtra("B_ID",B_ID);
-                            intent.putExtra("Width",Width);
-                            intent.putExtra("Heigth",Heigth);
-
-                            context.startActivity(intent);
-
-                            return false;
-                        }
-                    });
-
-                    viewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            try {
-                                DATA_MODEL.get(viewHolder.index).setCheck( ! DATA_MODEL.get(viewHolder.index).IsCheck );
-                                //viewHolder.chk.setImageResource( DATA_MODEL.get(position).getCheck() );
-                            }catch(Exception e){
-                                e.printStackTrace();
-                            }
-                        }
-                    });
                 }
-            }
-            else if(mode==3){
-                viewHolder.txt_usage_code.setVisibility(View.GONE);
-                viewHolder.txt_age.setVisibility(View.GONE);
-                viewHolder.txt_qty.setVisibility(View.GONE);
-                viewHolder.imv_print.setVisibility(View.GONE);
-
-                viewHolder.imv_remove.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        ((CssdSterile)context).onRemoveBasket(
-                                DATA_MODEL.get(position).getImportID()
-                        );
-
-                        ((CssdSterile)context).removeSterileDetail(
-                                viewHolder.ImportID,
-                                viewHolder.ID,
-                                viewHolder.ItemStockID
-                        );
-
-                    }
-                });
-            }
-
-            view.setTag(viewHolder);
-
-        } else {
-            view = convertView;
+            });
         }
-
-        // =========================================================================================
-        final ViewHolder holder = (ViewHolder) view.getTag();
-        holder.txt_id.setText(DATA_MODEL.get(position).getID());
-        //holder.txt_department.setText(DATA_MODEL.get(position).getDepName2());
-        holder.txt_item_name.setText(DATA_MODEL.get(position).getItemname()); // + " - " + DATA_MODEL.get(position).getUsageCount());
-        holder.txt_usage_code.setText(DATA_MODEL.get(position).getUsageCode());
-        holder.txt_qty.setText(DATA_MODEL.get(position).getQty());
-        holder.txt_age.setText(DATA_MODEL.get(position).getAge());
-        if(mode==3){
-            holder.txt_basket.setText(DATA_MODEL.get(position).getUsageCode());
-        }else{
-            holder.txt_basket.setText(DATA_MODEL.get(position).getBasketName());
-        }
-        // holder.chk.setImageResource(DATA_MODEL.get(position).getCheck() );
-        holder.chk.setChecked(DATA_MODEL.get(position).isCheck());
-        holder.index = position;
-        holder.imv_print.setImageResource(DATA_MODEL.get(position).getPrintStatus() );
-        holder.imv_remove.setImageResource( IsActive ? R.drawable.ic_left_grey : R.drawable.ic_left_blue );
-
-        holder.ID = DATA_MODEL.get(position).getID();
-        holder.DocNo = DATA_MODEL.get(position).getDocNo();
-        holder.ItemStockID = DATA_MODEL.get(position).getItemStockID();
-        holder.Qty = DATA_MODEL.get(position).getQty();
-        holder.itemname = DATA_MODEL.get(position).getItemname();
-
-        holder.itemcode = DATA_MODEL.get(position).getItemcode();
-        holder.UsageCode = DATA_MODEL.get(position).getUsageCode();
-        holder.age = DATA_MODEL.get(position).getAge();
-        holder.ImportID = DATA_MODEL.get(position).getImportID();
-        holder.SterileDate = DATA_MODEL.get(position).getSterileDate();
-
-        holder.ExpireDate = DATA_MODEL.get(position).getExpireDate();
-        holder.IsStatus = DATA_MODEL.get(position).getIsStatus();
-        holder.OccuranceQty = DATA_MODEL.get(position).getOccuranceQty();
-        holder.DepName = DATA_MODEL.get(position).getDepName();
-        holder.DepName2 = DATA_MODEL.get(position).getDepName2();
-
-        holder.LabelID = DATA_MODEL.get(position).getLabelID();
-        holder.usr_sterile = DATA_MODEL.get(position).getUsr_sterile();
-        holder.usr_prepare = DATA_MODEL.get(position).getUsr_prepare();
-        holder.usr_approve = DATA_MODEL.get(position).getUsr_approve();
-        holder.SterileRoundNumber = DATA_MODEL.get(position).getSterileRoundNumber();
-
-        holder.MachineName = DATA_MODEL.get(position).getMachineName();
-        holder.Price = DATA_MODEL.get(position).getPrice();
-        holder.Time = DATA_MODEL.get(position).getTime();
-
-        holder.Qty_Print = DATA_MODEL.get(position).getQty_Print();
-        holder.ItemSetData = DATA_MODEL.get(position).getItemSetData();
-
-        if (!DATA_MODEL.get(position).getIsRemarkExpress().equals("0")){
-            holder.txt_IsRemarkems.setVisibility(View.VISIBLE);
-        }else {
-            holder.txt_IsRemarkems.setVisibility(View.GONE);
-        }
-        // =========================================================================================
-        /*
-        holder.txt_department.setBackgroundResource( holder.index%2 == 0 ? R.color.even : R.color.odd);
-        holder.txt_item_name.setBackgroundResource( holder.index%2 == 0 ? R.color.even : R.color.odd);
-        holder.txt_usage_code.setBackgroundResource( holder.index%2 == 0 ? R.color.even : R.color.odd);
-        holder.txt_qty.setBackgroundResource( holder.index%2 == 0 ? R.color.even : R.color.odd);
-        holder.txt_age.setBackgroundResource( holder.index%2 == 0 ? R.color.even : R.color.odd);
-        holder.chk.setBackgroundResource( holder.index%2 == 0 ? R.color.even : R.color.odd);
-        */
-        /*
-        if ((DATA_MODEL.get(position).getAge().equals("1"))) {
-            holder.txt_age.setText("90");
-        } else if (DATA_MODEL.get(position).getAge().equals("2")) {
-            holder.txt_age.setText("365");
-        } else if (DATA_MODEL.get(position).getAge().equals("3")) {
-            holder.txt_age.setText("14");
-        } else if (DATA_MODEL.get(position).getAge().equals("4")) {
-            holder.txt_age.setText("14");
-        } else if (DATA_MODEL.get(position).getAge().equals("5")) {
-            holder.txt_age.setText("60");
-        } else if (DATA_MODEL.get(position).getAge().equals("6")) {
-            holder.txt_age.setText("90");
-        } else if (DATA_MODEL.get(position).getAge().equals("7")) {
-            holder.txt_age.setText("14");
-        } else if (DATA_MODEL.get(position).getAge().equals("8")) {
-            holder.txt_age.setText("14");
-        } else if (DATA_MODEL.get(position).getAge().equals("9")) {
-            holder.txt_age.setText("0");
-        } else if (DATA_MODEL.get(position).getAge().equals("10")) {
-            holder.txt_age.setText("90");
-        } else if (DATA_MODEL.get(position).getAge().equals("11")) {
-            holder.txt_age.setText("365");
-        }
-        */
-
-
 
         return view;
     }
-
-    static class ViewHolder {
-        int index;
-        TextView txt_id;
-        //TextView txt_department;
-        TextView txt_item_name;
-        TextView txt_usage_code;
-        TextView txt_qty;
-        TextView txt_age;
-        ImageView imv_remove;
-        ImageView imv_print;
-        TextView txt_basket;
-        CheckBox chk;
-        RelativeLayout relativeLayout;
-
-        String ID;
-        String DocNo;
-        String ItemStockID;
-        String Qty;
-        String itemname;
-
-        String itemcode;
-        String UsageCode;
-        String age;
-        String ImportID;
-        String SterileDate;
-
-        String ExpireDate;
-        String IsStatus;
-        String OccuranceQty;
-        String DepName;
-        String DepName2;
-
-        String LabelID;
-        String usr_sterile;
-        String usr_prepare;
-        String usr_approve;
-        String SterileRoundNumber;
-
-        String MachineName;
-        String Price;
-        String Time;
-
-        String Qty_Print;
-        String ItemSetData;
-        ImageView txt_IsRemarkems;
-
-        ListView list_sub;
-
-    }
-
+    
 }

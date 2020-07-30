@@ -50,7 +50,7 @@ public class ImportWashDetailGridViewAdapter extends ArrayAdapter<ModelImportWas
                 public void onClick(View v) {
                     ((CssdSterile)context).importWashDetail( viewHolder.txt_item_code.getText().toString(), viewHolder.txt_item_program_id.getText().toString() ,
                             viewHolder.item_program, viewHolder.PackingMatID,"0"
-                    ,viewHolder.basket);
+                    ,viewHolder.basket, viewHolder.usageCode);
                 }
             });
 
@@ -80,6 +80,8 @@ public class ImportWashDetailGridViewAdapter extends ArrayAdapter<ModelImportWas
         holder.txt_packingmat.setText( DATA_MODEL.get(position).getPackingMat() + "( " + DATA_MODEL.get(position).getShelflife() + " วัน )");
         holder.index = (DATA_MODEL.get(position).getIndex());
         holder.PackingMatID = DATA_MODEL.get(position).getPackingMatID();
+
+        holder.usageCode =DATA_MODEL.get(position).getI_UsageCode();
         // =========================================================================================
 
         return view;
@@ -99,6 +101,7 @@ public class ImportWashDetailGridViewAdapter extends ArrayAdapter<ModelImportWas
         String item_program;
         TextView txt_packingmat;
         String PackingMatID;
+        String usageCode;
     }
 
 }

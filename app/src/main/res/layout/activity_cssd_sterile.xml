@@ -427,8 +427,9 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginTop="0dp"
                     android:layout_marginBottom="0dp"
-                    android:layout_weight="1"
-                    android:divider="@null"></ListView>
+                    android:layout_weight="1">
+
+                </ListView>
 
             </RelativeLayout>
 
@@ -916,7 +917,9 @@
                         android:layout_weight="1"
                         android:divider="@null"
                         android:numColumns="2"
-                        android:visibility="gone" />
+                        android:visibility="gone" >
+
+                    </GridView>
 
 
                 </RelativeLayout>
@@ -991,10 +994,10 @@
             android:id="@+id/choice_1"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:background="@drawable/ic_radio_normal_grey"
+            android:text="S"
             android:textColor="@color/colorBlue"
-            app:tbgMarkerColor="@color/colorSwitchBlue"
-            android:background="@drawable/ic_radio_normal"
-            android:text="S"/>
+            app:tbgMarkerColor="@color/colorSwitchBlue" />
 
         <com.nex3z.togglebuttongroup.button.CircularToggle
             android:id="@+id/choice_2"
@@ -1009,10 +1012,10 @@
             android:id="@+id/choice_3"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:background="@drawable/ic_radio_normal_grey"
+            android:text="L"
             android:textColor="@color/colorBlue"
-            app:tbgMarkerColor="@color/colorSwitchBlue"
-            android:background="@drawable/ic_radio_normal"
-            android:text="L"/>
+            app:tbgMarkerColor="@color/colorSwitchBlue" />
 
     </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
 
@@ -1241,5 +1244,104 @@
             android:layout_marginBottom="16dp"
             android:background="@drawable/ic_popup_print_green"
             android:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/PairBasketBox"
+        android:layout_width="match_parent"
+        android:layout_height="690dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:background="@color/fefe"
+        android:paddingRight="11dp"
+        android:paddingBottom="7dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:orientation="vertical"
+            android:paddingLeft="75dp"
+            android:paddingTop="60dp"
+            android:paddingBottom="8dp">
+
+            <ListView
+                android:id="@+id/basket_dialog_w_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="56dp">
+
+            </ListView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="228dp"
+                android:orientation="vertical"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="740dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_recall"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:id="@+id/textView192"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ตะกร้า "
+                        android:textColor="@color/colorWhite"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/PairBasketBox_basket_Code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <ListView
+                    android:id="@+id/basket_dialog_list_basket"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg2_n" />
+
+                <Button
+                    android:id="@+id/pair_fin"
+                    android:layout_width="120dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="0"
+                    android:background="@drawable/btn_save" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>
