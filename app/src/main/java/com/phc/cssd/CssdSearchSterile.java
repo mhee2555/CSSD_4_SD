@@ -2,7 +2,16 @@ package com.phc.cssd;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.hardware.usb.UsbAccessory;
+import android.hardware.usb.UsbConstants;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbInterface;
+import android.hardware.usb.UsbManager;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -34,20 +43,24 @@ import com.phc.core.string.TextSplitName;
 import com.phc.core.string.TextTwoLine;
 import com.phc.cssd.adapter.SearchSterileAdapter;
 import com.phc.cssd.adapter.SearchSterileDetailAdapter;
+import com.phc.cssd.adapter.SterileDetailAdapter;
 import com.phc.cssd.data.PreviewSticker;
+import com.phc.cssd.data.SterileDetailItemSet;
 import com.phc.cssd.model.ModelSterile;
 import com.phc.cssd.model.ModelSterileDetail;
 import com.phc.cssd.print_sticker.PrintSticker;
+import com.phc.cssd.properties.pCustomer;
 import com.phc.cssd.url.Url;
 import com.phc.cssd.url.getUrl;
 import com.phc.cssd.usb.TscWifi;
 
-//import com.phc.cssd_4_sd.usb.TSCUSBActivity;
+//import com.phc.cssd.usb.TSCUSBActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -329,9 +342,8 @@ public class CssdSearchSterile extends AppCompatActivity {
                                     m.getPrinter(),
                                     m.getUsageCount(),
                                     m.getItemSetData(),
-                                    m.getBasketName(),
-                                    m.getIsRemarkExpress(),
-                                    m.getIndex()
+                                    m.getIndex(),
+                                    m.getIsRemarkExpress()
                             )
                     );
                 }
@@ -586,8 +598,7 @@ public class CssdSearchSterile extends AppCompatActivity {
                 }
 
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_display_sterile_detail_seaech.php", data);
-                Log.d("BANKFH",data+"");
-                Log.d("BANKFH",result+"");
+
                 return result;
             }
 
@@ -630,10 +641,8 @@ public class CssdSearchSterile extends AppCompatActivity {
                                         data.get(i + 25),
                                         data.get(i + 26),
                                         data.get(i + 27),
-                                        "",
-                                        "",
-                                        "",
-                                        index
+                                        index,
+                                        data.get(i + 28)
                                 )
                         );
 
@@ -683,10 +692,8 @@ public class CssdSearchSterile extends AppCompatActivity {
                     String Printer,
                     String UsageCount,
                     String ItemSetData,
-                    String BasketName,
-                    String BasketCode,
-                    String IsRemarkExpress,
-                    int index
+                    int index,
+                    String IsRemarkExpress
             ){
                 return new ModelSterileDetail(
                         ID,
@@ -722,10 +729,8 @@ public class CssdSearchSterile extends AppCompatActivity {
                         Printer,
                         UsageCount,
                         ItemSetData,
-                        BasketName,
-                        BasketCode,
-                        IsRemarkExpress,
-                        index
+                        index,
+                        IsRemarkExpress
                 );
             }
 
@@ -770,9 +775,8 @@ public class CssdSearchSterile extends AppCompatActivity {
             String Printer,
             String UsageCount,
             String ItemSetData,
-            String BasketName,
-            String IsRemarkExpress,
-            int index
+            int index,
+            String IsRemarkExpress
     ){
         return new ModelSterileDetail(
                 ID,
@@ -808,9 +812,8 @@ public class CssdSearchSterile extends AppCompatActivity {
                 Printer,
                 UsageCount,
                 ItemSetData,
-                BasketName,
-                IsRemarkExpress,
-                index
+                index,
+                IsRemarkExpress
         );
     }
 

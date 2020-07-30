@@ -136,39 +136,70 @@ public class ModelSterileDetail implements Cloneable {
         this.index = index;
     }
 
-//    public ModelSterileDetail(String ID, String docNo, String itemStockID, String qty, String itemname, String itemcode, String usageCode, String age, String importID, String sterileDate, String expireDate, String isStatus, String occuranceQty, String depName, String depName2, String labelID, String usr_sterile, String usr_prepare, String usr_approve, String sterileRoundNumber, String machineName, String price, String time, String sterileProcessID, String qty_Print, String printer, String usageCount, String itemSetData, String BasketName, String  IsRemarkExpress,int index) {
-//        this.ID = ID;
-//        DocNo = docNo;
-//        ItemStockID = itemStockID;
-//        Qty = qty;
-//        this.itemname = itemname;
-//        this.itemcode = itemcode;
-//        UsageCode = usageCode;
-//        this.age = age;
-//        ImportID = importID;
-//        SterileDate = sterileDate;
-//        ExpireDate = expireDate;
-//        IsStatus = isStatus;
-//        OccuranceQty = occuranceQty;
-//        DepName = depName;
-//        DepName2 = depName2;
-//        LabelID = labelID;
-//        this.usr_sterile = usr_sterile;
-//        this.usr_prepare = usr_prepare;
-//        this.usr_approve = usr_approve;
-//        SterileRoundNumber = sterileRoundNumber;
-//        MachineName = machineName;
-//        Price = price;
-//        Time = time;
-//        SterileProcessID = sterileProcessID;
-//        Qty_Print = qty_Print;
-//        Printer = printer;
-//        UsageCount = usageCount;
-//        ItemSetData = itemSetData;
-//        this.index = index;
-//        this.BasketName = BasketName;
-//        this.IsRemarkExpress = IsRemarkExpress;
-//    }
+    public ModelSterileDetail(String ID, String docNo, String itemStockID, String qty, String itemname, String itemcode, String usageCode, String age, String importID, String sterileDate, String expireDate, String isStatus, String occuranceQty, String depName, String depName2, String labelID, String usr_sterile, String usr_prepare, String usr_approve, String sterileRoundNumber, String machineName, String price, String time, String sterileProcessID, String qty_Print, String printer, String usageCount, String itemSetData, int index) {
+        this.ID = ID;
+        DocNo = docNo;
+        ItemStockID = itemStockID;
+        Qty = qty;
+        this.itemname = itemname;
+        this.itemcode = itemcode;
+        UsageCode = usageCode;
+        this.age = age;
+        ImportID = importID;
+        SterileDate = sterileDate;
+        ExpireDate = expireDate;
+        IsStatus = isStatus;
+        OccuranceQty = occuranceQty;
+        DepName = depName;
+        DepName2 = depName2;
+        LabelID = labelID;
+        this.usr_sterile = usr_sterile;
+        this.usr_prepare = usr_prepare;
+        this.usr_approve = usr_approve;
+        SterileRoundNumber = sterileRoundNumber;
+        MachineName = machineName;
+        Price = price;
+        Time = time;
+        SterileProcessID = sterileProcessID;
+        Qty_Print = qty_Print;
+        Printer = printer;
+        UsageCount = usageCount;
+        ItemSetData = itemSetData;
+        this.index = index;
+    }
+
+    public ModelSterileDetail(String ID, String docNo, String itemStockID, String qty, String itemname, String itemcode, String usageCode, String age, String importID, String sterileDate, String expireDate, String isStatus, String occuranceQty, String depName, String depName2, String labelID, String usr_sterile, String usr_prepare, String usr_approve, String sterileRoundNumber, String machineName, String price, String time, String sterileProcessID, String qty_Print, String printer, String usageCount, String itemSetData, int index, String IsRemarkExpress) {
+        this.ID = ID;
+        DocNo = docNo;
+        ItemStockID = itemStockID;
+        Qty = qty;
+        this.itemname = itemname;
+        this.itemcode = itemcode;
+        UsageCode = usageCode;
+        this.age = age;
+        ImportID = importID;
+        SterileDate = sterileDate;
+        ExpireDate = expireDate;
+        IsStatus = isStatus;
+        OccuranceQty = occuranceQty;
+        DepName = depName;
+        DepName2 = depName2;
+        LabelID = labelID;
+        this.usr_sterile = usr_sterile;
+        this.usr_prepare = usr_prepare;
+        this.usr_approve = usr_approve;
+        SterileRoundNumber = sterileRoundNumber;
+        MachineName = machineName;
+        Price = price;
+        Time = time;
+        SterileProcessID = sterileProcessID;
+        Qty_Print = qty_Print;
+        Printer = printer;
+        UsageCount = usageCount;
+        ItemSetData = itemSetData;
+        this.index = index;
+        this.IsRemarkExpress = IsRemarkExpress;
+    }
 
     public ModelSterileDetail(String ID, String docNo, String itemStockID, String qty, String itemname, String itemcode, String usageCode, String age, String importID, String sterileDate, String expireDate, String isStatus, String occuranceQty, String depName, String depName2, String labelID, String usr_sterile, String usr_prepare, String usr_approve, String sterileRoundNumber, String machineName, String price, String time, String sterileProcessID, String qty_Print, String printer, String usageCount, String itemSetData, String BasketName, String  IsRemarkExpress,int index) {
         this.ID = ID;
@@ -204,7 +235,7 @@ public class ModelSterileDetail implements Cloneable {
         this.IsRemarkExpress = IsRemarkExpress;
     }
 
-    public ModelSterileDetail(String ID, String docNo, String itemStockID, String qty, String itemname, String itemcode, String usageCode, String age, String importID, String sterileDate, String expireDate, String isStatus, String occuranceQty, String depName, String depName2, String labelID, String usr_sterile, String usr_prepare, String usr_approve, String sterileRoundNumber, String machineName, String price, String time, String sterileProcessID, String qty_Print, String printer, String usageCount, String itemSetData, String BasketName, String IsRemarkExpress ,String BasketCode ,int index) {
+    public ModelSterileDetail(String ID, String docNo, String itemStockID, String qty, String itemname, String itemcode, String usageCode, String age, String importID, String sterileDate, String expireDate, String isStatus, String occuranceQty, String depName, String depName2, String labelID, String usr_sterile, String usr_prepare, String usr_approve, String sterileRoundNumber, String machineName, String price, String time, String sterileProcessID, String qty_Print, String printer, String usageCount, String itemSetData, String BasketName, String  IsRemarkExpress,int index,String BasketCode) {
         this.ID = ID;
         DocNo = docNo;
         ItemStockID = itemStockID;
@@ -233,10 +264,10 @@ public class ModelSterileDetail implements Cloneable {
         Printer = printer;
         UsageCount = usageCount;
         ItemSetData = itemSetData;
+        this.index = index;
         this.BasketName = BasketName;
         this.BasketCode = BasketCode;
         this.IsRemarkExpress = IsRemarkExpress;
-        this.index = index;
     }
 
     public boolean getIsBasket() {
