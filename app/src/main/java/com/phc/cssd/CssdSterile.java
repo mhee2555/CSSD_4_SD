@@ -92,7 +92,7 @@ public class CssdSterile extends AppCompatActivity {
 
     private boolean IsShowBasket = false;
     private boolean OccupancyRate_Con = ConfigProgram.OccupancyRate;
-    private EditText OccupancyRate_Sterile;
+    private TextView OccupancyRate_Sterile;
     private String OccupancyRate_Text_Sterile;
     private boolean IsAdmin = false;
 
@@ -933,25 +933,37 @@ public class CssdSterile extends AppCompatActivity {
         //mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
 
         main = (LinearLayout)findViewById(R.id.main);
-        OccupancyRate_Sterile = (EditText ) findViewById(R.id.OccupancyRate_Sterile);
-
+        OccupancyRate_Sterile = (TextView ) findViewById(R.id.OccupancyRate_Sterile);
         if (OccupancyRate_Con == true){
-            OccupancyRate_Sterile.setVisibility(View.VISIBLE);
-            OccupancyRate_Sterile.setOnKeyListener(new View.OnKeyListener() {
-                public boolean onKey(View v, int keyCode, KeyEvent event) {
-                    if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                        switch (keyCode) {
-                            case KeyEvent.KEYCODE_DPAD_CENTER:
-                            case KeyEvent.KEYCODE_ENTER:
-                                OccupancyRate_Text_Sterile = OccupancyRate_Sterile.getText().toString();
-                                return true;
-                            default:
-                                break;
+            OccupancyRate_Sterile.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if (checkMachineActive()) {
+                        if (!txt_doc_no.getText().toString().equals("")) {
+                            openDropDown1("wash_test_program", "");
+                        }else {
+                            Toast.makeText(CssdSterile.this, "กรุณาเพิ่มรายการก่อนทำรายการ !!", Toast.LENGTH_SHORT).show();
                         }
+                    } else {
+                        Toast.makeText(CssdSterile.this, "ไม่สามารถเลือกข้อมูลได้ !!", Toast.LENGTH_SHORT).show();
                     }
-                    return false;
                 }
             });
+//            OccupancyRate_Sterile.setVisibility(View.VISIBLE);
+//            OccupancyRate_Sterile.setOnKeyListener(new View.OnKeyListener() {
+//                public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                    if (event.getAction() == KeyEvent.ACTION_DOWN) {
+//                        switch (keyCode) {
+//                            case KeyEvent.KEYCODE_DPAD_CENTER:
+//                            case KeyEvent.KEYCODE_ENTER:
+//                                OccupancyRate_Text_Sterile = OccupancyRate_Sterile.getText().toString();
+//                                return true;
+//                            default:
+//                                break;
+//                        }
+//                    }
+//                    return false;
+//                }
+//            });
         }else {
             OccupancyRate_Sterile.setVisibility(View.INVISIBLE);
         }
@@ -3231,6 +3243,14 @@ public class CssdSterile extends AppCompatActivity {
         i.putExtra("filter", filter);
         i.putExtra("B_ID", B_ID);
         startActivityForResult(i, Master.getResult(data));
+    }
+
+    private void openDropDown1(String data, String filter){
+        Intent i = new Intent(CssdSterile.this, MasterDropdown1.class);
+        i.putExtra("data", data);
+        i.putExtra("filter", filter);
+        i.putExtra("B_ID", B_ID);
+        startActivityForResult(i, 28);
     }
 
     @Override

@@ -13,6 +13,6 @@ public class ConfigProgram {
   //------------------------------------------------
   //wash and sterile
   //------------------------------------------------
-  public static boolean OccupancyRate = false ;
+  public static boolean OccupancyRate = true ;
 
 }

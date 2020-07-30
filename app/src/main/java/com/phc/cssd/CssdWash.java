@@ -1738,6 +1738,7 @@ public class CssdWash extends AppCompatActivity {
     private void onDisplay(List<ModelWashMachine> MACHINE){
         if (MACHINE.get(i).getDocNo() != null && !MACHINE.get(i).getDocNo().equals("-")) {
             onDisplay(MACHINE.get(i).getDocNo());
+            getOccupancyRate(getDocNo());
             if (MACHINE.get(i).isActive()) {
                 alertMachineBusy(MACHINE.get(i).getMachineName());
             }
@@ -4013,6 +4014,12 @@ public class CssdWash extends AppCompatActivity {
             if (resultCode == Master.washprocess) {
                 txt_wash_process.setText(RETURN_DATA);
                 txt_wash_process.setContentDescription(RETURN_VALUE);
+            }else if (resultCode == 28) {
+                occupancy_rate.setText(RETURN_DATA);
+//                occupancy_rate.setContentDescription(RETURN_VALUE);
+
+//                updateWash(Master.occupancy_rate, RETURN_VALUE, getDocNo());
+
             }else if (resultCode == Master.wash_type) {
                 txt_wash_type.setText(RETURN_DATA);
                 txt_wash_type.setContentDescription(RETURN_VALUE);
@@ -4091,12 +4098,6 @@ public class CssdWash extends AppCompatActivity {
                         }
                     }else{
                     }
-                }else if (resultCode == 28) {
-                    occupancy_rate.setText(RETURN_DATA);
-//                occupancy_rate.setContentDescription(RETURN_VALUE);
-
-//                updateWash(Master.occupancy_rate, RETURN_VALUE, getDocNo());
-
                 }else{
                     Toast.makeText(this, "บันทึกไม่สำเร็จ", Toast.LENGTH_SHORT).show();
                 }
