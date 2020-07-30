@@ -433,7 +433,7 @@ public class PrintSticker {
                 Tsc.qrcode(20, 240, "H", "5", "A", "0", "M2", "S1", m.getUsageCode());
                 String yy1 = (Integer.parseInt( m.getSterileDate().substring(6,10) )+543)+"";
                 String mfc1 = m.getSterileDate().substring(0,2) +"/"+m.getSterileDate().substring(3,5)+"/"+ yy1.substring(2,4);
-                Tsc.sendpicture(160, 240, TextAsBitmap.getTextBitmap("MFG : " + mfc1 + " ( " + m.getAgeDay() + " วัน " + ")", 20));
+                Tsc.sendpicture(150, 240, TextAsBitmap.getTextBitmap("MFG : " + mfc1 + " ( " + m.getAgeDay() + " วัน " + ")", 22));
                 String yy2 = (Integer.parseInt( m.getExpireDate().substring(6,10) )+543)+"";
                 String mfc2 = m.getExpireDate().substring(0,2) +"/"+m.getExpireDate().substring(3,5)+"/"+ yy2.substring(2,4);
                 Tsc.sendpicture(170, 270, TextAsBitmap.getTextBitmap("EXP : " + mfc2, 32));

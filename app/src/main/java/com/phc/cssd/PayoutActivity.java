@@ -1207,11 +1207,9 @@ public class PayoutActivity extends AppCompatActivity {
                                                 ConvertPayout(DocNo, resultsDepartment.get(spinner01.getSelectedItemPosition()).getFields1());
 //                                            savepayout_all(DocNo);
                                                 textViewDocNo.setText(DocNo);
-
                                                 spinner03.setSelection(0);
                                                 payoutnotfully(DocNo);
                                                 bt_switch.setChecked(true);
-
                                                 get_RecipientCode(DocNo);
                                             }
                                         });

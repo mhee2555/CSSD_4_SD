@@ -1165,9 +1165,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
 
     public void getlistdata(String department_id, String Date, String sreach) {
         class getlistdata extends AsyncTask<String, Void, String> {
-
-
-
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -1175,7 +1172,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
 //                this.dialog.setCancelable(false);
 //                this.dialog.show();
             }
-
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
@@ -1209,7 +1205,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-
             //class connect php RegisterUserClass important !!!!!!!
             @Override
             protected String doInBackground(String... params) {
