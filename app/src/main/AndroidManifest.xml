@@ -18,6 +18,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".MasterDropdown1"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
             android:name=".dialog_linen_detail"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog1"

@@ -3105,11 +3105,12 @@ public class CssdWash extends AppCompatActivity {
                     }
                     try {
                         if (IsQR) {
-                            if (occupancy_rate.getText().toString().equals("0 %")){
-                                Toast.makeText(CssdWash.this, "กรุณากรอกอัตราเต็มตู้ต่อรอบ !!", Toast.LENGTH_SHORT).show();
-                            }else {
-                                getQR(DocNo, "w1", "");
-                            }
+                            getQR(DocNo, "w1", "");
+//                            if (occupancy_rate.getText().toString().equals("0 %")){
+//                                Toast.makeText(CssdWash.this, "กรุณากรอกอัตราเต็มตู้ต่อรอบ !!", Toast.LENGTH_SHORT).show();
+//                            }else {
+//                                getQR(DocNo, "w1", "");
+//                            }
                         } else {
                             startMachine(DocNo);
                         }
