@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="90dp"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -51,22 +51,23 @@
 
             <TextView
                 android:id="@+id/dept"
-                android:layout_width="60dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="255dp"
+                android:layout_marginTop="29dp"
+                android:layout_marginLeft="5dp"
                 android:textColor="@android:color/black"
                 android:text="dept"
-                android:textSize="15sp"
+                android:paddingLeft="2dp"
+                android:textSize="14sp"
                 android:textStyle="bold"/>
 
             <ImageView
                 android:id="@+id/doc_dapt"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignTop="@+id/w_docdate"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="350dp"
+                android:layout_marginStart="340dp"
                 android:layout_marginTop="3dp"
                 android:background="@drawable/ic_b_x32"
                 android:paddingLeft="2dp" />
@@ -75,10 +76,11 @@
                 android:id="@+id/textView39"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="52dp"
                 android:layout_alignStart="@+id/docno"
                 android:layout_weight="1"
                 android:text="หมายเหตุ:"
+                android:paddingLeft="2dp"
                 android:textColor="@android:color/black"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -88,7 +90,7 @@
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="52dp"
                 android:layout_marginStart="81dp"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
@@ -99,7 +101,7 @@
                 android:layout_height="35dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="false"
-                android:layout_marginTop="27dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginEnd="3dp" />
 
             <TextView
@@ -108,7 +110,7 @@
                 android:layout_height="35dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="false"
-                android:layout_marginTop="27dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginEnd="47dp"
                 android:background="@drawable/ic_list_blue"
                 android:textStyle="bold" />
