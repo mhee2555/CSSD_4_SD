@@ -36,9 +36,11 @@ import com.phc.cssd.adapter.ImportWashDetailGridViewAdapter;
 import com.phc.cssd.adapter.ListEdit_L_Adapter;
 import com.phc.cssd.adapter.ListEdit_R_Adapter;
 import com.phc.cssd.data.Master;
+import com.phc.cssd.model.Model;
 import com.phc.cssd.model.ModelImportWashDetail;
 import com.phc.cssd.model.ModelItemStock;
 
+import com.phc.cssd.model.ModelWashDetail;
 import com.phc.cssd.url.Url;
 
 import org.json.JSONArray;
@@ -48,6 +50,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class CssdEditSterile extends Activity {

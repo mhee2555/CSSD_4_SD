@@ -290,7 +290,7 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
 
 //                    Log.d("ttest","DETAIL_SUB = "+basket+"--"+x+"--");
 
-                sub_item.setAdapter(new ImportWashDetailAdapter((CssdSterile) context, DETAIL_SUB));
+                sub_item.setAdapter(new ImportWashDetailAdapter((CssdSterile) context, DETAIL_SUB,4));
 
                 final float scale = getContext().getResources().getDisplayMetrics().density;
                 int pixels = (int) (44 * scale + 0.5f);
@@ -348,6 +348,20 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                     }
                 });
             }
+        }
+        else if(mode==5){ //In Basket
+            txt_qty.setVisibility(View.GONE);
+            imv_add.setImageResource(R.drawable.ic_bin1_2);
+            imv_add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    ((CssdSterile)context).onRemoveBasket(
+                            DATA_MODEL.get(position).getBasketDetailId()
+                    );
+
+                }
+            });
         }
 
         return view;
