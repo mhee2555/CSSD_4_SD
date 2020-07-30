@@ -420,19 +420,6 @@
                 </LinearLayout>
 
                 <ListView
-                    android:id="@+id/basket_dialog_w_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginBottom="0dp"
-                    android:layout_weight="1"
-                    android:visibility="gone">
-
-                </ListView>
-
-                <ListView
                     android:id="@+id/list_wash_detail"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -1268,64 +1255,93 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="0dp"
-        android:layout_marginEnd="11dp"
-        android:layout_marginBottom="7dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
         android:background="@color/fefe"
-        android:gravity="right"
-        android:orientation="vertical">
+        android:paddingRight="11dp"
+        android:paddingBottom="7dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="228dp"
-            android:orientation="vertical"></LinearLayout>
-
-        <LinearLayout
-            android:layout_width="740dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_recall"
+            android:layout_weight="4"
             android:orientation="vertical"
-            android:padding="15dp">
+            android:paddingLeft="75dp"
+            android:paddingTop="60dp"
+            android:paddingBottom="8dp">
+
+            <ListView
+                android:id="@+id/basket_dialog_w_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="56dp">
+
+            </ListView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingTop="5dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="5dp">
+                android:layout_height="228dp"
+                android:orientation="vertical"></LinearLayout>
 
-                <TextView
-                    android:id="@+id/textView192"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ตะกร้า "
-                    android:textColor="@color/colorWhite"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="740dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_recall"
+                android:orientation="vertical"
+                android:padding="15dp">
 
-                <TextView
-                    android:id="@+id/PairBasketBox_basket_Code"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:id="@+id/textView192"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ตะกร้า "
+                        android:textColor="@color/colorWhite"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/PairBasketBox_basket_Code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <ListView
+                    android:id="@+id/basket_dialog_list_basket"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg2_n" />
+
+                <Button
+                    android:id="@+id/pair_fin"
+                    android:layout_width="120dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="0"
+                    android:background="@drawable/btn_save" />
             </LinearLayout>
 
-            <ListView
-                android:id="@+id/basket_dialog_list_basket"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/bg2_n" />
-
-            <Button
-                android:id="@+id/pair_fin"
-                android:layout_width="120dp"
-                android:layout_height="50dp"
-                android:layout_weight="0"
-                android:background="@drawable/btn_save" />
         </LinearLayout>
 
     </LinearLayout>
