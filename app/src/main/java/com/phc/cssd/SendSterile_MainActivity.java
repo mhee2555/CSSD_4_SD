@@ -923,7 +923,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         Toast.makeText(SendSterile_MainActivity.this, "ไม่สามารถเพิ่มรายการได้เนื่องจากเอกสารถูกบันทึกแล้ว !!", Toast.LENGTH_SHORT).show();
                     }else {
                         if (!ED_Dept.equals("") && !ED_Dept.equals("0")) {
-                            openSearchItemStock("1");
+                            openSearchItemStock("2");
                         } else {
                             Toast.makeText(SendSterile_MainActivity.this, "กรุณาเลือกแผนก", Toast.LENGTH_SHORT).show();
                         }
@@ -2233,6 +2233,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         i.putExtra("ED_Dept", ED_Dept);
         i.putExtra("B_ID",B_ID);
         startActivityForResult(i, 100);
+        Log.d("KDJDHF",xSel);
     }
 
 

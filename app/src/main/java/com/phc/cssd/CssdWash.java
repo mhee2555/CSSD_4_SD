@@ -66,6 +66,8 @@ public class CssdWash extends AppCompatActivity {
 
     int cnt = 0;
     Boolean WASH = true;
+    private TextView occupancy_rate;
+    private String OccupancyRate_Text_Wash;
     private int countput = 0;
     private String QtyWash = "";
     // =================================================
@@ -467,6 +469,21 @@ public class CssdWash extends AppCompatActivity {
 
                 if (checkMachineActive()) {
                     openDropDown("wash_test_program", getProcessId());
+                } else {
+                    Toast.makeText(CssdWash.this, "ไม่สามารถเลือกข้อมูลได้ !!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        occupancy_rate = (TextView) findViewById(R.id.occupancy_rate);
+        occupancy_rate.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (checkMachineActive()) {
+                    if (!txt_doc_no.getText().toString().equals("")) {
+                        openDropDown1("wash_test_program", getProcessId());
+                    }else {
+                        Toast.makeText(CssdWash.this, "กรุณาเพิ่มรายการก่อนทำรายการ !!", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(CssdWash.this, "ไม่สามารถเลือกข้อมูลได้ !!", Toast.LENGTH_SHORT).show();
                 }
@@ -3089,6 +3106,11 @@ public class CssdWash extends AppCompatActivity {
                     try {
                         if (IsQR) {
                             getQR(DocNo, "w1", "");
+//                            if (occupancy_rate.getText().toString().equals("0 %")){
+//                                Toast.makeText(CssdWash.this, "กรุณากรอกอัตราเต็มตู้ต่อรอบ !!", Toast.LENGTH_SHORT).show();
+//                            }else {
+//                                getQR(DocNo, "w1", "");
+//                            }
                         } else {
                             startMachine(DocNo);
                         }
@@ -3250,10 +3272,12 @@ public class CssdWash extends AppCompatActivity {
         txt_round.setText("");
         txt_finish.setText("");
         txt_test_program.setContentDescription("");
+        occupancy_rate.setContentDescription("");
         txt_wash_type.setContentDescription("");
         edit_wash_type.setContentDescription("");
         txt_test_program.setText("");
         txt_wash_type.setText("");
+        occupancy_rate.setText("");
         edit_wash_type.setText("");
     }
 
@@ -3931,6 +3955,15 @@ public class CssdWash extends AppCompatActivity {
         startActivityForResult(i, Master.getResult(data));
     }
 
+    private void openDropDown1(String data, String filter){
+        Intent i = new Intent(CssdWash.this, MasterDropdown1.class);
+        i.putExtra("data", data);
+        i.putExtra("filter", filter);
+        i.putExtra("B_ID", B_ID);
+        startActivityForResult(i, 28);
+    }
+
+
     private void openSendSterile(){
         Intent i = new Intent(CssdWash.this, SendSterile_MainActivity.class);
         i.putExtra("userid", userid);
@@ -4058,6 +4091,12 @@ public class CssdWash extends AppCompatActivity {
                         }
                     }else{
                     }
+                }else if (resultCode == 28) {
+                    occupancy_rate.setText(RETURN_DATA);
+//                occupancy_rate.setContentDescription(RETURN_VALUE);
+
+//                updateWash(Master.occupancy_rate, RETURN_VALUE, getDocNo());
+
                 }else{
                     Toast.makeText(this, "บันทึกไม่สำเร็จ", Toast.LENGTH_SHORT).show();
                 }
@@ -4347,6 +4386,8 @@ public class CssdWash extends AppCompatActivity {
                 if(B_ID != null){
                     data.put("p_bid", B_ID);
                 }
+
+                data.put("OccupancyRate",occupancy_rate.getText().toString());
 
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_update_wash_start_time_.php", data);
 
@@ -6109,6 +6150,55 @@ public class CssdWash extends AppCompatActivity {
             // =========================================================================================
         }
         CheckUsageEms obj = new CheckUsageEms();
+        obj.execute();
+    }
+
+    public void getOccupancyRate(final String DocNo) {
+        class getOccupancyRate extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        OccupancyRate_Text_Wash = c.getString("OccupancyRate");
+                        occupancy_rate.setText(OccupancyRate_Text_Wash + " %");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("DocNo",DocNo);
+                data.put("B_ID",B_ID);
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_occupancyrate_wash.php", data);
+                    Log.d("BANKHG",data+"");
+                    Log.d("BANKHG",result);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+                return result;
+            }
+            // =========================================================================================
+        }
+
+        getOccupancyRate obj = new getOccupancyRate();
         obj.execute();
     }
 }
