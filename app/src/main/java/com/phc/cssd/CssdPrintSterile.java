@@ -249,6 +249,8 @@ public class CssdPrintSterile extends Activity {
                         "0",
                         "0",
                         ItemSetData,
+                        "",
+                        "",
                         0
                 )
         );
@@ -289,6 +291,8 @@ public class CssdPrintSterile extends Activity {
             String Printer,
             String UsageCount,
             String ItemSetData,
+            String BasketName,
+            String IsRemarkExpress,
             int index
     ){
         return new ModelSterileDetail(
@@ -325,6 +329,8 @@ public class CssdPrintSterile extends Activity {
                 Printer,
                 UsageCount,
                 ItemSetData,
+                BasketName,
+                IsRemarkExpress,
                 index
         );
     }

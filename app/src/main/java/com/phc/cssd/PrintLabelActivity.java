@@ -168,6 +168,8 @@ public class PrintLabelActivity extends AppCompatActivity {
                             "",
                             "",
                             "",
+                            "",
+                            "",
                             0
                     )
             );
@@ -843,6 +845,8 @@ public class PrintLabelActivity extends AppCompatActivity {
             String Printer,
             String UsageCount,
             String ItemSetData,
+            String BasketName,
+            String IsRemarkExpress,
             int index
     ){
         return new ModelSterileDetail(
@@ -879,6 +883,8 @@ public class PrintLabelActivity extends AppCompatActivity {
                 Printer,
                 UsageCount,
                 ItemSetData,
+                BasketName,
+                IsRemarkExpress,
                 index
         );
     }
