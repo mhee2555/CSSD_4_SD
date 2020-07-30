@@ -19,6 +19,8 @@ public class ModelImportWashDetail implements Cloneable {
             BasketName,
             IsRemarkExpress,
             i_UsageCode,
+            BasketType,
+            BasketDetailId,
             BasketCode;
 
     private int index = -1;
@@ -44,7 +46,7 @@ public class ModelImportWashDetail implements Cloneable {
         this.IsRemarkExpress = IsRemarkExpress;
     }
 
-    public ModelImportWashDetail(int index, boolean isCheck, String i_id, String i_code, String i_name, String i_alt_name, String i_barcode, String i_qty, String i_program, String i_program2, String i_program_id, String PackingMat, String Shelflife, String PackingMatID, String BasketName, String IsRemarkExpress,String i_UsageCode,String BasketCode) {
+    public ModelImportWashDetail(int index, boolean isCheck, String i_id, String i_code, String i_name, String i_alt_name, String i_barcode, String i_qty, String i_program, String i_program2, String i_program_id, String PackingMat, String Shelflife, String PackingMatID, String BasketName, String IsRemarkExpress,String i_UsageCode,String BasketCode,String BasketType,String BasketDetailId) {
         this.i_id = i_id;
         this.i_code = i_code;
         this.i_name = i_name;
@@ -63,6 +65,8 @@ public class ModelImportWashDetail implements Cloneable {
         this.BasketCode = BasketCode;
         this.IsRemarkExpress = IsRemarkExpress;
         this.i_UsageCode = i_UsageCode;
+        this.BasketType = BasketType;
+        this.BasketDetailId = BasketDetailId;
     }
 
     public String getBasketCode() {
@@ -71,6 +75,22 @@ public class ModelImportWashDetail implements Cloneable {
 
     public void setBasketCode(String basketCode) {
         BasketCode = basketCode;
+    }
+
+    public String getBasketDetailId() {
+        return BasketDetailId;
+    }
+
+    public void setBasketDetailId(String basketDetailId) {
+        BasketDetailId = basketDetailId;
+    }
+
+    public String getBasketType() {
+        return BasketType;
+    }
+
+    public void setBasketType(String basketType) {
+        BasketType = basketType;
     }
 
     public String getI_UsageCode() {

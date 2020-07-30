@@ -212,12 +212,8 @@ public class SterileDetailAdapter extends ArrayAdapter<ModelSterileDetail> {
                     Log.d("ttest_data","ItemStockID - "+ItemStockID);
                     Log.d("ttest_data","ID - "+ID);
 
-                    ((CssdSterile)context).onRemoveBasket(
-                            DATA_MODEL.get(position).getImportID()
-                    );
-
                     ((CssdSterile)context).removeSterileDetail(
-                            ImportID,
+                            DATA_MODEL.get(position).getImportID(),
                             ID,
                             ItemStockID
                     );
@@ -313,10 +309,6 @@ public class SterileDetailAdapter extends ArrayAdapter<ModelSterileDetail> {
 
                         for(int i=0;i<MODEL_SUB.size();i++){
 
-                            ((CssdSterile)context).onRemoveBasket(
-                                    MODEL_SUB.get(i).getImportID()
-                            );
-
                             ((CssdSterile)context).removeSterileDetail(
                                     MODEL_SUB.get(i).getImportID(),
                                     MODEL_SUB.get(i).getID(),
@@ -410,29 +402,6 @@ public class SterileDetailAdapter extends ArrayAdapter<ModelSterileDetail> {
                     }
                 });
             }
-        }
-        else if(mode==3){ //Pair Basket
-            txt_usage_code.setVisibility(View.GONE);
-            txt_age.setVisibility(View.GONE);
-            txt_qty.setVisibility(View.GONE);
-            imv_print.setVisibility(View.GONE);
-
-            imv_remove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    ((CssdSterile)context).onRemoveBasket(
-                            DATA_MODEL.get(position).getImportID()
-                    );
-
-                    ((CssdSterile)context).removeSterileDetail(
-                            ImportID,
-                            ID,
-                            ItemStockID
-                    );
-
-                }
-            });
         }
 
         return view;
