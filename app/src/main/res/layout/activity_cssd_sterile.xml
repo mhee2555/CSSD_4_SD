@@ -1262,7 +1262,7 @@
             android:orientation="vertical"
             android:paddingLeft="75dp"
             android:paddingTop="60dp"
-            android:paddingBottom="8dp">
+            android:paddingBottom="8dp" >
 
             <ListView
                 android:id="@+id/basket_dialog_w_list"
