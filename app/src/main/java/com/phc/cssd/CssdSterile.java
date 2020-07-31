@@ -2710,13 +2710,14 @@ public class CssdSterile extends AppCompatActivity {
 
                     }
                     if (OccupancyRate_Con == true) {
-                        if (!OccupancyRate_Sterile.getText().toString().equals("")) {
-                            if (isBowiedick()) {
-                                createSterile(getProcessId());
-                            }
-                        } else {
-                            Toast.makeText(CssdSterile.this, "กรุณากรอกอัตราการเต็มตู้ต่อรอบ", Toast.LENGTH_SHORT).show();
-                        }
+//                        if (!OccupancyRate_Sterile.getText().toString().equals("")) {
+//                            if (isBowiedick()) {
+//                                createSterile(getProcessId());
+//                            }
+//                        } else {
+//                            Toast.makeText(CssdSterile.this, "กรุณากรอกอัตราการเต็มตู้ต่อรอบ", Toast.LENGTH_SHORT).show();
+//                        }
+                        createSterile(getProcessId());
                     }else {
                         if (isBowiedick()) {
                             createSterile(getProcessId());
@@ -2786,17 +2787,25 @@ public class CssdSterile extends AppCompatActivity {
 
                             //System.out.println("isBowiedick() = " + !isBowiedick());
                             if (OccupancyRate_Con == true) {
-                                if (!OccupancyRate_Sterile.getText().toString().equals("")) {
-                                    if (!isBowiedick()) {
-                                        if ((MODEL_STERILE_DETAIL == null || MODEL_STERILE_DETAIL.size() < 1)) {
-                                            Toast.makeText(CssdSterile.this, "ไม่สามารถเริ่มการฆ่าเชื้อได้ เนื่องจากไม่มีรายการที่จะฆ่าเชื้อ !!", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            getQR(getDocNo(), "s1", "");
-                                            //startMachine(getDocNo());
-                                        }
+//                                if (!OccupancyRate_Sterile.getText().toString().equals("")) {
+//                                    if (!isBowiedick()) {
+//                                        if ((MODEL_STERILE_DETAIL == null || MODEL_STERILE_DETAIL.size() < 1)) {
+//                                            Toast.makeText(CssdSterile.this, "ไม่สามารถเริ่มการฆ่าเชื้อได้ เนื่องจากไม่มีรายการที่จะฆ่าเชื้อ !!", Toast.LENGTH_SHORT).show();
+//                                        } else {
+//                                            getQR(getDocNo(), "s1", "");
+//                                            //startMachine(getDocNo());
+//                                        }
+//                                    }
+//                                } else {
+//                                    Toast.makeText(CssdSterile.this, "กรุณากรอกอัตราการเต็มตู้ต่อรอบ", Toast.LENGTH_SHORT).show();
+//                                }
+                                if (!isBowiedick()) {
+                                    if ((MODEL_STERILE_DETAIL == null || MODEL_STERILE_DETAIL.size() < 1)) {
+                                        Toast.makeText(CssdSterile.this, "ไม่สามารถเริ่มการฆ่าเชื้อได้ เนื่องจากไม่มีรายการที่จะฆ่าเชื้อ !!", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        getQR(getDocNo(), "s1", "");
+                                        //startMachine(getDocNo());
                                     }
-                                } else {
-                                    Toast.makeText(CssdSterile.this, "กรุณากรอกอัตราการเต็มตู้ต่อรอบ", Toast.LENGTH_SHORT).show();
                                 }
                             }else {
                                 if (!isBowiedick()) {
