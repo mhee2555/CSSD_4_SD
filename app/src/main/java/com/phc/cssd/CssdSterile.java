@@ -1626,6 +1626,8 @@ public class CssdSterile extends AppCompatActivity {
 
                 pair_fin.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
+                        basket_Code = "";
+                        basket_ID = "";
                         dialog.dismiss();
                     }
                 });

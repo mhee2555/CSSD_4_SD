@@ -8,12 +8,13 @@
 
     <Button
         android:id="@+id/button_basket"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="620dp"
-        android:layout_marginTop="35dp"
-        android:text="ตะกร้าฆ่าเชื้อ"
-        android:visibility="gone"/>
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignStart="@+id/imageBack"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="3dp"
+        android:layout_marginBottom="66dp"
+        android:background="@drawable/ic_disinfecting_basket" />
 
     <ImageView
         android:id="@+id/imv_mc_1"
@@ -990,7 +991,7 @@
             android:id="@+id/choice_1"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="@drawable/ic_radio_normal_grey"
+            android:background="@drawable/ic_radio_normal"
             android:text="S"
             android:textColor="@color/colorBlue"
             app:tbgMarkerColor="@color/colorSwitchBlue" />
@@ -1008,7 +1009,7 @@
             android:id="@+id/choice_3"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="@drawable/ic_radio_normal_grey"
+            android:background="@drawable/ic_radio_normal"
             android:text="L"
             android:textColor="@color/colorBlue"
             app:tbgMarkerColor="@color/colorSwitchBlue" />

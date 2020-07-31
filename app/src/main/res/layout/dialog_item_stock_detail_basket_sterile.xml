@@ -19,22 +19,9 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/bastek_name"
-        android:layout_width="183dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="60dp"
-        android:textAlignment="viewStart"
-        android:textColor="@color/colorBlack"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="521dp"
+        android:layout_height="552dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="37dp"
@@ -46,20 +33,41 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            android:layout_marginBottom="50dp"
             android:orientation="horizontal">
 
             <ListView
                 android:id="@+id/list"
                 android:layout_width="380dp"
-                android:layout_height="420dp"
-                android:layout_marginStart="0dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="4dp" />
 
-            <ListView
-                android:id="@+id/list_basket"
-                android:layout_width="0dp"
-                android:layout_height="420dp"
-                android:layout_marginStart="0dp"
-                android:layout_weight="1" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/bastek_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ListView
+                    android:id="@+id/list_basket"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
         </LinearLayout>
     </RelativeLayout>
 
@@ -71,7 +79,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="140dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/btn_cancel" />
+        android:background="@drawable/btn_cancel"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/btn_save"
@@ -89,8 +98,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="19dp"
         android:gravity="center_vertical">
 
         <EditText
