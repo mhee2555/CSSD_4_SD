@@ -33,6 +33,9 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
     private final Activity context;
     public int mode = 1 ;
     public HashMap <String ,List<ModelImportWashDetail>>MODEL_IMPORT_WASH_DETAIL_SUB;
+    final float scale = getContext().getResources().getDisplayMetrics().density;
+    int pixels = (int) (44 * scale + 0.5f);
+    int x= 1;
 
     public ImportWashDetailAdapter(Activity context, List<ModelImportWashDetail> DATA_MODEL) {
         super(context, R.layout.activity_list_import_wash_detail, DATA_MODEL);
@@ -225,9 +228,6 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
 
                 sub_item.setAdapter(new ImportWashDetailAdapter((CssdSterile) context, DETAIL_SUB));
 
-                final float scale = getContext().getResources().getDisplayMetrics().density;
-                int pixels = (int) (44 * scale + 0.5f);
-
                 sub_item.getLayoutParams().height = pixels * DETAIL_SUB.size();
 
                 txt_item_name.setTypeface(null, Typeface.BOLD);
@@ -288,15 +288,15 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
             }
         }
         else if(mode == 4){// pair basket
+            Log.d("ttest_Xoad","x = "+x+"--"+DATA_MODEL.size());
+            x=x+1;
+            Log.d("ttest_Load","Load = "+position+"--"+DATA_MODEL.get(position).isCheck());
             if(DATA_MODEL.get(position).isCheck()) {
                 final List<ModelImportWashDetail> DETAIL_SUB = MODEL_IMPORT_WASH_DETAIL_SUB.get(basket);
 
-//                    Log.d("ttest","DETAIL_SUB = "+basket+"--"+x+"--");
+//                    Log.d("ttest_DETAIL_SUB","DETAIL_SUB = "+basket+"--"+position+"--");
 
                 sub_item.setAdapter(new ImportWashDetailAdapter((CssdSterile) context, DETAIL_SUB,4));
-
-                final float scale = getContext().getResources().getDisplayMetrics().density;
-                int pixels = (int) (44 * scale + 0.5f);
 
                 sub_item.getLayoutParams().height = pixels * DETAIL_SUB.size();
 
