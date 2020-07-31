@@ -3,6 +3,7 @@ package com.phc.cssd.adapter;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -229,6 +230,8 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
 
                 sub_item.getLayoutParams().height = pixels * DETAIL_SUB.size();
 
+                txt_item_name.setTypeface(null, Typeface.BOLD);
+
                 txt_qty.setText(DETAIL_SUB.size()+"");
                 txt_packingmat.setVisibility(View.GONE);
                 txt_basket.setVisibility(View.GONE);
@@ -297,6 +300,7 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
 
                 sub_item.getLayoutParams().height = pixels * DETAIL_SUB.size();
 
+                txt_qty.setText(DETAIL_SUB.size()+"");
                 txt_packingmat.setVisibility(View.GONE);
                 txt_basket.setVisibility(View.GONE);
 
@@ -332,6 +336,8 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                     }
                 });
             }else {
+                txt_qty.setVisibility(View.GONE);
+
                 imv_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

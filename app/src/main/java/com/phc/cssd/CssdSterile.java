@@ -1528,7 +1528,7 @@ public class CssdSterile extends AppCompatActivity {
 
 
         group_choices = (SingleSelectToggleGroup) findViewById(R.id.group_choices);
-        group_choices.setVisibility(View.GONE);
+//        group_choices.setVisibility(View.GONE);
         group_choices.setOnCheckedChangeListener(new SingleSelectToggleGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(SingleSelectToggleGroup group, int checkedId) {
@@ -1626,6 +1626,8 @@ public class CssdSterile extends AppCompatActivity {
 
                 pair_fin.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
+                        basket_Code = "";
+                        basket_ID = "";
                         dialog.dismiss();
                     }
                 });
