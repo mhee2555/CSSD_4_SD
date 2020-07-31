@@ -386,7 +386,6 @@
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
-
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.com.phc.cssd.provider"

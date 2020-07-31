@@ -1238,8 +1238,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="1120dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/ic_popup_print_green"
-            android:visibility="invisible" />
+            android:background="@drawable/ic_popup_print_green" />
 
     <LinearLayout
         android:id="@+id/PairBasketBox"
@@ -1253,7 +1252,8 @@
         android:layout_marginBottom="0dp"
         android:background="@color/fefe"
         android:paddingRight="11dp"
-        android:paddingBottom="7dp">
+        android:paddingBottom="7dp"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -1262,7 +1262,7 @@
             android:orientation="vertical"
             android:paddingLeft="75dp"
             android:paddingTop="60dp"
-            android:paddingBottom="8dp" >
+            android:paddingBottom="8dp">
 
             <ListView
                 android:id="@+id/basket_dialog_w_list"
@@ -1293,6 +1293,13 @@
                 android:background="@drawable/bg_recall"
                 android:orientation="vertical"
                 android:padding="15dp">
+
+                <Button
+                    android:id="@+id/pair_fin"
+                    android:layout_width="120dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="0"
+                    android:background="@drawable/btn_save" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -1327,13 +1334,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/bg2_n" />
-
-                <Button
-                    android:id="@+id/pair_fin"
-                    android:layout_width="120dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="0"
-                    android:background="@drawable/btn_save" />
             </LinearLayout>
 
         </LinearLayout>
