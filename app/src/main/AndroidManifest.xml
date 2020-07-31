@@ -27,6 +27,8 @@
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog1"
             tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".PairItemToSterileBasket"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar" />
         <activity
             android:name=".dialog_remark_sendsterile"
             android:screenOrientation="sensorLandscape"
@@ -384,16 +386,15 @@
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".util.newVdownloadActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW" />
+            <activity android:name=".util.newVdownloadActivity">
+                    <intent-filter>
+                            <action android:name="android.intent.action.MAIN" />
+                            <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
+                            <category android:name="android.intent.category.DEFAULT" />
+                            <category android:name="android.intent.category.LAUNCHER" />
+                    </intent-filter>
+            </activity>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"

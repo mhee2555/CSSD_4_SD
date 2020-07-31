@@ -12,7 +12,7 @@ public class getUrl {
     // ----------------------------------------------------
 
     public static final int appversion = 11;
-    public static final String VERSION = "4U" + "20200720 B";
+    public static final String VERSION = "4U" + "20200731 B";
     // ----------------------------------------------------
     // Var URL
     // ----------------------------------------------------
@@ -41,8 +41,8 @@ public class getUrl {
         return s;
         */
 //        return "http://poseintelligence.dyndns.biz:8181/cssd_test_itemcode/";
-//        return "http://poseintelligence.dyndns.biz:8181/cssd_siriraj/";
-        return "http://poseintelligence.dyndns.biz:8181/cssd_siriraj_dev/";
+        return "http://poseintelligence.dyndns.biz:8181/cssd_siriraj/";
+//        return "http://poseintelligence.dyndns.biz:8181/cssd_siriraj_dev/";
 //        return "http://poseintelligence.dyndns.biz:8181/cssd_siriraj_test/";
 //        return "http://poseintelligence.dyndns.biz:8181/cssd_vcy_test/";
 //        return "http://192.168.14.48/cssd_vch/";
