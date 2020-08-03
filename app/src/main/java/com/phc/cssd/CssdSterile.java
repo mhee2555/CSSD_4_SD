@@ -1593,73 +1593,82 @@ public class CssdSterile extends AppCompatActivity {
 //            }
 //        });
 
+
+
         PairBasketBox.setVisibility(View.GONE);
 //        basket_dialog_w_list.setVisibility(View.GONE);
+
+//        DialogCustomTheme
+        final Dialog dialog = new Dialog(CssdSterile.this, R.style.DialogCustomTheme);
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        dialog.setContentView(R.layout.dialog_item_stock_detail_basket_sterile);
+
+        dialog.setCancelable(false);
+
+        dialog.setTitle("");
+
+        basket_dialog_list_basket = (ListView) dialog.findViewById(R.id.list_basket);
+        basket_dialog_w_list = (ListView) dialog.findViewById(R.id.list);
+
+        pair_fin = (Button) dialog.findViewById(R.id.btn_save);
+        final EditText edt_basket_code = (EditText) dialog.findViewById(R.id.edt_basket_code);
+        PairBasketBox_basket_Code = (TextView) dialog.findViewById(R.id.bastek_name);
+
+        pair_fin.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                basket_Code = "";
+                basket_ID = "";
+                dialog.dismiss();
+            }
+        });
+
+        edt_basket_code.setOnKeyListener(new View.OnKeyListener()
+        {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                {
+                    switch (keyCode)
+                    {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+
+                            selectBasket(edt_basket_code.getText().toString());
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+
+                return false;
+
+            }
+
+
+        });
+//        DialogCustomTheme
 
         button_basket = (Button) findViewById(R.id.button_basket);
         button_basket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ProgressDialog dialogProgress = new ProgressDialog(CssdSterile.this);
+                dialogProgress.setMessage(Cons.WAIT_FOR_PROCESS);
+                dialogProgress.show();
                 basket_Code = "";
                 basket_ID = "";
                 if (STERILE_PROCESS_NUMBER_ACTIVE == 0){
                     Toast.makeText(CssdSterile.this, "ยังไม่ได้เลือกวิธีฆ่าเชื้อ!!", Toast.LENGTH_SHORT).show();
+                    dialogProgress.dismiss();
                     return;
                 }
-
-                final Dialog dialog = new Dialog(CssdSterile.this, R.style.DialogCustomTheme);
-
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-                dialog.setContentView(R.layout.dialog_item_stock_detail_basket_sterile);
-
-                dialog.setCancelable(false);
-
-                dialog.setTitle("");
-
-                basket_dialog_list_basket = (ListView) dialog.findViewById(R.id.list_basket);
-                basket_dialog_w_list = (ListView) dialog.findViewById(R.id.list);
-
-                pair_fin = (Button) dialog.findViewById(R.id.btn_save);
-                final EditText edt_basket_code = (EditText) dialog.findViewById(R.id.edt_basket_code);
-                PairBasketBox_basket_Code = (TextView) dialog.findViewById(R.id.bastek_name);
-
-                pair_fin.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        basket_Code = "";
-                        basket_ID = "";
-                        dialog.dismiss();
-                    }
-                });
-
-                edt_basket_code.setOnKeyListener(new View.OnKeyListener()
-                {
-                    public boolean onKey(View v, int keyCode, KeyEvent event)
-                    {
-                        if (event.getAction() == KeyEvent.ACTION_DOWN)
-                        {
-                            switch (keyCode)
-                            {
-                                case KeyEvent.KEYCODE_DPAD_CENTER:
-                                case KeyEvent.KEYCODE_ENTER:
-
-                                    selectBasket(edt_basket_code.getText().toString());
-                                    return true;
-                                default:
-                                    break;
-                            }
-                        }
-
-                        return false;
-
-                    }
-
-
-                });
 
                 basket_dialog_w_list.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR,MAP_MODEL_IMPORT_WASH_DETAIL_SUB,4));
 
                 dialog.show();
+                dialogProgress.dismiss();
             }
         });
 
