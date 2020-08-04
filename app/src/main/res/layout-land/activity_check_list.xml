@@ -28,7 +28,7 @@
                     android:layout_height="30dp"
                     android:layout_marginTop="30dp"
                     android:layout_marginLeft="45dp"
-                    android:text="เลือกประเภทเครื่องมือ"
+                    android:text="CheckList"
                     android:gravity="center"
                     android:textSize="20dp"
                     android:textColor="@color/colorWhite"
@@ -52,7 +52,7 @@
                 android:textColor="@color/colorWhite"
                 android:checked="false"
                 android:enabled="true"
-                android:text="เครื่องมือ"
+                android:text="ปริ้น"
                 android:textSize="15dp"
                 android:textStyle="bold"/>
 
@@ -65,7 +65,7 @@
                 android:textColor="@color/colorWhite"
                 android:checked="false"
                 android:enabled="true"
-                android:text="ผ้า"
+                android:text="ไม่ปริ้น"
                 android:textSize="15dp"
                 android:textStyle="bold"/>
 

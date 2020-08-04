@@ -167,6 +167,8 @@ public class Item_newlayout extends AppCompatActivity {
     private EditText txt_all_item_stock;
     private Button btn_save_item;
     private Button btn_save_item_1;
+    private Button btn_checklist;
+    private Button btn_checklist1;
     private Button btn_delete_item;
     private Button btn_open_item_stock;
     private Button btn_create_item_stock;
@@ -337,6 +339,23 @@ public class Item_newlayout extends AppCompatActivity {
             btn_save_item_1 = ( Button ) findViewById(R.id.btn_save_item_1);
 
             btn_save_item_1.setVisibility(View.INVISIBLE);
+
+            btn_checklist = ( Button ) findViewById(R.id.btn_checklist);
+            btn_checklist1 = ( Button ) findViewById(R.id.btn_checklist1);
+
+            btn_checklist.setVisibility(View.INVISIBLE);
+            btn_checklist.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getCheckList();
+                }
+            });
+            btn_checklist1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getCheckList();
+                }
+            });
 
             btn_delete_item = ( Button ) findViewById(R.id.btn_delete_item);
             btn_open_item_stock = ( Button ) findViewById(R.id.btn_open_item_stock);
@@ -821,6 +840,22 @@ public class Item_newlayout extends AppCompatActivity {
             //----------------------------------------------
             // Config Gen_ItemCode == True
             //----------------------------------------------
+            btn_checklist = ( Button ) findViewById(R.id.btn_checklist);
+            btn_checklist1 = ( Button ) findViewById(R.id.btn_checklist1);
+
+            btn_checklist.setVisibility(View.INVISIBLE);
+            btn_checklist.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getCheckList();
+                }
+            });
+            btn_checklist1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getCheckList();
+                }
+            });
             denger = ( CheckBox ) findViewById(R.id.denger);
             tab_1 = ( ImageButton ) findViewById(R.id.tab_1);
             tab_2 = ( ImageButton ) findViewById(R.id.tab_2);
@@ -3419,6 +3454,11 @@ public class Item_newlayout extends AppCompatActivity {
         }else {
 //            no_wash_type.setText("");
         }
+    }
+
+    public void getCheckList(){
+        Intent i = new Intent(Item_newlayout.this, CheckList.class);
+        startActivity(i);
     }
 
     public void StratPage(){
