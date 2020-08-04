@@ -220,7 +220,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         getuserCode();
-        getlistdetail(Usagecode);
+        getlistdetail(Usagecode,"");
     }
 
     public void byIntent() {
@@ -396,7 +396,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 etxt_date.setText(DocDate);
                 etxt_sumqty.setText(Qty);
                 getlistcreate(DocNo, ED_Dept);
-                getlistdetail("");
+                getlistdetail("","");
                 getlistdetailqty("");
                 txt_usr_receive.setText(newsData.getUsr_receive());
                 txt_usr_receive.setContentDescription(newsData.getUserReceive());
@@ -438,7 +438,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 etxt_date.setText(DocDate);
                 etxt_sumqty.setText(Qty);
                 getlistcreate_l2(DocNo);
-                getlistdetail("");
+                getlistdetail("","");
                 getlistdetailqty("");
                 txt_usr_receive.setText(newsData.getUsr_receive());
                 txt_usr_receive.setContentDescription(newsData.getUserReceive());
@@ -453,10 +453,10 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
                     CheckAll = "1";
-                    getlistdetail(Usagecode);
+                    getlistdetail(Usagecode,"");
                 }else {
                     CheckAll = "0";
-                    getlistdetail(Usagecode);
+                    getlistdetail(Usagecode,"");
                 }
             }
         });
@@ -679,7 +679,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 getlistdata(deptsp_id, edittext.getText().toString(), searchbox.getText().toString());
-                getlistdetail("");
+                getlistdetail("","");
                 getlistdetailqty("");
                 cleardoc2();
 
@@ -1224,7 +1224,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         ru.execute(department_id, Date, sreach);
     }
 
-    public void getlistdetail(final String UsageCode) {
+    public void getlistdetail(final String UsageCode, final String DocNo) {
         class getlistdetail extends AsyncTask<String, Void, String> {
             @Override
             protected void onPreExecute() {
@@ -1260,6 +1260,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String, String>();
                 data.put("UsageCode", UsageCode);
+                data.put("DocNo", DocNo);
                 data.put("B_ID",B_ID);
                 String result = ruc.sendPostRequest(iFt.getitemdetail_sendsterile(), data);
                 Log.d("YUYU",data+"");
@@ -1690,7 +1691,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 data.put("QTY", "1");
                 data.put("xSel", "1");
                 data.put("B_ID",B_ID);
-                data.put("usr_receive",txt_usr_receive.getText().toString());
+                data.put("usr_receive",txt_usr_receive.getText().toString().trim());
                 String result = ruc.sendPostRequest(iFt.InsertDetail1(), data);
                 Log.d("FKDHKDSS",data+"");
                 Log.d("FKDHKDSS",result);

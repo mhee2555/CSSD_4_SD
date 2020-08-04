@@ -225,7 +225,7 @@ public class sendsterile_washdocdetail_adapter extends ArrayAdapter {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                ( (SendSterile_MainActivity)aActivity ).getlistdetail(listData.get(position).getUsageCode());
+                ( (SendSterile_MainActivity)aActivity ).getlistdetail(listData.get(position).getUsageCode(),"");
                 if(listData.get(position).getChk_box_wash()) {
                     chk_box.setChecked(!chk_box.isChecked());
                 }

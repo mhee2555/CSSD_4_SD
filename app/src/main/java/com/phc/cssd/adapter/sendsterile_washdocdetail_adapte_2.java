@@ -137,7 +137,7 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
             @Override
             public void onClick(View v) {
                 ((SendSterile_MainActivity)aActivity).getlistdetailqty(listData.get(position).getUsageCode());
-                ((SendSterile_MainActivity)aActivity).getlistdetail(listData.get(position).getUsageCode());
+                ((SendSterile_MainActivity)aActivity).getlistdetail(listData.get(position).getUsageCode(),listData.get(position).getDocno());
                 ((SendSterile_MainActivity)aActivity).UsageCode(listData.get(position).getUsageCode(),listData.get(position).getDept(),listData.get(position).getDocno());
             }
         });
@@ -255,7 +255,7 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                ( (SendSterile_MainActivity)aActivity ).getlistdetail(listData.get(position).getUsageCode());
+                ( (SendSterile_MainActivity)aActivity ).getlistdetail(listData.get(position).getUsageCode(),"");
                 ((SendSterile_MainActivity)aActivity).UsageCode(listData.get(position).getUsageCode(),listData.get(position).getDept(),listData.get(position).getDocno());
             }
         });

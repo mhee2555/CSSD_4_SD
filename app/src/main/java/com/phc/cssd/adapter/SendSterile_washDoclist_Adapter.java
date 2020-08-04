@@ -137,7 +137,7 @@ public class SendSterile_washDoclist_Adapter extends ArrayAdapter {
                         txtnote.setText(note1.getText());
                         listData.get(position).setNote(note1.getText().toString());
                         updateremark(listData.get(position).getDocno(),listData.get(position).getNote(),"1");
-                        ((SendSterile_MainActivity)aActivity).getlistdetail(listData.get(position).getDocno());
+                        ((SendSterile_MainActivity)aActivity).getlistdetail(listData.get(position).getDocno(),"");
                         dialog.dismiss();
                     }
                 });

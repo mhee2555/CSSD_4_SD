@@ -1447,28 +1447,43 @@
 
                                     <CheckBox
                                         android:id="@+id/denger"
-                                        android:layout_width="150dp"
+                                        android:layout_width="100dp"
                                         android:layout_height="wrap_content"
                                         android:buttonTint="@color/colorBlue"
                                         android:theme="@style/CheckBox"
                                         android:text="ระวังพิเศษ"
                                         android:layout_marginTop="10dp"
-                                        android:textSize="13sp"
-                                        />
+                                        android:textSize="13sp" />
+
+                                    <Button
+                                        android:id="@+id/btn_checklist"
+                                        android:layout_width="150dp"
+                                        android:layout_height="60dp"
+                                        android:layout_marginLeft="100dp"
+                                        android:layout_marginTop="5dp"
+                                        android:background="@drawable/bt_save_newitem_disable" />
+
+                                    <Button
+                                        android:id="@+id/btn_checklist1"
+                                        android:layout_width="150dp"
+                                        android:layout_height="60dp"
+                                        android:layout_marginLeft="100dp"
+                                        android:layout_marginTop="5dp"
+                                        android:background="@drawable/bt_save_newitem_disable" />
 
                                     <Button
                                         android:id="@+id/btn_save_item"
-                                        android:layout_width="180dp"
+                                        android:layout_width="150dp"
                                         android:layout_height="60dp"
-                                        android:layout_marginLeft="230dp"
+                                        android:layout_marginLeft="260dp"
                                         android:layout_marginTop="5dp"
                                         android:background="@drawable/bt_save_newitem_disable" />
 
                                     <Button
                                         android:id="@+id/btn_save_item_1"
-                                        android:layout_width="180dp"
+                                        android:layout_width="150dp"
                                         android:layout_height="60dp"
-                                        android:layout_marginLeft="230dp"
+                                        android:layout_marginLeft="260dp"
                                         android:layout_marginTop="5dp"
                                         android:background="@drawable/bt_save_newitem_disable" />
 
