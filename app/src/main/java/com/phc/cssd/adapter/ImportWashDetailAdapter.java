@@ -105,7 +105,7 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
         txt_item_name.setText(DATA_MODEL.get(position).getI_name());
         txt_qty.setText(DATA_MODEL.get(position).getI_qty());
 
-        index = (DATA_MODEL.get(position).getIndex());
+//        index = (DATA_MODEL.get(position).getIndex());
         PackingMatID = DATA_MODEL.get(position).getPackingMatID();
         item_program = DATA_MODEL.get(position).getI_program();
         basket = DATA_MODEL.get(position).getBasketCode();
