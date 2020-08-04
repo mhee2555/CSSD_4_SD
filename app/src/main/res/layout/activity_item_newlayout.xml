@@ -1461,7 +1461,7 @@
                                         android:layout_height="60dp"
                                         android:layout_marginLeft="100dp"
                                         android:layout_marginTop="5dp"
-                                        android:background="@drawable/bt_save_newitem_disable" />
+                                        android:text="CheckList"/>
 
                                     <Button
                                         android:id="@+id/btn_checklist1"
@@ -1469,7 +1469,7 @@
                                         android:layout_height="60dp"
                                         android:layout_marginLeft="100dp"
                                         android:layout_marginTop="5dp"
-                                        android:background="@drawable/bt_save_newitem_disable" />
+                                        android:text="CheckList"/>
 
                                     <Button
                                         android:id="@+id/btn_save_item"
