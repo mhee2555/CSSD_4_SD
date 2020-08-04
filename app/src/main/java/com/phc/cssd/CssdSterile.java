@@ -7156,7 +7156,6 @@ public class CssdSterile extends AppCompatActivity {
 
     public void selectBasket(final String BasketCode) {
 
-
         class Basket extends AsyncTask<String, Void, String> {
 
             // variable
@@ -7195,7 +7194,6 @@ public class CssdSterile extends AppCompatActivity {
                             }
                             basket_dialog_list_basket.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR,5));
 
-
                         }else{
                             Toast.makeText(CssdSterile.this, "ไม่พบตะกร้า !!", Toast.LENGTH_SHORT).show();
                         }
@@ -7204,6 +7202,7 @@ public class CssdSterile extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }finally {
+
                 }
             }
 
