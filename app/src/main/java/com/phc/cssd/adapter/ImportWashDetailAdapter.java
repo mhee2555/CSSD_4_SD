@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -357,8 +358,12 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
         }
         else if(mode==5){ //In Basket
             txt_qty.setVisibility(View.GONE);
-            imv_add.setImageResource(R.drawable.ic_bin1_2);
-            imv_add.setOnClickListener(new View.OnClickListener() {
+            imv_add.setVisibility(View.GONE);
+            ImageView imv_remove = (ImageView) view.findViewById(R.id.imv_remove);
+            RadioButton isPrint = (RadioButton) view.findViewById(R.id.isPrint);
+            imv_remove.setVisibility(View.VISIBLE);
+            isPrint.setVisibility(View.VISIBLE);
+            imv_remove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
