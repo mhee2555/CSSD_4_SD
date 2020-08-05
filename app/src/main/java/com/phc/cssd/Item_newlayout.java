@@ -836,24 +836,30 @@ public class Item_newlayout extends AppCompatActivity {
 
             getSupportActionBar().hide();
         }else {
-
             //----------------------------------------------
             // Config Gen_ItemCode == True
             //----------------------------------------------
             btn_checklist = ( Button ) findViewById(R.id.btn_checklist);
             btn_checklist1 = ( Button ) findViewById(R.id.btn_checklist1);
-
             btn_checklist.setVisibility(View.INVISIBLE);
             btn_checklist.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getCheckList();
+                    if (!edt_item_code1.getText().toString().equals("")){
+                        getCheckList();
+                    }else {
+                        Toast.makeText(Item_newlayout.this, "กรุณากรอกข้อมูลที่สำคัญให้ครบ!!!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             btn_checklist1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getCheckList();
+                    if (!edt_item_code1.getText().toString().equals("")){
+                        getCheckList();
+                    }else {
+                        Toast.makeText(Item_newlayout.this, "กรุณากรอกข้อมูลที่สำคัญให้ครบ!!!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             denger = ( CheckBox ) findViewById(R.id.denger);
@@ -3458,6 +3464,7 @@ public class Item_newlayout extends AppCompatActivity {
 
     public void getCheckList(){
         Intent i = new Intent(Item_newlayout.this, CheckList.class);
+        i.putExtra("itemcode",edt_item_code1.getText().toString());
         startActivity(i);
     }
 

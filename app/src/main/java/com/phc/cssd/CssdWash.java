@@ -64,6 +64,10 @@ import java.util.List;
 
 public class CssdWash extends AppCompatActivity {
 
+    String condition1 = "";
+    String condition2 = "";
+    String condition3 = "";
+    String condition4 = "";
     int cnt = 0;
     Boolean WASH = true;
     private TextView occupancy_rate;
@@ -6101,30 +6105,39 @@ public class CssdWash extends AppCompatActivity {
             protected void onPreExecute() {
                 super.onPreExecute();
             }
-
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
                 try {
                     JSONObject jsonObj = new JSONObject(result);
                     rs = jsonObj.getJSONArray(TAG_RESULTS);
                     String IsRemarkExpress = "";
                     String itemname = "";
-                    String UsageCode = "";
                     String Shelflife = "";
 
+                    String UsageCode = "";
+                    String Cnt = "";
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
-                        IsRemarkExpress = c.getString("IsRemarkExpress");
-                        cnt++;
+                        UsageCode = c.getString("UsageCode");
+                        Cnt = c.getString("cnt");
+                        condition1 = c.getString("condition1");
+                        condition2 = c.getString("condition2");
+                        condition3 = c.getString("condition3");
+                        condition4 = c.getString("condition4");
                     }
 
-                    if (!IsRemarkExpress.equals("0")) {
-                        Intent intent = new Intent(CssdWash.this, dialog_usagecode_ems.class);
-                        intent.putExtra("IsRemarkExpress", IsRemarkExpress);
-                        intent.putExtra("cnt", IsRemarkExpress);
-                        intent.putExtra("DocNo", DOC_NO);
+                    if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0")){
+                        Intent intent = new Intent(CssdWash.this, dialog_check_usage_count.class);
+                        intent.putExtra("UsageCode", UsageCode);
+                        intent.putExtra("cnt", Cnt);
+                        intent.putExtra("DocNo",getDocNo());
+                        intent.putExtra("B_ID",B_ID);
+                        intent.putExtra("sel","1");
+                        intent.putExtra("condition1",condition1);
+                        intent.putExtra("condition2",condition2);
+                        intent.putExtra("condition3",condition3);
+                        intent.putExtra("condition4",condition4);
                         startActivity(intent);
                     }
                 } catch (JSONException e) {

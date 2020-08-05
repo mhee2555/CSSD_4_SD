@@ -1,17 +1,26 @@
 package com.phc.cssd;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.phc.core.connect.HTTPConnect;
+import com.phc.cssd.url.Url;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 public class CheckList extends Activity {
 
@@ -29,7 +38,7 @@ public class CheckList extends Activity {
 
     String TypeItem;
     String TypeNum;
-    String Type;
+    String itemcode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,11 +48,12 @@ public class CheckList extends Activity {
 
         init();
 
+        OnDisplay(itemcode);
     }
 
     private void byIntent(){
         Intent i = getIntent();
-        Type = i.getStringExtra("type");
+        itemcode = i.getStringExtra("itemcode");
     }
 
     public void init(){
@@ -53,22 +63,9 @@ public class CheckList extends Activity {
         type1 = (CheckBox) findViewById(R.id.type1);
         type2 = (CheckBox) findViewById(R.id.type2);
 
-
-//        if (Type.equals("0")){
-//            type1.setChecked(false);
-//            type2.setChecked(false);
-//        }else if (Type.equals("1")){
-//            type1.setChecked(true);
-//            type2.setChecked(false);
-//        }else if (Type.equals("2")){
-//            type1.setChecked(false);
-//            type2.setChecked(true);
-//        }
-
         type1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(type1.isChecked()){
-                    TypeItem = "(เครื่องมือ)";
                     TypeNum = "1";
                     type1.setChecked(true);
                     type2.setChecked(false);
@@ -78,8 +75,7 @@ public class CheckList extends Activity {
         type2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(type2.isChecked()){
-                    TypeItem = "(ผ้า)";
-                    TypeNum = "1";
+                    TypeNum = "0";
                     type2.setChecked(true);
                     type1.setChecked(false);
                 }
@@ -88,15 +84,13 @@ public class CheckList extends Activity {
         bt_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                b3();
                 finish();
             }
         });
         bt_comfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                b1();
-                finish();
+                UpDateChecklist(itemcode);
             }
         });
     }
@@ -107,16 +101,105 @@ public class CheckList extends Activity {
         finish();
     }
 
-    public void b1() {
-        Intent intent = new Intent();
-        intent.putExtra("RETURN_DATA",TypeItem);
-        setResult(205, intent);
+    public void UpDateChecklist(final String itemcode) {
+        class UpDateChecklist extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        if (c.getString("finish").equals("true")){
+                            Toast.makeText(CheckList.this,"บันทึกสำเร็จ",Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("itemcode",itemcode);
+                data.put("TypeNum",TypeNum);
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_save_item_checklist.php", data);
+                    Log.d("DJKHDK",data+"");
+                    Log.d("DJKHDK",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        UpDateChecklist obj = new UpDateChecklist();
+        obj.execute();
     }
 
-    public void b3() {
-        Intent intent = new Intent();
-        intent.putExtra("RETURN_DATA","");
-        setResult(205, intent);
+    public void OnDisplay(final String itemcode) {
+        class OnDisplay extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        if (c.getString("IsCheckList").equals("1")){
+                            type1.setChecked(true);
+                            type2.setChecked(false);
+                        }else if (c.getString("IsCheckList").equals("0")){
+                            type1.setChecked(false);
+                            type2.setChecked(true);
+                        }else {
+                            type1.setChecked(false);
+                            type2.setChecked(false);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("itemcode",itemcode);
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_diaplay_item_checklist.php", data);
+                    Log.d("DJKHDK",data+"");
+                    Log.d("DJKHDK",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        OnDisplay obj = new OnDisplay();
+        obj.execute();
     }
 
     @Override
