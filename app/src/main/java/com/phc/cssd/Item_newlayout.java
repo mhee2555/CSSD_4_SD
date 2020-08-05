@@ -836,13 +836,11 @@ public class Item_newlayout extends AppCompatActivity {
 
             getSupportActionBar().hide();
         }else {
-
             //----------------------------------------------
             // Config Gen_ItemCode == True
             //----------------------------------------------
             btn_checklist = ( Button ) findViewById(R.id.btn_checklist);
             btn_checklist1 = ( Button ) findViewById(R.id.btn_checklist1);
-
             btn_checklist.setVisibility(View.INVISIBLE);
             btn_checklist.setOnClickListener(new View.OnClickListener() {
                 @Override
