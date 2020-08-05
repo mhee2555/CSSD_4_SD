@@ -252,7 +252,6 @@ public class CssdSterile extends AppCompatActivity {
     private String basket_ID="";
     private ListView basket_dialog_list_basket;
     private ListView basket_dialog_w_list;
-    private LinearLayout PairBasketBox;
     private TextView PairBasketBox_basket_Code;
     private Button pair_fin;
 
@@ -1390,7 +1389,7 @@ public class CssdSterile extends AppCompatActivity {
         // =========================================================================================
 
         btn_complete = (Button) findViewById(R.id.btn_add);
-        btn_print = (Button) findViewById(R.id.btn_print);
+//        btn_print = (Button) findViewById(R.id.btn_print);
         btn_import = (Button) findViewById(R.id.btn_import);
         btn_export = (Button) findViewById(R.id.btn_export);
         btn_import_new_item_stock = (Button) findViewById(R.id.btn_import_new_item_stock);
@@ -1506,18 +1505,6 @@ public class CssdSterile extends AppCompatActivity {
             }
         });
 
-        btn_print.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                try {
-                    Log.d("SSSS","PRINTER_IP : "+PRINTER_IP);
-                    onPrint();
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        });
-
-
         switch_mode = (Switch) findViewById(R.id.switch_mode);
         switch_mode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -1573,32 +1560,6 @@ public class CssdSterile extends AppCompatActivity {
         group_choices.bringToFront();
         switch_mode.bringToFront();
 
-        PairBasketBox = (LinearLayout) findViewById(R.id.PairBasketBox);
-
-//        PairBasketBox_basket_Code = (TextView) findViewById(R.id.PairBasketBox_basket_Code);
-//        basket_dialog_list_basket = (ListView) findViewById(R.id.basket_dialog_list_basket);
-//        basket_dialog_w_list = (ListView) findViewById(R.id.basket_dialog_w_list);
-//        PairBasketBox.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-//        pair_fin = (Button) findViewById(R.id.pair_fin);
-//
-//        pair_fin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                displaySterileBasketBox(false);
-//            }
-//        });
-
-
-
-        PairBasketBox.setVisibility(View.GONE);
-//        basket_dialog_w_list.setVisibility(View.GONE);
-
-//        DialogCustomTheme
         final Dialog dialog = new Dialog(CssdSterile.this, R.style.DialogCustomTheme);
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -1612,7 +1573,9 @@ public class CssdSterile extends AppCompatActivity {
         basket_dialog_list_basket = (ListView) dialog.findViewById(R.id.list_basket);
         basket_dialog_w_list = (ListView) dialog.findViewById(R.id.list);
 
-        pair_fin = (Button) dialog.findViewById(R.id.btn_save);
+        btn_print = (Button) dialog.findViewById(R.id.btn_save);
+
+        pair_fin = (Button) dialog.findViewById(R.id.btn_cancel);
         final EditText edt_basket_code = (EditText) dialog.findViewById(R.id.edt_basket_code);
         PairBasketBox_basket_Code = (TextView) dialog.findViewById(R.id.bastek_name);
 
@@ -1649,6 +1612,17 @@ public class CssdSterile extends AppCompatActivity {
 
         });
 //        DialogCustomTheme
+
+        btn_print.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                try {
+                    Log.d("SSSS","PRINTER_IP : "+PRINTER_IP);
+                    onPrint();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
 
         button_basket = (Button) findViewById(R.id.button_basket);
         button_basket.setOnClickListener(new View.OnClickListener() {
@@ -1690,7 +1664,7 @@ public class CssdSterile extends AppCompatActivity {
         Intent i = new Intent(CssdSterile.this, CssdQrUser.class);
         i.putExtra("data", data);
         i.putExtra("B_ID", B_ID);
-        startActivityForResult(i, Master.getResult(data));
+        startActivityForResult(i, Master.getResult(data));//14
     }
 
     private void GetReport(String DocNo) {
@@ -7183,8 +7157,6 @@ public class CssdSterile extends AppCompatActivity {
                             basket_ID = c.getString("ID");
                             PairBasketBox_basket_Code.setText(c.getString("BasketName"));
 
-                            displaySterileBasketBox(true);
-
                             basket_dialog_w_list.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR,MAP_MODEL_IMPORT_WASH_DETAIL_SUB,4));
                             Log.d("ttest_pair","Key_map = "+MAP_MODEL_IMPORT_WASH_DETAIL_SUB);
                             Log.d("ttest_pair","containsKey_map = "+MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code));
@@ -7229,36 +7201,6 @@ public class CssdSterile extends AppCompatActivity {
     // =============================================================================================
     // -- Display Sterile Detail By Basket
     // =============================================================================================
-
-    public void displaySterileBasketBox(boolean x){
-
-//        disable
-
-//        int BasketBox = View.VISIBLE;
-//        int normal = View.GONE;
-//        if(!x){
-//            BasketBox = View.GONE;
-//            normal = View.VISIBLE;
-//
-//            basket_Code = "";
-//            basket_ID = "";
-//        }else{
-//            basket_dialog_w_list.bringToFront();
-//            PairBasketBox.bringToFront();
-//        }
-//        imageBack.bringToFront();
-//        PairBasketBox.setVisibility(BasketBox);
-//        basket_dialog_w_list.setVisibility(BasketBox);
-//
-//        list_wash_detail.setVisibility(normal);
-//        btn_import.setVisibility(normal);
-//        btn_export.setVisibility(normal);
-//        btn_import_new_item_stock.setVisibility(normal);
-//        imv_import_all_wash.setVisibility(normal);
-//        imv_remove_all_sterile.setVisibility(normal);
-//        switch_mode.setVisibility(normal);
-//        button_basket.setVisibility(normal);
-    }
 
     public void importWashDetailToBasket(String Id, String SterileProgramID, String SterileProgramName, String PackingMatID,String gQty,String basket,String usageCode){
 
