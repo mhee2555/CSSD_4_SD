@@ -926,10 +926,10 @@ public class CssdEditSterile extends Activity {
         Log.d("ttest_getToMac","itemcode - "+itemcode);
         for(int i =0;i<MODEL_IMPORT_WASH_DETAIL.size();i++){
 
-            Log.d("ttest_getToMac","M-itemcode - "+MODEL_IMPORT_WASH_DETAIL.get(i).getI_id());
-            if(MODEL_IMPORT_WASH_DETAIL.get(i).getI_id().equals(itemcode)){
+            Log.d("ttest_getToMac","M-itemcode - "+MODEL_IMPORT_WASH_DETAIL.get(i).getI_code());
+            if(MODEL_IMPORT_WASH_DETAIL.get(i).getI_code().equals(itemcode)){
                 importWashDetail(
-                        MODEL_IMPORT_WASH_DETAIL.get(i).getI_id(),
+                        MODEL_IMPORT_WASH_DETAIL.get(i).getI_code(),
                         MODEL_IMPORT_WASH_DETAIL.get(i).getI_program_id() ,
                         MODEL_IMPORT_WASH_DETAIL.get(i).getI_program(),
                         MODEL_IMPORT_WASH_DETAIL.get(i).getPackingMatID(),

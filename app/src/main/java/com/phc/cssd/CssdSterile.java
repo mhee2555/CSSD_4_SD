@@ -6544,7 +6544,7 @@ public class CssdSterile extends AppCompatActivity {
                     int index = 0;
 
                     for(int i=0;i<data.size();i+=size){
-
+                        Log.d("ttestdataget(i)","data.get(i) = "+data.get(i));
                         list.add(
                                 new ModelImportWashDetail(
                                         index,
