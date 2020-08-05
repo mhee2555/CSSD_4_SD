@@ -54,16 +54,16 @@ public class CheckList extends Activity {
         type2 = (CheckBox) findViewById(R.id.type2);
 
 
-        if (Type.equals("0")){
-            type1.setChecked(false);
-            type2.setChecked(false);
-        }else if (Type.equals("1")){
-            type1.setChecked(true);
-            type2.setChecked(false);
-        }else if (Type.equals("2")){
-            type1.setChecked(false);
-            type2.setChecked(true);
-        }
+//        if (Type.equals("0")){
+//            type1.setChecked(false);
+//            type2.setChecked(false);
+//        }else if (Type.equals("1")){
+//            type1.setChecked(true);
+//            type2.setChecked(false);
+//        }else if (Type.equals("2")){
+//            type1.setChecked(false);
+//            type2.setChecked(true);
+//        }
 
         type1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
