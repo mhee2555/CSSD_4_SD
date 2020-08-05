@@ -97,7 +97,7 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
         sub_item.setVisibility(View.GONE);
 
         // =========================================================================================
-        txt_item_code.setText( DATA_MODEL.get(position).getI_id());
+        txt_item_code.setText( DATA_MODEL.get(position).getI_code());
         txt_packingmat.setText( "( " + DATA_MODEL.get(position).getPackingMat() + " : " + DATA_MODEL.get(position).getShelflife() + " วัน )");
 //        txt_no.setText( DATA_MODEL.get(position).getI_no() + ".");
         txt_no.setText(position+1 + ".");
@@ -271,6 +271,13 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
             }else {
                 txt_qty.setVisibility(View.GONE);
 
+                relativeLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ((CssdSterile) context).callCheckList(DATA_MODEL.get(position).getI_id());
+                    }
+                });
+
                 imv_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -373,6 +380,8 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
 
                 }
             });
+
+            isPrint.setChecked(DATA_MODEL.get(position).getPrint_count()>0);
         }
 
         return view;

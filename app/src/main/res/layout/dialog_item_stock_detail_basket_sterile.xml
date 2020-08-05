@@ -19,6 +19,17 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/packer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView14"
+        android:layout_marginStart="35dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toEndOf="@+id/textView14"
+        android:text="TextView"
+        android:textColor="@color/colorwhite" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="555dp"

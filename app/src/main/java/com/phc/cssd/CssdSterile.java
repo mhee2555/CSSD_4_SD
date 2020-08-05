@@ -61,7 +61,9 @@ import com.phc.cssd.model.ModelSterileDetail;
 import com.phc.cssd.model.ModelSterileMachine;
 import com.phc.cssd.model.ModelSterileProcess;
 import com.phc.cssd.model.ModelWashDetail;
+import com.phc.cssd.model.ModelWashDetailForPrint;
 import com.phc.cssd.print_sticker.PrintSticker;
+import com.phc.cssd.print_sticker.PrintWash;
 import com.phc.cssd.url.Url;
 import com.phc.cssd.url.getUrl;
 
@@ -254,6 +256,8 @@ public class CssdSterile extends AppCompatActivity {
     private ListView basket_dialog_w_list;
     private TextView PairBasketBox_basket_Code;
     private Button pair_fin;
+    private TextView packer;
+    private String print_w_id ="";
 
     public void onDestroy() {
         super.onDestroy();
@@ -1560,6 +1564,8 @@ public class CssdSterile extends AppCompatActivity {
         group_choices.bringToFront();
         switch_mode.bringToFront();
 
+//        DialogCustomTheme pair basket
+
         final Dialog dialog = new Dialog(CssdSterile.this, R.style.DialogCustomTheme);
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -1579,11 +1585,16 @@ public class CssdSterile extends AppCompatActivity {
         final EditText edt_basket_code = (EditText) dialog.findViewById(R.id.edt_basket_code);
         PairBasketBox_basket_Code = (TextView) dialog.findViewById(R.id.bastek_name);
 
+        packer = (TextView) dialog.findViewById(R.id.packer);
+
+
         pair_fin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 basket_Code = "";
                 basket_ID = "";
+                edt_basket_code.setText("");
                 dialog.dismiss();
+                MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.clear();
             }
         });
 
@@ -1611,16 +1622,75 @@ public class CssdSterile extends AppCompatActivity {
 
 
         });
+
+        final Dialog dialog_qr = new Dialog(CssdSterile.this, R.style.DialogCustomTheme);
+
+        dialog_qr.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        dialog_qr.setContentView(R.layout.activity_check_qr__approve);
+
+        dialog_qr.setCancelable(false);
+
+        dialog_qr.setTitle("");
+
+
+        Button bt_cancel = (Button) dialog_qr.findViewById(R.id.bt_cancel);
+
+        bt_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog_qr.dismiss();
+            }
+        });
+
+        final EditText etxt_qr_pack = (EditText) dialog_qr.findViewById(R.id.etxt_qr);
+        etxt_qr_pack.setOnKeyListener(new View.OnKeyListener()
+        {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                {
+                    switch (keyCode)
+                    {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+
+                            checkPacker(etxt_qr_pack.getText().toString(),print_w_id,dialog_qr);
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+
+                return false;
+
+            }
+
+
+        });
 //        DialogCustomTheme
 
         btn_print.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                try {
-                    Log.d("SSSS","PRINTER_IP : "+PRINTER_IP);
-                    onPrint();
-                }catch (Exception e){
-                    e.printStackTrace();
+//                try {
+//                    Log.d("SSSS","PRINTER_IP : "+PRINTER_IP);
+//                    onPrint();
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+                print_w_id = "";
+
+                for(int i=0;i<MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size();i++){
+                    if(MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(i).getPrint_count()<=0){
+                        print_w_id=print_w_id+","+MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(i).getI_id();
+                    }
                 }
+
+                print_w_id = print_w_id.substring(1,print_w_id.length());
+
+                Log.d("ttest_W_id","w_id"+print_w_id);
+
+                dialog_qr.show();
             }
         });
 
@@ -1631,17 +1701,19 @@ public class CssdSterile extends AppCompatActivity {
                 ProgressDialog dialogProgress = new ProgressDialog(CssdSterile.this);
                 dialogProgress.setMessage(Cons.WAIT_FOR_PROCESS);
                 dialogProgress.show();
-                basket_Code = "";
-                basket_ID = "";
+
                 if (STERILE_PROCESS_NUMBER_ACTIVE == 0){
                     Toast.makeText(CssdSterile.this, "ยังไม่ได้เลือกวิธีฆ่าเชื้อ!!", Toast.LENGTH_SHORT).show();
                     dialogProgress.dismiss();
                     return;
                 }
 
+                basket_Code = "";
+                basket_ID = "";
                 basket_dialog_w_list.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR,MAP_MODEL_IMPORT_WASH_DETAIL_SUB,4));
 
                 dialog.show();
+
                 dialogProgress.dismiss();
             }
         });
@@ -6540,8 +6612,8 @@ public class CssdSterile extends AppCompatActivity {
                                         data.get(i + 14),
                                         data.get(i + 15),
                                         data.get(i + 16),
-                                        data.get(i + 17)
-
+                                        data.get(i + 17),
+                                        data.get(i + 18)
                                 )
                         );
 
@@ -7404,6 +7476,268 @@ public class CssdSterile extends AppCompatActivity {
         RemoveBasket obj = new RemoveBasket();
         obj.execute();
 
+    }
+
+    public void callCheckList(final String ID){
+        Intent intent = new Intent(CssdSterile.this, CssdCheckList.class);
+        intent.putExtra("userid", userid);
+        intent.putExtra("B_ID", B_ID);
+        intent.putExtra("IsAdmin", IsAdmin);
+        intent.putExtra("ID", ID);
+        startActivity(intent);
+    }
+
+
+    private void onPrintWash(final String W_id){
+
+//        final String ID = "2945,2946,2947,2948,2949,2950,2951,2952,2953,2954";
+        final String ID = W_id;
+
+        try {
+
+            // Print
+            class Print extends AsyncTask<String, Void, String> {
+
+                // variable
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                }
+
+                @Override
+                protected void onPostExecute(String s) {
+                    super.onPostExecute(s);
+
+                    List<ModelWashDetailForPrint> list = new ArrayList<>();
+
+                    try {
+                        JSONObject jsonObj = new JSONObject(s);
+                        rs = jsonObj.getJSONArray(TAG_RESULTS);
+
+                        for (int i = 0; i < rs.length(); i++) {
+
+                            JSONObject c = rs.getJSONObject(i);
+
+                            if (c.getString("result").equals("A")) {
+                                list.add(
+                                        new ModelWashDetailForPrint(
+                                                c.getString("ID"),
+                                                c.getString("itemcode"),
+                                                c.getString("itemname"),
+                                                c.getString("UsageCode"),
+                                                c.getString("Packer"),
+                                                c.getString("Age"),
+                                                c.getString("MFG"),
+                                                c.getString("EXP"),
+                                                c.getString("CaseLabel"),
+                                                c.getString("PrinterIP"),
+                                                c.getString("UsageCount"),
+                                                c.getString("IsCheckList")
+                                        )
+                                );
+                            }
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return;
+                    }finally {
+
+                    }
+
+                    // -----------------------------------
+                    // Print Multiple Id
+                    // -----------------------------------
+                    List<ModelWashDetailForPrint> list_2 ;
+                    List<ModelWashDetailForPrint> list_3 ;
+
+                    list_2 = getWashDetailLabelForPrint(list, "2");
+                    list_3 = getWashDetailLabelForPrint(list, "3");
+
+                    System.out.println("list_2.size() = " + list_2.size());
+                    System.out.println("list_3.size() = " + list_3.size());
+
+                    // Print
+                    final PrintWash p = new PrintWash();
+                    String p_data = "";
+
+                    if(list_2 != null && list_2.size() > 0) {
+                        String ip = list_2.get(0).getPrinterIP();
+                        p_data += p.print(CssdSterile.this, 2, ip, list_2);
+                    }
+
+                    if(list_3 != null && list_3.size() > 0) {
+                        String ip = list_3.get(0).getPrinterIP();
+                        p_data += p.print(CssdSterile.this, 3, ip, list_3);
+                    }
+
+                    // Update Print Status
+                    if(p_data != null && !p_data.equals(""))
+                        updatePrintWashStatus(p_data);
+
+                    // -----------------------------------
+
+                }
+
+                @Override
+                protected String doInBackground(String... params) {
+                    HashMap<String, String> data = new HashMap<String,String>();
+                    data.put("ID", ID);
+                    String result = null;
+
+                    try {
+                        result = httpConnect.sendPostRequest(Url.URL + "cssd_select_wash_detail_for_print.php", data);
+
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+
+                    return result;
+                }
+
+                // =========================================================================================
+            }
+
+            Print obj = new Print();
+            obj.execute();
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+
+        }
+    }
+
+    private List<ModelWashDetailForPrint> getWashDetailLabelForPrint(List<ModelWashDetailForPrint> list, String Label){
+
+        List<ModelWashDetailForPrint> list_label = new ArrayList<>();
+
+        // List Label portion
+        for(int ix=0;ix<list.size();ix++){
+            if(list.get(ix).getCaseLabel().equals(Label)) {
+                list_label.add(
+                        new ModelWashDetailForPrint(
+                                list.get(ix).getID(),
+                                list.get(ix).getItemcode(),
+                                list.get(ix).getItemname(),
+                                list.get(ix).getUsageCode(),
+                                list.get(ix).getPacker(),
+                                list.get(ix).getAge(),
+                                list.get(ix).getMFG(),
+                                list.get(ix).getEXP(),
+                                list.get(ix).getCaseLabel(),
+                                list.get(ix).getPrinterIP(),
+                                list.get(ix).getUsageCount(),
+                                list.get(ix).getIsCheckList()
+                        )
+                );
+            }
+        }
+
+        return list_label;
+    }
+
+    public void updatePrintWashStatus(final String p_data) {
+
+        class UpdatePrintStatus extends AsyncTask<String, Void, String> {
+
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+
+                data.put("p_data", p_data.substring(0, p_data.length()-1));
+
+                String result = httpConnect.sendPostRequest(Url.URL + "cssd_update_wash_detail_print_status.php", data);
+
+                return result;
+            }
+
+            // =========================================================================================
+        }
+
+        UpdatePrintStatus obj = new UpdatePrintStatus();
+        obj.execute();
+    }
+
+    public void checkPacker(final String packer, final String W_ID, final Dialog dialog_qr) {
+
+        class Check extends AsyncTask<String, Void, String> {
+
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(s);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+
+                    for (int i = 0; i < rs.length(); i++) {
+
+                        JSONObject c = rs.getJSONObject(i);
+
+                        if (c.getString("result").equals("A")) {
+                            onPrintWash(W_ID);
+                        }else{
+                            Toast.makeText(CssdSterile.this, "ไม่พบรหัสพนักงาน !!", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    dialog_qr.dismiss();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }finally {
+//                    focus();
+                }
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+
+                data.put("ID", W_ID);
+                data.put("packer", packer);
+
+                if(B_ID != null){
+                    data.put("p_bid", B_ID);
+                }
+
+                String result = null;
+
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_check_packer.php", data);
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+                return result;
+            }
+
+            // =========================================================================================
+        }
+
+        Check obj = new Check();
+        obj.execute();
     }
 
 }
