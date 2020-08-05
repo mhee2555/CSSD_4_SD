@@ -6101,9 +6101,12 @@ public class CssdWash extends AppCompatActivity {
 
     public void CheckUsageEms(final String DOC_NO) {
         class CheckUsageEms extends AsyncTask<String, Void, String> {
+            private ProgressDialog dialog = new ProgressDialog(CssdWash.this);
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                this.dialog.setMessage(Cons.WAIT_FOR_PROCESS);
+                this.dialog.show();
             }
             @Override
             protected void onPostExecute(String result) {
@@ -6114,7 +6117,6 @@ public class CssdWash extends AppCompatActivity {
                     String IsRemarkExpress = "";
                     String itemname = "";
                     String Shelflife = "";
-
                     String UsageCode = "";
                     String Cnt = "";
                     for(int i=0;i<rs.length();i++) {
@@ -6126,7 +6128,6 @@ public class CssdWash extends AppCompatActivity {
                         condition3 = c.getString("condition3");
                         condition4 = c.getString("condition4");
                     }
-
                     if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0")){
                         Intent intent = new Intent(CssdWash.this, dialog_check_usage_count.class);
                         intent.putExtra("UsageCode", UsageCode);
@@ -6142,9 +6143,12 @@ public class CssdWash extends AppCompatActivity {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                }finally {
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
                 }
             }
-
             @SuppressLint("WrongThread")
             @Override
             protected String doInBackground(String... params) {
@@ -6169,16 +6173,13 @@ public class CssdWash extends AppCompatActivity {
 
     public void getOccupancyRate(final String DocNo) {
         class getOccupancyRate extends AsyncTask<String, Void, String> {
-
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
             }
-
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
                 try {
                     JSONObject jsonObj = new JSONObject(result);
                     rs = jsonObj.getJSONArray(TAG_RESULTS);
@@ -6191,7 +6192,6 @@ public class CssdWash extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-
             @SuppressLint("WrongThread")
             @Override
             protected String doInBackground(String... params) {
@@ -6206,12 +6206,10 @@ public class CssdWash extends AppCompatActivity {
                 }catch(Exception e){
                     e.printStackTrace();
                 }
-
                 return result;
             }
             // =========================================================================================
         }
-
         getOccupancyRate obj = new getOccupancyRate();
         obj.execute();
     }

@@ -1,5 +1,6 @@
 package com.phc.cssd;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -49,6 +50,11 @@ import java.util.Date;
 import java.util.HashMap;
 
 public class SterileSeachActivity extends AppCompatActivity implements View.OnClickListener {
+
+    String condition1 = "";
+    String condition2 = "";
+    String condition3 = "";
+    String condition4 = "";
     ArrayList<Response_Aux> results = new ArrayList<Response_Aux>();
     ArrayList<Response_Aux> resultssterileprocess = new ArrayList<Response_Aux>();
     ArrayList<Response_Aux> resultssterilemachine = new ArrayList<Response_Aux>();
@@ -1092,41 +1098,63 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
 
     public void ShowAlertRemart(final String DocNo) {
         class ShowAlertRemart extends AsyncTask<String, Void, String> {
+            private ProgressDialog dialog = new ProgressDialog(SterileSeachActivity.this);
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                this.dialog.setMessage(Cons.WAIT_FOR_PROCESS);
+                this.dialog.show();
             }
-
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
                 try {
                     JSONObject jsonObj = new JSONObject(result);
                     setRs = jsonObj.getJSONArray(TAG_RESULTS);
+                    String IsRemarkExpress = "";
+                    String itemname = "";
+                    String Shelflife = "";
+                    String UsageCode = "";
+                    String Cnt = "";
                     for(int i=0;i<setRs.length();i++) {
                         JSONObject c = setRs.getJSONObject(i);
-                        String cnt = c.getString("cnt");
-                        if (!cnt.equals("0")) {
-                            Intent intent = new Intent(SterileSeachActivity.this, dialog_usagecode_ems_sterile_approve.class);
-                            intent.putExtra("cnt", cnt);
-                            intent.putExtra("DocNo", DocNo);
-                            startActivity(intent);
-                        }
+                        UsageCode = c.getString("UsageCode");
+                        Cnt = c.getString("cnt");
+                        condition1 = c.getString("condition1");
+                        condition2 = c.getString("condition2");
+                        condition3 = c.getString("condition3");
+                        condition4 = c.getString("condition4");
                     }
-
+                    if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0")){
+                        Intent intent = new Intent(SterileSeachActivity.this, dialog_check_usage_count.class);
+                        intent.putExtra("UsageCode", UsageCode);
+                        intent.putExtra("cnt", Cnt);
+                        intent.putExtra("DocNo",DocNo);
+                        intent.putExtra("B_ID",B_ID);
+                        intent.putExtra("sel","1");
+                        intent.putExtra("condition1",condition1);
+                        intent.putExtra("condition2",condition2);
+                        intent.putExtra("condition3",condition3);
+                        intent.putExtra("condition4",condition4);
+                        startActivity(intent);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                }finally {
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
                 }
             }
-
+            @SuppressLint("WrongThread")
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
-                data.put("DocNo",DocNo);
+                data.put("DOC_NO",DocNo);
+                data.put("B_ID",B_ID);
                 String result = null;
                 try {
-                    result = ruc.sendPostRequest(Url.URL + "cssd_check_ems_docno.php", data);
+                    result = ruc.sendPostRequest(Url.URL + "cssd_check_usage_ems_Approve.php", data);
                     Log.d("DJKHDK",data+"");
                     Log.d("DJKHDK",result+"");
                 }catch(Exception e){
