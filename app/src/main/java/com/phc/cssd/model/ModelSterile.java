@@ -26,13 +26,14 @@ public class ModelSterile {
     String usr_sterile;
     String usr_prepare;
     String usr_approve;
+    String usr_beforeapprove;
     String PrintAll;
     String PrintCount;
     String TestProgramID;
     String TestProgramName;
     private int index = -1;
 
-    public ModelSterile(
+    public ModelSterile(//create_sterile
             String ID,
             String docNo,
             String docDate,
@@ -96,7 +97,85 @@ public class ModelSterile {
         this.PrintCount = PrintCount;
         this.TestProgramID = TestProgramID;
         this.TestProgramName = TestProgramName;
+        this.usr_beforeapprove ="-";
         this.index = index;
+    }
+
+    public ModelSterile(//display_sterile
+            String ID,
+            String docNo,
+            String docDate,
+            String modifyDate,
+            String userCode,
+
+            String prepareCode,
+            String approveCode,
+            String deptID,
+            String qty,
+            String isStatus,
+
+            String sterileProgramID,
+            String sterileMachineID,
+            String sterileRoundNumber,
+            String startTime,
+            String finishTime,
+
+            String s_time,
+            String f_time,
+            String remark,
+            String isOccurance,
+            String sterileName,
+
+            String machineName,
+            String usr_sterile,
+            String usr_prepare,
+            String usr_approve,
+            String PrintAll,
+
+            String PrintCount,
+            String TestProgramID,
+            String TestProgramName,
+            String usr_beforeapprove,
+            int index
+    ) {
+        this.ID = ID;
+        DocNo = docNo;
+        DocDate = docDate;
+        ModifyDate = modifyDate;
+        UserCode = userCode;
+        PrepareCode = prepareCode;
+        ApproveCode = approveCode;
+        DeptID = deptID;
+        Qty = qty;
+        IsStatus = isStatus;
+        this.sterileProgramID = sterileProgramID;
+        this.sterileMachineID = sterileMachineID;
+        this.sterileRoundNumber = sterileRoundNumber;
+        StartTime = startTime;
+        FinishTime = finishTime;
+        this.s_time = s_time;
+        this.f_time = f_time;
+        Remark = remark;
+        IsOccurance = isOccurance;
+        SterileName = sterileName;
+        MachineName = machineName;
+        this.usr_sterile = usr_sterile;
+        this.usr_prepare = usr_prepare;
+        this.usr_approve = usr_approve;
+        this.PrintAll = PrintAll;
+        this.PrintCount = PrintCount;
+        this.TestProgramID = TestProgramID;
+        this.TestProgramName = TestProgramName;
+        this.usr_beforeapprove =usr_beforeapprove;
+        this.index = index;
+    }
+
+    public String getUsr_beforeapprove() {
+        return usr_beforeapprove;
+    }
+
+    public void setUsr_beforeapprove(String usr_beforeapprove) {
+        this.usr_beforeapprove = usr_beforeapprove;
     }
 
     public String getPrintBalance() {
