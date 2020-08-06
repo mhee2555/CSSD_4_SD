@@ -90,7 +90,7 @@ public class dialog_check_usage_count extends Activity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                SetIsstatus();
             }
         });
         P1 = (LinearLayout) findViewById(R.id.P1);
@@ -229,5 +229,59 @@ public class dialog_check_usage_count extends Activity {
             qty1.setText(condition1);
             qty3.setText(condition3);
         }
+    }
+
+    public void SetIsstatus() {
+        class SetIsstatus extends AsyncTask<String, Void, String> {
+            private ProgressDialog dialog = new ProgressDialog(dialog_check_usage_count.this);
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                this.dialog.setMessage(Cons.WAIT_FOR_PROCESS);
+                this.dialog.show();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++){
+                        JSONObject c = rs.getJSONObject(i);
+                        if (c.getString("finish").equals("true")){
+                            finish();
+                        }else {
+                            finish();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }finally {
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            }
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("DOC_NO", DocNo);
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_set_status_ems.php", data);
+                    Log.d("KJDGDK",data+"");
+                    Log.d("KJDGDK",result);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+                return result;
+            }
+            // =========================================================================================
+        }
+        SetIsstatus obj = new SetIsstatus();
+        obj.execute();
     }
 }

@@ -733,6 +733,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 del_multi_1.setEnabled(true);
                 DelRowId.clear();
                 DelAlldata.clear();
+                txt_usr_receive.requestFocus();
             }
         });
 

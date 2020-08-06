@@ -219,6 +219,10 @@ public class CssdSterile extends AppCompatActivity {
     private Handler handler_3 = new Handler();
     private Handler handler_4 = new Handler();
     private Handler handler_5 = new Handler();
+    String condition1 = "";
+    String condition2 = "";
+    String condition3 = "";
+    String condition4 = "";
     private Runnable runnable_1;
     private Runnable runnable_2;
     private Runnable runnable_3;
@@ -7061,41 +7065,54 @@ public class CssdSterile extends AppCompatActivity {
 
     public void CheckUsageEms(final String DOC_NO) {
         class CheckUsageEms extends AsyncTask<String, Void, String> {
+            private ProgressDialog dialog = new ProgressDialog(CssdSterile.this);
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                this.dialog.setMessage(Cons.WAIT_FOR_PROCESS);
+                this.dialog.show();
             }
-
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
                 try {
                     JSONObject jsonObj = new JSONObject(result);
                     rs = jsonObj.getJSONArray(TAG_RESULTS);
                     String IsRemarkExpress = "";
                     String itemname = "";
-                    String UsageCode = "";
                     String Shelflife = "";
-
+                    String UsageCode = "";
+                    String Cnt = "";
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
-                        IsRemarkExpress = c.getString("IsRemarkExpress");
-                        cnt++;
+                        UsageCode = c.getString("UsageCode");
+                        Cnt = c.getString("cnt");
+                        condition1 = c.getString("condition1");
+                        condition2 = c.getString("condition2");
+                        condition3 = c.getString("condition3");
+                        condition4 = c.getString("condition4");
                     }
-
-                    if (!IsRemarkExpress.equals("0")) {
-                        Intent intent = new Intent(CssdSterile.this, dialog_usagecode_ems_sterile.class);
-                        intent.putExtra("IsRemarkExpress", IsRemarkExpress);
-                        intent.putExtra("cnt", IsRemarkExpress);
-                        intent.putExtra("DocNo", DOC_NO);
+                    if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0")){
+                        Intent intent = new Intent(CssdSterile.this, dialog_check_usage_count.class);
+                        intent.putExtra("UsageCode", UsageCode);
+                        intent.putExtra("cnt", Cnt);
+                        intent.putExtra("DocNo",getDocNo());
+                        intent.putExtra("B_ID",B_ID);
+                        intent.putExtra("sel","1");
+                        intent.putExtra("condition1",condition1);
+                        intent.putExtra("condition2",condition2);
+                        intent.putExtra("condition3",condition3);
+                        intent.putExtra("condition4",condition4);
                         startActivity(intent);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                }finally {
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
                 }
             }
-
             @SuppressLint("WrongThread")
             @Override
             protected String doInBackground(String... params) {
@@ -7104,7 +7121,7 @@ public class CssdSterile extends AppCompatActivity {
                 data.put("B_ID",B_ID);
                 String result = null;
                 try {
-                    result = httpConnect.sendPostRequest(Url.URL + "cssd_check_usage_ems_sterile.php", data);
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_check_usage_ems.php", data);
                     Log.d("DJKHDK",data+"");
                     Log.d("DJKHDK",result+"");
                 }catch(Exception e){
