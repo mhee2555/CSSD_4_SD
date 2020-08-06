@@ -133,6 +133,7 @@ public class CssdSterile extends AppCompatActivity {
     private TextView txt_cap_doc_date;
     private TextView txt_usr_prepare;
     private TextView txt_usr_approve;
+    private TextView txt_usr_beforeapprove;
     private TextView txt_usr_sterile;
     private TextView txt_test_program;
     private TextView txt_sterile_program;
@@ -1045,6 +1046,7 @@ public class CssdSterile extends AppCompatActivity {
 
         txt_usr_prepare = (TextView)findViewById(R.id.txt_usr_prepare);
         txt_usr_approve = (TextView)findViewById(R.id.txt_usr_approve);
+        txt_usr_beforeapprove = (TextView)findViewById(R.id.txt_usr_beforeapprove);
         txt_usr_sterile = (TextView)findViewById(R.id.txt_usr_sterile);
         txt_test_program = (TextView)findViewById(R.id.txt_test_program);
 
@@ -2315,7 +2317,8 @@ public class CssdSterile extends AppCompatActivity {
             String print_balance,
             String print_all,
             String TestProgramID,
-            String TestProgramName
+            String TestProgramName,
+            String Usr_beforeapprove
     ) {
 
         // Display Sterile
@@ -2330,6 +2333,7 @@ public class CssdSterile extends AppCompatActivity {
         txt_usr_prepare.setText(Usr_prepare);
         txt_usr_sterile.setText(Usr_sterile);
         txt_usr_approve.setText(Usr_approve);
+        txt_usr_beforeapprove.setText(Usr_beforeapprove);
         txt_test_program.setText(TestProgramName);
 
         ProgramTest = TestProgramName;
@@ -2379,6 +2383,7 @@ public class CssdSterile extends AppCompatActivity {
         txt_usr_sterile.setText("");
         txt_test_program.setText("");
         txt_print_balance.setText("0");
+        txt_usr_beforeapprove.setText("");
     }
 
     private void disableButtonAictive(){
@@ -2791,6 +2796,7 @@ public class CssdSterile extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     txt_usr_prepare.setText("");
                     txt_usr_approve.setText("");
+                    txt_usr_beforeapprove.setText("");
                     txt_test_program.setText("");
                     Time = null;
                 }
@@ -4163,6 +4169,7 @@ public class CssdSterile extends AppCompatActivity {
                     try {
                         MODEL_STERILE_MACHINE = getModelSterileMachine();
                         MAX_STERILE_MACHINE = MODEL_STERILE_MACHINE.size();
+                        onDisplay(p_doc_no);
                     } catch (Exception e) {
                         e.printStackTrace();
                         return;
@@ -4869,7 +4876,8 @@ public class CssdSterile extends AppCompatActivity {
                                     m.getPrintBalance(),
                                     m.getPrintAll(),
                                     m.getTestProgramID(),
-                                    m.getTestProgramName()
+                                    m.getTestProgramName(),
+                                    m.getUsr_beforeapprove()
                             );
 
                             //////System.out.println("STERILE_MACHINE_NUMBER_ACTIVE = " + STERILE_MACHINE_NUMBER_ACTIVE);
@@ -5111,7 +5119,8 @@ public class CssdSterile extends AppCompatActivity {
                                     m.getPrintBalance(),
                                     m.getPrintAll(),
                                     m.getTestProgramID(),
-                                    m.getTestProgramName()
+                                    m.getTestProgramName(),
+                                    m.getUsr_beforeapprove()
                             );
 
                             // SetData Machine
@@ -5369,7 +5378,8 @@ public class CssdSterile extends AppCompatActivity {
                                     m.getPrintBalance(),
                                     m.getPrintAll(),
                                     m.getTestProgramID(),
-                                    m.getTestProgramName()
+                                    m.getTestProgramName(),
+                                    m.getUsr_beforeapprove()
                             );
 
 
@@ -5614,7 +5624,8 @@ public class CssdSterile extends AppCompatActivity {
                                     m.getPrintBalance(),
                                     m.getPrintAll(),
                                     m.getTestProgramID(),
-                                    m.getTestProgramName()
+                                    m.getTestProgramName(),
+                                    m.getUsr_beforeapprove()
                             );
 
                             // Display Sterile Detail
@@ -5645,6 +5656,8 @@ public class CssdSterile extends AppCompatActivity {
                 }catch(Exception e){
                     e.printStackTrace();
                 }
+
+                Log.d("ttest_display_sterile","result = "+result);
 
                 return result;
             }
@@ -5688,13 +5701,13 @@ public class CssdSterile extends AppCompatActivity {
                                         data.get(i + 25),
                                         data.get(i + 26),
                                         data.get(i + 27),
+                                        data.get(i + 28),
                                         index
                                 )
                         );
 
                         index++;
                     }
-
                     // //////System.out.println("list = " + list.size());
 
                 }catch(Exception e){
@@ -5733,6 +5746,7 @@ public class CssdSterile extends AppCompatActivity {
                     String PrintCount,
                     String TestProgramID,
                     String TestProgramName,
+                    String usr_beforeapprove,
                     int index
             ){
                 return new ModelSterile(
@@ -5764,6 +5778,7 @@ public class CssdSterile extends AppCompatActivity {
                         PrintCount,
                         TestProgramID,
                         TestProgramName,
+                        usr_beforeapprove,
                         index
                 );
             }
