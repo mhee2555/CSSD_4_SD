@@ -7147,7 +7147,6 @@ public class CssdSterile extends AppCompatActivity {
                 }
             }, DELAY_TIME);
         }
-
     }
 
     public void CheckUsageEms(final String DOC_NO) {
@@ -7186,6 +7185,7 @@ public class CssdSterile extends AppCompatActivity {
                         intent.putExtra("DocNo",getDocNo());
                         intent.putExtra("B_ID",B_ID);
                         intent.putExtra("sel","1");
+                        intent.putExtra("page","1");
                         intent.putExtra("condition1",condition1);
                         intent.putExtra("condition2",condition2);
                         intent.putExtra("condition3",condition3);

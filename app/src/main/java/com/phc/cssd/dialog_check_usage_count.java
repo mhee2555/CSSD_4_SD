@@ -35,6 +35,7 @@ public class dialog_check_usage_count extends Activity {
     String B_ID;
     String sel;
     String Cnt;
+    String page;
 
     String condition1;
     String condition2;
@@ -69,6 +70,7 @@ public class dialog_check_usage_count extends Activity {
         B_ID = intent.getStringExtra("B_ID");
         sel = intent.getStringExtra("sel");
         Cnt = intent.getStringExtra("cnt");
+        page = intent.getStringExtra("page");
         condition1 = intent.getStringExtra("condition1");
         condition2 = intent.getStringExtra("condition2");
         condition3 = intent.getStringExtra("condition3");
@@ -90,7 +92,11 @@ public class dialog_check_usage_count extends Activity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SetIsstatus();
+                if (page.equals("0")){
+                    finish();
+                }else {
+                    SetIsstatus();
+                }
             }
         });
         P1 = (LinearLayout) findViewById(R.id.P1);
@@ -227,6 +233,15 @@ public class dialog_check_usage_count extends Activity {
             index1.setText("1.");
             index3.setText("2.");
             qty1.setText(condition1);
+            qty3.setText(condition3);
+        }else if (condition1.equals("0") && !condition2.equals("0") && !condition3.equals("0") && condition4.equals("0")){
+            P1.setVisibility(View.GONE);
+            P2.setVisibility(View.VISIBLE);
+            P3.setVisibility(View.VISIBLE);
+            P4.setVisibility(View.GONE);
+            index2.setText("1.");
+            index3.setText("2.");
+            qty2.setText(condition2);
             qty3.setText(condition3);
         }
     }

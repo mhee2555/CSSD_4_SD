@@ -287,10 +287,12 @@ public class dialog_linen_detail extends Activity {
                             }
                             index++;
                         }else {
-                            search_name.requestFocus();
-                            search_scan.setText("");
-                            search_scan.setHint("สแกนเช็ครายการ");
-                            Toast.makeText(dialog_linen_detail.this, "รหัสใช้งานไม่ถูกต้อง !!", Toast.LENGTH_SHORT).show();
+                            if (!search_name.getText().toString().equals("")){
+                                search_name.requestFocus();
+                                search_scan.setText("");
+                                search_scan.setHint("สแกนเช็ครายการ");
+                                Toast.makeText(dialog_linen_detail.this, "รหัสใช้งานไม่ถูกต้อง !!", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                     Model_Linen = list;

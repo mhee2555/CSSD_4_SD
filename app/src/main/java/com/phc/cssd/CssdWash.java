@@ -6135,6 +6135,7 @@ public class CssdWash extends AppCompatActivity {
                         intent.putExtra("DocNo",getDocNo());
                         intent.putExtra("B_ID",B_ID);
                         intent.putExtra("sel","1");
+                        intent.putExtra("page","1");
                         intent.putExtra("condition1",condition1);
                         intent.putExtra("condition2",condition2);
                         intent.putExtra("condition3",condition3);

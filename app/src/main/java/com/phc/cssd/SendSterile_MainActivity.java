@@ -3007,6 +3007,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         intent.putExtra("DocNo",DocNo);
                         intent.putExtra("B_ID",B_ID);
                         intent.putExtra("sel","1");
+                        intent.putExtra("page","0");
                         intent.putExtra("condition1",condition1);
                         intent.putExtra("condition2",condition2);
                         intent.putExtra("condition3",condition3);
@@ -3182,6 +3183,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         intent.putExtra("condition2",condition2);
                         intent.putExtra("condition3",condition3);
                         intent.putExtra("condition4",condition4);
+                        intent.putExtra("page","0");
                         startActivity(intent);
                     }
                 } catch (JSONException e) {
