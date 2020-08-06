@@ -23,6 +23,8 @@ public class ModelImportWashDetail implements Cloneable {
             BasketDetailId,
             BasketCode;
 
+    private int print_count;
+
     private int index = -1;
 
     public boolean IsCheck = false;
@@ -46,7 +48,7 @@ public class ModelImportWashDetail implements Cloneable {
         this.IsRemarkExpress = IsRemarkExpress;
     }
 
-    public ModelImportWashDetail(int index, boolean isCheck, String i_id, String i_code, String i_name, String i_alt_name, String i_barcode, String i_qty, String i_program, String i_program2, String i_program_id, String PackingMat, String Shelflife, String PackingMatID, String BasketName, String IsRemarkExpress,String i_UsageCode,String BasketCode,String BasketType,String BasketDetailId) {
+    public ModelImportWashDetail(int index, boolean isCheck, String i_id, String i_code, String i_name, String i_alt_name, String i_barcode, String i_qty, String i_program, String i_program2, String i_program_id, String PackingMat, String Shelflife, String PackingMatID, String BasketName, String IsRemarkExpress,String i_UsageCode,String BasketCode,String BasketType,String BasketDetailId,String print_count) {
         this.i_id = i_id;
         this.i_code = i_code;
         this.i_name = i_name;
@@ -67,6 +69,15 @@ public class ModelImportWashDetail implements Cloneable {
         this.i_UsageCode = i_UsageCode;
         this.BasketType = BasketType;
         this.BasketDetailId = BasketDetailId;
+        this.print_count= Integer.parseInt(print_count);
+    }
+
+    public int getPrint_count() {
+        return print_count;
+    }
+
+    public void setPrint_count(int print_count) {
+        this.print_count = print_count;
     }
 
     public String getBasketCode() {
