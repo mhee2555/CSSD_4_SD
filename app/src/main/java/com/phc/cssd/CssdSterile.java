@@ -1700,11 +1700,12 @@ public class CssdSterile extends AppCompatActivity {
                     for(int i=0;i<MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size();i++){
                         if(MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(i).getPrint_count()<=0){
                             print_w_id=print_w_id+","+MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(i).getI_id();
+                            xn = xn+1;
                         }
-                        xn = xn+1;
                     }
-
                 }
+
+                btn_print.setText(xn+"");
 
                 if(xn==0){
                     Toast.makeText(CssdSterile.this, "ไม่พบรายการในตะกร้าที่พิมพ์ได้!!", Toast.LENGTH_SHORT).show();
@@ -6564,7 +6565,15 @@ public class CssdSterile extends AppCompatActivity {
                                     if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code)){
                                         MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR = MAP_MODEL_IMPORT_WASH_DETAIL_SUB.get(basket_Code);
                                         basket_dialog_list_basket.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR,5));
+                                        int xn=0;
+                                        for(int i=0;i<MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size();i++){
+                                            if(MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(i).getPrint_count()<=0){
+                                                xn = xn+1;
+                                            }
+                                        }
+                                        btn_print.setText(xn+"");
                                     }else{
+                                        btn_print.setText("0");
                                         basket_dialog_list_basket.setAdapter(null);
                                     }
 
@@ -7290,7 +7299,15 @@ public class CssdSterile extends AppCompatActivity {
                             if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code)){
                                 MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR = MAP_MODEL_IMPORT_WASH_DETAIL_SUB.get(basket_Code);
                                 basket_dialog_list_basket.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR,5));
+                                int xn=0;
+                                for(int ii=0;ii<MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size();ii++){
+                                    if(MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(ii).getPrint_count()<=0){
+                                        xn = xn+1;
+                                    }
+                                }
+                                btn_print.setText(xn+"");
                             }else{
+                                btn_print.setText("0");
                                 basket_dialog_list_basket.setAdapter(null);
                             }
 
