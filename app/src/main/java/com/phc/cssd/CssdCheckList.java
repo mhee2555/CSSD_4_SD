@@ -44,7 +44,7 @@ import java.util.List;
 public class CssdCheckList extends Activity {
 
     // Http
-    private String TAG_RESULTS = "result";
+    private String TAG_RESULTS="result";
     private JSONArray rs = null;
     private HTTPConnect httpConnect = new HTTPConnect();
 
@@ -220,7 +220,7 @@ public class CssdCheckList extends Activity {
                 }catch (Exception e){
 
                 }finally {
-                    focus();
+                    focus_();
                 }
 
             }
@@ -779,6 +779,16 @@ public class CssdCheckList extends Activity {
                 edt_usage_code.requestFocus();
             }
         }, 500);
+    }
 
+    private void focus_(){
+        final Handler h = new Handler();
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                edt_usage_code.setText("");
+                edt_usage_code.requestFocus();
+            }
+        }, 500);
     }
 }

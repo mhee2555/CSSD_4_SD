@@ -68,9 +68,9 @@ public class SearchSterileDetailAdapter extends ArrayAdapter<ModelSterileDetail>
                 @Override
                 public void onClick(View v) {
                     try {
-                        DATA_MODEL.get(viewHolder.index).setCheck( ! DATA_MODEL.get(viewHolder.index).isCheck() );
+                        DATA_MODEL.get(viewHolder.index).setCheck(!DATA_MODEL.get(viewHolder.index).isCheck());
                         Log.d("LFHLKD","1");
-                        (( CssdSearchSterile ) context).WashID_Row(DATA_MODEL_WASH.get(position).getI_id());
+                        (( CssdSearchSterile ) context).WashID_Row(DATA_MODEL.get(position).getUsageCode());
                     }catch(Exception e){
                         e.printStackTrace();
                     }

@@ -1081,15 +1081,12 @@ public class CssdSearchSterile extends AppCompatActivity {
     private void onPrint(){
         boolean IsCheck = true;
         String MsgCheck = "";
-
         try {
-
             int cnt=0;
             for (String key : WashallID.keySet()) {
                 if (WashallID.get(key) == "0")
                     cnt++;
             }
-
             for (String key : WashallID.keySet()) {
                 if (WashallID.get(key) == "0")
                     WashID.add(key);
@@ -1099,7 +1096,6 @@ public class CssdSearchSterile extends AppCompatActivity {
 //                Toast.makeText(CssdCheckList.this, "ยังไม่ได้เลือกผู้ห่อ !!", Toast.LENGTH_SHORT).show();
 //                return;
 //            }
-
             // Check List
 //            for(int i=0;i<MODEL_CHECK_LIST.size();i++){
 //
@@ -1115,35 +1111,26 @@ public class CssdSearchSterile extends AppCompatActivity {
 //                    break;
 //                }
 //            }
-
             if(!IsCheck){
                 Toast.makeText(CssdSearchSterile.this, MsgCheck, Toast.LENGTH_SHORT).show();
                 return;
             }
-
             // Print
             class Print extends AsyncTask<String, Void, String> {
-
                 // variable
                 @Override
                 protected void onPreExecute() {
                     super.onPreExecute();
                 }
-
                 @Override
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
-
                     List<ModelWashDetailForPrint> list = new ArrayList<>();
-
                     try {
                         JSONObject jsonObj = new JSONObject(s);
                         rs = jsonObj.getJSONArray(TAG_RESULTS);
-
                         for (int i = 0; i < rs.length(); i++) {
-
                             JSONObject c = rs.getJSONObject(i);
-
                             if (c.getString("result").equals("A")) {
                                 list.add(
                                         new ModelWashDetailForPrint(
@@ -1161,22 +1148,24 @@ public class CssdSearchSterile extends AppCompatActivity {
                                                 c.getString("IsCheckList")
                                         )
                                 );
-
                                 // Print
                                 PrintWash p = new PrintWash();
                                 String p_data = p.print(CssdSearchSterile.this, c.getInt("CaseLabel"), c.getString("PrinterIP"), list);
-
                                 // Update Print Status
                                 updatePrintStatus(p_data);
-
-                                if(c.getString("IsCheckList").equals("1")){
-                                    callCheckListPaper(String.valueOf(WashID));
+//                                if(c.getString("IsCheckList").equals("1")){
+//                                    callCheckListPaper(String.valueOf(WashID));
+//                                }
+                                WashID.clear();
+                                WashallID.clear();
+                                for (int a = 0 ; a < MODEL_STERILE_DETAIL.size() ; a ++){
+                                    MODEL_STERILE_DETAIL.get(a).setCheck(false);
+                                    ArrayAdapter<ModelSterileDetail> adapter = new SearchSterileDetailAdapter(CssdSearchSterile.this, MODEL_STERILE_DETAIL);
+                                    list_sterile_detail.setAdapter(adapter);
                                 }
 
-                                finish();
                             }
                         }
-
                     } catch (Exception e) {
                         e.printStackTrace();
                         return;
@@ -1213,18 +1202,17 @@ public class CssdSearchSterile extends AppCompatActivity {
                         updatePrintStatus(p_data);
                     */
                     // -----------------------------------
-
                 }
-
                 @Override
                 protected String doInBackground(String... params) {
                     HashMap<String, String> data = new HashMap<String,String>();
-                    data.put("ID", String.valueOf(WashID));
+                    data.put("RowID", String.valueOf(WashID));
                     String result = null;
 
                     try {
                         result = httpConnect.sendPostRequest(Url.URL + "cssd_select_wash_detail_for_print.php", data);
-
+                        Log.d("FJDLJF",data+"");
+                        Log.d("FJDLJF",result+"");
                     }catch(Exception e){
                         e.printStackTrace();
                     }
