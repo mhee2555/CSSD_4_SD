@@ -527,6 +527,9 @@ public class CssdCheckList extends Activity {
 
                     String packer_code = (String) txt_packer.getContentDescription();
 
+                    System.out.println("packer_code = " + packer_code );
+                    System.out.println("packer_text = " + txt_packer.getText() );
+
                     // Check Employee
                     if(ID != null && packer_code != null && !packer_code.equals("")){
                         updatePacker(ID, packer_code);
@@ -676,7 +679,7 @@ public class CssdCheckList extends Activity {
                 String result = null;
 
                 try {
-                    result = httpConnect.sendPostRequest(Url.URL + "cssd_update_packer.php.php", data);
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_update_packer.php", data);
 
                 }catch(Exception e){
                     e.printStackTrace();
@@ -693,49 +696,69 @@ public class CssdCheckList extends Activity {
     }
 
     private void checkInput(final String Input){
+
         String packer_code = (String) txt_packer.getContentDescription();
+
         // Check Employee
         if(packer_code == null || packer_code.equals("")){
             checkPacker(Input);
             return;
         }
+
         // Check Usage
         if(ID == null){
+
             UsageCode = Input;
+
             displayCheckList();
+
             return;
         }
+
         // Check Item Detail
         boolean IsCheck = false;
+
         try {
+
             String code = Input.length() > 6 ? Input.substring(0, 5) : Input;
+
             for(int i=0;i<MODEL_CHECK_LIST.size();i++){
+
                 //System.out.println(code + " = " + MODEL_CHECK_LIST.get(i).getItemcode());
+
                 if (code.equals(MODEL_CHECK_LIST.get(i).getItemcode())) {
+
                     IsCheck = true;
+
                     if(MODEL_CHECK_LIST.get(i).isCheck()){
                         Toast.makeText(CssdCheckList.this, "รายการนี้ได้ทำการยิงเช็คแล้ว !!", Toast.LENGTH_SHORT).show();
                         break;
                     }
+
                     // Set
                     MODEL_CHECK_LIST.get(i).setCheck(true);
+
                     // Display
                     ArrayAdapter<ModelCheckList> adapter;
                     adapter = new CheckListAdapter(CssdCheckList.this, MODEL_CHECK_LIST);
                     list_check.setAdapter(adapter);
+
                     try {
                         /*
                         URL url = new URL(Url.getImageURL() + MODEL_CHECK_LIST.get(i).getPicture_set());
                         Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                         img_item_all.setImageBitmap(bmp);
                          */
+
                         URL url_ = new URL(Url.getImageURL() + MODEL_CHECK_LIST.get(i).getPicture_detail());
                         Bitmap bmp_ = BitmapFactory.decodeStream(url_.openConnection().getInputStream());
                         img_item.setImageBitmap(bmp_);
+
                     }catch(Exception e){
                         img_item_all.setImageResource(R.drawable.ic_preview);
                         img_item.setImageResource(R.drawable.ic_preview);
                     }
+
                     break;
                 }
             }

@@ -619,6 +619,7 @@ public class CssdSearchSterile extends AppCompatActivity {
                     data.put("p_bid", B_ID);
                 }
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_display_sterile_detail_seaech.php", data);
+                Log.d("FKHDKH",data+"");
                 Log.d("FKHDKH",result);
                 return result;
             }
