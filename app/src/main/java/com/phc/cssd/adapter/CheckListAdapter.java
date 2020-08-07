@@ -113,6 +113,11 @@ public class CheckListAdapter extends ArrayAdapter {
                             txt_remark_admin.setTextColor(Color.GRAY);
                             txt_remark_type.setTextColor(Color.GRAY);
                             txt_remark_date.setTextColor(Color.GRAY);
+
+                            checkbox.setChecked(true);
+                            listData.get(position).setCheck(true);
+
+                            ((CssdCheckList)acc).onListClick(img_set, img_detail);
                         }
                     });
 
@@ -147,6 +152,7 @@ public class CheckListAdapter extends ArrayAdapter {
             @Override
             public void onClick(View view) {
                 listData.get(position).setCheck(checkbox.isChecked());
+                ((CssdCheckList)acc).onListClick(img_set, img_detail);
             }
         });
 
