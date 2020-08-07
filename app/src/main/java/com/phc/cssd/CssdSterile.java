@@ -1623,6 +1623,7 @@ public class CssdSterile extends AppCompatActivity {
                         case KeyEvent.KEYCODE_ENTER:
 
                             selectBasket(edt_basket_code.getText().toString());
+                            edt_basket_code.setText("");
                             return true;
                         default:
                             break;
@@ -7272,6 +7273,7 @@ public class CssdSterile extends AppCompatActivity {
                             Log.d("ttest_pair","Key_map = "+MAP_MODEL_IMPORT_WASH_DETAIL_SUB);
                             Log.d("ttest_pair","containsKey_map = "+MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code));
                             Log.d("ttest_pair","basket_Code = "+basket_Code);
+                            MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.clear();
                             if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code)){
                                 MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR = MAP_MODEL_IMPORT_WASH_DETAIL_SUB.get(basket_Code);
                             }
