@@ -44,7 +44,7 @@ import java.util.List;
 public class CssdCheckList extends Activity {
 
     // Http
-    private String TAG_RESULTS="result";
+    private String TAG_RESULTS = "result";
     private JSONArray rs = null;
     private HTTPConnect httpConnect = new HTTPConnect();
 
