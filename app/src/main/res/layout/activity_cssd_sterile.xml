@@ -1296,15 +1296,15 @@
         android:scaleType="fitCenter" />
 
 
-        <Button
-            android:id="@+id/bt_report_print"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="1120dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/ic_popup_print_green" />
+    <Button
+        android:id="@+id/bt_report_print"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="1120dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/ic_popup_print_green" />
 
     <LinearLayout
         android:id="@+id/PairBasketBox"
@@ -1405,5 +1405,15 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_checklist"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignStart="@+id/imageBack"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="175dp"
+        android:layout_marginBottom="19dp"
+        android:background="@drawable/ic_newx32" />
 
 </RelativeLayout>

@@ -64,7 +64,7 @@ public class ModelEditDetail {
             String QRCode,
             String IsChange,
             int index
-            ){
+    ){
         this.ID = ID;
         this.itemname = itemname;
         this.itemcode = itemcode;
@@ -864,7 +864,7 @@ public class ModelEditDetail {
 
     public int getPrintCount() {
         try{
-             return Integer.valueOf(Qty_Print).intValue();
+            return Integer.valueOf(Qty_Print).intValue();
         }catch(Exception e){
             return 0;
         }

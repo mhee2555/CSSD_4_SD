@@ -178,6 +178,7 @@ public class CssdSterile extends AppCompatActivity {
     private Button btn_import;
     private Button btn_export;
     private Button btn_import_new_item_stock;
+    private Button btn_checklist;
     private ImageView imageBack;
     private int DISPLAY_MODE = 0;
     private final int i = 0;
@@ -215,7 +216,7 @@ public class CssdSterile extends AppCompatActivity {
     private List<ModelImportWashDetail> MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR = new ArrayList<>();;
     private List<ModelImportWashDetail> MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR = new ArrayList<>();;
 
-//    HashMap <String ,ArrayList<String>>model_head_show_Usagecode = new HashMap<String ,ArrayList<String>>();
+    //    HashMap <String ,ArrayList<String>>model_head_show_Usagecode = new HashMap<String ,ArrayList<String>>();
     HashMap<String,List<ModelImportWashDetail>> MAP_MODEL_IMPORT_WASH_DETAIL_SUB = new HashMap<String,List<ModelImportWashDetail>>();
     private Handler handler_1 = new Handler();
     private Handler handler_2 = new Handler();
@@ -1403,7 +1404,13 @@ public class CssdSterile extends AppCompatActivity {
         btn_import = (Button) findViewById(R.id.btn_import);
         btn_export = (Button) findViewById(R.id.btn_export);
         btn_import_new_item_stock = (Button) findViewById(R.id.btn_import_new_item_stock);
+        btn_checklist = (Button) findViewById(R.id.btn_checklist);
 
+        btn_checklist.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                callCheckList();
+            }
+        });
 
         btn_import_new_item_stock.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -6840,7 +6847,7 @@ public class CssdSterile extends AppCompatActivity {
     ArrayList<String> PRINTER_IP = new ArrayList<>();
     int Width = 0;
     int Heigth = 0;
-//    ArrayList<Integer> HEIGHT = new ArrayList<>();
+    //    ArrayList<Integer> HEIGHT = new ArrayList<>();
 //    ArrayList<Integer> WIDTH = new ArrayList<>();
     int xItemname1 = 0;
     int yItemname1 = 0;
@@ -7518,6 +7525,16 @@ public class CssdSterile extends AppCompatActivity {
         intent.putExtra("B_ID", B_ID);
         intent.putExtra("IsAdmin", IsAdmin);
         intent.putExtra("ID", ID);
+        intent.putExtra("Is_ById", true);
+        startActivity(intent);
+    }
+
+    public void callCheckList(){
+        Intent intent = new Intent(CssdSterile.this, CssdCheckList.class);
+        intent.putExtra("userid", userid);
+        intent.putExtra("B_ID", B_ID);
+        intent.putExtra("IsAdmin", IsAdmin);
+        intent.putExtra("Is_ById", false);
         startActivity(intent);
     }
 

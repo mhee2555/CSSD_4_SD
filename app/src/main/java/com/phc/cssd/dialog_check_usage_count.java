@@ -202,7 +202,7 @@ public class dialog_check_usage_count extends Activity {
             P3.setVisibility(View.GONE);
             P4.setVisibility(View.VISIBLE);
             index1.setText("1.");
-            index4.setText("4.");
+            index4.setText("2.");
             qty1.setText(condition1);
             qty4.setText(condition4);
         }else if (!condition1.equals("0") && !condition2.equals("0") && condition3.equals("0") && !condition4.equals("0")){
@@ -242,6 +242,13 @@ public class dialog_check_usage_count extends Activity {
             index2.setText("1.");
             index3.setText("2.");
             qty2.setText(condition2);
+            qty3.setText(condition3);
+        }else if (condition1.equals("0") && condition2.equals("0") && !condition3.equals("0") && condition4.equals("0")){
+            P1.setVisibility(View.GONE);
+            P2.setVisibility(View.GONE);
+            P3.setVisibility(View.VISIBLE);
+            P4.setVisibility(View.GONE);
+            index3.setText("1.");
             qty3.setText(condition3);
         }
     }

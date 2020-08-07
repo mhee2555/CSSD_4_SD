@@ -10,9 +10,13 @@ public class ModelCheckList {
     String DateRemark;
     String Remark;
     String NameType;
+    String Picture_set;
+    String Picture_detail;
+    String usage_item_code;
+    String usage_item_name;
     boolean IsCheck = false;
 
-    public ModelCheckList(String ID, String send_ID, String itemcode, String itemname, String qty, String adminRemark, String dateRemark, String remark, String NameType, boolean IsCheck) {
+    public ModelCheckList(String ID, String send_ID, String itemcode, String itemname, String qty, String adminRemark, String dateRemark, String remark, String nameType, String picture_set, String picture_detail, String usage_item_code, String usage_item_name, boolean isCheck) {
         this.ID = ID;
         Send_ID = send_ID;
         this.itemcode = itemcode;
@@ -21,8 +25,44 @@ public class ModelCheckList {
         AdminRemark = adminRemark;
         DateRemark = dateRemark;
         Remark = remark;
-        this.NameType = NameType;
-        this.IsCheck = IsCheck;
+        NameType = nameType;
+        Picture_set = picture_set;
+        Picture_detail = picture_detail;
+        this.usage_item_code = usage_item_code;
+        this.usage_item_name = usage_item_name;
+        IsCheck = isCheck;
+    }
+
+    public String getUsage_item_code() {
+        return usage_item_code;
+    }
+
+    public void setUsage_item_code(String usage_item_code) {
+        this.usage_item_code = usage_item_code;
+    }
+
+    public String getUsage_item_name() {
+        return usage_item_name;
+    }
+
+    public void setUsage_item_name(String usage_item_name) {
+        this.usage_item_name = usage_item_name;
+    }
+
+    public String getPicture_set() {
+        return Picture_set;
+    }
+
+    public void setPicture_set(String picture_set) {
+        Picture_set = picture_set;
+    }
+
+    public String getPicture_detail() {
+        return Picture_detail;
+    }
+
+    public void setPicture_detail(String picture_detail) {
+        Picture_detail = picture_detail;
     }
 
     public String getNameType() {

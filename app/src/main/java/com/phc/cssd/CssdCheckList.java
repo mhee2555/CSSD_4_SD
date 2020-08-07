@@ -1,8 +1,12 @@
 package com.phc.cssd;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -10,14 +14,17 @@ import android.os.StrictMode;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.phc.core.connect.HTTPConnect;
+import com.phc.core.string.Cons;
 import com.phc.cssd.adapter.CheckListAdapter;
 import com.phc.cssd.model.ModelCheckList;
 import com.phc.cssd.model.ModelWashDetailForPrint;
@@ -28,6 +35,7 @@ import com.phc.cssd.url.getUrl;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,14 +52,24 @@ public class CssdCheckList extends Activity {
     private String userid = null;
     private String B_ID = null;
     private boolean IsAdmin = false;
+    private boolean Is_ById = false;
     private String ID = null;
+    private String UsageCode= null;
 
     // Widget
     private ListView list_check;
     private ImageView imv_print;
     private ImageView imageBack;
+    private ImageView imv_new;
     private EditText edt_usage_code;
     private TextView txt_packer;
+    private TextView txt_item_name;
+    private TextView txt_item_detail;
+
+    private ImageView img_item;
+    private ImageView img_item_all;
+
+    private LinearLayout west;
 
     private List<ModelCheckList> MODEL_CHECK_LIST = null;
 
@@ -71,7 +89,9 @@ public class CssdCheckList extends Activity {
 
         byEvent();
 
-        displayCheckList();
+        if(Is_ById) {
+            displayCheckList();
+        }
 
     }
 
@@ -82,6 +102,7 @@ public class CssdCheckList extends Activity {
         B_ID = intent.getStringExtra("B_ID");
         IsAdmin = intent.getBooleanExtra("IsAdmin", false);
         ID = intent.getStringExtra("ID");
+        Is_ById = intent.getBooleanExtra("Is_ById", false);
     }
 
     private void byWidget(){
@@ -90,9 +111,20 @@ public class CssdCheckList extends Activity {
 
         imv_print = (ImageView) findViewById(R.id.imv_print);
 
+        img_item = (ImageView)findViewById(R.id.img_item);
+        img_item_all = (ImageView)findViewById(R.id.img_item_all);
+        imv_new = (ImageView)findViewById(R.id.imv_new);
+
         imageBack = (ImageView) findViewById(R.id.imageBack);
         txt_packer = ( TextView ) findViewById(R.id.txt_packer);
+        txt_item_name = ( TextView ) findViewById(R.id.txt_item_name);
+        txt_item_detail = ( TextView ) findViewById(R.id.txt_item_detail);
         edt_usage_code = ( EditText ) findViewById(R.id.edt_usage_code);
+        west = ( LinearLayout ) findViewById(R.id.west);
+
+        // west.setVisibility(Is_ById ? View.GONE : View.VISIBLE);
+        west.setVisibility(View.GONE);
+        imv_new.setVisibility(Is_ById ? View.GONE : View.VISIBLE);
         edt_usage_code.setShowSoftInputOnFocus(false);
     }
 
@@ -102,6 +134,34 @@ public class CssdCheckList extends Activity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        imv_new.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder quitDialog = new AlertDialog.Builder(CssdCheckList.this);
+                quitDialog.setTitle(Cons.TITLE);
+                quitDialog.setIcon(R.drawable.pose_favicon_2x);
+                quitDialog.setMessage("ค้นหา Usage Code เพื่อทำการเช็คอุปกรณ์ใหม่ ?");
+
+                quitDialog.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        clearAll();
+                    }
+                });
+
+                quitDialog.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                quitDialog.show();
             }
         });
 
@@ -139,6 +199,41 @@ public class CssdCheckList extends Activity {
             }
         });
 
+    }
+
+    private void clearAll(){
+
+        ID = null;
+        UsageCode= null;
+
+        img_item_all.setImageResource(R.drawable.ic_preview);
+        img_item.setImageResource(R.drawable.ic_preview);
+
+        txt_packer.setText("ผู้ห่อ : -");
+        txt_packer.setContentDescription("");
+
+        txt_item_name.setText("ชื่อเซ็ท : -");
+        txt_item_detail.setText("รายการในเซ็ท 0 รายการ   จำนวนทั้งหมด 0 ชิ้น");
+
+        list_check.setAdapter(null);
+
+    }
+
+    public void onListClick(String img_set, String img_detail){
+
+        try {
+            URL url = new URL(Url.getImageURL() + img_set);
+            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            img_item_all.setImageBitmap(bmp);
+
+            URL url_ = new URL(Url.getImageURL() + img_detail);
+            Bitmap bmp_ = BitmapFactory.decodeStream(url_.openConnection().getInputStream());
+            img_item.setImageBitmap(bmp_);
+
+        }catch(Exception e){
+            img_item_all.setImageResource(R.drawable.ic_preview);
+            img_item.setImageResource(R.drawable.ic_preview);
+        }
     }
 
     private void onPrint(){
@@ -227,7 +322,11 @@ public class CssdCheckList extends Activity {
                                     callCheckListPaper(ID);
                                 }
 
-                                finish();
+                                if(Is_ById) {
+                                    finish();
+                                }else{
+                                    clearAll();
+                                }
                             }
                         }
 
@@ -237,36 +336,6 @@ public class CssdCheckList extends Activity {
                     }finally {
                         focus();
                     }
-
-                    // -----------------------------------
-                    // Print Multiple Id
-                    // -----------------------------------
-                    /*
-                    List<ModelWashDetailForPrint> list_2 ;
-                    List<ModelWashDetailForPrint> list_3 ;
-
-                    list_2 = getWashDetailLabelForPrint(list, "2");
-                    list_3 = getWashDetailLabelForPrint(list, "3");
-
-                    // Print
-                    final PrintWash p = new PrintWash();
-                    String p_data = "";
-
-                    if(list_2 != null && list_2.size() > 0) {
-                        String ip = list_2.get(0).getPrinterIP();
-                        p_data += p.print(CssdCheckList.this, 2, ip, list_2);
-                    }
-
-                    if(list_3 != null && list_3.size() > 0) {
-                        String ip = list_2.get(0).getPrinterIP();
-                        p_data += p.print(CssdCheckList.this, 3, ip, list_3);
-                    }
-
-                    // Update Print Status
-                    if(p_data != null && !p_data.equals(""))
-                        updatePrintStatus(p_data);
-                    */
-                    // -----------------------------------
 
                 }
 
@@ -299,35 +368,6 @@ public class CssdCheckList extends Activity {
             if(!IsCheck)
                 focus();
         }
-    }
-
-    private List<ModelWashDetailForPrint> getWashDetailLabelForPrint(List<ModelWashDetailForPrint> list, String Label){
-
-        List<ModelWashDetailForPrint> list_label = new ArrayList<>();
-
-        // List Label portion
-        for(int ix=0;ix<list.size();ix++){
-            if(list.get(ix).getCaseLabel().equals(Label)) {
-                list_label.add(
-                        new ModelWashDetailForPrint(
-                                list.get(ix).getID(),
-                                list.get(ix).getItemcode(),
-                                list.get(ix).getItemname(),
-                                list.get(ix).getUsageCode(),
-                                list.get(ix).getPacker(),
-                                list.get(ix).getAge(),
-                                list.get(ix).getMFG(),
-                                list.get(ix).getEXP(),
-                                list.get(ix).getCaseLabel(),
-                                list.get(ix).getPrinterIP(),
-                                list.get(ix).getUsageCount(),
-                                list.get(ix).getIsCheckList()
-                        )
-                );
-            }
-        }
-
-        return list_label;
     }
 
     public void updatePrintStatus(final String p_data) {
@@ -388,6 +428,11 @@ public class CssdCheckList extends Activity {
                     JSONObject jsonObj = new JSONObject(s);
                     rs = jsonObj.getJSONArray(TAG_RESULTS);
 
+                    String usage_item_code = "";
+                    String usage_item_name = "";
+                    String img_set = "";
+                    int sum_qty = 0;
+
                     List<ModelCheckList> list = new ArrayList<>();
 
                     for (int i = 0; i < rs.length(); i++) {
@@ -395,6 +440,14 @@ public class CssdCheckList extends Activity {
                         JSONObject c = rs.getJSONObject(i);
 
                         if (c.getString("result").equals("A")) {
+
+                            usage_item_code = c.getString("usage_item_code");
+                            usage_item_name = c.getString("usage_item_name");
+                            img_set = c.getString("Picture_set");
+                            sum_qty += c.getInt("Qty");
+
+                            ID = c.getString("ID");
+
                             list.add(
                                     new ModelCheckList(
                                             c.getString("ID"),
@@ -406,6 +459,10 @@ public class CssdCheckList extends Activity {
                                             c.getString("DateRemark"),
                                             c.getString("Remark"),
                                             c.getString("NameType"),
+                                            img_set,
+                                            c.getString("Picture_detail"),
+                                            usage_item_code,
+                                            usage_item_name,
                                             false
                                     )
                             );
@@ -421,6 +478,17 @@ public class CssdCheckList extends Activity {
                         adapter = new CheckListAdapter(CssdCheckList.this, MODEL_CHECK_LIST);
                         list_check.setAdapter(adapter);
 
+                        txt_item_name.setText("ชื่อเซ็ท : " + usage_item_code + " - " + usage_item_name);
+                        txt_item_detail.setText("รายการในเซ็ท " + MODEL_CHECK_LIST.size() + " รายการ   จำนวนทั้งหมด " + sum_qty + " ชิ้น");
+
+                        try {
+                            URL url = new URL(Url.getImageURL() + img_set);
+                            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                            img_item_all.setImageBitmap(bmp);
+                        }catch(Exception e){
+                            img_item_all.setImageResource(R.drawable.ic_preview);
+                        }
+
                     } catch (Exception e) {
                         list_check.setAdapter(null);
                         e.printStackTrace();
@@ -432,6 +500,8 @@ public class CssdCheckList extends Activity {
                     list_check.setAdapter(null);
 
                     return;
+                }finally {
+                    focus();
                 }
 
             }
@@ -440,7 +510,11 @@ public class CssdCheckList extends Activity {
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
 
-                data.put("ID", ID);
+                if(ID != null) {
+                    data.put("ID", ID);
+                }else if(UsageCode != null) {
+                    data.put("p_usage_code", UsageCode);
+                }
 
                 if(B_ID != null){
                     data.put("p_bid", B_ID);
@@ -535,6 +609,15 @@ public class CssdCheckList extends Activity {
 
     private void checkInput(final String Input){
 
+        if(ID == null){
+
+            UsageCode = Input;
+
+            displayCheckList();
+
+            return;
+        }
+
         boolean IsCheck = false;
 
         try {
@@ -561,6 +644,22 @@ public class CssdCheckList extends Activity {
                     ArrayAdapter<ModelCheckList> adapter;
                     adapter = new CheckListAdapter(CssdCheckList.this, MODEL_CHECK_LIST);
                     list_check.setAdapter(adapter);
+
+                    try {
+                        /*
+                        URL url = new URL(Url.getImageURL() + MODEL_CHECK_LIST.get(i).getPicture_set());
+                        Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                        img_item_all.setImageBitmap(bmp);
+                         */
+
+                        URL url_ = new URL(Url.getImageURL() + MODEL_CHECK_LIST.get(i).getPicture_detail());
+                        Bitmap bmp_ = BitmapFactory.decodeStream(url_.openConnection().getInputStream());
+                        img_item.setImageBitmap(bmp_);
+
+                    }catch(Exception e){
+                        img_item_all.setImageResource(R.drawable.ic_preview);
+                        img_item.setImageResource(R.drawable.ic_preview);
+                    }
 
                     break;
                 }

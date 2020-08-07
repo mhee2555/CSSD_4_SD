@@ -5,9 +5,308 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Theme.AppCompat.Light.DarkActionBar"
-    android:layout_width="1000dp"
+    android:layout_width="1275dp"
     android:layout_height="match_parent"
     android:background="@drawable/bg_recall">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="horizontal"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        tools:context=".CssdPreviewItemSterile"
+        android:layout_marginLeft="16dp">
+
+        <!-- west -->
+        <LinearLayout
+            android:id="@+id/west"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@drawable/form_layout"
+            android:orientation="vertical"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="72dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginLeft="8dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="98dp"
+                android:background="@drawable/form_layout"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp">
+
+                <TextView
+                    android:id="@+id/txt_setdetail_l2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="เช็ครายละเอียดเซ็ท"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:orientation="vertical"
+                android:paddingTop="0dp"
+                android:paddingRight="8dp"
+                android:paddingLeft="8dp"
+                android:paddingBottom="8dp"
+                android:layout_height="fill_parent"
+                android:layout_width="match_parent">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="30dp"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="14dp"
+                        android:paddingLeft="8dp"
+                        android:paddingTop="4dp"
+                        android:maxLines="1"
+                        android:text="รายการอุปกรณ์ (Usage)"
+                        android:background="@drawable/textview_column"
+                        >
+                    </TextView>
+
+                </LinearLayout>
+
+                <ListView
+                    android:id="@+id/list_item_sterile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:background="@color/colorWhite"
+                    android:layout_marginLeft="4dp"
+                    android:listSelector="@android:color/holo_red_light"
+                    android:layout_marginRight="4dp"></ListView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- center -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@drawable/form_layout"
+            android:orientation="vertical"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="72dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginLeft="8dp">
+
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:orientation="vertical"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_height="65dp"
+                android:layout_width="match_parent">
+
+                <TextView
+                    android:id="@+id/txt_item_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/form_label"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="16dp"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:text="ชื่อเซ็ท : -" />
+
+                <TextView
+                    android:id="@+id/txt_item_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/form_label"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="16dp"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:text="รายการในเซ็ท 0 รายการ   จำนวนทั้งหมด 0 ชิ้น" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <TextView
+                    android:id="@+id/txt_packer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginBottom="0dp"
+                    android:text="ผู้ห่อ : - "
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+
+                <RelativeLayout
+                    android:id="@+id/linear_layout_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp">
+
+                    <EditText
+                        android:id="@+id/edt_usage_code"
+                        android:layout_width="175dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/text_standard"
+                        android:color="@color/form_label"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:singleLine="true" />
+
+                    <Button
+                        android:id="@+id/btn_search_item"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginTop="2dp"
+                        android:background="@drawable/ic_qrcode2" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:orientation="vertical"
+                android:paddingTop="0dp"
+                android:paddingRight="8dp"
+                android:paddingLeft="8dp"
+                android:paddingBottom="8dp"
+                android:layout_height="fill_parent"
+                android:layout_width="match_parent">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal" >
+
+                    <TextView
+                        android:id="@+id/txt_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:textColor="@color/colorWhite"
+                        android:text="รายละเอียดเซ็ท"
+                        android:layout_marginRight="1dp"
+                        android:paddingLeft="8dp"
+                        android:paddingTop="4dp"
+                        android:background="@drawable/textview_column"
+                        >
+                    </TextView>
+
+                </LinearLayout>
+
+                <ListView
+                    android:id="@+id/list_check"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/textView46"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:numColumns="1" />
+
+            </LinearLayout>
+        </LinearLayout>
+        <!-- east -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@drawable/form_layout"
+            android:orientation="vertical"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="72dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginLeft="8dp">
+
+            <TextView
+                android:id="@+id/txt_caption_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/form_label"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:textSize="16dp"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="รายการส่วนประกอบในชุดอุปกรณ์" />
+
+            <ImageView
+                android:id="@+id/img_item"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/ic_preview" />
+
+
+            <ImageView
+                android:id="@+id/img_item_all"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_preview" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 
@@ -32,103 +331,16 @@
         android:scaleType="fitCenter"
         android:src="@drawable/ic_print_01" />
 
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="18dp"
-    android:layout_marginRight="24dp"
-    android:layout_marginLeft="24dp"
-    android:layout_marginBottom="65dp"
-    android:background="@drawable/rectangle"
-    android:orientation="vertical">
-
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="60dp">
-
-
-        <TextView
-            android:id="@+id/txt_setdetail_l2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="4dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginBottom="5dp"
-            android:text="เช็ครายละเอียดเซ็ท"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/txt_packer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginBottom="0dp"
-            android:text="ผู้ห่อ : - "
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
-
-    </RelativeLayout>
-
-    <ListView
-        android:id="@+id/list_check"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/textView46"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="13dp"
-        android:layout_marginBottom="10dp"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:numColumns="1" />
-
-</LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/linear_layout_search"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="24dp"
+    <ImageView
+        android:id="@+id/imv_new"
+        android:layout_width="161dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="-1dp"
+        android:layout_alignBottom="@+id/imageBack"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="40dp">
-
-        <EditText
-            android:id="@+id/edt_usage_code"
-            android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/text_standard"
-            android:color="@color/form_label"
-            android:gravity="center_vertical"
-            android:paddingLeft="14dp"
-            android:singleLine="true" />
-
-        <Button
-            android:id="@+id/btn_search_item"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="6dp"
-            android:layout_marginTop="9dp"
-            android:background="@drawable/ic_qrcode2" />
-
-    </RelativeLayout>
-
+        android:layout_marginEnd="200dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_detail_blue01" />
 
 
 </RelativeLayout>
