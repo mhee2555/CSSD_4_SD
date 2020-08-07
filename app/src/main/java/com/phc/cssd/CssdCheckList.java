@@ -448,6 +448,8 @@ public class CssdCheckList extends Activity {
 
                             ID = c.getString("ID");
 
+                            System.out.println();
+
                             list.add(
                                     new ModelCheckList(
                                             c.getString("ID"),
@@ -463,7 +465,7 @@ public class CssdCheckList extends Activity {
                                             c.getString("Picture_detail"),
                                             usage_item_code,
                                             usage_item_name,
-                                            !c.getString("NameType").equals("-")
+                                            c.getString("NameType").equals("-")
                                     )
                             );
                         }
@@ -636,31 +638,40 @@ public class CssdCheckList extends Activity {
                         Toast.makeText(CssdCheckList.this, "รายการนี้ได้ทำการยิงเช็คแล้ว !!", Toast.LENGTH_SHORT).show();
                         break;
                     }
+
                     // Set
                     MODEL_CHECK_LIST.get(i).setCheck(true);
+
                     // Display
                     ArrayAdapter<ModelCheckList> adapter;
                     adapter = new CheckListAdapter(CssdCheckList.this, MODEL_CHECK_LIST);
                     list_check.setAdapter(adapter);
+
                     try {
                         /*
                         URL url = new URL(Url.getImageURL() + MODEL_CHECK_LIST.get(i).getPicture_set());
                         Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                         img_item_all.setImageBitmap(bmp);
                          */
+
                         URL url_ = new URL(Url.getImageURL() + MODEL_CHECK_LIST.get(i).getPicture_detail());
                         Bitmap bmp_ = BitmapFactory.decodeStream(url_.openConnection().getInputStream());
                         img_item.setImageBitmap(bmp_);
+
                     }catch(Exception e){
                         img_item_all.setImageResource(R.drawable.ic_preview);
                         img_item.setImageResource(R.drawable.ic_preview);
                     }
+
                     break;
                 }
             }
+
             if(!IsCheck){
                 checkPacker(Input);
             }
+
+
         }catch (Exception e){
             e.printStackTrace();
         }finally {
@@ -679,5 +690,6 @@ public class CssdCheckList extends Activity {
                 edt_usage_code.requestFocus();
             }
         }, 500);
+
     }
 }
