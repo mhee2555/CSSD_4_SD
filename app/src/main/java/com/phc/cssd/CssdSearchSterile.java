@@ -12,6 +12,7 @@ import android.hardware.usb.UsbConstants;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -48,7 +49,9 @@ import com.phc.cssd.data.PreviewSticker;
 import com.phc.cssd.data.SterileDetailItemSet;
 import com.phc.cssd.model.ModelSterile;
 import com.phc.cssd.model.ModelSterileDetail;
+import com.phc.cssd.model.ModelWashDetailForPrint;
 import com.phc.cssd.print_sticker.PrintSticker;
+import com.phc.cssd.print_sticker.PrintWash;
 import com.phc.cssd.properties.pCustomer;
 import com.phc.cssd.url.Url;
 import com.phc.cssd.url.getUrl;
@@ -67,10 +70,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import static com.phc.cssd.CssdTscPrintLabel.updatePrintStatus;
+
 public class CssdSearchSterile extends AppCompatActivity {
 
     //------------------------------------------------
-
+    private String TAG_RESULTS="result";
+    private JSONArray rs = null;
     private HTTPConnect httpConnect = new HTTPConnect();
     getUrl iFt = new getUrl();
     HTTPConnect ruc = new HTTPConnect();
@@ -78,6 +84,7 @@ public class CssdSearchSterile extends AppCompatActivity {
     private boolean Success = false;
     private ArrayList<String> data = null;
     private int size = 0;
+    private String ID = null;
     //------------------------------------------------
 
     private List<ModelSterile> MODEL_STERILE = null;
@@ -903,173 +910,349 @@ public class CssdSearchSterile extends AppCompatActivity {
 
     final int DELAY_TIME = 0;
 
-    private void onPrint() throws Exception {
+//    private void onPrint() throws Exception {
+//
+//        final List<ModelSterileDetail> Label_1 = getItemLabel("1");
+//        final List<ModelSterileDetail> Label_2 = getItemLabel("2");
+//        final List<ModelSterileDetail> Label_3 = getItemLabel("3");
+//        final List<ModelSterileDetail> Label_4 = getItemLabel("4");
+//        final List<ModelSterileDetail> Label_5 = getItemLabel("5");
+//        final List<ModelSterileDetail> Label_6 = getItemLabel("6");
+//        final List<ModelSterileDetail> Label_7 = getItemLabel("7");
+//        final List<ModelSterileDetail> Label_8 = getItemLabel("8");
+//        final List<ModelSterileDetail> Label_9 = getItemLabel("9");
+//        final List<ModelSterileDetail> Label_10 = getItemLabel("10");
+//
+//        if(Label_1 != null && Label_1.size() > 0) {
+//            final Handler handler0 = new Handler();
+//            handler0.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        PSK.PrintSticker(CssdSearchSterile.this,1,Label_1,PRINTER_IP,B_ID,Print);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//            }, 0);
+//        }
+//
+//        if(Label_2 != null && Label_2.size() > 0) {
+//            final Handler handler = new Handler();
+//            handler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        PSK.PrintSticker(CssdSearchSterile.this,2,Label_2,PRINTER_IP,B_ID,Print);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//            }, DELAY_TIME);
+//        }
+//
+//        if(Label_3 != null && Label_3.size() > 0) {
+//            final Handler handler2 = new Handler();
+//            handler2.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        PSK.PrintSticker(CssdSearchSterile.this,3,Label_3,PRINTER_IP,B_ID,Print);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//            }, DELAY_TIME);
+//        }
+//
+//        if(Label_4 != null && Label_4.size() > 0) {
+//            final Handler handler4 = new Handler();
+//            handler4.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        PSK.PrintSticker(CssdSearchSterile.this,4,Label_4,PRINTER_IP,B_ID,Print);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//            }, DELAY_TIME);
+//        }
+//
+//        if(Label_5 != null && Label_5.size() > 0) {
+//            final Handler handler5 = new Handler();
+//            handler5.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        PSK.PrintSticker(CssdSearchSterile.this,5,Label_5,PRINTER_IP,B_ID,Print);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//            }, DELAY_TIME);
+//        }
+//
+//        if(Label_6 != null && Label_6.size() > 0) {
+//            final Handler handler6 = new Handler();
+//            handler6.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        PSK.PrintSticker(CssdSearchSterile.this,6,Label_6,PRINTER_IP,B_ID,Print);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//            }, DELAY_TIME);
+//        }
+//
+//        if(Label_7 != null && Label_7.size() > 0) {
+//            final Handler handler7 = new Handler();
+//            handler7.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        PSK.PrintSticker(CssdSearchSterile.this,7,Label_7,PRINTER_IP,B_ID,Print);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//            }, DELAY_TIME);
+//        }
+//
+//        if(Label_8 != null && Label_8.size() > 0) {
+//            final Handler handler8 = new Handler();
+//            handler8.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        PSK.PrintSticker(CssdSearchSterile.this,8,Label_8,PRINTER_IP,B_ID,Print);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//            }, DELAY_TIME);
+//        }
+//
+//        if(Label_9 != null && Label_9.size() > 0) {
+//            final Handler handler9 = new Handler();
+//            handler9.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        PSK.PrintSticker(CssdSearchSterile.this,9,Label_9,PRINTER_IP,B_ID,Print);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//            }, DELAY_TIME);
+//
+//        }
+//
+//        if(Label_10 != null && Label_10.size() > 0) {
+//            final Handler handler10 = new Handler();
+//            handler10.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        PSK.PrintSticker(CssdSearchSterile.this,10,Label_10,PRINTER_IP,B_ID,Print);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//            }, DELAY_TIME);
+//        }
+//    }
 
-        final List<ModelSterileDetail> Label_1 = getItemLabel("1");
-        final List<ModelSterileDetail> Label_2 = getItemLabel("2");
-        final List<ModelSterileDetail> Label_3 = getItemLabel("3");
-        final List<ModelSterileDetail> Label_4 = getItemLabel("4");
-        final List<ModelSterileDetail> Label_5 = getItemLabel("5");
-        final List<ModelSterileDetail> Label_6 = getItemLabel("6");
-        final List<ModelSterileDetail> Label_7 = getItemLabel("7");
-        final List<ModelSterileDetail> Label_8 = getItemLabel("8");
-        final List<ModelSterileDetail> Label_9 = getItemLabel("9");
-        final List<ModelSterileDetail> Label_10 = getItemLabel("10");
+    private void onPrint(){
 
-        if(Label_1 != null && Label_1.size() > 0) {
-            final Handler handler0 = new Handler();
-            handler0.postDelayed(new Runnable() {
+        boolean IsCheck = true;
+        String MsgCheck = "";
+
+        try {
+
+            // Check Packer
+//            if (txt_packer.getContentDescription() == null || txt_packer.getContentDescription().toString().equals("")) {
+//                Toast.makeText(CssdCheckList.this, "ยังไม่ได้เลือกผู้ห่อ !!", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+
+            // Check List
+//            for(int i=0;i<MODEL_CHECK_LIST.size();i++){
+//
+//                if (!MODEL_CHECK_LIST.get(i).isCheck()) {
+//                    MsgCheck = "มีบางรายการยังไม่ได้ถูกเช็ค !!";
+//                    IsCheck = false;
+//                    break;
+//                }
+//
+//                if (!MODEL_CHECK_LIST.get(i).getNameType().equals("")) {
+//                    MsgCheck = "มีบางรายการถูก Remark ไว้ !!";
+//                    IsCheck = false;
+//                    break;
+//                }
+//            }
+
+            if(!IsCheck){
+                Toast.makeText(CssdSearchSterile.this, MsgCheck, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Print
+            class Print extends AsyncTask<String, Void, String> {
+
+                // variable
                 @Override
-                public void run() {
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                }
+
+                @Override
+                protected void onPostExecute(String s) {
+                    super.onPostExecute(s);
+
+                    List<ModelWashDetailForPrint> list = new ArrayList<>();
+
                     try {
-                        PSK.PrintSticker(CssdSearchSterile.this,1,Label_1,PRINTER_IP,B_ID,Print);
+                        JSONObject jsonObj = new JSONObject(s);
+                        rs = jsonObj.getJSONArray(TAG_RESULTS);
+
+                        for (int i = 0; i < rs.length(); i++) {
+
+                            JSONObject c = rs.getJSONObject(i);
+
+                            if (c.getString("result").equals("A")) {
+                                list.add(
+                                        new ModelWashDetailForPrint(
+                                                c.getString("ID"),
+                                                c.getString("itemcode"),
+                                                c.getString("itemname"),
+                                                c.getString("UsageCode"),
+                                                c.getString("Packer"),
+                                                c.getString("Age"),
+                                                c.getString("MFG"),
+                                                c.getString("EXP"),
+                                                c.getString("CaseLabel"),
+                                                c.getString("PrinterIP"),
+                                                c.getString("UsageCount"),
+                                                c.getString("IsCheckList")
+                                        )
+                                );
+
+                                // Print
+                                PrintWash p = new PrintWash();
+                                String p_data = p.print(CssdSearchSterile.this, c.getInt("CaseLabel"), c.getString("PrinterIP"), list);
+
+                                // Update Print Status
+                                updatePrintStatus(p_data);
+
+                                if(c.getString("IsCheckList").equals("1")){
+                                    callCheckListPaper(ID);
+                                }
+
+                                finish();
+                            }
+                        }
+
                     } catch (Exception e) {
+                        e.printStackTrace();
+                        return;
+                    }finally {
+                        focus();
+                    }
+
+                    // -----------------------------------
+                    // Print Multiple Id
+                    // -----------------------------------
+                    /*
+                    List<ModelWashDetailForPrint> list_2 ;
+                    List<ModelWashDetailForPrint> list_3 ;
+
+                    list_2 = getWashDetailLabelForPrint(list, "2");
+                    list_3 = getWashDetailLabelForPrint(list, "3");
+
+                    // Print
+                    final PrintWash p = new PrintWash();
+                    String p_data = "";
+
+                    if(list_2 != null && list_2.size() > 0) {
+                        String ip = list_2.get(0).getPrinterIP();
+                        p_data += p.print(CssdCheckList.this, 2, ip, list_2);
+                    }
+
+                    if(list_3 != null && list_3.size() > 0) {
+                        String ip = list_2.get(0).getPrinterIP();
+                        p_data += p.print(CssdCheckList.this, 3, ip, list_3);
+                    }
+
+                    // Update Print Status
+                    if(p_data != null && !p_data.equals(""))
+                        updatePrintStatus(p_data);
+                    */
+                    // -----------------------------------
+
+                }
+
+                @Override
+                protected String doInBackground(String... params) {
+                    HashMap<String, String> data = new HashMap<String,String>();
+                    data.put("ID", ID);
+                    String result = null;
+
+                    try {
+                        result = httpConnect.sendPostRequest(Url.URL + "cssd_select_wash_detail_for_print.php", data);
+
+                    }catch(Exception e){
                         e.printStackTrace();
                     }
 
-                }
-            }, 0);
-        }
-
-        if(Label_2 != null && Label_2.size() > 0) {
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        PSK.PrintSticker(CssdSearchSterile.this,2,Label_2,PRINTER_IP,B_ID,Print);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }, DELAY_TIME);
-        }
-
-        if(Label_3 != null && Label_3.size() > 0) {
-            final Handler handler2 = new Handler();
-            handler2.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        PSK.PrintSticker(CssdSearchSterile.this,3,Label_3,PRINTER_IP,B_ID,Print);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    return result;
                 }
 
-            }, DELAY_TIME);
-        }
+                // =========================================================================================
+            }
 
-        if(Label_4 != null && Label_4.size() > 0) {
-            final Handler handler4 = new Handler();
-            handler4.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        PSK.PrintSticker(CssdSearchSterile.this,4,Label_4,PRINTER_IP,B_ID,Print);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+            Print obj = new Print();
+            obj.execute();
 
-                }
-            }, DELAY_TIME);
-        }
 
-        if(Label_5 != null && Label_5.size() > 0) {
-            final Handler handler5 = new Handler();
-            handler5.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        PSK.PrintSticker(CssdSearchSterile.this,5,Label_5,PRINTER_IP,B_ID,Print);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }, DELAY_TIME);
-        }
-
-        if(Label_6 != null && Label_6.size() > 0) {
-            final Handler handler6 = new Handler();
-            handler6.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        PSK.PrintSticker(CssdSearchSterile.this,6,Label_6,PRINTER_IP,B_ID,Print);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }, DELAY_TIME);
-        }
-
-        if(Label_7 != null && Label_7.size() > 0) {
-            final Handler handler7 = new Handler();
-            handler7.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        PSK.PrintSticker(CssdSearchSterile.this,7,Label_7,PRINTER_IP,B_ID,Print);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }, DELAY_TIME);
-        }
-
-        if(Label_8 != null && Label_8.size() > 0) {
-            final Handler handler8 = new Handler();
-            handler8.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        PSK.PrintSticker(CssdSearchSterile.this,8,Label_8,PRINTER_IP,B_ID,Print);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }, DELAY_TIME);
-        }
-
-        if(Label_9 != null && Label_9.size() > 0) {
-            final Handler handler9 = new Handler();
-            handler9.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        PSK.PrintSticker(CssdSearchSterile.this,9,Label_9,PRINTER_IP,B_ID,Print);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }, DELAY_TIME);
-
-        }
-
-        if(Label_10 != null && Label_10.size() > 0) {
-            final Handler handler10 = new Handler();
-            handler10.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        PSK.PrintSticker(CssdSearchSterile.this,10,Label_10,PRINTER_IP,B_ID,Print);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }, DELAY_TIME);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if(!IsCheck)
+                focus();
         }
     }
 
+    private void callCheckListPaper(String WashID) {
+        String url = Url.URL + "report/Report_checklist_sterile.php?WashID=" + WashID;
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
+    }
 
+    private void focus(){
+        final Handler h = new Handler();
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+//                edt_usage_code.setText("");
+//                edt_usage_code.requestFocus();
+            }
+        }, 500);
 
+    }
 
     void xPrint(int Sel, List<ModelSterileDetail> sterile) throws Exception {
 
