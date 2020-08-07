@@ -264,7 +264,7 @@ public class CssdSterile extends AppCompatActivity {
     private Button pair_fin;
     private TextView packer;
     private String print_w_id ="";
-
+    boolean add_basket_cnt = true;
     public void onDestroy() {
         super.onDestroy();
         clearHandler();
@@ -1635,6 +1635,17 @@ public class CssdSterile extends AppCompatActivity {
             }
 
 
+        });
+
+        Button add_basket_Button = (Button) dialog.findViewById(R.id.add_basket_Button);
+        add_basket_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(add_basket_cnt){
+                    add_basket_cnt = false;
+                    add_basket();
+                }
+            }
         });
 
         final Dialog dialog_qr = new Dialog(CssdSterile.this, R.style.DialogCustomTheme);
@@ -7820,6 +7831,177 @@ public class CssdSterile extends AppCompatActivity {
         }
 
         Check obj = new Check();
+        obj.execute();
+    }
+
+
+    private void add_basket(){
+
+        class add_basket extends AsyncTask<String, Void, String> {
+
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(s);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+
+                    for (int i = 0; i < rs.length(); i++) {
+
+                        JSONObject c = rs.getJSONObject(i);
+
+                        if (c.getString("result").equals("A")) {
+
+                            final Dialog dialog_add_bk = new Dialog(CssdSterile.this, R.style.DialogCustomTheme);
+
+                            dialog_add_bk.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+                            dialog_add_bk.setContentView(R.layout.new_basket);
+
+                            dialog_add_bk.setCancelable(false);
+
+                            dialog_add_bk.setTitle("");
+
+                            dialog_add_bk.show();
+
+                            final TextView textBkcode = (TextView) dialog_add_bk.findViewById(R.id.textBkcode);
+                            textBkcode.setText(c.getString("bkcode"));
+
+                            final EditText BkName = (EditText) dialog_add_bk.findViewById(R.id.BkName);
+
+                            Button buttonSave = (Button) dialog_add_bk.findViewById(R.id.saveBk);
+                            buttonSave.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    if(BkName.getText().toString().length()<=0){
+
+                                    }else{
+                                        new_basket(textBkcode.getText().toString(),BkName.getText().toString(),dialog_add_bk);
+                                    }
+                                }
+                            });
+
+                            Button buttonCancel = (Button) dialog_add_bk.findViewById(R.id.cancelBk);
+                            buttonCancel.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    dialog_add_bk.dismiss();
+                                    add_basket_cnt = true;
+                                }
+                            });
+
+                        }else{
+                            Toast.makeText(CssdSterile.this, "Error !!", Toast.LENGTH_SHORT).show();
+                        }
+//                        add_basket_cnt = true;
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }finally {
+//                    focus();
+                }
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+
+                String result = null;
+
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_new_basket.php", data);
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+                Log.d("ttest_new_bk","new bk result = "+result);
+                return result;
+            }
+
+            // =========================================================================================
+        }
+
+        add_basket obj = new add_basket();
+        obj.execute();
+    }
+
+    private void new_basket(final String textBkcode,final String BkName, final Dialog dialog_add_bk){
+        class new_basket extends AsyncTask<String, Void, String> {
+
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(s);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+
+                    for (int i = 0; i < rs.length(); i++) {
+
+                        JSONObject c = rs.getJSONObject(i);
+
+                        if (c.getString("result").equals("A")) {
+                            if(c.getString("re").equals("0")){
+                                Toast.makeText(CssdSterile.this, "ชื่อซ้ำกับตะกร้าอื่น ลองใหม่อีกครั้ง", Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(CssdSterile.this, "เพิ่มตะกร้าใหมสำเร็จ", Toast.LENGTH_SHORT).show();
+                                dialog_add_bk.dismiss();
+                                add_basket_cnt = true;
+                            }
+                        }else{
+                            Toast.makeText(CssdSterile.this, "Error !!", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }finally {
+//                    focus();
+                }
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+
+                data.put("BKCODE", textBkcode);
+                data.put("BKNAME", BkName);
+                data.put("BKTYPE", "1");
+
+                String result = null;
+
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_new_basket.php", data);
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+                Log.d("ttest_new_bk","new bk result = "+result);
+                return result;
+            }
+
+            // =========================================================================================
+        }
+
+        new_basket obj = new new_basket();
         obj.execute();
     }
 
