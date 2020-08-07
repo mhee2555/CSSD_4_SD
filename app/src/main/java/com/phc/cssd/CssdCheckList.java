@@ -351,17 +351,12 @@ public class CssdCheckList extends Activity {
                     }catch(Exception e){
                         e.printStackTrace();
                     }
-
                     return result;
                 }
-
                 // =========================================================================================
             }
-
             Print obj = new Print();
             obj.execute();
-
-
         }catch (Exception e){
             e.printStackTrace();
         }finally {
