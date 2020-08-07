@@ -66,7 +66,7 @@ public class ModelCheckList {
     }
 
     public String getNameType() {
-        return NameType.equals("-") ? "" : ("Type : " + NameType);
+        return NameType.equals("-") ? "" : ("ประเภท : " + NameType);
     }
 
     public void setNameType(String nameType) {

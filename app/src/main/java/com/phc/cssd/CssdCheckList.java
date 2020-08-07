@@ -16,6 +16,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -69,6 +70,8 @@ public class CssdCheckList extends Activity {
     private ImageView img_item;
     private ImageView img_item_all;
 
+    private CheckBox checkbox;
+
     private LinearLayout west;
 
     private List<ModelCheckList> MODEL_CHECK_LIST = null;
@@ -121,6 +124,8 @@ public class CssdCheckList extends Activity {
         txt_item_detail = ( TextView ) findViewById(R.id.txt_item_detail);
         edt_usage_code = ( EditText ) findViewById(R.id.edt_usage_code);
         west = ( LinearLayout ) findViewById(R.id.west);
+
+        checkbox = ( CheckBox ) findViewById(R.id.checkbox);
 
         // west.setVisibility(Is_ById ? View.GONE : View.VISIBLE);
         west.setVisibility(View.GONE);
@@ -199,6 +204,28 @@ public class CssdCheckList extends Activity {
             }
         });
 
+        checkbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    //Set All Check
+                    for (int i = 0; i < MODEL_CHECK_LIST.size(); i++) {
+                        MODEL_CHECK_LIST.get(i).setCheck(checkbox.isChecked());
+                    }
+
+                    // Display
+                    ArrayAdapter<ModelCheckList> adapter;
+                    adapter = new CheckListAdapter(CssdCheckList.this, MODEL_CHECK_LIST);
+                    list_check.setAdapter(adapter);
+                }catch (Exception e){
+
+                }finally {
+                    focus();
+                }
+
+            }
+        });
+
     }
 
     private void clearAll(){
@@ -214,6 +241,8 @@ public class CssdCheckList extends Activity {
 
         txt_item_name.setText("ชื่อเซ็ท : -");
         txt_item_detail.setText("รายการในเซ็ท 0 รายการ   จำนวนทั้งหมด 0 ชิ้น");
+
+        checkbox.setChecked(false);
 
         list_check.setAdapter(null);
 
@@ -282,12 +311,17 @@ public class CssdCheckList extends Activity {
                 @Override
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
+
                     List<ModelWashDetailForPrint> list = new ArrayList<>();
+
                     try {
                         JSONObject jsonObj = new JSONObject(s);
                         rs = jsonObj.getJSONArray(TAG_RESULTS);
+
                         for (int i = 0; i < rs.length(); i++) {
+
                             JSONObject c = rs.getJSONObject(i);
+
                             if (c.getString("result").equals("A")) {
                                 list.add(
                                         new ModelWashDetailForPrint(
@@ -305,14 +339,18 @@ public class CssdCheckList extends Activity {
                                                 c.getString("IsCheckList")
                                         )
                                 );
+
                                 // Print
                                 PrintWash p = new PrintWash();
                                 String p_data = p.print(CssdCheckList.this, c.getInt("CaseLabel"), c.getString("PrinterIP"), list);
+
                                 // Update Print Status
                                 updatePrintStatus(p_data);
+
                                 if(c.getString("IsCheckList").equals("1")){
                                     callCheckListPaper(ID);
                                 }
+
                                 if(Is_ById) {
                                     finish();
                                 }else{
@@ -320,29 +358,39 @@ public class CssdCheckList extends Activity {
                                 }
                             }
                         }
+
                     } catch (Exception e) {
                         e.printStackTrace();
                         return;
                     }finally {
                         focus();
                     }
+
                 }
+
                 @Override
                 protected String doInBackground(String... params) {
                     HashMap<String, String> data = new HashMap<String,String>();
                     data.put("ID", ID);
                     String result = null;
+
                     try {
                         result = httpConnect.sendPostRequest(Url.URL + "cssd_select_wash_detail_for_print.php", data);
+
                     }catch(Exception e){
                         e.printStackTrace();
                     }
+
                     return result;
                 }
+
                 // =========================================================================================
             }
+
             Print obj = new Print();
             obj.execute();
+
+
         }catch (Exception e){
             e.printStackTrace();
         }finally {
@@ -477,6 +525,13 @@ public class CssdCheckList extends Activity {
                         e.printStackTrace();
                     }
 
+                    String packer_code = (String) txt_packer.getContentDescription();
+
+                    // Check Employee
+                    if(ID != null && packer_code != null && !packer_code.equals("")){
+                        updatePacker(ID, packer_code);
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
 
@@ -548,7 +603,7 @@ public class CssdCheckList extends Activity {
                             txt_packer.setText("ผู้ห่อ : " + c.getString("packer"));
                             txt_packer.setContentDescription(c.getString("ID"));
                         }else{
-                            Toast.makeText(CssdCheckList.this, "ไม่พบรายการ !!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CssdCheckList.this, "ไม่พบรายชื่อพนักงาน โปรด Scan รหัสพนักงานก่อน !!", Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -557,6 +612,8 @@ public class CssdCheckList extends Activity {
                     e.printStackTrace();
                 }finally {
                     focus();
+
+
                 }
             }
 
@@ -564,7 +621,9 @@ public class CssdCheckList extends Activity {
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
 
-                data.put("ID", ID);
+                if(ID != null)
+                    data.put("ID", ID);
+
                 data.put("packer", packer);
 
                 if(B_ID != null){
@@ -590,8 +649,60 @@ public class CssdCheckList extends Activity {
         obj.execute();
     }
 
+    public void updatePacker(final String ID, final String p_user_id) {
+
+        class Check extends AsyncTask<String, Void, String> {
+
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+
+                focus();
+
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("ID", ID);
+                data.put("p_user_id", p_user_id);
+
+                String result = null;
+
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_update_packer.php.php", data);
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+                return result;
+            }
+
+            // =========================================================================================
+        }
+
+        Check obj = new Check();
+        obj.execute();
+    }
+
     private void checkInput(final String Input){
 
+        String packer_code = (String) txt_packer.getContentDescription();
+
+        // Check Employee
+        if(packer_code == null || packer_code.equals("")){
+            checkPacker(Input);
+            return;
+        }
+
+        // Check Usage
         if(ID == null){
 
             UsageCode = Input;
@@ -601,6 +712,7 @@ public class CssdCheckList extends Activity {
             return;
         }
 
+        // Check Item Detail
         boolean IsCheck = false;
 
         try {
@@ -648,11 +760,6 @@ public class CssdCheckList extends Activity {
                 }
             }
 
-            if(!IsCheck){
-                checkPacker(Input);
-            }
-
-
         }catch (Exception e){
             e.printStackTrace();
         }finally {
@@ -663,6 +770,7 @@ public class CssdCheckList extends Activity {
     }
 
     private void focus(){
+        checkbox.setChecked(false);
         final Handler h = new Handler();
         h.postDelayed(new Runnable() {
             @Override
