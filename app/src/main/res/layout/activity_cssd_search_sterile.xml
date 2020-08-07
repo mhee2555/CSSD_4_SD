@@ -131,10 +131,6 @@
                     android:text="ผู้ตรวจ"
                     android:textColor="#505050"
                     android:textSize="14dp"></TextView>
-
-
-
-
             </LinearLayout>
 
             <ListView
@@ -145,8 +141,44 @@
                 android:layout_weight="1"
                 android:divider="@null"
                 android:background="@drawable/listview_transaction"
-                android:listSelector="#02fff6" >
-            </ListView>
+                android:listSelector="#02fff6" ></ListView>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="45dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp">
+
+                    <EditText
+                        android:id="@+id/scan"
+                        android:layout_width="230dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/text_dropdown"
+                        android:color="@color/form_label"
+                        android:gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_alignParentEnd="true"
+                        android:singleLine="true" />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="18dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/qr_1">
+
+                    </ImageView>
+
+                </RelativeLayout>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/linear_column_sterile_detail"

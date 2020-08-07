@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -103,18 +104,16 @@ public class CssdSearchSterile extends AppCompatActivity {
     // Widget Variable
     private LinearLayout main;
     private EditText txt_search;
+    private EditText scan;
     private TextView txt_caption;
     TextView gDate;
     Button bDate;
 
     private ListView list_sterile;
     private ListView list_sterile_detail;
-
     private ImageView imv_print;
-
     private ImageView imageBack;
     private Button btn_search_item;
-
     HashMap<String, String> WashallID = new HashMap<String,String>();
     public ArrayList<String> WashID = new ArrayList<String>();
 
@@ -225,7 +224,22 @@ public class CssdSearchSterile extends AppCompatActivity {
 
     private void byWidget() {
         main = (LinearLayout) findViewById(R.id.main);
-
+        scan = (EditText) findViewById(R.id.scan);
+        scan.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode) {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+                            onDisplayDetail(scan.getText().toString());
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
         txt_search = (EditText) findViewById(R.id.txt_search);
         txt_caption = (TextView) findViewById(R.id.txt_caption);
 
@@ -600,15 +614,12 @@ public class CssdSearchSterile extends AppCompatActivity {
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
-
                 data.put("p_docno", p_docno);
-
                 if(B_ID != null){
                     data.put("p_bid", B_ID);
                 }
-
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_display_sterile_detail_seaech.php", data);
-
+                Log.d("FKHDKH",result);
                 return result;
             }
 
