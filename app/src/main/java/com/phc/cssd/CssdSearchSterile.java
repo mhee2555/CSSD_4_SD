@@ -115,6 +115,9 @@ public class CssdSearchSterile extends AppCompatActivity {
     private ImageView imageBack;
     private Button btn_search_item;
 
+    HashMap<String, String> WashallID = new HashMap<String,String>();
+    public ArrayList<String> WashID = new ArrayList<String>();
+
     static final int DATE_PICKER_ID = 1111;
     private int year;
     private int month;
@@ -1076,12 +1079,21 @@ public class CssdSearchSterile extends AppCompatActivity {
 //    }
 
     private void onPrint(){
-
         boolean IsCheck = true;
         String MsgCheck = "";
 
         try {
 
+            int cnt=0;
+            for (String key : WashallID.keySet()) {
+                if (WashallID.get(key) == "0")
+                    cnt++;
+            }
+
+            for (String key : WashallID.keySet()) {
+                if (WashallID.get(key) == "0")
+                    WashID.add(key);
+            }
             // Check Packer
 //            if (txt_packer.getContentDescription() == null || txt_packer.getContentDescription().toString().equals("")) {
 //                Toast.makeText(CssdCheckList.this, "ยังไม่ได้เลือกผู้ห่อ !!", Toast.LENGTH_SHORT).show();
@@ -1158,7 +1170,7 @@ public class CssdSearchSterile extends AppCompatActivity {
                                 updatePrintStatus(p_data);
 
                                 if(c.getString("IsCheckList").equals("1")){
-                                    callCheckListPaper(ID);
+                                    callCheckListPaper(String.valueOf(WashID));
                                 }
 
                                 finish();
@@ -1207,7 +1219,7 @@ public class CssdSearchSterile extends AppCompatActivity {
                 @Override
                 protected String doInBackground(String... params) {
                     HashMap<String, String> data = new HashMap<String,String>();
-                    data.put("ID", ID);
+                    data.put("ID", String.valueOf(WashID));
                     String result = null;
 
                     try {
@@ -2070,5 +2082,13 @@ public class CssdSearchSterile extends AppCompatActivity {
         ru.execute(xID);
     }
 
+    public void WashID_Row (String Washid){
+        String x="0";
+        if(WashallID.get(Washid)=="0"){
+            x="1";
+        }
+        WashallID.put(Washid, x);
+        Log.d("LFHLKD",WashallID+"");
+    }
 
 }

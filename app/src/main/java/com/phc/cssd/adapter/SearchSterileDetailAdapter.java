@@ -1,6 +1,7 @@
 package com.phc.cssd.adapter;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.phc.cssd.CssdSearchSterile;
+import com.phc.cssd.CssdSterile;
 import com.phc.cssd.R;
+import com.phc.cssd.model.ModelImportWashDetail;
 import com.phc.cssd.model.ModelSterileDetail;
 
 import java.util.List;
@@ -18,6 +22,7 @@ import java.util.List;
 public class SearchSterileDetailAdapter extends ArrayAdapter<ModelSterileDetail> {
 
     private final List<ModelSterileDetail> DATA_MODEL;
+    private List<ModelImportWashDetail> DATA_MODEL_WASH;
     private final Activity context;
 
     public SearchSterileDetailAdapter(Activity context, List<ModelSterileDetail> DATA_MODEL) {
@@ -64,6 +69,8 @@ public class SearchSterileDetailAdapter extends ArrayAdapter<ModelSterileDetail>
                 public void onClick(View v) {
                     try {
                         DATA_MODEL.get(viewHolder.index).setCheck( ! DATA_MODEL.get(viewHolder.index).isCheck() );
+                        Log.d("LFHLKD","1");
+                        (( CssdSearchSterile ) context).WashID_Row(DATA_MODEL_WASH.get(position).getI_id());
                     }catch(Exception e){
                         e.printStackTrace();
                     }
