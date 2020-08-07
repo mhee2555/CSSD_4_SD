@@ -593,10 +593,10 @@ public class CssdSearchSterile extends AppCompatActivity {
                 data = ason.getASONData();
 
                 if(Success && data != null) {
-
                     try {
                         MODEL_STERILE_DETAIL = getModelSterileDetail();
                     } catch (Exception e) {
+
                         e.printStackTrace();
                         return;
                     }
@@ -604,10 +604,14 @@ public class CssdSearchSterile extends AppCompatActivity {
                     try {
                         ArrayAdapter<ModelSterileDetail> adapter = new SearchSterileDetailAdapter(CssdSearchSterile.this, MODEL_STERILE_DETAIL);
                         list_sterile_detail.setAdapter(adapter);
+                        scan.setText("");
                     } catch (Exception e) {
                         list_sterile_detail.setAdapter(null);
                         e.printStackTrace();
                     }
+                }else {
+                    Toast.makeText(CssdSearchSterile.this, "ไม่พบข้อมูล !!", Toast.LENGTH_SHORT).show();
+                    scan.setText("");
                 }
             }
 
@@ -1160,14 +1164,9 @@ public class CssdSearchSterile extends AppCompatActivity {
                                                 c.getString("IsCheckList")
                                         )
                                 );
-                                // Print
                                 PrintWash p = new PrintWash();
                                 String p_data = p.print(CssdSearchSterile.this, c.getInt("CaseLabel"), c.getString("PrinterIP"), list);
-                                // Update Print Status
                                 updatePrintStatus(p_data);
-//                                if(c.getString("IsCheckList").equals("1")){
-//                                    callCheckListPaper(String.valueOf(WashID));
-//                                }
                                 WashID.clear();
                                 WashallID.clear();
                                 for (int a = 0 ; a < MODEL_STERILE_DETAIL.size() ; a ++){
@@ -1175,8 +1174,8 @@ public class CssdSearchSterile extends AppCompatActivity {
                                     ArrayAdapter<ModelSterileDetail> adapter = new SearchSterileDetailAdapter(CssdSearchSterile.this, MODEL_STERILE_DETAIL);
                                     list_sterile_detail.setAdapter(adapter);
                                 }
-
                             }
+                            list.clear();
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
