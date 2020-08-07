@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.phc.core.string.Cons;
+import com.phc.cssd.CssdCheckList;
 import com.phc.cssd.CssdPrintSterile;
 import com.phc.cssd.CssdSterile;
 import com.phc.cssd.R;
@@ -69,14 +70,16 @@ public class CheckListAdapter extends ArrayAdapter {
         final RelativeLayout R1 = (RelativeLayout) v.findViewById(R.id.R1);
         final CheckBox checkbox = (CheckBox ) v.findViewById(R.id.checkbox);
 
-        /*
+        final String img_set = listData.get(position).getPicture_set();
+        final String img_detail = listData.get(position).getPicture_detail();
+
         R1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                ((CssdCheckList)acc).onListClick(img_set, img_detail);
             }
         });
-        */
+
 
         R1.setOnLongClickListener(new View.OnLongClickListener() {
             public boolean onLongClick(View v) {
@@ -148,7 +151,7 @@ public class CheckListAdapter extends ArrayAdapter {
         });
 
         txtitemname.setPaintFlags(txtitemname.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        txtitemname.setText(listData.get(position).getItemname());
+        txtitemname.setText(listData.get(position).getItemcode() + " - " + listData.get(position).getItemname());
         txt_qty.setText(listData.get(position).getQty());
         checkbox.setChecked(listData.get(position).isCheck());
         txt_remark.setText(listData.get(position).getRemark());
