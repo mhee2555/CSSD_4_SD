@@ -282,17 +282,12 @@ public class CssdCheckList extends Activity {
                 @Override
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
-
                     List<ModelWashDetailForPrint> list = new ArrayList<>();
-
                     try {
                         JSONObject jsonObj = new JSONObject(s);
                         rs = jsonObj.getJSONArray(TAG_RESULTS);
-
                         for (int i = 0; i < rs.length(); i++) {
-
                             JSONObject c = rs.getJSONObject(i);
-
                             if (c.getString("result").equals("A")) {
                                 list.add(
                                         new ModelWashDetailForPrint(
@@ -310,18 +305,14 @@ public class CssdCheckList extends Activity {
                                                 c.getString("IsCheckList")
                                         )
                                 );
-
                                 // Print
                                 PrintWash p = new PrintWash();
                                 String p_data = p.print(CssdCheckList.this, c.getInt("CaseLabel"), c.getString("PrinterIP"), list);
-
                                 // Update Print Status
                                 updatePrintStatus(p_data);
-
                                 if(c.getString("IsCheckList").equals("1")){
                                     callCheckListPaper(ID);
                                 }
-
                                 if(Is_ById) {
                                     finish();
                                 }else{
@@ -329,25 +320,20 @@ public class CssdCheckList extends Activity {
                                 }
                             }
                         }
-
                     } catch (Exception e) {
                         e.printStackTrace();
                         return;
                     }finally {
                         focus();
                     }
-
                 }
-
                 @Override
                 protected String doInBackground(String... params) {
                     HashMap<String, String> data = new HashMap<String,String>();
                     data.put("ID", ID);
                     String result = null;
-
                     try {
                         result = httpConnect.sendPostRequest(Url.URL + "cssd_select_wash_detail_for_print.php", data);
-
                     }catch(Exception e){
                         e.printStackTrace();
                     }
