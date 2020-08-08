@@ -221,7 +221,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         getuserCode();
-        getlistdetail(Usagecode,"");
+       // getlistdetail(Usagecode,"");
     }
 
     public void byIntent() {
@@ -402,8 +402,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 etxt_date.setText(DocDate);
                 etxt_sumqty.setText(Qty);
                 getlistcreate(DocNo, ED_Dept);
-                getlistdetail("","");
-                getlistdetailqty("");
+                //getlistdetail("","");
+                //getlistdetailqty("");
                 txt_usr_receive.setText(newsData.getUsr_receive());
                 txt_usr_receive.setContentDescription(newsData.getUserReceive());
                 txt_usr_send.setSelection(listUSendID.indexOf(newsData.getUserSend())+1);
@@ -450,8 +450,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 etxt_date.setText(DocDate);
                 etxt_sumqty.setText(Qty);
                 getlistcreate_l2(DocNo);
-                getlistdetail("","");
-                getlistdetailqty("");
+                //getlistdetail("","");
+                //getlistdetailqty("");
                 txt_usr_receive.setText(newsData.getUsr_receive());
                 txt_usr_receive.setContentDescription(newsData.getUserReceive());
                 txt_usr_send.setSelection(listUSendID.indexOf(newsData.getUserSend())+1);
