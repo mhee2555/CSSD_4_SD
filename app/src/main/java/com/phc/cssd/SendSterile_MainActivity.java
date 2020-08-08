@@ -3208,6 +3208,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 HashMap<String, String> data = new HashMap<String,String>();
                 data.put("Usagecode",Usagecode);
                 data.put("B_ID",B_ID);
+                data.put("Type","0");
                 data.put("DocNo",etxt_docno.getText().toString());
                 String result = null;
                 try {
