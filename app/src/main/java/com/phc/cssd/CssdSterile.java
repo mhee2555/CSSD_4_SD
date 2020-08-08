@@ -245,6 +245,7 @@ public class CssdSterile extends AppCompatActivity {
     private int b = R.color.colorBlue;
     private int gr = R.color.colorGray;
     private boolean PRINT_ACTIVE = false;
+    private boolean DIALOG_ACTIVE = false;
     static final int DATE_PICKER_ID = 6628;
     private int year;
     private int month;
@@ -5856,6 +5857,7 @@ public class CssdSterile extends AppCompatActivity {
                             // Display Import Wash Detail
                             displayWashDetail( getSterileProcessId() );
                             CheckUsageEms(getDocNo());
+                            DIALOG_ACTIVE = true;
                         }else{
                             Toast.makeText(CssdSterile.this, "ไม่พบรายการ !!", Toast.LENGTH_SHORT).show();
                         }
@@ -7208,19 +7210,22 @@ public class CssdSterile extends AppCompatActivity {
                         condition3 = c.getString("condition3");
                         condition4 = c.getString("condition4");
                     }
-                    if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0")){
-                        Intent intent = new Intent(CssdSterile.this, dialog_check_usage_count.class);
-                        intent.putExtra("UsageCode", UsageCode);
-                        intent.putExtra("cnt", Cnt);
-                        intent.putExtra("DocNo",getDocNo());
-                        intent.putExtra("B_ID",B_ID);
-                        intent.putExtra("sel","1");
-                        intent.putExtra("page","1");
-                        intent.putExtra("condition1",condition1);
-                        intent.putExtra("condition2",condition2);
-                        intent.putExtra("condition3",condition3);
-                        intent.putExtra("condition4",condition4);
-                        startActivity(intent);
+                    if (DIALOG_ACTIVE == true){
+                        if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0")){
+                            Intent intent = new Intent(CssdSterile.this, dialog_check_usage_count.class);
+                            intent.putExtra("UsageCode", UsageCode);
+                            intent.putExtra("cnt", Cnt);
+                            intent.putExtra("DocNo",getDocNo());
+                            intent.putExtra("B_ID",B_ID);
+                            intent.putExtra("sel","1");
+                            intent.putExtra("page","1");
+                            intent.putExtra("condition1",condition1);
+                            intent.putExtra("condition2",condition2);
+                            intent.putExtra("condition3",condition3);
+                            intent.putExtra("condition4",condition4);
+                            startActivity(intent);
+                            DIALOG_ACTIVE = false;
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

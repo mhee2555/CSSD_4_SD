@@ -114,6 +114,7 @@ public class CssdWash extends AppCompatActivity {
     private ListView list_import_send_sterile;
     private GridView grid_import_send_sterile;
     private GridView grid_wash_detail;
+    private boolean DIALOG_ACTIVE = false;
     // Process
     private ImageView imv_pc_1;
     private ImageView imv_pc_2;
@@ -5673,6 +5674,7 @@ public class CssdWash extends AppCompatActivity {
                         // Display Import Wash Detail
                         displayImportSendSterile("1");
                         CheckUsageEms(getDocNo());
+                        DIALOG_ACTIVE = true;
                         countput = 0;
                     }catch(Exception e){
                         e.printStackTrace();
@@ -6128,19 +6130,22 @@ public class CssdWash extends AppCompatActivity {
                         condition3 = c.getString("condition3");
                         condition4 = c.getString("condition4");
                     }
-                    if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0")){
-                        Intent intent = new Intent(CssdWash.this, dialog_check_usage_count.class);
-                        intent.putExtra("UsageCode", UsageCode);
-                        intent.putExtra("cnt", Cnt);
-                        intent.putExtra("DocNo",getDocNo());
-                        intent.putExtra("B_ID",B_ID);
-                        intent.putExtra("sel","1");
-                        intent.putExtra("page","1");
-                        intent.putExtra("condition1",condition1);
-                        intent.putExtra("condition2",condition2);
-                        intent.putExtra("condition3",condition3);
-                        intent.putExtra("condition4",condition4);
-                        startActivity(intent);
+                    if (DIALOG_ACTIVE == true){
+                        if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0")){
+                            Intent intent = new Intent(CssdWash.this, dialog_check_usage_count.class);
+                            intent.putExtra("UsageCode", UsageCode);
+                            intent.putExtra("cnt", Cnt);
+                            intent.putExtra("DocNo",getDocNo());
+                            intent.putExtra("B_ID",B_ID);
+                            intent.putExtra("sel","1");
+                            intent.putExtra("page","1");
+                            intent.putExtra("condition1",condition1);
+                            intent.putExtra("condition2",condition2);
+                            intent.putExtra("condition3",condition3);
+                            intent.putExtra("condition4",condition4);
+                            startActivity(intent);
+                            DIALOG_ACTIVE = false;
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

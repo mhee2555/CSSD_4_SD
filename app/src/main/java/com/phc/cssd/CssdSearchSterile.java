@@ -231,7 +231,7 @@ public class CssdSearchSterile extends AppCompatActivity {
                     switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
-                            onDisplayDetail(scan.getText().toString());
+                            onDisplayDetail(scan.getText().toString(),"1");
                             return true;
                         default:
                             break;
@@ -288,7 +288,7 @@ public class CssdSearchSterile extends AppCompatActivity {
 
                 //System.out.println(DocNo);
 
-                onDisplayDetail(DocNo);
+                onDisplayDetail(DocNo,"0");
 
             }
         });
@@ -391,7 +391,6 @@ public class CssdSearchSterile extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-
                 list_sterile.setAdapter(null);
                 list_sterile_detail.setAdapter(null);
             }
@@ -573,7 +572,7 @@ public class CssdSearchSterile extends AppCompatActivity {
         obj.execute();
     }
 
-    public void onDisplayDetail(final String p_docno) {
+    public void onDisplayDetail(final String p_docno,final String type) {
         class DisplayDetail extends AsyncTask<String, Void, String> {
 
             // variable
@@ -596,7 +595,6 @@ public class CssdSearchSterile extends AppCompatActivity {
                     try {
                         MODEL_STERILE_DETAIL = getModelSterileDetail();
                     } catch (Exception e) {
-
                         e.printStackTrace();
                         return;
                     }
@@ -605,6 +603,12 @@ public class CssdSearchSterile extends AppCompatActivity {
                         ArrayAdapter<ModelSterileDetail> adapter = new SearchSterileDetailAdapter(CssdSearchSterile.this, MODEL_STERILE_DETAIL);
                         list_sterile_detail.setAdapter(adapter);
                         scan.setText("");
+                        if (type.equals("1")){
+                            for (int a = 0 ; a < MODEL_STERILE_DETAIL.size() ; a ++) {
+                                MODEL_STERILE_DETAIL.get(a).setCheck(true);
+                            }
+                            WashID_Row(MODEL_STERILE_DETAIL.get(0).getUsageCode());
+                        }
                     } catch (Exception e) {
                         list_sterile_detail.setAdapter(null);
                         e.printStackTrace();
@@ -629,14 +633,10 @@ public class CssdSearchSterile extends AppCompatActivity {
             }
 
             private List<ModelSterileDetail> getModelSterileDetail() {
-
                 List<ModelSterileDetail> list = new ArrayList<>();
-
                 try {
                     int index = 0;
-
                     for(int i=0;i<data.size();i+=size){
-
                         list.add(
                                 getSterileDetail(
                                         data.get(i),
@@ -671,12 +671,8 @@ public class CssdSearchSterile extends AppCompatActivity {
                                         data.get(i + 28)
                                 )
                         );
-
                         index++;
                     }
-
-                    // //System.out.println("list = " + list.size());
-
                 }catch(Exception e){
                     e.printStackTrace();
                 }

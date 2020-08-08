@@ -106,6 +106,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     private String IsStatus = "";
     private String UserReceive = "";
     private String UserSend = "";
+    private boolean DIALOG_ACTIVE = false;
     String xSel = "";
     String xSel1 = "";
     String B_ID = null;
@@ -411,6 +412,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 CheckUsageCont();
+                DIALOG_ACTIVE = true;
                 Object o = list_docno_l2.getItemAtPosition(position);
                 DelRowId.clear();
                 DelAlldata.clear();
@@ -1654,6 +1656,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     if (bo.equals("true")) {
                         Toast.makeText(SendSterile_MainActivity.this, "นำเข้าอุปกรณ์สำเร็จ", Toast.LENGTH_SHORT).show();
                         CheckUsageContScanToInsert(RowID);
+                        DIALOG_ACTIVE = true;
                         txt_get_ucode.setText("");
                         txt_get_ucode.requestFocus();
                     }
@@ -2999,22 +3002,23 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         condition3 = c.getString("condition3");
                         condition4 = c.getString("condition4");
                     }
-
-                    if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0")){
-                        Intent intent = new Intent(SendSterile_MainActivity.this, dialog_check_usage_count.class);
-                        intent.putExtra("UsageCode", UsageCode);
-                        intent.putExtra("cnt", Cnt);
-                        intent.putExtra("DocNo",DocNo);
-                        intent.putExtra("B_ID",B_ID);
-                        intent.putExtra("sel","1");
-                        intent.putExtra("page","0");
-                        intent.putExtra("condition1",condition1);
-                        intent.putExtra("condition2",condition2);
-                        intent.putExtra("condition3",condition3);
-                        intent.putExtra("condition4",condition4);
-                        startActivity(intent);
+                    if (DIALOG_ACTIVE == true){
+                        if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0")){
+                            Intent intent = new Intent(SendSterile_MainActivity.this, dialog_check_usage_count.class);
+                            intent.putExtra("UsageCode", UsageCode);
+                            intent.putExtra("cnt", Cnt);
+                            intent.putExtra("DocNo",DocNo);
+                            intent.putExtra("B_ID",B_ID);
+                            intent.putExtra("sel","1");
+                            intent.putExtra("page","0");
+                            intent.putExtra("condition1",condition1);
+                            intent.putExtra("condition2",condition2);
+                            intent.putExtra("condition3",condition3);
+                            intent.putExtra("condition4",condition4);
+                            startActivity(intent);
+                            DIALOG_ACTIVE = false;
+                        }
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }finally {
@@ -3177,14 +3181,17 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         condition3 = c.getString("condition3");
                         condition4 = c.getString("condition4");
                     }
-                    if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0")){
-                        Intent intent = new Intent(SendSterile_MainActivity.this, dialog_check_usage_count.class);
-                        intent.putExtra("condition1",condition1);
-                        intent.putExtra("condition2",condition2);
-                        intent.putExtra("condition3",condition3);
-                        intent.putExtra("condition4",condition4);
-                        intent.putExtra("page","0");
-                        startActivity(intent);
+                    if (DIALOG_ACTIVE = true){
+                        if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0")){
+                            Intent intent = new Intent(SendSterile_MainActivity.this, dialog_check_usage_count.class);
+                            intent.putExtra("condition1",condition1);
+                            intent.putExtra("condition2",condition2);
+                            intent.putExtra("condition3",condition3);
+                            intent.putExtra("condition4",condition4);
+                            intent.putExtra("page","0");
+                            startActivity(intent);
+                            DIALOG_ACTIVE = false;
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -3246,6 +3253,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         JSONObject c = rs.getJSONObject(i);
                         if (c.getString("IsStatus").equals("0")){
                             CheckUsageCont();
+                            DIALOG_ACTIVE = true;
                         }
                     }
 
