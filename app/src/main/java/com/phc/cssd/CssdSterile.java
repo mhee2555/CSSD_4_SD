@@ -1604,6 +1604,8 @@ public class CssdSterile extends AppCompatActivity {
 
         pair_fin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                btn_print.setText("0");
+                basket_dialog_list_basket.setAdapter(null);
                 PairBasketBox_basket_Code.setText("");
                 basket_Code = "";
                 basket_ID = "";
@@ -1682,6 +1684,7 @@ public class CssdSterile extends AppCompatActivity {
                         case KeyEvent.KEYCODE_ENTER:
 
                             checkPacker(etxt_qr_pack.getText().toString(),print_w_id,dialog_qr);
+                            etxt_qr_pack.setText("");
                             return true;
                         default:
                             break;
@@ -7676,6 +7679,7 @@ public class CssdSterile extends AppCompatActivity {
 
                     // -----------------------------------
 
+                    displayWashDetail(getSterileProcessId());
                 }
 
                 @Override
@@ -7691,6 +7695,8 @@ public class CssdSterile extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
+                    Log.d("ttest_for_print","data = "+data);
+                    Log.d("ttest_for_print","re = "+result);
                     return result;
                 }
 
