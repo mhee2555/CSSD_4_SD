@@ -163,10 +163,10 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
         b_Back = (Button) findViewById(R.id.b_Back);
         bImport = (ImageView) findViewById(R.id.b_Import);
         b_Occurance = (ImageView) findViewById(R.id.b_Occurance);
+        lv1 = (GridView) findViewById(R.id.ListView02);
         b_OccuranceReturn  = (ImageView) findViewById(R.id.b_OccuranceReturn);
         bDate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // On button click show datepicker dialog
                 showDialog(DATE_PICKER_ID);
                 ListMachineCount( gDate );
                 textViewProgram.setText( "" );
