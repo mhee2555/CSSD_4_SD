@@ -1684,6 +1684,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             }
 
             //class connect php RegisterUserClass important !!!!!!!
+            @SuppressLint("WrongThread")
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String, String>();
