@@ -221,7 +221,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         getuserCode();
-        getlistdetail(Usagecode,"");
+       // getlistdetail(Usagecode,"");
     }
 
     public void byIntent() {
@@ -366,13 +366,18 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         dept_l2 = ( Spinner ) findViewById(R.id.dept_spinner_l2);
         finddoc_l2 = ( Button ) findViewById(R.id.finddoc_l2);
         textView19 = ( TextView ) findViewById(R.id.textView19);
-
+        list_docno_detail = ( ListView ) findViewById(R.id.list_docno_detail);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 Object o = lv.getItemAtPosition(position);
                 pCustomer newsData = ( pCustomer ) o;
                 CheckStatusDocNo();
+                list_docno_detail.setAdapter(null);
+                textView48.setText("" + "0" + " ชิ้น" + " ]");
+                txt_setdetail_l4.setText("" + "0" + " ชิ้น" + " ]");
+                textView47.setText("[ " +"0"+ "  รายการ  /");
+                txt_setdetail_l3.setText("[ " +"0"+ "  รายการ  /");
                 DelRowId.clear();
                 DelAlldata.clear();
                 DocNo = newsData.getDocno();
@@ -397,8 +402,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 etxt_date.setText(DocDate);
                 etxt_sumqty.setText(Qty);
                 getlistcreate(DocNo, ED_Dept);
-                getlistdetail("","");
-                getlistdetailqty("");
+                //getlistdetail("","");
+                //getlistdetailqty("");
                 txt_usr_receive.setText(newsData.getUsr_receive());
                 txt_usr_receive.setContentDescription(newsData.getUserReceive());
                 txt_usr_send.setSelection(listUSendID.indexOf(newsData.getUserSend())+1);
@@ -414,6 +419,11 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 CheckUsageCont();
                 DIALOG_ACTIVE = true;
                 Object o = list_docno_l2.getItemAtPosition(position);
+                list_docno_detail.setAdapter(null);
+                textView48.setText("" + "0" + " ชิ้น" + " ]");
+                txt_setdetail_l4.setText("" + "0" + " ชิ้น" + " ]");
+                textView47.setText("[ " +"0"+ "  รายการ  /");
+                txt_setdetail_l3.setText("[ " +"0"+ "  รายการ  /");
                 DelRowId.clear();
                 DelAlldata.clear();
                 pCustomer newsData = ( pCustomer ) o;
@@ -440,8 +450,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 etxt_date.setText(DocDate);
                 etxt_sumqty.setText(Qty);
                 getlistcreate_l2(DocNo);
-                getlistdetail("","");
-                getlistdetailqty("");
+                //getlistdetail("","");
+                //getlistdetailqty("");
                 txt_usr_receive.setText(newsData.getUsr_receive());
                 txt_usr_receive.setContentDescription(newsData.getUserReceive());
                 txt_usr_send.setSelection(listUSendID.indexOf(newsData.getUserSend())+1);

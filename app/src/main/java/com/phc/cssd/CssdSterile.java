@@ -3086,7 +3086,6 @@ public class CssdSterile extends AppCompatActivity {
     }
 
     public void importWashDetail(String Id, String SterileProgramID, String SterileProgramName, String PackingMatID,String gQty,String basket,String usageCode){
-
         onImport(Id, SterileProgramID, SterileProgramName, PackingMatID, gQty,basket,usageCode);
     }
 

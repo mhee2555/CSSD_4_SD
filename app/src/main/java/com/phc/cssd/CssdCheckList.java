@@ -654,86 +654,63 @@ public class CssdCheckList extends Activity {
                         list_check.setAdapter(null);
                         e.printStackTrace();
                     }
-
                     String packer_code = (String) txt_packer.getContentDescription();
-
                     System.out.println("packer_code = " + packer_code );
                     System.out.println("packer_text = " + txt_packer.getText() );
-
                     // Check Employee
                     if(ID != null && packer_code != null && !packer_code.equals("")){
                         updatePacker(ID, packer_code);
                     }
-
                     COUNT_PROCESS = 3;
-
                 } catch (Exception e) {
                     e.printStackTrace();
-
                     list_check.setAdapter(null);
-
                     return;
                 }finally {
                     focus();
                 }
-
             }
 
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
-
                 if(ID != null) {
                     data.put("ID", ID);
                 }else if(UsageCode != null) {
                     data.put("p_usage_code", UsageCode);
                 }
-
                 if(B_ID != null){
                     data.put("p_bid", B_ID);
                 }
-
                 String result = null;
-
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_select_check_list.php", data);
-
                 }catch(Exception e){
                     e.printStackTrace();
                 }
-
                 return result;
             }
-
             // =========================================================================================
         }
-
         DisplayWashDetail obj = new DisplayWashDetail();
         obj.execute();
     }
 
     public void checkPacker(final String packer) {
-
         class Check extends AsyncTask<String, Void, String> {
-
             // variable
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
             }
-
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-
                 try {
                     JSONObject jsonObj = new JSONObject(s);
                     rs = jsonObj.getJSONArray(TAG_RESULTS);
-
                     for (int i = 0; i < rs.length(); i++) {
-
                         JSONObject c = rs.getJSONObject(i);
-
                         if (c.getString("result").equals("A")) {
                             txt_packer.setText("ผู้ห่อ : " + c.getString("packer"));
                             txt_packer.setContentDescription(c.getString("ID"));
@@ -741,54 +718,39 @@ public class CssdCheckList extends Activity {
                         }else{
                             Toast.makeText(CssdCheckList.this, "ไม่พบรายชื่อพนักงาน โปรด Scan รหัสพนักงานก่อน !!", Toast.LENGTH_SHORT).show();
                         }
-
                     }
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }finally {
                     focus();
-
-
                 }
             }
 
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
-
                 if(ID != null)
                     data.put("ID", ID);
-
                 data.put("packer", packer);
-
                 if(B_ID != null){
                     data.put("p_bid", B_ID);
                 }
-
                 String result = null;
-
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_check_packer.php", data);
-
                 }catch(Exception e){
                     e.printStackTrace();
                 }
-
                 return result;
             }
-
             // =========================================================================================
         }
-
         Check obj = new Check();
         obj.execute();
     }
 
     public void updatePacker(final String ID, final String p_user_id) {
-
         class Check extends AsyncTask<String, Void, String> {
-
             // variable
             @Override
             protected void onPreExecute() {
