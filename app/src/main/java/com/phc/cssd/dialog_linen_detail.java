@@ -108,10 +108,10 @@ public class dialog_linen_detail extends Activity {
                     }
                 }
                 if (cnt != 0) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(dialog_linen_detail.this);
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(dialog_linen_detail.this);
                     builder.setCancelable(true);
                     builder.setTitle("ยืนยัน");
-                    builder.setMessage("ต้องการเปลี่ยนรายการจัดเซ็ตใช่หรือไม่ ?");
+                    builder.setMessage("นำผ้าหมดอายุออกจากสต๊อกจ่ายกลาง ?");
                     builder.setPositiveButton("ยืนยัน",
                             new DialogInterface.OnClickListener() {
                                 @Override
