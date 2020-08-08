@@ -2143,6 +2143,7 @@ public class PayoutActivity extends AppCompatActivity {
         i.putExtra("DocNo", DocNo);
         i.putExtra("xSel", xsel);
         i.putExtra("MacNo", macno);
+        i.putExtra("devicemode", devicemode);
         startActivityForResult(i, 1035);
     }
     @Override
