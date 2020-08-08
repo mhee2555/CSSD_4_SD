@@ -51,7 +51,7 @@ public class CssdCheckList extends Activity {
     private JSONArray rs = null;
     private HTTPConnect httpConnect = new HTTPConnect();
 
-
+    private int COUNT_PROCESS = 0;
     // Intent
     private String userid = null;
     private String B_ID = null;
@@ -66,6 +66,7 @@ public class CssdCheckList extends Activity {
     String condition4 = "";
 
     // Widget
+    private String chk = "0";
     private boolean DIALOG_ACTIVE = false;
     private ListView list_check;
     private ImageView imv_print;
@@ -164,6 +165,7 @@ public class CssdCheckList extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         clearAll();
+                        COUNT_PROCESS = 0;
                     }
                 });
 
@@ -185,9 +187,53 @@ public class CssdCheckList extends Activity {
                     switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
-                            checkInput(edt_usage_code.getText().toString());
-                            CheckDialog(edt_usage_code.getText().toString());
-                            DIALOG_ACTIVE = true;
+                            if (COUNT_PROCESS < 2){
+                                checkInput(edt_usage_code.getText().toString());
+                                CheckDialog(edt_usage_code.getText().toString());
+                                DIALOG_ACTIVE = true;
+                            }else {
+                                if (COUNT_PROCESS > 2){
+                                    for (int i = 0 ; i < MODEL_CHECK_LIST.size() ; i ++){
+                                        MODEL_CHECK_LIST.get(i).getItemcode();
+                                        String Itemcode;
+                                        Itemcode = edt_usage_code.getText().toString().toUpperCase().substring(0,5);
+                                        if (Itemcode.equals(MODEL_CHECK_LIST.get(i).getItemcode())){
+                                            if (MODEL_CHECK_LIST.get(i).isCheck() == true){
+                                                chk = "2";
+                                            }else {
+                                                MODEL_CHECK_LIST.get(i).setCheck(true);
+                                                ArrayAdapter adapter = new CheckListAdapter(CssdCheckList.this, MODEL_CHECK_LIST);
+                                                list_check.setAdapter(adapter);
+                                                try {
+                                                    URL url = new URL(Url.getImageURL() + Itemcode+"_pic1.PNG");
+                                                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                                                    img_item_all.setImageBitmap(bmp);
+                                                }catch(Exception e){
+                                                    e.printStackTrace();
+                                                    img_item_all.setImageResource(R.drawable.ic_preview);
+                                                }
+                                                chk = "1";
+                                            }
+                                        }
+                                    }
+                                    if (chk.equals("1")){
+                                        Toast.makeText(CssdCheckList.this, "รายการถูกต้อง", Toast.LENGTH_SHORT).show();
+                                        chk.equals("0");
+                                        edt_usage_code.setText("");
+                                        edt_usage_code.requestFocus();
+                                    }else if (chk.equals("0")){
+                                        Toast.makeText(CssdCheckList.this, "รายการไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
+                                        edt_usage_code.setText("");
+                                        edt_usage_code.requestFocus();
+                                    }else if (chk.equals("2")){
+                                        Toast.makeText(CssdCheckList.this, "รายการซ้ำ", Toast.LENGTH_SHORT).show();
+                                        edt_usage_code.setText("");
+                                        edt_usage_code.requestFocus();
+                                    }
+                                    COUNT_PROCESS ++;
+                                }
+                                return true;
+                            }
                             break;
                         default:
                             break;
@@ -615,6 +661,8 @@ public class CssdCheckList extends Activity {
                         updatePacker(ID, packer_code);
                     }
 
+                    COUNT_PROCESS = 3;
+
                 } catch (Exception e) {
                     e.printStackTrace();
 
@@ -685,6 +733,7 @@ public class CssdCheckList extends Activity {
                         if (c.getString("result").equals("A")) {
                             txt_packer.setText("ผู้ห่อ : " + c.getString("packer"));
                             txt_packer.setContentDescription(c.getString("ID"));
+                            COUNT_PROCESS = 1;
                         }else{
                             Toast.makeText(CssdCheckList.this, "ไม่พบรายชื่อพนักงาน โปรด Scan รหัสพนักงานก่อน !!", Toast.LENGTH_SHORT).show();
                         }
@@ -784,14 +833,10 @@ public class CssdCheckList extends Activity {
             checkPacker(Input);
             return;
         }
-
         // Check Usage
         if(ID == null){
-
             UsageCode = Input;
-
             displayCheckList();
-
             return;
         }
 

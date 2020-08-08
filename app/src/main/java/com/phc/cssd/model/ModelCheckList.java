@@ -77,8 +77,9 @@ public class ModelCheckList {
         return IsCheck;
     }
 
-    public void setCheck(boolean check) {
+    public boolean setCheck(boolean check) {
         IsCheck = check;
+        return check;
     }
 
     public String getID() {
