@@ -222,12 +222,27 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="4"
+            android:gravity="right"
             android:orientation="vertical"
             android:paddingLeft="75dp"
-            android:paddingTop="60dp"
+            android:paddingTop="30dp"
             android:paddingBottom="8dp">
 
             <!-- west -->
+
+            <EditText
+                android:id="@+id/scan_basket"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/text_dropdown"
+                android:ems="10"
+                android:hint="สแกนตะกร้า"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@color/colorBlack" />
+
             <LinearLayout
                 android:id="@+id/tab_process"
                 android:layout_width="fill_parent"
@@ -1042,7 +1057,7 @@
         android:textColor="@color/colorWhite"
         android:theme="@style/SwitchTheme"
         android:thumbTint="@color/colorSwitchBlue"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 
     <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
         android:id="@+id/group_choices"
@@ -1052,7 +1067,7 @@
         android:layout_marginStart="275dp"
         android:layout_toEndOf="@+id/txt_caption"
         android:textColor="@color/colorWhite"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:tbgCheckedButton="@+id/choice_2">
 
         <com.nex3z.togglebuttongroup.button.CircularToggle
@@ -1310,106 +1325,6 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/ic_popup_print_green"
         android:visibility="gone"/>
-
-    <LinearLayout
-        android:id="@+id/PairBasketBox"
-        android:layout_width="match_parent"
-        android:layout_height="690dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp"
-        android:background="@color/fefe"
-        android:paddingRight="11dp"
-        android:paddingBottom="7dp"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:orientation="vertical"
-            android:paddingLeft="75dp"
-            android:paddingTop="60dp"
-            android:paddingBottom="8dp">
-
-            <ListView
-                android:id="@+id/basket_dialog_w_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginRight="24dp"
-                android:layout_marginBottom="56dp">
-
-            </ListView>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="228dp"
-                android:orientation="vertical"></LinearLayout>
-
-            <LinearLayout
-                android:layout_width="740dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/bg_recall"
-                android:orientation="vertical"
-                android:padding="15dp">
-
-                <Button
-                    android:id="@+id/pair_fin"
-                    android:layout_width="120dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="0"
-                    android:background="@drawable/btn_save" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="5dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="5dp">
-
-                    <TextView
-                        android:id="@+id/textView192"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="ตะกร้า "
-                        android:textColor="@color/colorWhite"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/PairBasketBox_basket_Code"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <ListView
-                    android:id="@+id/basket_dialog_list_basket"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg2_n" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
 
     <Button
         android:id="@+id/btn_checklist"
