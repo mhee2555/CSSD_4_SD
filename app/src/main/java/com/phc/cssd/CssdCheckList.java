@@ -187,6 +187,7 @@ public class CssdCheckList extends Activity {
                         case KeyEvent.KEYCODE_ENTER:
                             checkInput(edt_usage_code.getText().toString());
                             CheckDialog(edt_usage_code.getText().toString());
+                            DIALOG_ACTIVE = true;
                             break;
                         default:
                             break;
@@ -263,7 +264,7 @@ public class CssdCheckList extends Activity {
                         condition3 = c.getString("condition3");
                         condition4 = c.getString("condition4");
                     }
-                    if (DIALOG_ACTIVE = true){
+                    if (DIALOG_ACTIVE == true){
                         if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0")){
                             Intent intent = new Intent(CssdCheckList.this, dialog_check_usage_count.class);
                             intent.putExtra("condition1",condition1);
