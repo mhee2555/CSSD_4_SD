@@ -80,7 +80,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_marginStart="4dp"
-            android:layout_toStartOf="@+id/imv_print"
+            android:layout_alignParentEnd="true"
             android:background="@drawable/text_edit"
             android:gravity="center|center_vertical"
             android:maxLines="1"
@@ -127,6 +127,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="5dp"
+            android:visibility="gone"
             android:src="@drawable/ic_radio_normal_grey" />
 
     </RelativeLayout>

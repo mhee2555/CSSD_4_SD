@@ -207,10 +207,10 @@ public class CssdCheckList extends Activity {
                                                 try {
                                                     URL url = new URL(Url.getImageURL() + Itemcode+"_pic1.PNG");
                                                     Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                                                    img_item_all.setImageBitmap(bmp);
+                                                    img_item.setImageBitmap(bmp);
                                                 }catch(Exception e){
                                                     e.printStackTrace();
-                                                    img_item_all.setImageResource(R.drawable.ic_preview);
+                                                    img_item.setImageResource(R.drawable.ic_preview);
                                                 }
                                                 chk = "1";
                                             }
@@ -234,10 +234,14 @@ public class CssdCheckList extends Activity {
                                 }
                                 return true;
                             }
-                            break;
+                            return true;
                         default:
+                            edt_usage_code.requestFocus();
                             break;
                     }
+                }else {
+                    edt_usage_code.requestFocus();
+                return true;
                 }
                 return false;
             }
