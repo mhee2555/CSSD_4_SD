@@ -1,5 +1,6 @@
 package com.phc.cssd;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -12,6 +13,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,6 +36,7 @@ import com.phc.cssd.url.Url;
 import com.phc.cssd.url.getUrl;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URL;
@@ -57,7 +60,13 @@ public class CssdCheckList extends Activity {
     private String ID = null;
     private String UsageCode= null;
 
+    String condition1 = "";
+    String condition2 = "";
+    String condition3 = "";
+    String condition4 = "";
+
     // Widget
+    private boolean DIALOG_ACTIVE = false;
     private ListView list_check;
     private ImageView imv_print;
     private ImageView imageBack;
@@ -130,7 +139,7 @@ public class CssdCheckList extends Activity {
         // west.setVisibility(Is_ById ? View.GONE : View.VISIBLE);
         west.setVisibility(View.GONE);
         imv_new.setVisibility(Is_ById ? View.GONE : View.VISIBLE);
-        edt_usage_code.setShowSoftInputOnFocus(false);
+        //edt_usage_code.setShowSoftInputOnFocus(false);
     }
 
     private void byEvent(){
@@ -176,9 +185,8 @@ public class CssdCheckList extends Activity {
                     switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
-
                             checkInput(edt_usage_code.getText().toString());
-
+                            CheckDialog(edt_usage_code.getText().toString());
                             break;
                         default:
                             break;
@@ -222,10 +230,81 @@ public class CssdCheckList extends Activity {
                 }finally {
                     focus_();
                 }
-
             }
         });
+    }
 
+    public void CheckDialog(final String Usagecode) {
+        class CheckDialog extends AsyncTask<String, Void, String> {
+            private ProgressDialog dialog = new ProgressDialog(CssdCheckList.this);
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                this.dialog.setMessage(Cons.WAIT_FOR_PROCESS);
+                this.dialog.show();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    String UsageCode = "";
+                    String UsageItem = "";
+
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        UsageCode = c.getString("UsageCode");
+                        UsageItem = c.getString("UsageItem");
+                        condition1 = c.getString("condition1");
+                        condition2 = c.getString("condition2");
+                        condition3 = c.getString("condition3");
+                        condition4 = c.getString("condition4");
+                    }
+                    if (DIALOG_ACTIVE = true){
+                        if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0")){
+                            Intent intent = new Intent(CssdCheckList.this, dialog_check_usage_count.class);
+                            intent.putExtra("condition1",condition1);
+                            intent.putExtra("condition2",condition2);
+                            intent.putExtra("condition3",condition3);
+                            intent.putExtra("condition4",condition4);
+                            intent.putExtra("page","0");
+                            startActivity(intent);
+                            DIALOG_ACTIVE = false;
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }finally {
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("Usagecode",Usagecode);
+                data.put("B_ID",B_ID);
+                data.put("Type","1");
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_usage_count_scan.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        CheckDialog obj = new CheckDialog();
+        obj.execute();
     }
 
     private void clearAll(){

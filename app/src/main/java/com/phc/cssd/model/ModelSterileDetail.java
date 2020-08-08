@@ -509,8 +509,9 @@ public class ModelSterileDetail implements Cloneable {
         }
     }
 
-    public void setCheck(boolean check) {
+    public boolean setCheck(boolean check) {
         IsCheck = check;
+        return check;
     }
 
     public String getLabelID() {

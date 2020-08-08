@@ -51,6 +51,7 @@ import java.util.HashMap;
 
 public class SterileSeachActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private boolean DIALOG_ACTIVE = false;
     String condition1 = "";
     String condition2 = "";
     String condition3 = "";
@@ -926,6 +927,7 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
         McSel = index;
         ListSterileDocDetail( listMachine_ApStock.get(index).getDocNo() );
         ShowAlertRemart( listMachine_ApStock.get(index).getDocNo() );
+        DIALOG_ACTIVE = true;
     }
 
     private void ClearDocHeader() {
@@ -1125,19 +1127,22 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
                         condition3 = c.getString("condition3");
                         condition4 = c.getString("condition4");
                     }
-                    if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0")){
-                        Intent intent = new Intent(SterileSeachActivity.this, dialog_check_usage_count.class);
-                        intent.putExtra("UsageCode", UsageCode);
-                        intent.putExtra("cnt", Cnt);
-                        intent.putExtra("DocNo",DocNo);
-                        intent.putExtra("B_ID",B_ID);
-                        intent.putExtra("sel","1");
-                        intent.putExtra("page","0");
-                        intent.putExtra("condition1",condition1);
-                        intent.putExtra("condition2",condition2);
-                        intent.putExtra("condition3",condition3);
-                        intent.putExtra("condition4",condition4);
-                        startActivity(intent);
+                    if (DIALOG_ACTIVE == true){
+                        if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0")){
+                            Intent intent = new Intent(SterileSeachActivity.this, dialog_check_usage_count.class);
+                            intent.putExtra("UsageCode", UsageCode);
+                            intent.putExtra("cnt", Cnt);
+                            intent.putExtra("DocNo",DocNo);
+                            intent.putExtra("B_ID",B_ID);
+                            intent.putExtra("sel","1");
+                            intent.putExtra("page","0");
+                            intent.putExtra("condition1",condition1);
+                            intent.putExtra("condition2",condition2);
+                            intent.putExtra("condition3",condition3);
+                            intent.putExtra("condition4",condition4);
+                            startActivity(intent);
+                            DIALOG_ACTIVE = false;
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
