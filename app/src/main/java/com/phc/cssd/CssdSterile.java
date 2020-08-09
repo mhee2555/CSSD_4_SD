@@ -1593,7 +1593,7 @@ public class CssdSterile extends AppCompatActivity {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
 
-                            String txt = scan_basket.getText().toString();
+                            String txt = scan_basket.getText().toString().toLowerCase();
                             if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(txt)&&(!txt.equals(""))){//&&chk_mac()
 
                                 List<ModelImportWashDetail> MODEL_IMPORT_WASH_DETAIL_TO_ADD = MAP_MODEL_IMPORT_WASH_DETAIL_SUB.get(txt);
@@ -1613,7 +1613,7 @@ public class CssdSterile extends AppCompatActivity {
 
                                 }
                             }else{
-                                Toast.makeText(CssdSterile.this, "ไม่พบตะกร้า!!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CssdSterile.this, "ไม่พบตะกร้า ("+txt+")!!", Toast.LENGTH_SHORT).show();
                             }
 
                             scan_basket.setText("");
@@ -1758,7 +1758,7 @@ public class CssdSterile extends AppCompatActivity {
 //                }
                 int xn =0;
 
-                if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code)){
+                if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code.toLowerCase())){
 
                     print_w_id = "";
 
@@ -6592,7 +6592,7 @@ public class CssdSterile extends AppCompatActivity {
 
                         for(int i =0;i<MODEL_IMPORT_WASH_DETAIL.size();i++){
                             ModelImportWashDetail x = MODEL_IMPORT_WASH_DETAIL.get(i);
-                            String key = x.getBasketCode();
+                            String key = x.getBasketCode().toLowerCase();
                             if(key.equals("-")){
                                 MODEL_IMPORT_WASH_DETAIL_SUB.add(x);
                                 MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR.add(x);
@@ -6629,8 +6629,8 @@ public class CssdSterile extends AppCompatActivity {
                                 if(!basket_Code.equals("")){
                                     basket_dialog_w_list.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR,MAP_MODEL_IMPORT_WASH_DETAIL_SUB,4));
 
-                                    if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code)){
-                                        MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR = MAP_MODEL_IMPORT_WASH_DETAIL_SUB.get(basket_Code);
+                                    if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code.toLowerCase())){
+                                        MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR = MAP_MODEL_IMPORT_WASH_DETAIL_SUB.get(basket_Code.toLowerCase());
                                         basket_dialog_list_basket.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR,5));
                                         int xn=0;
                                         for(int i=0;i<MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size();i++){
@@ -7362,11 +7362,11 @@ public class CssdSterile extends AppCompatActivity {
 
                             basket_dialog_w_list.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR,MAP_MODEL_IMPORT_WASH_DETAIL_SUB,4));
                             Log.d("ttest_pair","Key_map = "+MAP_MODEL_IMPORT_WASH_DETAIL_SUB);
-                            Log.d("ttest_pair","containsKey_map = "+MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code));
+                            Log.d("ttest_pair","containsKey_map = "+MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code.toLowerCase()));
                             Log.d("ttest_pair","basket_Code = "+basket_Code);
 
-                            if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code)){
-                                MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR = MAP_MODEL_IMPORT_WASH_DETAIL_SUB.get(basket_Code);
+                            if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code.toLowerCase())){
+                                MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR = MAP_MODEL_IMPORT_WASH_DETAIL_SUB.get(basket_Code.toLowerCase());
                                 basket_dialog_list_basket.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR,5));
                                 int xn=0;
                                 for(int ii=0;ii<MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size();ii++){
