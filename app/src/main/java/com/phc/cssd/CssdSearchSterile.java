@@ -1163,8 +1163,6 @@ public class CssdSearchSterile extends AppCompatActivity {
                                 PrintWash p = new PrintWash();
                                 String p_data = p.print(CssdSearchSterile.this, c.getInt("CaseLabel"), c.getString("PrinterIP"), list);
                                 updatePrintStatus(p_data);
-                                WashID.clear();
-                                WashallID.clear();
                                 for (int a = 0 ; a < MODEL_STERILE_DETAIL.size() ; a ++){
                                     MODEL_STERILE_DETAIL.get(a).setCheck(false);
                                     ArrayAdapter<ModelSterileDetail> adapter = new SearchSterileDetailAdapter(CssdSearchSterile.this, MODEL_STERILE_DETAIL);
@@ -1172,6 +1170,8 @@ public class CssdSearchSterile extends AppCompatActivity {
                                 }
                             }
                             list.clear();
+                            WashID.clear();
+                            WashallID.clear();
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
