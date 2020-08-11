@@ -1586,6 +1586,8 @@ public class CssdSterile extends AppCompatActivity {
         scan_basket.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event)
             {
+                Log.d("ttest_scan","keyCode = "+keyCode);
+                String txt = scan_basket.getText().toString();
                 if (event.getAction() == KeyEvent.ACTION_DOWN)
                 {
                     switch (keyCode)
@@ -1593,7 +1595,7 @@ public class CssdSterile extends AppCompatActivity {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
 
-                            String txt = scan_basket.getText().toString().toLowerCase();
+                            Log.d("ttest_scan","txt = "+txt);
                             if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(txt)&&(!txt.equals(""))){//&&chk_mac()
 
                                 List<ModelImportWashDetail> MODEL_IMPORT_WASH_DETAIL_TO_ADD = MAP_MODEL_IMPORT_WASH_DETAIL_SUB.get(txt);
@@ -1621,9 +1623,11 @@ public class CssdSterile extends AppCompatActivity {
                         default:
                             break;
                     }
+                }else if(keyCode==KeyEvent.KEYCODE_ENTER){
+                    return true;
                 }
 
-                return true;
+                return false;
 
             }
         });

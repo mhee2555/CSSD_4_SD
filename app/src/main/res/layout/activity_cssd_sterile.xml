@@ -460,11 +460,10 @@
                 android:layout_marginRight="24dp"
                 android:layout_marginBottom="15dp"
                 android:background="@drawable/text_dropdown"
-                android:ems="10"
                 android:hint="สแกนตะกร้า"
-                android:inputType="textPersonName"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
+                android:singleLine="true"
                 android:textColor="@color/colorBlack" />
 
             <LinearLayout
