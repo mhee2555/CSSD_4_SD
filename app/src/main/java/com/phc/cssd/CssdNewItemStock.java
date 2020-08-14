@@ -302,7 +302,6 @@ public class CssdNewItemStock extends Activity {
                                         ""
                                 )
                         );
-
                         index++;
                     }
 
