@@ -42,9 +42,13 @@ public class dialog_remark_sendsterile extends Activity {
     String datacheck,EmpCode,Type;
     String IsSave = "0";
 
+    boolean IsAdmin = false;
+
     private SendSterile_MainActivity context;
 
     Intent intent;
+
+    private String data = "";
 
     private String TAG_RESULTS = "result";
     private JSONArray rs = null;
@@ -66,6 +70,7 @@ public class dialog_remark_sendsterile extends Activity {
 
     public void byIntent() {
         intent = getIntent();
+        IsAdmin = intent.getBooleanExtra("IsAdmin",false);
         Itemname = intent.getStringExtra("Itemname");
         Usagecode = intent.getStringExtra("Usagecode");
         DepID = intent.getStringExtra("DepID");
@@ -193,7 +198,7 @@ public class dialog_remark_sendsterile extends Activity {
                     datacheck = "6";
                 }
                 if (userdep.getText().toString().equals("")){
-                    Toast.makeText(dialog_remark_sendsterile.this, "กรุณากรอกชื่อเจ้าาหน้าที่", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(dialog_remark_sendsterile.this, "กรุณากรอกชื่อเจ้าหน้าที่", Toast.LENGTH_SHORT).show();
                 }else {
                     SaveRemark(datacheck,text_remark.getText().toString(),DocNoSend,Usagecode,Itemname,DepID);
                 }
@@ -208,12 +213,17 @@ public class dialog_remark_sendsterile extends Activity {
                     AlertDialog.Builder builder = new AlertDialog.Builder(dialog_remark_sendsterile.this);
                     builder.setCancelable(true);
                     builder.setTitle("ยืนยัน");
-                    builder.setMessage("ยืนยันการยกเลิกRemarkหรือไม่ !!");
+                    builder.setMessage("ยืนยันการยกเลิก Remark หรือไม่ !!");
                     builder.setPositiveButton("ยืนยัน",
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    CancelRemark(datacheck,text_remark.getText().toString(),DocNoSend,Usagecode,Itemname,DepID);
+                                    Log.d("FLJDLDI",IsAdmin+"");
+                                    if (IsAdmin == true){
+                                        CancelRemark(datacheck,text_remark.getText().toString(),DocNoSend,Usagecode,Itemname,DepID);
+                                    }else {
+                                        Toast.makeText(dialog_remark_sendsterile.this, "ผู้ใช้ทั่วไปไม่สามารถยกเลิก Remark ได้ !!", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             });
                     builder.setNegativeButton("ไม่ยืนยัน", new DialogInterface.OnClickListener() {
@@ -249,10 +259,19 @@ public class dialog_remark_sendsterile extends Activity {
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
                         if (c.getString("finish").equals("true")){
+                            Intent intent = new Intent();
+                            intent.putExtra("usagecode",usagecode);
+                            intent.putExtra("DocNoSend",DocNoSend);
+                            setResult(1005, intent);
                             finish();
                             Toast.makeText(dialog_remark_sendsterile.this, "บันทึกสำเร็จ", Toast.LENGTH_SHORT).show();
                             IsSave = "1";
                         }else {
+                            Intent intent = new Intent();
+                            intent.putExtra("usagecode",usagecode);
+                            intent.putExtra("DocNoSend",DocNoSend);
+                            setResult(1005, intent);
+                            finish();
                             Toast.makeText(dialog_remark_sendsterile.this, "บันทึกไม่สำเร็จ", Toast.LENGTH_SHORT).show();
                             IsSave = "0";
                         }
@@ -307,10 +326,19 @@ public class dialog_remark_sendsterile extends Activity {
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
                         if (c.getString("finish").equals("true")){
+                            Intent intent = new Intent();
+                            intent.putExtra("usagecode",usagecode);
+                            intent.putExtra("DocNoSend",DocNoSend);
+                            setResult(1005, intent);
                             finish();
                             Toast.makeText(dialog_remark_sendsterile.this, "บันทึกสำเร็จ", Toast.LENGTH_SHORT).show();
                             IsSave = "1";
                         }else {
+                            Intent intent = new Intent();
+                            intent.putExtra("usagecode",usagecode);
+                            intent.putExtra("DocNoSend",DocNoSend);
+                            setResult(1005, intent);
+                            finish();
                             Toast.makeText(dialog_remark_sendsterile.this, "บันทึกไม่สำเร็จ", Toast.LENGTH_SHORT).show();
                             IsSave = "0";
                         }
@@ -326,6 +354,7 @@ public class dialog_remark_sendsterile extends Activity {
                 HashMap<String, String> data = new HashMap<String,String>();
                 data.put("usagecode",usagecode);
                 data.put("itemname",itemname);
+                data.put("EmpCode",EmpCode);
                 String result = null;
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_delete_remark_send.php", data);

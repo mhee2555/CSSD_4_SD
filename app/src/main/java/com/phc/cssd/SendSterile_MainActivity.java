@@ -34,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.phc.core.data.AsonData;
 import com.phc.core.string.Cons;
+import com.phc.cssd.adapter.CheckListAdapter;
 import com.phc.cssd.adapter.SendSterile_DocListAdapter;
 import com.phc.cssd.adapter.SendSterile_DocListDetailAdapter;
 import com.phc.cssd.adapter.SendSterile_EditDetailAdapter;
@@ -195,6 +196,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     String DepID = "";
     String DocNoSend = "";
     String EmpCode = "";
+    String Usage = "";
     String Type = "";
 
     @Override
@@ -221,7 +223,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         getuserCode();
-       // getlistdetail(Usagecode,"");
     }
 
     public void byIntent() {
@@ -367,6 +368,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         finddoc_l2 = ( Button ) findViewById(R.id.finddoc_l2);
         textView19 = ( TextView ) findViewById(R.id.textView19);
         list_docno_detail = ( ListView ) findViewById(R.id.list_docno_detail);
+
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
@@ -2670,6 +2672,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             try {
                 String RETURN_DATA = data.getStringExtra("RETURN_DATA");
                 String RETURN_VALUE = data.getStringExtra("RETURN_VALUE");
+                String usagecode = data.getStringExtra("usagecode");
+                String DocNoSend = data.getStringExtra("DocNoSend");
                 if (resultCode == Master.user_receive) {
                     if(txt_usr_receive.getContentDescription() == null){
                         txt_usr_receive.setText(RETURN_DATA);
@@ -2690,6 +2694,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     //txt_usr_send.setText(RETURN_DATA);
                     //txt_usr_send.setContentDescription(RETURN_VALUE);
                     //updateSendSterile(Master.user_send, RETURN_VALUE, DocNo);
+                }else if (resultCode == 1005){
+                    getlistdetail(usagecode,DocNoSend);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -3365,10 +3371,11 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         intent.putExtra("DepID", DepID);
         intent.putExtra("DocNoSend", DocNoSend);
         intent.putExtra("EmpCode",EmpCode);
+        intent.putExtra("IsAdmin",IsAdmin);
+        Log.d("FLJDLDI",IsAdmin+"");
         intent.putExtra("Type",type);
         intent.putExtra("context", String.valueOf(SendSterile_MainActivity.this));
-        Log.d("FKJDHJKDH",EmpCode+"");
-        startActivity(intent);
+        startActivityForResult(intent,1005);
     }
 
     public void showAndhideBlueHead(boolean x) {
