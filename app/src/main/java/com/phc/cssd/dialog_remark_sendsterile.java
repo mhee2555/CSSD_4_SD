@@ -49,7 +49,8 @@ public class dialog_remark_sendsterile extends Activity {
     Intent intent;
 
     private String data = "";
-
+    private String RETURN_VALUE = "";
+    private String RETURN_ADMIN = "";
     private String TAG_RESULTS = "result";
     private JSONArray rs = null;
     private HTTPConnect httpConnect = new HTTPConnect();
@@ -218,12 +219,7 @@ public class dialog_remark_sendsterile extends Activity {
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Log.d("FLJDLDI",IsAdmin+"");
-                                    if (IsAdmin == true){
-                                        CancelRemark(datacheck,text_remark.getText().toString(),DocNoSend,Usagecode,Itemname,DepID);
-                                    }else {
-                                        Toast.makeText(dialog_remark_sendsterile.this, "ผู้ใช้ทั่วไปไม่สามารถยกเลิก Remark ได้ !!", Toast.LENGTH_SHORT).show();
-                                    }
+                                    openQR("admin");
                                 }
                             });
                     builder.setNegativeButton("ไม่ยืนยัน", new DialogInterface.OnClickListener() {
@@ -240,6 +236,35 @@ public class dialog_remark_sendsterile extends Activity {
             }
         });
 
+    }
+
+    private void openQR(final String admin){
+        Intent i = new Intent(dialog_remark_sendsterile.this, CssdQrUser.class);
+        i.putExtra("data", admin);
+        startActivityForResult(i,1006);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(data == null)
+            return;
+        try {
+            RETURN_VALUE = data.getStringExtra("RETURN_VALUE");
+            RETURN_ADMIN = data.getStringExtra("RETURN_ADMIN");
+            Log.d("BANK7",RETURN_ADMIN+"");
+            Log.d("BANK7",RETURN_VALUE+"");
+            Log.d("BANK7",resultCode+"");
+            if (resultCode == 1006) {
+                if (RETURN_ADMIN.equals("1")){
+                    CancelRemark(datacheck,text_remark.getText().toString(),DocNoSend,Usagecode,Itemname,DepID);
+                }else {
+                    Toast.makeText(dialog_remark_sendsterile.this, "ผู้ใช้ทั่วไปไม่สามารถยกเลิก Remark ได้ !!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void SaveRemark(final String remarkselect, final String noteremark, final String senddocno, final String usagecode, final String itemname, final String depname) {
@@ -354,7 +379,7 @@ public class dialog_remark_sendsterile extends Activity {
                 HashMap<String, String> data = new HashMap<String,String>();
                 data.put("usagecode",usagecode);
                 data.put("itemname",itemname);
-                data.put("EmpCode",EmpCode);
+                data.put("EmpCode",RETURN_VALUE);
                 String result = null;
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_delete_remark_send.php", data);

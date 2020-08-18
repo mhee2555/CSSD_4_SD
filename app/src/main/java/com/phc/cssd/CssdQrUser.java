@@ -55,7 +55,6 @@ public class CssdQrUser extends Activity {
 
     private void byWidget() {
         txt_user_code = (EditText) findViewById(R.id.txt_user_code);
-
         txt_user_code.setOnKeyListener(new View.OnKeyListener()
         {
             public boolean onKey(View v, int keyCode, KeyEvent event)
@@ -66,30 +65,22 @@ public class CssdQrUser extends Activity {
                     {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
-
                             String user_code = txt_user_code.getText().toString();
-
                             onCheckUser(user_code);
-
                             return true;
                         default:
                             break;
                     }
                 }
-
-
                 return false;
-
             }
 
 
         });
     }
-
     // =============================================================================================
     // Check User
     // =============================================================================================
-
     private void onCheckUser(final String user_code){
         class CheckUser extends AsyncTask<String, Void, String> {
 
@@ -102,39 +93,43 @@ public class CssdQrUser extends Activity {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
                 try {
                     JSONObject jsonObj = new JSONObject(result);
                     rs = jsonObj.getJSONArray(TAG_RESULTS);
-
                     for(int i=0;i<rs.length();i++){
                         JSONObject c = rs.getJSONObject(i);
-
                         if(c.getString("result").equals("A")) {
-
-                            Intent intent = new Intent();
-                            intent.putExtra("RETURN_DATA", c.getString("data"));
-                            intent.putExtra("RETURN_VALUE", c.getString("value"));
-                            setResult(Master.getResult(data), intent);
-
-                            finish();
+                            Log.d("BANK7",data+"");
+                            if (data.equals("admin")){
+                                Intent intent = new Intent();
+                                intent.putExtra("RETURN_DATA", c.getString("data"));
+                                intent.putExtra("RETURN_VALUE", c.getString("value"));
+                                intent.putExtra("RETURN_ADMIN", c.getString("admin"));
+                                setResult(1006, intent);
+                                finish();
+                            }else {
+                                Intent intent = new Intent();
+                                intent.putExtra("RETURN_DATA", c.getString("data"));
+                                intent.putExtra("RETURN_VALUE", c.getString("value"));
+                                setResult(Master.getResult(data), intent);
+                                finish();
+                            }
                         }else{
                             Toast.makeText(CssdQrUser.this, "ไม่พบผู้ใช้งานนี้ !!", Toast.LENGTH_SHORT).show();
                         }
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
                 data.put("p_user_code", user_code);
-
+                if (data != null){
+                    data.put("data", String.valueOf(data));
+                }
                 String result = null;
-
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_check_user.php", data);
                     Log.d("BANK7",data+"");
@@ -142,21 +137,11 @@ public class CssdQrUser extends Activity {
                 }catch(Exception e){
                     e.printStackTrace();
                 }
-
-
-
-
                 return result;
             }
-
-
             // =========================================================================================
         }
-
         CheckUser obj = new CheckUser();
         obj.execute();
     }
-
-
-
 }

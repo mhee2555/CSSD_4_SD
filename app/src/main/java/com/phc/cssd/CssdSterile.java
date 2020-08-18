@@ -3561,17 +3561,13 @@ public class CssdSterile extends AppCompatActivity {
                             case "bowiedick":
                                 createSterile(getProcessId());
                                 break;
-
                         }
-
                     }else{
-
                     }
                 }else{
                     Toast.makeText(this, "บันทึกไม่สำเร็จ", Toast.LENGTH_SHORT).show();
                 }
             }
-
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -3584,14 +3580,10 @@ public class CssdSterile extends AppCompatActivity {
         backgroundWorker.execute("create_wash", userid, p_SterileProgramID, p_SterileMachineID,xDep,xId,xQty,xReSterile,xReSterileType,RETURN_IsWithdraw);
     }
 
-
-
     public int getMachineNumberActive(String MachineId) {
-
         if(MAX_STERILE_MACHINE > 0 && MACHINE_1.get(i).getID().equals(MachineId)){
             return MACHINE_1.get(i).getMachineNumber();
         }
-
         if(MAX_STERILE_MACHINE > 1 && MACHINE_2.get(i).getID().equals(MachineId)){
             return MACHINE_2.get(i).getMachineNumber();
         }
