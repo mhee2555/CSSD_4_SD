@@ -79,9 +79,6 @@ public class dialog_remark_sendsterile extends Activity {
         DocNoSend = intent.getStringExtra("DocNoSend");
         EmpCode = intent.getStringExtra("EmpCode");
         Type = intent.getStringExtra("Type");
-        if (Type.equals("1")){
-            ShowDetail(DocNoSend,Itemname);
-        }
     }
 
     public void initialize() {
@@ -98,6 +95,11 @@ public class dialog_remark_sendsterile extends Activity {
                 finish();
             }
         });
+
+        if (Type.equals("1")){
+            ShowDetail(DocNoSend,Itemname);
+        }
+        SaveRemarkDocNoStart(DocNoSend,Usagecode,Itemname);
 
         check1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -203,7 +205,7 @@ public class dialog_remark_sendsterile extends Activity {
                     Toast.makeText(dialog_remark_sendsterile.this, "กรุณากรอกชื่อเจ้าหน้าที่", Toast.LENGTH_SHORT).show();
                 }else {
                     if (IsStatus.equals("0")){
-                        SaveRemark(datacheck,text_remark.getText().toString(),DocNoSend,Usagecode,Itemname,DepID);
+                        SaveRemarkDocNo(DocNoSend,Usagecode,Itemname);
                     }else {
                         Toast.makeText(dialog_remark_sendsterile.this, "ไม่สามารถแก้ไข Remark ได้เนื่องจากเอกสารถูกบันทึกแล้ว !!", Toast.LENGTH_SHORT).show();
                     }
@@ -270,6 +272,122 @@ public class dialog_remark_sendsterile extends Activity {
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void SaveRemarkDocNo(final String senddocno, final String usagecode, final String itemname) {
+        class SaveRemarkDocNo extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        if (c.getString("finish").equals("1") || c.getString("finish").equals("0")){
+                            SaveRemark(datacheck,text_remark.getText().toString(),DocNoSend,Usagecode,Itemname,DepID);
+                        }else {
+                            Toast.makeText(dialog_remark_sendsterile.this, "กรุณายกเลิก Remark เก่าก่อน !!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("senddocno",senddocno);
+                data.put("usagecode",usagecode);
+                data.put("itemname",itemname);
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_check_remark_send.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        SaveRemarkDocNo obj = new SaveRemarkDocNo();
+        obj.execute();
+    }
+
+    public void SaveRemarkDocNoStart(final String senddocno, final String usagecode, final String itemname) {
+        class SaveRemarkDocNoStart extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        if (c.getString("finish").equals("1") || c.getString("finish").equals("0")){
+                            userdep.setEnabled(true);
+                            text_remark.setEnabled(true);
+                            summit.setEnabled(true);
+                            check1.setEnabled(true);
+                            check2.setEnabled(true);
+                            check3.setEnabled(true);
+                            check4.setEnabled(true);
+                            check5.setEnabled(true);
+                            check6.setEnabled(true);
+                        }else {
+                            userdep.setEnabled(false);
+                            text_remark.setEnabled(false);
+                            summit.setEnabled(false);
+                            check1.setEnabled(false);
+                            check2.setEnabled(false);
+                            check3.setEnabled(false);
+                            check4.setEnabled(false);
+                            check5.setEnabled(false);
+                            check6.setEnabled(false);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("senddocno",senddocno);
+                data.put("usagecode",usagecode);
+                data.put("itemname",itemname);
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_check_remark_send.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        SaveRemarkDocNoStart obj = new SaveRemarkDocNoStart();
+        obj.execute();
     }
 
     public void SaveRemark(final String remarkselect, final String noteremark, final String senddocno, final String usagecode, final String itemname, final String depname) {
