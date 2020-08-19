@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -48,6 +49,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SterileSeachActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -62,6 +65,7 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
     ArrayList<Response_Aux> resultssterileround = new ArrayList<Response_Aux>();
     ArrayList<Response_Aux> resultssteriledocument = new ArrayList<Response_Aux>();
     ArrayList<Response_Aux> resultssteriledetail = new ArrayList<Response_Aux>();
+    ArrayList<Response_Aux> resultssteriledetailgroup = new ArrayList<Response_Aux>();
     ArrayList<Response_Aux> resultsOccurance;
     ArrayList<Response_Aux> xListOccuranceType = new ArrayList<Response_Aux>();
     ArrayList<Response_Machine_ApStock> listMachine_ApStock = new ArrayList<Response_Machine_ApStock>();
@@ -119,6 +123,8 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
     Object DateTime;
     ProgressDialog loadingDialog;
     String B_ID ;
+    private Switch switchGroup;
+    boolean isSterileDetailGroup = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,6 +211,23 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
                 ClosePage();
             }
         });
+
+        switchGroup = (Switch) findViewById(R.id.switchGroup);
+        switchGroup.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Log.d("ttest_switchGroup","switchGroup = "+switchGroup.isChecked());
+                isSterileDetailGroup = switchGroup.isChecked();
+                if(isSterileDetailGroup){
+                    lv1.setAdapter(new SterileDetailForSearchAdapter( SterileSeachActivity.this, resultssteriledetailgroup,xIsStatus,userid,DocNo,xQty,2));
+                }else{
+                    lv1.setAdapter(new SterileDetailForSearchAdapter( SterileSeachActivity.this, resultssteriledetail,xIsStatus,userid,DocNo,xQty,1));
+                }
+            }
+        });
+
+        isSterileDetailGroup = switchGroup.isChecked();
+
         initialize();
     }
 
@@ -573,10 +596,13 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 try {
+
+                    HashMap<String, Integer> itemCodeSet = new HashMap<String,Integer>();
                     Response_Aux newsData;
                     JSONObject jsonObj = new JSONObject(s);
                     setRs = jsonObj.getJSONArray(TAG_RESULTS);
                     resultssteriledetail.clear();
+                    resultssteriledetailgroup.clear();
                     for(int i=0;i<setRs.length();i++){
                         newsData = new Response_Aux();
                         JSONObject c = setRs.getJSONObject(i);
@@ -590,9 +616,32 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
                         newsData.setFields8(c.getString("OccuranceDocNo"));
                         newsData.setFields15(c.getString("IsRemarkExpress"));
                         resultssteriledetail.add( newsData );
+
+                        Response_Aux newsData2 = new Response_Aux();
+                        int cnt = itemCodeSet.size();
+                        if(!itemCodeSet.containsKey(c.getString("xItemCode"))){
+                            itemCodeSet.put(c.getString("xItemCode"),cnt);
+
+                            newsData2.setFields1(c.getString("xId"));
+                            newsData2.setFields2(c.getString("xItemName"));
+                            newsData2.setFields3(c.getString("xQty"));
+                            newsData2.setFields6(c.getString("xItemCode"));
+                            resultssteriledetailgroup.add(newsData2);
+                        }else{
+                            newsData2 = resultssteriledetailgroup.get(itemCodeSet.get(c.getString("xItemCode")));
+                            int qty = Integer.parseInt(newsData2.getFields3())+1;
+                            newsData2.setFields3(qty+"");
+                        }
+
                     }
-                    lv1 = (GridView) findViewById(R.id.ListView02);
-                    lv1.setAdapter(new SterileDetailForSearchAdapter( SterileSeachActivity.this, resultssteriledetail,xIsStatus,userid,DocNo,xQty));
+
+                    Log.d("ttest_switchGroup","isSterileDetailGroup = "+isSterileDetailGroup);
+                    if(isSterileDetailGroup){
+                        lv1.setAdapter(new SterileDetailForSearchAdapter( SterileSeachActivity.this, resultssteriledetailgroup,xIsStatus,userid,DocNo,xQty,2));
+                    }else{
+                        lv1.setAdapter(new SterileDetailForSearchAdapter( SterileSeachActivity.this, resultssteriledetail,xIsStatus,userid,DocNo,xQty,1));
+                    }
+//                    lv1 = (GridView) findViewById(R.id.ListView02);
                     int IsOcc = 0;
                     int IsImport = 0;
                     for(int n=0;n<resultssteriledetail.size();n++){
@@ -718,6 +767,7 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
                     JSONObject jsonObj = new JSONObject(s);
                     setRs = jsonObj.getJSONArray(TAG_RESULTS);
                     resultssteriledetail.clear();
+                    resultssteriledetailgroup.clear();
                     Log.d("ttest","in ReturnOccurance resultssteriledetail.clear");
                     for(int i=0;i<setRs.length();i++){
                         JSONObject c = setRs.getJSONObject(i);

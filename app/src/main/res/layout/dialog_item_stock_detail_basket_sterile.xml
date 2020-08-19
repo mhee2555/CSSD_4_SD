@@ -21,14 +21,24 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/packer"
+        android:id="@+id/textView192"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textView14"
         android:layout_marginStart="35dp"
         android:layout_marginBottom="0dp"
         android:layout_toEndOf="@+id/textView14"
-        android:text="TextView"
+        android:text="Packer : "
+        android:textColor="@color/colorwhite" />
+
+    <TextView
+        android:id="@+id/packer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView192"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/textView192"
         android:textColor="@color/colorwhite" />
 
     <RelativeLayout
