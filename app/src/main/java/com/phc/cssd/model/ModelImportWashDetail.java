@@ -21,7 +21,8 @@ public class ModelImportWashDetail implements Cloneable {
             i_UsageCode,
             BasketType,
             BasketDetailId,
-            BasketCode;
+            BasketCode,
+            i_program_type;
 
     private int print_count;
 
@@ -48,7 +49,8 @@ public class ModelImportWashDetail implements Cloneable {
         this.IsRemarkExpress = IsRemarkExpress;
     }
 
-    public ModelImportWashDetail(int index, boolean isCheck, String i_id, String i_code, String i_name, String i_alt_name, String i_barcode, String i_qty, String i_program, String i_program2, String i_program_id, String PackingMat, String Shelflife, String PackingMatID, String BasketName, String IsRemarkExpress,String i_UsageCode,String BasketCode,String BasketType,String BasketDetailId,String print_count) {
+    //Use for CssdSterile
+    public ModelImportWashDetail(int index, boolean isCheck, String i_id, String i_code, String i_name, String i_alt_name, String i_barcode, String i_qty, String i_program, String i_program2, String i_program_id, String PackingMat, String Shelflife, String PackingMatID, String BasketName, String IsRemarkExpress,String i_UsageCode,String BasketCode,String BasketType,String BasketDetailId,String print_count,String i_program_type) {
         this.i_id = i_id;
         this.i_code = i_code;
         this.i_name = i_name;
@@ -70,6 +72,15 @@ public class ModelImportWashDetail implements Cloneable {
         this.BasketType = BasketType;
         this.BasketDetailId = BasketDetailId;
         this.print_count= Integer.parseInt(print_count);
+        this.i_program_type= i_program_type;
+    }
+
+    public String getI_program_type() {
+        return i_program_type;
+    }
+
+    public void setI_program_type(String i_program_type) {
+        this.i_program_type = i_program_type;
     }
 
     public int getPrint_count() {

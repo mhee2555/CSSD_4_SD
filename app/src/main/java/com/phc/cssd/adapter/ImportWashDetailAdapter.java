@@ -25,6 +25,7 @@ import com.phc.cssd.CssdWash;
 import com.phc.cssd.R;
 import com.phc.cssd.model.ModelImportWashDetail;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -252,20 +253,10 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                 imv_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        for (int i = 0; i < DETAIL_SUB.size(); i++) {
 
-                            ModelImportWashDetail x = DETAIL_SUB.get(i);
-
-                            ((CssdSterile) context).importWashDetail(
-                                    x.getI_code(),
-                                    x.getI_program_id(),
-                                    x.getI_program(),
-                                    x.getPackingMatID(),
-                                    x.getI_qty(),
-                                    x.getBasketCode(),
-                                    x.getI_UsageCode()
-                            );
-                        }
+                        ((CssdSterile) context).importWashDetail(
+                                DETAIL_SUB
+                        );
                     }
                 });
             }else {
@@ -327,20 +318,33 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                 imv_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        String print_w_id = "";
+                        Boolean cnt = true;
                         for (int i = 0; i < DETAIL_SUB.size(); i++) {
-
                             ModelImportWashDetail x = DETAIL_SUB.get(i);
-
-                            ((CssdSterile) context).importWashDetailToBasket(
-                                    x.getI_code(),
-                                    x.getI_program_id(),
-                                    x.getI_program(),
-                                    x.getPackingMatID(),
-                                    x.getI_qty(),
-                                    x.getBasketCode(),
-                                    x.getI_UsageCode()
-                            );
+                            if(!(((CssdSterile) context).CheckProgramTypePairBasket(x.getI_program_type()))){
+                                cnt = false;
+                            }
                         }
+
+                        if(cnt){
+                            for (int i = 0; i < DETAIL_SUB.size(); i++) {
+
+                                ModelImportWashDetail x = DETAIL_SUB.get(i);
+
+                                ((CssdSterile) context).importWashDetailToBasket(
+                                        x.getI_code(),
+                                        x.getPackingMatID(),
+                                        x.getI_UsageCode()
+                                );
+                                print_w_id=print_w_id+","+x.getI_id();
+                            }
+                            print_w_id = print_w_id.substring(1);
+                            ((CssdSterile)context).checkPacker(print_w_id);
+                        }else{
+                            Toast.makeText(((CssdSterile) context), "โปรแกรมฆ่าเชื้อไม่ตรงกันกับรายการในตะกร้า !!", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 });
             }else {
@@ -349,16 +353,18 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                 imv_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ((CssdSterile)context).importWashDetailToBasket(
-                                txt_item_code.getText().toString(),
-                                txt_item_program_id.getText().toString() ,
-                                item_program,
-                                PackingMatID,
-                                txt_qty.getText().toString(),
-                                basket,
-                                usageCode
+                        if(((CssdSterile) context).CheckProgramTypePairBasket(DATA_MODEL.get(position).getI_program_type())){
+                            ((CssdSterile)context).importWashDetailToBasket(
+                                    txt_item_code.getText().toString(),
+                                    PackingMatID,
+                                    usageCode
 
-                        );
+                            );
+                            ((CssdSterile)context).checkPacker(DATA_MODEL.get(position).getI_id());
+                        }else{
+                            Toast.makeText(((CssdSterile) context), "โปรแกรมฆ่าเชื้อไม่ตรงกันกับรายการในตะกร้า !!", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 });
             }

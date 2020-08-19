@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SterileDetailForSearchAdapter extends ArrayAdapter {
+
+    int usagecodeMode = 1;
+    int itemcodeMode = 2;
+
     private ArrayList<Response_Aux> listData ;
     private Activity context;
     private int IsStatus;
@@ -38,8 +43,19 @@ public class SterileDetailForSearchAdapter extends ArrayAdapter {
     ArrayList<Response_Aux> resultssteriledetail = new ArrayList<Response_Aux>();
     String DocNo;
     String Qty;
+    int mode;
 
-    public SterileDetailForSearchAdapter(Activity aActivity, ArrayList<Response_Aux> listData, int IsStatus, String UserId, String DocNo, String Qty) {
+//    public SterileDetailForSearchAdapter(Activity aActivity, ArrayList<Response_Aux> listData, int IsStatus, String UserId, String DocNo, String Qty) {
+//        super(aActivity, 0, listData);
+//        this.context = aActivity;
+//        this.listData = listData;
+//        this.IsStatus = IsStatus;
+//        this.UserId = UserId;
+//        this.DocNo = DocNo;
+//        this.Qty = Qty;
+//    }
+
+    public SterileDetailForSearchAdapter(Activity aActivity, ArrayList<Response_Aux> listData, int IsStatus, String UserId, String DocNo, String Qty,int mode) {
         super(aActivity, 0, listData);
         this.context = aActivity;
         this.listData = listData;
@@ -47,6 +63,7 @@ public class SterileDetailForSearchAdapter extends ArrayAdapter {
         this.UserId = UserId;
         this.DocNo = DocNo;
         this.Qty = Qty;
+        this.mode = mode;
     }
 
     @Override
@@ -66,65 +83,86 @@ public class SterileDetailForSearchAdapter extends ArrayAdapter {
         final int nPosition=position;
         final TextView tFields1 = (TextView) v.findViewById(R.id.tFields1);
         final TextView tFields2 = (TextView) v.findViewById(R.id.tFields2);
+        final TextView tFields3 = (TextView) v.findViewById(R.id.tFields3);
         final ImageView ems = (ImageView) v.findViewById(R.id.ems);
         final ImageView imageView01 = (ImageView) v.findViewById(R.id.imageView1);
-        final LinearLayout Re1 = (LinearLayout) v.findViewById(R.id.Re1);
+        final RelativeLayout Re1 = (RelativeLayout) v.findViewById(R.id.Re1);
 
-        if (listData.get(position).getFields15().equals("0")){
-            ems.setVisibility(View.GONE);
-        }else {
-            ems.setVisibility(View.VISIBLE);
-        }
-
-        ems.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((SterileSeachActivity)context).DisplayRemarkItem(listData.get(position).getFields6());
+        if(mode==usagecodeMode){ //usagecodeMode
+            tFields3.setVisibility(View.GONE);
+            if (listData.get(position).getFields15().equals("0")){
+                ems.setVisibility(View.GONE);
+            }else {
+                ems.setVisibility(View.VISIBLE);
             }
-        });
 
-        imageView01.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                int Status = 0;
-                if( listData.get(nPosition).getFields5().equals("0") ) {
-                    Status = 1;
-                    imageView01.setImageResource(R.drawable.ic_box_normal_blue);
-                    Re1.setBackgroundResource(R.drawable.rectangle_red);
-                }else {
-                    Status = 0;
+            ems.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((SterileSeachActivity)context).DisplayRemarkItem(listData.get(position).getFields6());
+                }
+            });
+
+            imageView01.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    int Status = 0;
+                    if( listData.get(nPosition).getFields5().equals("0") ) {
+                        Status = 1;
+                        imageView01.setImageResource(R.drawable.ic_box_normal_blue);
+                        Re1.setBackgroundResource(R.drawable.rectangle_red);
+                    }else {
+                        Status = 0;
+                        imageView01.setImageResource(R.drawable.ic_box_check_blue);
+                        Re1.setBackgroundResource(R.drawable.rectangle);
+                    }
+                    listData.get(nPosition).setFields5(Status+"");
+                    UpdateSDIsOccurence(listData.get(nPosition).getFields1(),Status+"");
+                }
+            });
+
+
+            if( IsStatus>0 ) {
+                tFields1.setText(listData.get(position).getFields2());
+                tFields2.setText("รหัสใช้งาน : "+listData.get(position).getFields6());
+                if (listData.get(position).getFields5().equals("0")) {
                     imageView01.setImageResource(R.drawable.ic_box_check_blue);
                     Re1.setBackgroundResource(R.drawable.rectangle);
+                } else if (listData.get(position).getFields5().equals("1")) {
+                    imageView01.setImageResource(R.drawable.ic_box_normal_blue);
+                    Re1.setBackgroundResource(R.drawable.rectangle_red);
+                    if(!listData.get(position).getFields8().equals("null")){
+                        imageView01.setEnabled(false);
+                    }
+                }else {
+                    Re1.setBackgroundResource(R.drawable.rectangle_red);
+                    tFields1.setTextColor(Color.RED);
+                    tFields2.setTextColor(Color.RED);
+                    imageView01.setVisibility(View.GONE);
                 }
-                listData.get(nPosition).setFields5(Status+"");
-                UpdateSDIsOccurence(listData.get(nPosition).getFields1(),Status+"");
-            }
-        });
-
-
-        if( IsStatus>0 ) {
-            tFields1.setText(listData.get(position).getFields2());
-            tFields2.setText("รหัสใช้งาน : "+listData.get(position).getFields6());
-            if (listData.get(position).getFields5().equals("0")) {
-                imageView01.setImageResource(R.drawable.ic_box_check_blue);
-                Re1.setBackgroundResource(R.drawable.rectangle);
-            } else if (listData.get(position).getFields5().equals("1")) {
-                imageView01.setImageResource(R.drawable.ic_box_normal_blue);
-                Re1.setBackgroundResource(R.drawable.rectangle_red);
-                if(!listData.get(position).getFields8().equals("null")){
-                    imageView01.setEnabled(false);
-                }
-            }else {
-                Re1.setBackgroundResource(R.drawable.rectangle_red);
-                tFields1.setTextColor(Color.RED);
-                tFields2.setTextColor(Color.RED);
+            }else{
+                Re1.setVisibility(View.GONE);
+                tFields1.setVisibility(View.GONE);
+                tFields2.setVisibility(View.GONE);
                 imageView01.setVisibility(View.GONE);
             }
-        }else{
-            Re1.setVisibility(View.GONE);
-            tFields1.setVisibility(View.GONE);
-            tFields2.setVisibility(View.GONE);
+        }else{ //itemcodeMode
+
+            ems.setVisibility(View.GONE);
             imageView01.setVisibility(View.GONE);
+
+            if( IsStatus>0 ) {
+                tFields1.setText(listData.get(position).getFields2());
+                tFields2.setText("รหัสรายการ : "+listData.get(position).getFields6());
+                tFields3.setText("จำนวน : "+listData.get(position).getFields3());
+            }else{
+                Re1.setVisibility(View.GONE);
+                tFields1.setVisibility(View.GONE);
+                tFields2.setVisibility(View.GONE);
+                imageView01.setVisibility(View.GONE);
+            }
         }
+
+
         return v;
     }
 
