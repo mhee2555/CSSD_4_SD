@@ -38,7 +38,7 @@ public class dialog_remark_sendsterile extends Activity {
     Button summit,cancle;
     ImageView close;
 
-    String Itemname,Usagecode,DepID,DocNoSend;
+    String Itemname,Usagecode,DepID,DocNoSend,IsStatus;
     String datacheck,EmpCode,Type;
     String IsSave = "0";
 
@@ -72,6 +72,7 @@ public class dialog_remark_sendsterile extends Activity {
     public void byIntent() {
         intent = getIntent();
         IsAdmin = intent.getBooleanExtra("IsAdmin",false);
+        IsStatus = intent.getStringExtra("IsStatus");
         Itemname = intent.getStringExtra("Itemname");
         Usagecode = intent.getStringExtra("Usagecode");
         DepID = intent.getStringExtra("DepID");
@@ -201,7 +202,11 @@ public class dialog_remark_sendsterile extends Activity {
                 if (userdep.getText().toString().equals("")){
                     Toast.makeText(dialog_remark_sendsterile.this, "กรุณากรอกชื่อเจ้าหน้าที่", Toast.LENGTH_SHORT).show();
                 }else {
-                    SaveRemark(datacheck,text_remark.getText().toString(),DocNoSend,Usagecode,Itemname,DepID);
+                    if (IsStatus.equals("0")){
+                        SaveRemark(datacheck,text_remark.getText().toString(),DocNoSend,Usagecode,Itemname,DepID);
+                    }else {
+                        Toast.makeText(dialog_remark_sendsterile.this, "ไม่สามารถแก้ไข Remark ได้เนื่องจากเอกสารถูกบันทึกแล้ว !!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -356,7 +361,7 @@ public class dialog_remark_sendsterile extends Activity {
                             intent.putExtra("DocNoSend",DocNoSend);
                             setResult(1005, intent);
                             finish();
-                            Toast.makeText(dialog_remark_sendsterile.this, "บันทึกสำเร็จ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(dialog_remark_sendsterile.this, "ยกเลิก Remark สำเร็จ", Toast.LENGTH_SHORT).show();
                             IsSave = "1";
                         }else {
                             Intent intent = new Intent();
@@ -364,7 +369,7 @@ public class dialog_remark_sendsterile extends Activity {
                             intent.putExtra("DocNoSend",DocNoSend);
                             setResult(1005, intent);
                             finish();
-                            Toast.makeText(dialog_remark_sendsterile.this, "บันทึกไม่สำเร็จ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(dialog_remark_sendsterile.this, "ยกเลิก Remark ไม่สำเร็จ", Toast.LENGTH_SHORT).show();
                             IsSave = "0";
                         }
                     }
@@ -414,15 +419,17 @@ public class dialog_remark_sendsterile extends Activity {
                         JSONObject c = rs.getJSONObject(i);
                         userdep.setText(c.getString("DepRemark"));
                         text_remark.setText(c.getString("Note"));
-                        userdep.setEnabled(false);
-                        text_remark.setEnabled(false);
-                        summit.setEnabled(false);
-                        check1.setEnabled(false);
-                        check2.setEnabled(false);
-                        check3.setEnabled(false);
-                        check4.setEnabled(false);
-                        check5.setEnabled(false);
-                        check6.setEnabled(false);
+                        if (IsStatus.equals("1")){
+                            userdep.setEnabled(false);
+                            text_remark.setEnabled(false);
+                            summit.setEnabled(false);
+                            check1.setEnabled(false);
+                            check2.setEnabled(false);
+                            check3.setEnabled(false);
+                            check4.setEnabled(false);
+                            check5.setEnabled(false);
+                            check6.setEnabled(false);
+                        }
                         if (c.getString("RemarkTypeID").equals("1")){
                             check1.setChecked(true);
                             check2.setChecked(false);

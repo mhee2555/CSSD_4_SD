@@ -3372,7 +3372,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         intent.putExtra("DocNoSend", DocNoSend);
         intent.putExtra("EmpCode",EmpCode);
         intent.putExtra("IsAdmin",IsAdmin);
-        Log.d("FLJDLDI",IsAdmin+"");
+        intent.putExtra("IsStatus",IsStatus);
         intent.putExtra("Type",type);
         intent.putExtra("context", String.valueOf(SendSterile_MainActivity.this));
         startActivityForResult(intent,1005);
