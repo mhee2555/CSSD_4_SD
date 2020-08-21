@@ -234,6 +234,10 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
     public void initialize(){
         b_Occurance.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if(isSterileDetailGroup){
+                    Toast.makeText(getApplicationContext(), "กรุณาปิดโหมดแสดงแบบรวมรหัสใช้งาน", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 xIsOccurance = 0;
                 resultsOccurance = new ArrayList<Response_Aux>();
                 for(int n=0;n<resultssteriledetail.size();n++){
