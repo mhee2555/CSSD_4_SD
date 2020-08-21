@@ -83,49 +83,25 @@ public class CheckListAdapter extends ArrayAdapter {
 
         R1.setOnLongClickListener(new View.OnLongClickListener() {
             public boolean onLongClick(View v) {
-
                 if (model.getNameType().equals("")) {
                     return false;
                 } else {
                     AlertDialog.Builder quitDialog = new AlertDialog.Builder(acc);
-                    quitDialog.setTitle(Cons.TITLE);
-                    quitDialog.setMessage("ยืนยันลบ Remark ออกจากรายการ ?");
-
-                    quitDialog.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
-
+                    quitDialog.setTitle("แจ้งเตือน");
+                    quitDialog.setMessage("คุณต้องการ Delete Remark / Admin Approve หรือไม่ !!");
+                    quitDialog.setPositiveButton("Admin Approve", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
-                            listData.get(position).setRemark("-");
-                            listData.get(position).setAdminRemark("-");
-                            listData.get(position).setNameType("-");
-                            listData.get(position).setDateRemark("-");
-
-                            txt_remark.setText(listData.get(position).getRemark());
-                            txt_remark_admin.setText(listData.get(position).getAdminRemark());
-                            txt_remark_type.setText(listData.get(position).getNameType());
-                            txt_remark_date.setText(listData.get(position).getDateRemark());
-
-                            txtitemname.setTextColor(Color.GRAY);
-                            txt_caption_qty.setTextColor(Color.GRAY);
-                            txt_qty.setTextColor(Color.GRAY);
-                            txt_remark.setTextColor(Color.GRAY);
-                            txt_remark_admin.setTextColor(Color.GRAY);
-                            txt_remark_type.setTextColor(Color.GRAY);
-                            txt_remark_date.setTextColor(Color.GRAY);
-
-                            checkbox.setChecked(true);
-                            listData.get(position).setCheck(true);
-
+                            ((CssdCheckList)acc).openQR("admin",listData.get(position).getItemcode(),listData.get(position).getItem_Detail_ID(),listData.get(position).getRowID(),"approve");
                             ((CssdCheckList)acc).onListClick(img_set, img_detail);
                         }
                     });
 
-                    quitDialog.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
-
+                    quitDialog.setNegativeButton("Delete Remark", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
+                            ((CssdCheckList)acc).openQR("admin",listData.get(position).getItemcode(),listData.get(position).getItem_Detail_ID(),listData.get(position).getRowID(),"delete");
+                            ((CssdCheckList)acc).onListClick(img_set, img_detail);
                         }
                     });
 
@@ -136,9 +112,7 @@ public class CheckListAdapter extends ArrayAdapter {
             }
         });
 
-        if (model.getNameType().equals("")) {
-
-        } else {
+        if (!model.getNameType().equals("") && model.getAdminApprove().equals("0")){
             txtitemname.setTextColor(Color.RED);
             txt_caption_qty.setTextColor(Color.RED);
             txt_qty.setTextColor(Color.RED);
@@ -146,6 +120,42 @@ public class CheckListAdapter extends ArrayAdapter {
             txt_remark_admin.setTextColor(Color.RED);
             txt_remark_type.setTextColor(Color.RED);
             txt_remark_date.setTextColor(Color.RED);
+        }else if (!model.getNameType().equals("") && model.getAdminApprove().equals("1")){
+            listData.get(position).setRemark("-");
+            listData.get(position).setAdminRemark("-");
+            listData.get(position).setNameType("-");
+            listData.get(position).setDateRemark("-");
+            txt_remark.setText(listData.get(position).getRemark());
+            txt_remark_admin.setText(listData.get(position).getAdminRemark());
+            txt_remark_type.setText(listData.get(position).getNameType());
+            txt_remark_date.setText(listData.get(position).getDateRemark());
+            txtitemname.setTextColor(Color.GRAY);
+            txt_caption_qty.setTextColor(Color.GRAY);
+            txt_qty.setTextColor(Color.GRAY);
+            txt_remark.setTextColor(Color.GRAY);
+            txt_remark_admin.setTextColor(Color.GRAY);
+            txt_remark_type.setTextColor(Color.GRAY);
+            txt_remark_date.setTextColor(Color.GRAY);
+            checkbox.setChecked(true);
+            listData.get(position).setCheck(true);
+        }else {
+            listData.get(position).setRemark("-");
+            listData.get(position).setAdminRemark("-");
+            listData.get(position).setNameType("-");
+            listData.get(position).setDateRemark("-");
+            txt_remark.setText(listData.get(position).getRemark());
+            txt_remark_admin.setText(listData.get(position).getAdminRemark());
+            txt_remark_type.setText(listData.get(position).getNameType());
+            txt_remark_date.setText(listData.get(position).getDateRemark());
+            txtitemname.setTextColor(Color.BLACK);
+            txt_caption_qty.setTextColor(Color.BLACK);
+            txt_qty.setTextColor(Color.BLACK);
+            txt_remark.setTextColor(Color.BLACK);
+            txt_remark_admin.setTextColor(Color.BLACK);
+            txt_remark_type.setTextColor(Color.BLACK);
+            txt_remark_date.setTextColor(Color.BLACK);
+            checkbox.setChecked(true);
+            listData.get(position).setCheck(true);
         }
 
         checkbox.setOnClickListener(new View.OnClickListener() {

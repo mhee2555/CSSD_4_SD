@@ -271,6 +271,7 @@
                     android:numColumns="1" />
 
             </LinearLayout>
+
         </LinearLayout>
         <!-- east -->
         <LinearLayout

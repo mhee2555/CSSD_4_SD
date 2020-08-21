@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.phc.core.connect.HTTPConnect;
 import com.phc.core.string.Cons;
 import com.phc.cssd.adapter.CheckListAdapter;
+import com.phc.cssd.data.Master;
 import com.phc.cssd.model.ModelCheckList;
 import com.phc.cssd.model.ModelWashDetailForPrint;
 import com.phc.cssd.print_sticker.PrintWash;
@@ -76,6 +77,13 @@ public class CssdCheckList extends Activity {
     private TextView txt_packer;
     private TextView txt_item_name;
     private TextView txt_item_detail;
+    private String RETURN_VALUE = "";
+    private String RETURN_ADMIN = "";
+    private String RETURN_ITEMCODE = "";
+    private String RETURN_ITEMDETAIL = "";
+    private String RETURN_ROWID = "";
+    private String RETURN_TYPE = "";
+    String IsSave = "0";
 
     private ImageView img_item;
     private ImageView img_item_all;
@@ -165,6 +173,7 @@ public class CssdCheckList extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         clearAll();
+                        ReturnApprove();
                         COUNT_PROCESS = 0;
                     }
                 });
@@ -256,9 +265,7 @@ public class CssdCheckList extends Activity {
 
         txt_packer.setOnLongClickListener(new View.OnLongClickListener() {
             public boolean onLongClick(View v) {
-
                 checkPacker("EM00002");
-
                 return true;
             }
         });
@@ -271,7 +278,6 @@ public class CssdCheckList extends Activity {
                     for (int i = 0; i < MODEL_CHECK_LIST.size(); i++) {
                         MODEL_CHECK_LIST.get(i).setCheck(checkbox.isChecked());
                     }
-
                     // Display
                     ArrayAdapter<ModelCheckList> adapter;
                     adapter = new CheckListAdapter(CssdCheckList.this, MODEL_CHECK_LIST);
@@ -359,36 +365,168 @@ public class CssdCheckList extends Activity {
     }
 
     private void clearAll(){
-
-        ID = null;
         UsageCode= null;
-
         img_item_all.setImageResource(R.drawable.ic_preview);
         img_item.setImageResource(R.drawable.ic_preview);
-
         txt_packer.setText("ผู้ห่อ : -");
         txt_packer.setContentDescription("");
-
         txt_item_name.setText("ชื่อเซ็ท : -");
         txt_item_detail.setText("รายการในเซ็ท 0 รายการ   จำนวนทั้งหมด 0 ชิ้น");
-
         checkbox.setChecked(false);
-
         list_check.setAdapter(null);
+    }
 
+    public void openQR(final String admin,final String itemcode,final String itemdetail,final String RowID,final String type){
+        Intent i = new Intent(CssdCheckList.this, CssdQrUser.class);
+        i.putExtra("data", admin);
+        i.putExtra("itemcode", itemcode);
+        i.putExtra("itemdetail", itemdetail);
+        i.putExtra("RowID", RowID);
+        i.putExtra("type", type);
+        startActivityForResult(i,1006);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(data == null)
+            return;
+        try {
+            RETURN_VALUE = data.getStringExtra("RETURN_VALUE");
+            RETURN_ADMIN = data.getStringExtra("RETURN_ADMIN");
+            RETURN_ITEMCODE = data.getStringExtra("RETURN_ITEMCODE");
+            RETURN_ITEMDETAIL = data.getStringExtra("RETURN_ITEMDETAIL");
+            RETURN_ROWID = data.getStringExtra("RETURN_ROWID");
+            RETURN_TYPE = data.getStringExtra("RETURN_TYPE");
+            if (resultCode == 1006) {
+                if (RETURN_ADMIN.equals("1")){
+                    CancelRemark(RETURN_ITEMCODE,RETURN_ITEMDETAIL,RETURN_ROWID,RETURN_TYPE);
+                }else {
+                    Toast.makeText(CssdCheckList.this, "ผู้ใช้ทั่วไปไม่สามารถยกเลิก Remark ได้ !!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void CancelRemark(final String itemcode,final String itemdetail,final String RowId,final String type) {
+        class CancelRemark extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        if (c.getString("finish").equals("truedelete")){
+                            displayCheckList();
+                            Toast.makeText(CssdCheckList.this, "ยกเลิก Remark สำเร็จ", Toast.LENGTH_SHORT).show();
+                            IsSave = "1";
+                        }else if (c.getString("finish").equals("falsedelete")){
+                            displayCheckList();
+                            Toast.makeText(CssdCheckList.this, "ยกเลิก Remark ไม่สำเร็จ", Toast.LENGTH_SHORT).show();
+                            IsSave = "0";
+                        }else if (c.getString("finish").equals("trueapprove")){
+                            displayCheckList();
+                            Toast.makeText(CssdCheckList.this, "Approve Remark สำเร็จ", Toast.LENGTH_SHORT).show();
+                            IsSave = "1";
+                        }else if (c.getString("finish").equals("falseapprove")){
+                            displayCheckList();
+                            Toast.makeText(CssdCheckList.this, "Approve Remark ไม่สำเร็จ", Toast.LENGTH_SHORT).show();
+                            IsSave = "0";
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("itemcode",itemcode);
+                data.put("itemdetail",itemdetail);
+                data.put("RowId",RowId);
+                data.put("page","checklist");
+                data.put("type",type);
+                data.put("EmpCode",RETURN_VALUE);
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_delete_remark_send.php", data);
+                    Log.d("DHKDHKD",data+"");
+                    Log.d("DHKDHKD",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        CancelRemark obj = new CancelRemark();
+        obj.execute();
+    }
+
+    private void ReturnApprove(){
+        class ReturnApprove extends AsyncTask<String, Void, String> {
+
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++){
+                        JSONObject c = rs.getJSONObject(i);
+                        ID = null;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("ID", ID);
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_select_wash_detail_for_print.php", data);
+                    Log.d("DLJLCJL",data+"");
+                    Log.d("DLJLCJL",result);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        ReturnApprove obj = new ReturnApprove();
+        obj.execute();
     }
 
     public void onListClick(String img_set, String img_detail){
-
         try {
             URL url = new URL(Url.getImageURL() + img_set);
             Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
             img_item_all.setImageBitmap(bmp);
-
             URL url_ = new URL(Url.getImageURL() + img_detail);
             Bitmap bmp_ = BitmapFactory.decodeStream(url_.openConnection().getInputStream());
             img_item.setImageBitmap(bmp_);
-
         }catch(Exception e){
             img_item_all.setImageResource(R.drawable.ic_preview);
             img_item.setImageResource(R.drawable.ic_preview);
@@ -506,7 +644,8 @@ public class CssdCheckList extends Activity {
 
                     try {
                         result = httpConnect.sendPostRequest(Url.URL + "cssd_select_wash_detail_for_print.php", data);
-
+                        Log.d("V:K:DD",data+"");
+                        Log.d("V:K:DD",result);
                     }catch(Exception e){
                         e.printStackTrace();
                     }
@@ -611,10 +750,13 @@ public class CssdCheckList extends Activity {
 
                             list.add(
                                     new ModelCheckList(
+                                            c.getString("AdminApprove"),
+                                            c.getString("RowID"),
                                             c.getString("ID"),
                                             c.getString("Send_ID"),
                                             c.getString("itemcode"),
                                             c.getString("itemname"),
+                                            c.getString("Item_Detail_ID"),
                                             c.getString("Qty"),
                                             c.getString("AdminRemark"),
                                             c.getString("DateRemark"),
@@ -685,6 +827,8 @@ public class CssdCheckList extends Activity {
                 String result = null;
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_select_check_list.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
                 }catch(Exception e){
                     e.printStackTrace();
                 }

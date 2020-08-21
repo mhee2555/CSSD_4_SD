@@ -5,6 +5,7 @@ public class ModelCheckList {
     String Send_ID;
     String itemcode;
     String itemname;
+    String Item_Detail_ID;
     String Qty;
     String AdminRemark;
     String DateRemark;
@@ -14,13 +15,18 @@ public class ModelCheckList {
     String Picture_detail;
     String usage_item_code;
     String usage_item_name;
+    String RowID;
+    String AdminApprove;
     boolean IsCheck = false;
 
-    public ModelCheckList(String ID, String send_ID, String itemcode, String itemname, String qty, String adminRemark, String dateRemark, String remark, String nameType, String picture_set, String picture_detail, String usage_item_code, String usage_item_name, boolean isCheck) {
+    public ModelCheckList(String AdminApprove, String RowID, String ID, String send_ID, String itemcode, String itemname, String Item_Detail_ID,String qty, String adminRemark, String dateRemark, String remark, String nameType, String picture_set, String picture_detail, String usage_item_code, String usage_item_name, boolean isCheck) {
+        this.AdminApprove = AdminApprove;
+        this.RowID = RowID;
         this.ID = ID;
         Send_ID = send_ID;
         this.itemcode = itemcode;
         this.itemname = itemname;
+        this.Item_Detail_ID = Item_Detail_ID;
         Qty = qty;
         AdminRemark = adminRemark;
         DateRemark = dateRemark;
@@ -33,21 +39,30 @@ public class ModelCheckList {
         IsCheck = isCheck;
     }
 
+
+    public String getAdminApprove() { return AdminApprove; }
+
+    public void setAdminApprove(String adminApprove) { AdminApprove = adminApprove; }
+
+    public String getRowID() { return RowID; }
+
+    public void setRowID(String rowID) { RowID = rowID; }
+
+    public String getItem_Detail_ID() { return Item_Detail_ID; }
+
+    public void setItem_Detail_ID(String item_Detail_ID) { Item_Detail_ID = item_Detail_ID; }
+
     public String getUsage_item_code() {
         return usage_item_code;
     }
 
-    public void setUsage_item_code(String usage_item_code) {
-        this.usage_item_code = usage_item_code;
-    }
+    public void setUsage_item_code(String usage_item_code) { this.usage_item_code = usage_item_code; }
 
     public String getUsage_item_name() {
         return usage_item_name;
     }
 
-    public void setUsage_item_name(String usage_item_name) {
-        this.usage_item_name = usage_item_name;
-    }
+    public void setUsage_item_name(String usage_item_name) { this.usage_item_name = usage_item_name; }
 
     public String getPicture_set() {
         return Picture_set;
@@ -73,14 +88,9 @@ public class ModelCheckList {
         NameType = nameType;
     }
 
-    public boolean isCheck() {
-        return IsCheck;
-    }
+    public boolean isCheck() { return IsCheck; }
 
-    public boolean setCheck(boolean check) {
-        IsCheck = check;
-        return check;
-    }
+    public boolean setCheck(boolean check) { IsCheck = check;return check; }
 
     public String getID() {
         return ID;
@@ -122,9 +132,7 @@ public class ModelCheckList {
         Qty = qty;
     }
 
-    public String getAdminRemark() {
-        return AdminRemark.equals("-") ? "" : ("By : " + AdminRemark);
-    }
+    public String getAdminRemark() { return AdminRemark.equals("-") ? "" : ("By : " + AdminRemark); }
 
     public void setAdminRemark(String adminRemark) {
         AdminRemark = adminRemark;

@@ -28,6 +28,10 @@ public class CssdQrUser extends Activity {
     private HTTPConnect httpConnect = new HTTPConnect();
 
     private String data = "";
+    private String itemcode = "";
+    private String itemdetail = "";
+    private String RowID = "";
+    private String type = "";
     private String xSel9 = "";
     private String xSel10 = "";
 
@@ -51,6 +55,10 @@ public class CssdQrUser extends Activity {
         // Argument
         Intent intent = getIntent();
         data = intent.getStringExtra("data");
+        itemcode = intent.getStringExtra("itemcode");
+        itemdetail = intent.getStringExtra("itemdetail");
+        RowID = intent.getStringExtra("RowID");
+        type = intent.getStringExtra("type");
     }
 
     private void byWidget() {
@@ -99,12 +107,15 @@ public class CssdQrUser extends Activity {
                     for(int i=0;i<rs.length();i++){
                         JSONObject c = rs.getJSONObject(i);
                         if(c.getString("result").equals("A")) {
-                            Log.d("BANK7",data+"");
                             if (data.equals("admin")){
                                 Intent intent = new Intent();
                                 intent.putExtra("RETURN_DATA", c.getString("data"));
                                 intent.putExtra("RETURN_VALUE", c.getString("value"));
                                 intent.putExtra("RETURN_ADMIN", c.getString("admin"));
+                                intent.putExtra("RETURN_ITEMCODE", itemcode);
+                                intent.putExtra("RETURN_ITEMDETAIL", itemdetail);
+                                intent.putExtra("RETURN_ROWID", RowID);
+                                intent.putExtra("RETURN_TYPE", type);
                                 setResult(1006, intent);
                                 finish();
                             }else {
