@@ -274,11 +274,9 @@ public class CssdCheckList extends Activity {
             @Override
             public void onClick(View view) {
                 try {
-                    //Set All Check
                     for (int i = 0; i < MODEL_CHECK_LIST.size(); i++) {
                         MODEL_CHECK_LIST.get(i).setCheck(checkbox.isChecked());
                     }
-                    // Display
                     ArrayAdapter<ModelCheckList> adapter;
                     adapter = new CheckListAdapter(CssdCheckList.this, MODEL_CHECK_LIST);
                     list_check.setAdapter(adapter);

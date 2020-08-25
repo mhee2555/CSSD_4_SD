@@ -444,68 +444,125 @@ public class PayoutActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d("ttest_save_doc","DocNo : "+DocNo);
                 if(!DocNo.equals("")){
-                    if(spinner03.getSelectedItemPosition()!=0) {
-                        if (!txt_notfully.getText().toString().equals("0")) {
-                            if(WithdrawMode == 1){
-                                AlertDialog.Builder builder = new AlertDialog.Builder(PayoutActivity.this);
-                                builder.setCancelable(true);
-                                builder.setTitle("ยืนยัน");
-                                builder.setMessage("มีรายการค้างจ่ายจำนวน " + txt_notfully.getText().toString() + " ต้องการยกเลิกรายการที่ค้างหรือไม่?");
-                                builder.setPositiveButton("ใช่",
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                deletepayoutdetailfromsub(DocNo);
-                                            }
-                                        });
-                                builder.setNegativeButton("ไม่", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                                AlertDialog dialog = builder.create();
-                                dialog.show();
-                            }else{
+//                        if(spinner03.getSelectedItemPosition()!=0) {
+//                            if (!txt_notfully.getText().toString().equals("0")) {
+//                                if(WithdrawMode == 1){
+//                                    AlertDialog.Builder builder = new AlertDialog.Builder(PayoutActivity.this);
+//                                    builder.setCancelable(true);
+//                                    builder.setTitle("ยืนยัน");
+//                                    builder.setMessage("มีรายการค้างจ่ายจำนวน " + txt_notfully.getText().toString() + " ต้องการยกเลิกรายการที่ค้างหรือไม่?");
+//                                    builder.setPositiveButton("ใช่",
+//                                            new DialogInterface.OnClickListener() {
+//                                                @Override
+//                                                public void onClick(DialogInterface dialog, int which) {
+//                                                    deletepayoutdetailfromsub(DocNo);
+//                                                }
+//                                            });
+//                                    builder.setNegativeButton("ไม่", new DialogInterface.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(DialogInterface dialog, int which) {
+//                                            dialog.dismiss();
+//                                        }
+//                                    });
+//                                    AlertDialog dialog = builder.create();
+//                                    dialog.show();
+//                                }else{
+//
+//                                    Set<String> itemcode_notfully_set = new HashSet<String>();
+//                                    for(int i =0;i<resultspayout_notfully.size();i++){
+//                                        itemcode_notfully_set.add(resultspayout_notfully.get(i).getFields4());
+//                                        Log.d("payout_notfully","resultspayout_notfully : "+resultspayout_notfully.get(i).getFields4());
+//                                    }
+//                                    AlertDialog.Builder builder = new AlertDialog.Builder(PayoutActivity.this);
+//                                    builder.setCancelable(true);
+//                                    builder.setTitle("จ่ายอุปกรณ์ไม่ครบ");
+//                                    builder.setMessage("มีรายการค้างจ่าย " +itemcode_notfully_set.size()+" รายการ ทั้งหมด "+ txt_notfully.getText().toString() + " ชิ้น ต้องการดำเนินการต่อหรือไม่?");
+//                                    builder.setPositiveButton("ดำเนินการต่อ",
+//                                            new DialogInterface.OnClickListener() {
+//                                                @Override
+//                                                public void onClick(DialogInterface dialog, int which) {
+//                                                    getQR(DocNo, "pa", "");
+//                                                    isnewDoc = false;
+//                                                    bt_additem.setEnabled(true);
+//                                                    bt_createdoc.setEnabled(true);
+//                                                }
+//                                            });
+//                                    builder.setNegativeButton("ยกเลิกการจ่าย", new DialogInterface.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(DialogInterface dialog, int which) {
+//                                            dialog.dismiss();
+//                                        }
+//                                    });
+//                                    AlertDialog dialog = builder.create();
+//                                    dialog.show();
+//                                }
+//                            } else {
+//                                getQR(DocNo, "pa", "");
+//                                isnewDoc = false;
+//                                bt_additem.setEnabled(true);
+//                                bt_createdoc.setEnabled(true);
+//                            }
+//                        }else{
+//                            Toast.makeText(PayoutActivity.this, "กรุณาเลือกผู้รับ!!", Toast.LENGTH_SHORT).show();
+//                        }
 
-                                Set<String> itemcode_notfully_set = new HashSet<String>();
-                                for(int i =0;i<resultspayout_notfully.size();i++){
-                                    itemcode_notfully_set.add(resultspayout_notfully.get(i).getFields4());
-                                    Log.d("payout_notfully","resultspayout_notfully : "+resultspayout_notfully.get(i).getFields4());
+                    if (!txt_notfully.getText().toString().equals("0")) {
+                        if(WithdrawMode == 1){
+                            AlertDialog.Builder builder = new AlertDialog.Builder(PayoutActivity.this);
+                            builder.setCancelable(true);
+                            builder.setTitle("ยืนยัน");
+                            builder.setMessage("มีรายการค้างจ่ายจำนวน " + txt_notfully.getText().toString() + " ต้องการยกเลิกรายการที่ค้างหรือไม่?");
+                            builder.setPositiveButton("ใช่",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            deletepayoutdetailfromsub(DocNo);
+                                        }
+                                    });
+                            builder.setNegativeButton("ไม่", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
                                 }
-                                AlertDialog.Builder builder = new AlertDialog.Builder(PayoutActivity.this);
-                                builder.setCancelable(true);
-                                builder.setTitle("จ่ายอุปกรณ์ไม่ครบ");
-                                builder.setMessage("มีรายการค้างจ่าย " +itemcode_notfully_set.size()+" รายการ ทั้งหมด "+ txt_notfully.getText().toString() + " ชิ้น ต้องการดำเนินการต่อหรือไม่?");
-                                builder.setPositiveButton("ดำเนินการต่อ",
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                getQR(DocNo, "pa", "");
-                                                isnewDoc = false;
-                                                bt_additem.setEnabled(true);
-                                                bt_createdoc.setEnabled(true);
-                                            }
-                                        });
-                                builder.setNegativeButton("ยกเลิกการจ่าย", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                                AlertDialog dialog = builder.create();
-                                dialog.show();
-                            }
-                        } else {
-                            getQR(DocNo, "pa", "");
-                            isnewDoc = false;
-                            bt_additem.setEnabled(true);
-                            bt_createdoc.setEnabled(true);
-                        }
-                    }else{
-                        Toast.makeText(PayoutActivity.this, "กรุณาเลือกผู้รับ!!", Toast.LENGTH_SHORT).show();
-                    }
+                            });
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }else{
 
+                            Set<String> itemcode_notfully_set = new HashSet<String>();
+                            for(int i =0;i<resultspayout_notfully.size();i++){
+                                itemcode_notfully_set.add(resultspayout_notfully.get(i).getFields4());
+                                Log.d("payout_notfully","resultspayout_notfully : "+resultspayout_notfully.get(i).getFields4());
+                            }
+                            AlertDialog.Builder builder = new AlertDialog.Builder(PayoutActivity.this);
+                            builder.setCancelable(true);
+                            builder.setTitle("จ่ายอุปกรณ์ไม่ครบ");
+                            builder.setMessage("มีรายการค้างจ่าย " +itemcode_notfully_set.size()+" รายการ ทั้งหมด "+ txt_notfully.getText().toString() + " ชิ้น ต้องการดำเนินการต่อหรือไม่?");
+                            builder.setPositiveButton("ดำเนินการต่อ",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            getQR(DocNo, "pa", "");
+                                            isnewDoc = false;
+                                            bt_additem.setEnabled(true);
+                                            bt_createdoc.setEnabled(true);
+                                        }
+                                    });
+                            builder.setNegativeButton("ยกเลิกการจ่าย", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+                    } else {
+                        getQR(DocNo, "pa", "");
+                        isnewDoc = false;
+                        bt_additem.setEnabled(true);
+                        bt_createdoc.setEnabled(true);
+                    }
                 }else{
                     Toast.makeText(PayoutActivity.this, "ยังไม่ได้เลือกเอกสาร!!", Toast.LENGTH_SHORT).show();
                 }
@@ -980,7 +1037,12 @@ public class PayoutActivity extends AppCompatActivity {
                 HashMap<String, String> data = new HashMap<String,String>();
                 data.put("xSel",params[0]);
                 data.put("xDocNo",params[1]);
-                data.put("UserCode",UserSelect);
+                if (UserSelect == null){
+                    data.put("UserCode","");
+                }else {
+                    data.put("UserCode",UserSelect);
+                }
+
                 if(B_ID!=null){data.put("B_ID",B_ID);}
                 String result = ruc.sendPostRequest(iFt.getsavepayout(),data);
                 Log.d("ttest_reUser","ImportPayout Data : "+data);

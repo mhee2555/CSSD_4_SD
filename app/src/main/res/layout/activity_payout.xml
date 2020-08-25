@@ -164,7 +164,8 @@
             android:text="ผู้รับ   "
             android:textColor="@color/colorWhite"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone"/>
 
         <com.toptoche.searchablespinnerlibrary.SearchableSpinner
             android:id="@+id/spinner3"
@@ -174,7 +175,8 @@
             android:layout_alignTop="@+id/recipient"
             android:layout_marginStart="2dp"
             android:layout_marginTop="-5dp"
-            android:layout_toEndOf="@+id/recipient" />
+            android:layout_toEndOf="@+id/recipient"
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <Button
