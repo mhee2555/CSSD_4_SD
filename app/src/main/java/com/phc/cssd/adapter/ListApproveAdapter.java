@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.phc.cssd.R;
@@ -43,7 +44,7 @@ public class ListApproveAdapter extends ArrayAdapter {
         final TextView tFields1 = (TextView) v.findViewById(R.id.tFields1);
         final TextView tFields2 = (TextView) v.findViewById(R.id.tFields2);
         final ImageView imageView01 = (ImageView) v.findViewById(R.id.imageView1);
-        final LinearLayout Re1 = (LinearLayout) v.findViewById(R.id.Re1);
+        final RelativeLayout Re1 = (RelativeLayout) v.findViewById(R.id.Re1);
 
 
         imageView01.setImageResource(R.drawable.ic_file);

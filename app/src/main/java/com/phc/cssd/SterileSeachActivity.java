@@ -1115,7 +1115,11 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
                             dialog.setCancelable(true);
                             dialog.setTitle("หมายเหตุ...");
                             final TextView note1 = (TextView) dialog.findViewById(R.id.note1);
-                            note1.setText(c.getString("RemarkExpress"));
+                            if(c.getString("RemarkExpress").equals("null")){
+                                note1.setText("");
+                            }else{
+                                note1.setText(c.getString("RemarkExpress"));
+                            }
                             Button button1 = (Button) dialog.findViewById(R.id.button1);
                             button1.setOnClickListener(new View.OnClickListener() {
                                 @Override
