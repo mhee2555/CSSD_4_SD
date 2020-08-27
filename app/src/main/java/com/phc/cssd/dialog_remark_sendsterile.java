@@ -259,9 +259,6 @@ public class dialog_remark_sendsterile extends Activity {
         try {
             RETURN_VALUE = data.getStringExtra("RETURN_VALUE");
             RETURN_ADMIN = data.getStringExtra("RETURN_ADMIN");
-            Log.d("BANK7",RETURN_ADMIN+"");
-            Log.d("BANK7",RETURN_VALUE+"");
-            Log.d("BANK7",resultCode+"");
             if (resultCode == 1006) {
                 if (RETURN_ADMIN.equals("1")){
                     CancelRemark(datacheck,text_remark.getText().toString(),DocNoSend,Usagecode,Itemname,DepID);
