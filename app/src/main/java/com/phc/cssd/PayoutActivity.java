@@ -2062,7 +2062,6 @@ public class PayoutActivity extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-
                 // loading = ProgressDialog.show(ApproveStockActivity.this, "Please Wait",null, true, true);
             }
             @Override
