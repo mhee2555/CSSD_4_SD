@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,6 +113,8 @@ public class CheckListAdapter extends ArrayAdapter {
             }
         });
 
+        Log.d("FKJDHJKDH",model.getNameType()+"");
+
         if (!model.getNameType().equals("") && model.getAdminApprove().equals("0")){
             txtitemname.setTextColor(Color.RED);
             txt_caption_qty.setTextColor(Color.RED);
@@ -120,7 +123,7 @@ public class CheckListAdapter extends ArrayAdapter {
             txt_remark_admin.setTextColor(Color.RED);
             txt_remark_type.setTextColor(Color.RED);
             txt_remark_date.setTextColor(Color.RED);
-        }else if (!model.getNameType().equals("") && model.getAdminApprove().equals("1")){
+        }else if (model.getAdminApprove().equals("1")){
             listData.get(position).setRemark("-");
             listData.get(position).setAdminRemark("-");
             listData.get(position).setNameType("-");
