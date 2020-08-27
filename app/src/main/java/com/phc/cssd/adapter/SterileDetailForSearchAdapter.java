@@ -147,6 +147,7 @@ public class SterileDetailForSearchAdapter extends ArrayAdapter {
             }
         }else{ //itemcodeMode
 
+            tFields3.setVisibility(View.VISIBLE);
             ems.setVisibility(View.GONE);
             imageView01.setVisibility(View.GONE);
 
