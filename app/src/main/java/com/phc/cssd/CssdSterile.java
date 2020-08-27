@@ -3317,7 +3317,6 @@ public class CssdSterile extends AppCompatActivity {
 
     // 1 : 1
     private boolean onImport(String Id, String SterileProgramID, String SterileProgramName, String PackingMatID, String gQty,String basket,String usageCode){
-        Log.d("ttest_import","basket = "+basket);
 
         // Check Sterile Process
         if (userid == null){
