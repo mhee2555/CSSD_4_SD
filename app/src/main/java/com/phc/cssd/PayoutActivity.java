@@ -696,8 +696,8 @@ public class PayoutActivity extends AppCompatActivity {
                                         new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                ImportPayout( "1",DocNo );
-                                                finishpayout(DocNo);
+                                                ImportPayout("1",DocNo,"close");
+                                                finishpayout(DocNo,"close");
                                                 ListPayoutDetail("");
                                                 payoutnotfully("");
                                                 ListPayoutDocument("0",xSearch);
@@ -1004,7 +1004,7 @@ public class PayoutActivity extends AppCompatActivity {
         }
     };
 
-    public void ImportPayout(final String Sel,final String xDocNo) {
+    public void ImportPayout(final String Sel,final String xDocNo,final String type) {
         class ImportPayout extends AsyncTask<String, Void, String> {
             @Override
             protected void onPreExecute() {
@@ -1042,7 +1042,7 @@ public class PayoutActivity extends AppCompatActivity {
                 }else {
                     data.put("UserCode",UserSelect);
                 }
-
+                data.put("type",type);
                 if(B_ID!=null){data.put("B_ID",B_ID);}
                 String result = ruc.sendPostRequest(iFt.getsavepayout(),data);
                 Log.d("ttest_reUser","ImportPayout Data : "+data);
@@ -2056,7 +2056,7 @@ public class PayoutActivity extends AppCompatActivity {
         ru.execute( xDocNo,RowID_chk );
     }
 
-    public void finishpayout(String xDocNo) {
+    public void finishpayout(String xDocNo,final String type) {
         class finishpayout extends AsyncTask<String, Void, String> {
             // ProgressDialog loading;
             @Override
@@ -2093,6 +2093,7 @@ public class PayoutActivity extends AppCompatActivity {
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
                 data.put("xDocNo",params[0]);
+                data.put("type",type);
                 Log.d("xDocNo: ", data+"");
 
                 if(B_ID!=null){data.put("B_ID",B_ID);}
@@ -2269,9 +2270,9 @@ public class PayoutActivity extends AppCompatActivity {
             bt_finish.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     if(bt_switch.isChecked())
-                        ImportPayout("1",xDocNo);
+                        ImportPayout("1",DocNo,"notype");
                     else
-                        ImportPayout("2",xDocNo);
+                        ImportPayout("2",DocNo,"notype");
                     GetReport(xDocNo,userid,resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields1(),"1", spCount.getSelectedItem().toString() ,(PrintCnt+1)+"");
                     textViewDocNo.setText("");
                     spinner03.setSelection(0);
@@ -2313,9 +2314,9 @@ public class PayoutActivity extends AppCompatActivity {
             bt_finish.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     if(bt_switch.isChecked()) {
-                        ImportPayout("1", xDocNo);
+                        ImportPayout("1",DocNo,"notype");
                     }else{
-                        ImportPayout("2",xDocNo);
+                        ImportPayout("1",DocNo,"notype");
                     }
 
                     GetReport(xDocNo,userid,resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields1(),"1", spCount.getSelectedItem().toString() ,(PrintCnt+1)+"");

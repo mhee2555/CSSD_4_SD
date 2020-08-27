@@ -3357,14 +3357,6 @@ public class CssdSterile extends AppCompatActivity {
             // Create Document
             String DocNo = getDocNo();
 
-            // Check DocNo
-
-//            String usageCode = "";
-//            for(int i = 1;i<Integer.parseInt(gQty);i++){
-//                usageCode = usageCode+model_head_show_Usagecode.get(basket).get(i)+"','";
-//            }
-//            usageCode = usageCode+model_head_show_Usagecode.get(basket).get(0);
-
             if (DocNo != null && !DocNo.equals("-")) {
 
                 if(MODEL_STERILE_DETAIL == null || MODEL_STERILE_DETAIL.size() == 0){
