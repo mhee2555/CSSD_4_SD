@@ -3100,17 +3100,19 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                             if (txt_get_ucode.getText().toString().length() == 12 && !etxt_docno.getText().toString().equals("")) {
                                 CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
                             } else {
-                                checkdubplicate(txt_get_ucode.getText().toString().toLowerCase(), ED_Dept);
-                                txt_get_ucode.setText("");
-                                txt_get_ucode.requestFocus();
+//                                checkdubplicate(txt_get_ucode.getText().toString().toLowerCase(), ED_Dept);
+//                                txt_get_ucode.setText("");
+//                                txt_get_ucode.requestFocus();
+                                CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
                             }
                         } else {
                             if (txt_get_ucode.getText().toString().length() == 12 && !etxt_docno.getText().toString().equals("")) {
                                 CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
                             } else {
-                                checkdubplicate(txt_get_ucode.getText().toString().toLowerCase(), ED_Dept);
-                                txt_get_ucode.setText("");
-                                txt_get_ucode.requestFocus();
+//                                checkdubplicate(txt_get_ucode.getText().toString().toLowerCase(), ED_Dept);
+//                                txt_get_ucode.setText("");
+//                                txt_get_ucode.requestFocus();
+                                CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
                             }
 //                            Toast.makeText(SendSterile_MainActivity.this, "กรุณาเลือกแผนก", Toast.LENGTH_SHORT).show();
 //                            txt_get_ucode.setText("");
@@ -3121,17 +3123,19 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                             if (txt_get_ucode.getText().toString().length() == 12 && !etxt_docno.getText().toString().equals("")) {
                                 CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
                             } else {
-                                checkdubplicate(txt_get_ucode.getText().toString().toLowerCase(), ED_Dept);
-                                txt_get_ucode.setText("");
-                                txt_get_ucode.requestFocus();
+//                                checkdubplicate(txt_get_ucode.getText().toString().toLowerCase(), ED_Dept);
+//                                txt_get_ucode.setText("");
+//                                txt_get_ucode.requestFocus();
+                                CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
                             }
                         } else {
                             if (txt_get_ucode.getText().toString().length() == 12 && !etxt_docno.getText().toString().equals("")) {
                                 CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
                             } else {
-                                checkdubplicate(txt_get_ucode.getText().toString().toLowerCase(), ED_Dept);
-                                txt_get_ucode.setText("");
-                                txt_get_ucode.requestFocus();
+//                                checkdubplicate(txt_get_ucode.getText().toString().toLowerCase(), ED_Dept);
+//                                txt_get_ucode.setText("");
+//                                txt_get_ucode.requestFocus();
+                                CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
                             }
 //                            Toast.makeText(SendSterile_MainActivity.this, "กรุณาเลือกแผนก", Toast.LENGTH_SHORT).show();
 //                            txt_get_ucode.setText("");
@@ -3373,6 +3377,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         intent.putExtra("EmpCode",EmpCode);
         intent.putExtra("IsAdmin",IsAdmin);
         intent.putExtra("IsStatus",IsStatus);
+        intent.putExtra("DocNo",etxt_docno.getText().toString());
         intent.putExtra("Type",type);
         intent.putExtra("context", String.valueOf(SendSterile_MainActivity.this));
         startActivityForResult(intent,1005);

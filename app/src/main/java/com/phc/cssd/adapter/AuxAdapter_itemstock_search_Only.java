@@ -49,6 +49,7 @@ public class AuxAdapter_itemstock_search_Only extends ArrayAdapter {
         TextView tFields4 = (TextView) v.findViewById(R.id.tFields4);
         TextView tFields5 = (TextView) v.findViewById(R.id.tFields5);
         TextView tFields7 = (TextView) v.findViewById(R.id.tFields7);
+        TextView tFields7_1 = (TextView) v.findViewById(R.id.tFields7_1);
         TextView tFields8 = (TextView) v.findViewById(R.id.tFields8);
 
         tFields1.setText( listData.get(position).getFields8() );//getFields8
@@ -57,6 +58,7 @@ public class AuxAdapter_itemstock_search_Only extends ArrayAdapter {
         tFields4.setText( listData.get(position).getFields3() );
         tFields5.setText( listData.get(position).getFields4() );
         tFields7.setText( listData.get(position).getFields5() );
+        tFields7_1.setText( listData.get(position).getxFields17() );
         tFields8.setText( listData.get(position).getFields7() );
 
 //        chx_change.setOnClickListener(new View.OnClickListener() {

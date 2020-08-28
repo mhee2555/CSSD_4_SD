@@ -658,6 +658,7 @@ public class PayoutActivity extends AppCompatActivity {
         bt_notfully.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(!DocNo.equals("")){
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(PayoutActivity.this);
                     LayoutInflater inflater = getLayoutInflater();
@@ -703,7 +704,6 @@ public class PayoutActivity extends AppCompatActivity {
                                                 ListPayoutDocument("0",xSearch);
                                                 textViewDocNo.setText("");
                                                 spinner03.setSelection(0);
-                                                DocNo="";
 //                                                xDataUserCode.add("");
                                                 p.dismiss();
                                             }
@@ -1020,18 +1020,15 @@ public class PayoutActivity extends AppCompatActivity {
                     for(int i=0;i<setRs.length();i++){
                         JSONObject c = setRs.getJSONObject(i);
                         if( c.getString("Finish").equals("true")){
-
-                            Log.d("ttest_save_doc","ImportPayout5 DocNo : "+xDocNo);
                             ListPayoutDocument("0",xSearch);
-                            // ListPayoutDetail( DocNo );
                         }
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
 
+            @SuppressLint("WrongThread")
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
@@ -1045,12 +1042,12 @@ public class PayoutActivity extends AppCompatActivity {
                 data.put("type",type);
                 if(B_ID!=null){data.put("B_ID",B_ID);}
                 String result = ruc.sendPostRequest(iFt.getsavepayout(),data);
-                Log.d("ttest_reUser","ImportPayout Data : "+data);
+                Log.d("DLCLDJ",data+"");
+                Log.d("DLCLDJ",result);
                 return  result;
             }
         }
         ImportPayout ru = new ImportPayout();
-        Log.d("ttest_save_doc","ImportPayout2 DocNo : "+xDocNo);
         ru.execute( Sel,xDocNo );
     }
 
@@ -1087,6 +1084,8 @@ public class PayoutActivity extends AppCompatActivity {
                 data.put("xDept",params[1]);
 //                Log.d("OOOO","Convert : " + params[0]);
                 String result = ruc.sendPostRequest(iFt.getconvertpayout(),data);
+                Log.d("DKFJDCD",data+"");
+                Log.d("DKFJDCD",result);
                 return  result;
             }
         }
@@ -2043,12 +2042,10 @@ public class PayoutActivity extends AppCompatActivity {
                 HashMap<String, String> data = new HashMap<String,String>();
                 data.put("xDocNo",params[0]);
                 data.put("RowID_chk",params[1]);
-                Log.d("ischeckdel: ", data+"");
                 if(WithdrawMode==1 && isnewDoc){
                     data.put("isnewBorrow","true");
                 }
                 String result = ruc.sendPostRequest(getUrl.xUrl+"1/set_deletecheckbox_payoutdetail.php",data);
-                Log.d("result ischeckdel: ", result);
                 return  result;
             }
         }
@@ -2268,9 +2265,9 @@ public class PayoutActivity extends AppCompatActivity {
             bt_finish.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     if(bt_switch.isChecked())
-                        ImportPayout("1",DocNo,"notype");
+                        ImportPayout("1",xDocNo,"notype");
                     else
-                        ImportPayout("2",DocNo,"notype");
+                        ImportPayout("2",xDocNo,"notype");
                     GetReport(xDocNo,userid,resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields1(),"1", spCount.getSelectedItem().toString() ,(PrintCnt+1)+"");
                     textViewDocNo.setText("");
                     spinner03.setSelection(0);
@@ -2312,9 +2309,9 @@ public class PayoutActivity extends AppCompatActivity {
             bt_finish.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     if(bt_switch.isChecked()) {
-                        ImportPayout("1",DocNo,"notype");
+                        ImportPayout("1",xDocNo,"notype");
                     }else{
-                        ImportPayout("1",DocNo,"notype");
+                        ImportPayout("1",xDocNo,"notype");
                     }
 
                     GetReport(xDocNo,userid,resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields1(),"1", spCount.getSelectedItem().toString() ,(PrintCnt+1)+"");

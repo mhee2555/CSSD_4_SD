@@ -269,7 +269,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="แผนก"
+                    android:text="แผนกส่ง"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/textView131"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="แผนกปัจจุบัน"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="17sp" />

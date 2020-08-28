@@ -22,6 +22,7 @@ public class Response_Aux_itemstock {
     private String xFields14;
     private String xFields15;
     private String xFields16;
+    private String xFields17;
     private boolean Is_Check;
 
     public Boolean getError() {
@@ -131,6 +132,10 @@ public class Response_Aux_itemstock {
     public void setxFields16(String xFields16) {
         this.xFields16 = xFields16;
     }
+
+    public String getxFields17() { return xFields17; }
+
+    public void setxFields17(String xFields17) { this.xFields17 = xFields17; }
 
     public boolean isIs_Check() {
         return Is_Check;

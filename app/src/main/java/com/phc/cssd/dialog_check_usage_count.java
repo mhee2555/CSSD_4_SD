@@ -123,7 +123,7 @@ public class dialog_check_usage_count extends Activity {
             qty1.setText(condition1);
             qty2.setText(condition2);
             qty3.setText(condition3);
-            qty4.setText(condition3);
+            qty4.setText(condition4);
         }else if (!condition1.equals("0") && !condition2.equals("0") && !condition3.equals("0") && condition4.equals("0")){
             P1.setVisibility(View.VISIBLE);
             P2.setVisibility(View.VISIBLE);
@@ -251,6 +251,7 @@ public class dialog_check_usage_count extends Activity {
             index3.setText("1.");
             qty3.setText(condition3);
         }
+
     }
 
     public void SetIsstatus() {

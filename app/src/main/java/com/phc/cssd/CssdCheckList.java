@@ -197,8 +197,8 @@ public class CssdCheckList extends Activity {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
                             if (COUNT_PROCESS < 2){
+                                Log.d("KFHKDHD",COUNT_PROCESS+"");
                                 checkInput(edt_usage_code.getText().toString());
-                                CheckDialog(edt_usage_code.getText().toString());
                                 DIALOG_ACTIVE = true;
                             }else {
                                 if (COUNT_PROCESS > 2){
@@ -723,29 +723,22 @@ public class CssdCheckList extends Activity {
                 try {
                     JSONObject jsonObj = new JSONObject(s);
                     rs = jsonObj.getJSONArray(TAG_RESULTS);
-
                     String usage_item_code = "";
                     String usage_item_name = "";
                     String img_set = "";
+                    String resultdata = "";
                     int sum_qty = 0;
-
                     List<ModelCheckList> list = new ArrayList<>();
-
                     for (int i = 0; i < rs.length(); i++) {
-
                         JSONObject c = rs.getJSONObject(i);
-
                         if (c.getString("result").equals("A")) {
-
                             usage_item_code = c.getString("usage_item_code");
                             usage_item_name = c.getString("usage_item_name");
                             img_set = c.getString("Picture_set");
                             sum_qty += c.getInt("Qty");
-
+                            resultdata = c.getString("result");
                             ID = c.getString("ID");
-
                             System.out.println();
-
                             list.add(
                                     new ModelCheckList(
                                             c.getString("AdminApprove"),
@@ -769,19 +762,17 @@ public class CssdCheckList extends Activity {
                             );
                         }
                     }
-
                     // Model
                     MODEL_CHECK_LIST = list;
-
                     try {
                         ArrayAdapter<ModelCheckList> adapter;
-
                         adapter = new CheckListAdapter(CssdCheckList.this, MODEL_CHECK_LIST);
                         list_check.setAdapter(adapter);
-
+                        if (resultdata.equals("A")){
+                            CheckDialog(edt_usage_code.getText().toString());
+                        }
                         txt_item_name.setText("ชื่อเซ็ท : " + usage_item_code + " - " + usage_item_name);
                         txt_item_detail.setText("รายการในเซ็ท " + MODEL_CHECK_LIST.size() + " รายการ   จำนวนทั้งหมด " + sum_qty + " ชิ้น");
-
                         try {
                             URL url = new URL(Url.getImageURL() + img_set);
                             Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
@@ -789,28 +780,27 @@ public class CssdCheckList extends Activity {
                         }catch(Exception e){
                             img_item_all.setImageResource(R.drawable.ic_preview);
                         }
-
                     } catch (Exception e) {
+                        Toast.makeText(CssdCheckList.this, "ไม่พบข้อมูล !!", Toast.LENGTH_SHORT).show();
                         list_check.setAdapter(null);
                         e.printStackTrace();
                     }
                     String packer_code = (String) txt_packer.getContentDescription();
                     System.out.println("packer_code = " + packer_code );
                     System.out.println("packer_text = " + txt_packer.getText() );
-                    // Check Employee
                     if(ID != null && packer_code != null && !packer_code.equals("")){
                         updatePacker(ID, packer_code);
                     }
                     COUNT_PROCESS = 3;
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Toast.makeText(CssdCheckList.this, "ไม่พบข้อมูล !!", Toast.LENGTH_SHORT).show();
                     list_check.setAdapter(null);
                     return;
                 }finally {
                     focus();
                 }
             }
-
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();

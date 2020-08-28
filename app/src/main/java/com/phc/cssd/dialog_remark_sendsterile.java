@@ -38,7 +38,7 @@ public class dialog_remark_sendsterile extends Activity {
     Button summit,cancle;
     ImageView close;
 
-    String Itemname,Usagecode,DepID,DocNoSend,IsStatus;
+    String Itemname,Usagecode,DepID,DocNoSend,IsStatus,DocNo;
     String datacheck,EmpCode,Type;
     String IsSave = "0";
 
@@ -79,6 +79,7 @@ public class dialog_remark_sendsterile extends Activity {
         DocNoSend = intent.getStringExtra("DocNoSend");
         EmpCode = intent.getStringExtra("EmpCode");
         Type = intent.getStringExtra("Type");
+        DocNo = intent.getStringExtra("DocNo");
     }
 
     public void initialize() {
@@ -204,11 +205,7 @@ public class dialog_remark_sendsterile extends Activity {
                 if (userdep.getText().toString().equals("")){
                     Toast.makeText(dialog_remark_sendsterile.this, "กรุณากรอกชื่อเจ้าหน้าที่", Toast.LENGTH_SHORT).show();
                 }else {
-                    if (IsStatus.equals("0")){
-                        SaveRemarkDocNo(DocNoSend,Usagecode,Itemname);
-                    }else {
-                        Toast.makeText(dialog_remark_sendsterile.this, "ไม่สามารถแก้ไข Remark ได้เนื่องจากเอกสารถูกบันทึกแล้ว !!", Toast.LENGTH_SHORT).show();
-                    }
+                    CheckStatusDocNo(DocNoSend);
                 }
             }
         });
@@ -902,6 +899,52 @@ public class dialog_remark_sendsterile extends Activity {
             // =========================================================================================
         }
         PutDataCheckBox6 obj = new PutDataCheckBox6();
+        obj.execute();
+    }
+
+    public void CheckStatusDocNo(final String senddocno) {
+        class CheckStatusDocNo extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        if (c.getString("IsStatus").equals("0")){
+                            SaveRemarkDocNo(DocNoSend,Usagecode,Itemname);
+                        }else {
+                            Toast.makeText(dialog_remark_sendsterile.this, "ไม่สามารถแก้ไข Remark ได้เนื่องจากเอกสารถูกบันทึกแล้ว !!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("senddocno",senddocno);
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_CheckStatusDocNo.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        CheckStatusDocNo obj = new CheckStatusDocNo();
         obj.execute();
     }
 }

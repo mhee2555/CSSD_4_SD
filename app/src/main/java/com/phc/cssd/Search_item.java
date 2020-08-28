@@ -382,6 +382,7 @@ public class Search_item extends AppCompatActivity {
                         newsData.setFields4(c.getString("xExpDate"));
                         newsData.setFields5(c.getString("xDept"));
                         newsData.setFields6(c.getString("xQty"));
+                        newsData.setxFields17(c.getString("DepName3"));
 
 //                        newsData.setFields7(c.getString("xStatus"));
 
@@ -429,10 +430,8 @@ public class Search_item extends AppCompatActivity {
                                 txtname.setText(newsData.getFields9()+" [ "+newsData.getFields8()+" ]");
                                 txtcode.setText(newsData.getFields8());
                             }
-
                         }
                     });
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
