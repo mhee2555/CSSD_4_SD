@@ -1604,21 +1604,9 @@ public class CssdSterile extends AppCompatActivity {
                             if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(txt)&&(!txt.equals(""))){//&&chk_mac()
 
                                 List<ModelImportWashDetail> MODEL_IMPORT_WASH_DETAIL_TO_ADD = MAP_MODEL_IMPORT_WASH_DETAIL_SUB.get(txt);
-                                for(int i=0;i<MODEL_IMPORT_WASH_DETAIL_TO_ADD.size();i++){
-
-                                    ModelImportWashDetail x = MODEL_IMPORT_WASH_DETAIL_TO_ADD.get(i);
-
-                                    importWashDetail(
-                                            x.getI_code(),
-                                            x.getI_program_id(),
-                                            x.getI_program(),
-                                            x.getPackingMatID(),
-                                            x.getI_qty(),
-                                            x.getBasketCode(),
-                                            x.getI_UsageCode()
-                                    );
-
-                                }
+                                importWashDetail(
+                                        MODEL_IMPORT_WASH_DETAIL_TO_ADD
+                                );
                             }else{
                                 Toast.makeText(CssdSterile.this, "ไม่พบตะกร้า ("+txt+")!!", Toast.LENGTH_SHORT).show();
                             }
@@ -3104,8 +3092,8 @@ public class CssdSterile extends AppCompatActivity {
         }
     }
 
-    public void importWashDetail(String Id, String SterileProgramID, String SterileProgramName, String PackingMatID,String gQty,String basket,String usageCode){
-        onImport(Id, SterileProgramID, SterileProgramName, PackingMatID, gQty,basket,usageCode);
+    public void importWashDetail(String Id, String SterileProgramID, String PackingMatID,String gQty,String usageCode){
+        onImport(Id, SterileProgramID, PackingMatID, gQty,usageCode);
     }
 
     Runnable runnable2;
@@ -3121,10 +3109,8 @@ public class CssdSterile extends AppCompatActivity {
 
             onImport(x.getI_code(),
                     x.getI_program_id(),
-                    x.getI_program(),
                     x.getPackingMatID(),
                     x.getI_qty(),
-                    x.getBasketCode(),
                     x.getI_UsageCode()
             );
 
@@ -3155,10 +3141,8 @@ public class CssdSterile extends AppCompatActivity {
 
                 onImport(x.getI_code(),
                         x.getI_program_id(),
-                        x.getI_program(),
                         x.getPackingMatID(),
                         x.getI_qty(),
-                        x.getBasketCode(),
                         x.getI_UsageCode()
                 );
             }
@@ -3316,7 +3300,7 @@ public class CssdSterile extends AppCompatActivity {
     }
 
     // 1 : 1
-    private boolean onImport(String Id, String SterileProgramID, String SterileProgramName, String PackingMatID, String gQty,String basket,String usageCode){
+    private boolean onImport(String Id, String SterileProgramID, String PackingMatID, String gQty,String usageCode){
 
         // Check Sterile Process
         if (userid == null){
@@ -7671,7 +7655,7 @@ public class CssdSterile extends AppCompatActivity {
 
 
     private void onPrintWash(final String W_id){
-
+        Log.d("ttest_for_print","W_id = "+W_id);
 //        final String ID = "2945,2946,2947,2948,2949,2950,2951,2952,2953,2954";
         final String ID = W_id;
 
@@ -7825,6 +7809,7 @@ public class CssdSterile extends AppCompatActivity {
 
     public void updatePrintWashStatus(final String p_data) {
 
+        Log.d("ttest_UpdatePrint","p_data = "+p_data );
         class UpdatePrintStatus extends AsyncTask<String, Void, String> {
 
             // variable
@@ -7845,6 +7830,8 @@ public class CssdSterile extends AppCompatActivity {
                 data.put("p_data", p_data.substring(0, p_data.length()-1));
 
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_update_wash_detail_print_status.php", data);
+
+                Log.d("ttest_UpdatePrint","p_data = "+data );
 
                 return result;
             }
@@ -7882,7 +7869,6 @@ public class CssdSterile extends AppCompatActivity {
                         JSONObject c = rs.getJSONObject(i);
 
                         if (c.getString("result").equals("A")) {
-//                            onPrintWash(W_ID);
                         }else{
                             Toast.makeText(CssdSterile.this, "ไม่พบรหัสพนักงาน !!", Toast.LENGTH_SHORT).show();
                         }

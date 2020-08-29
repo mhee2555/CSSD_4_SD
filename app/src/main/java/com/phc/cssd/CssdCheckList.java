@@ -665,6 +665,7 @@ public class CssdCheckList extends Activity {
 
     public void updatePrintStatus(final String p_data) {
 
+        Log.d("ttest_UpdatePrint","p_data = "+p_data );
         class UpdatePrintStatus extends AsyncTask<String, Void, String> {
 
             // variable

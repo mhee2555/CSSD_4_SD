@@ -170,10 +170,8 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                                             (( CssdSterile ) context).importWashDetail(
                                                     txt_item_code.getText().toString(),
                                                     txt_item_program_id.getText().toString(),
-                                                    item_program,
                                                     PackingMatID,
                                                     gQty,
-                                                    basket,
                                                     usageCode
                                             );
                                         }
@@ -197,10 +195,8 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                     ((CssdSterile)context).importWashDetail(
                             txt_item_code.getText().toString(),
                             txt_item_program_id.getText().toString() ,
-                            item_program,
                             PackingMatID,
                             txt_qty.getText().toString(),
-                            basket,
                             usageCode
 
                     );
@@ -275,10 +271,8 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                         ((CssdSterile)context).importWashDetail(
                                 txt_item_code.getText().toString(),
                                 txt_item_program_id.getText().toString() ,
-                                item_program,
                                 PackingMatID,
                                 txt_qty.getText().toString(),
-                                basket,
                                 usageCode
 
                         );

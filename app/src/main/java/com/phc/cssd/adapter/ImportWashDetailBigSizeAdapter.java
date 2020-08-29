@@ -50,9 +50,7 @@ public class ImportWashDetailBigSizeAdapter extends ArrayAdapter<ModelImportWash
             viewHolder.imv_add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((CssdSterile)context).importWashDetail( viewHolder.txt_item_code.getText().toString(), viewHolder.txt_item_program_id.getText().toString() , viewHolder.item_program, viewHolder.PackingMatID,"0",
-                            viewHolder.basket,
-                            viewHolder.usageCode);
+                    ((CssdSterile)context).importWashDetail( viewHolder.txt_item_code.getText().toString(), viewHolder.txt_item_program_id.getText().toString(), viewHolder.PackingMatID,"0", viewHolder.usageCode);
                 }
             });
 
