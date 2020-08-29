@@ -3234,8 +3234,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 String result = null;
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_display_usage_count_scan.php", data);
-                    Log.d("FKJDHJKDH",data+"");
-                    Log.d("FKJDHJKDH",result+"");
+                    Log.d("DKCKCNKD",data+"");
+                    Log.d("DKCKCNKD",result+"");
                 }catch(Exception e){
                     e.printStackTrace();
                 }

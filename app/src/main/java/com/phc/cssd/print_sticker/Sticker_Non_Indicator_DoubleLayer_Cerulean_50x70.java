@@ -71,7 +71,7 @@ public class Sticker_Non_Indicator_DoubleLayer_Cerulean_50x70 {
                 Tsc.sendpicture( x(4) , y(19), TextAsBitmap.getTextBitmap1("Usage Count : " + m.getUsageCount(), 26));
 
                 // ID
-                Tsc.sendpicture( x(4) , y(24), TextAsBitmap.getTextBitmap1("SD : " + m.getID(), 26));
+                //Tsc.sendpicture( x(4) , y(24), TextAsBitmap.getTextBitmap1("SD : " + m.getID(), 26));
 
                 // MFG
                 Tsc.sendpicture(x(21), y(36.5), TextAsBitmap.getTextBitmap(m.getMFG() + " " + m.getAge(), 25));
