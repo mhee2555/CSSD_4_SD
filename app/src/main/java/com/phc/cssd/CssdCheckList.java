@@ -87,11 +87,8 @@ public class CssdCheckList extends Activity {
 
     private ImageView img_item;
     private ImageView img_item_all;
-
     private CheckBox checkbox;
-
     private LinearLayout west;
-
     private List<ModelCheckList> MODEL_CHECK_LIST = null;
 
     @Override

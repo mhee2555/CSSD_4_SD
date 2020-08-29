@@ -2405,7 +2405,6 @@ public class Item_newlayout extends AppCompatActivity {
 
                         chkIsSpecial.setEnabled(!list.get(ix).isSet().equals("0"));
                         chkIsSpecial.setChecked(list.get(ix).isSpecial());
-
                         chkNoWash.setChecked(list.get(ix).getNoWash().equals("1"));
                         no_wash_num_item1 = list.get(ix).getNoWashType() ;
                         if (no_wash_num_item1.equals("1")){
@@ -2418,7 +2417,6 @@ public class Item_newlayout extends AppCompatActivity {
                         no_wash_type.setText(no_wash_num_item2);
                         chkisWashdept.setChecked(list.get(ix).getWashDept().equals("1"));
                         paydep.setChecked(list.get(ix).getPayDep().equals("1"));
-
                         edt_item_code1.setText(list.get(ix).getItemcode());
                         edt_item_code1.setVisibility(View.INVISIBLE);
                         edt_item_code.setText(list.get(ix).getItemcode());
@@ -2426,16 +2424,12 @@ public class Item_newlayout extends AppCompatActivity {
                         limit_count.setText(list.get(ix).getLimitCount());
                         edt_item_alternate_name.setText(list.get(ix).getAlternatename());
                         edt_set_count.setText(list.get(ix).getSetCount());
-
                         radio_used.setChecked(list.get(ix).getIsNormal());
                         radio_unused.setChecked(!list.get(ix).getIsNormal());
-
                         radio_reused.setChecked(list.get(ix).getIsReuse());
                         radio_unreused.setChecked(!list.get(ix).getIsReuse());
-
                         radio_used_department.setChecked(list.get(ix).getSpecialID().equals("1"));
                         radio_used_multiple_department.setChecked(!list.get(ix).getSpecialID().equals("1"));
-
                         txt_item_type.setText(list.get(ix).getTyeName());
                         txt_special.setText(list.get(ix).getSpecialName());
                         txt_supplier.setText(list.get(ix).getSuppliername());
@@ -2447,7 +2441,6 @@ public class Item_newlayout extends AppCompatActivity {
                         txt_unit.setText(list.get(ix).getUnitName());
                         //txt_department.setText(list.get(ix).getDepName());
                         CheckUsageContScan(list.get(ix).getDepName());
-
                         txt_item_type.setContentDescription(list.get(ix).getItemtypeID());
                         txt_special.setContentDescription(list.get(ix).getSpecialID());
                         txt_supplier.setContentDescription(list.get(ix).getSupllierID());
@@ -2459,14 +2452,11 @@ public class Item_newlayout extends AppCompatActivity {
                         txt_unit.setContentDescription(list.get(ix).getUnitID());
                         //txt_department.setContentDescription(list.get(ix).getDepartmentID());
                         etxt_dept.setContentDescription(list.get(ix).getDepartmentID());
-
                         edt_life.setText(list.get(ix).getShelflife());
-
                         //Detail 2
                         edt_cost_price.setText(list.get(ix).getCostPrice());
                         edt_sale_price.setText(list.get(ix).getSalePrice());
                         edt_usage_price.setText(list.get(ix).getUsagePrice());
-
                         //Detail 3
                         edt_minimum.setText(list.get(ix).getMinimum());
                         edt_maximum.setText(list.get(ix).getMaximum());
@@ -2474,20 +2464,15 @@ public class Item_newlayout extends AppCompatActivity {
                         txt_all_item_stock.setText(list.get(ix).getAll_ItemStock());
                         edt_on_stock.setText(list.get(ix).getOnStock());
                         edt_on_cssd.setText(list.get(ix).getOnCssd());
-
                         stockdetail_edt_minimum=list.get(ix).getMinimum();
                         stockdetail_edt_maximum=list.get(ix).getMaximum();
                         stockdetail_txt_on_department=list.get(ix).getOnDepartment();
                         stockdetail_txt_all_item_stock=list.get(ix).getAll_ItemStock();
                         stockdetail_edt_on_stock=list.get(ix).getOnStock();
                         stockdetail_edt_on_cssd=list.get(ix).getOnCssd();
-
                         URL imageUrl = new URL(Url.URL + "cssd_image/"+getF_edt_item_code()+"_pic1"+".PNG");
-
                         System.out.println(Url.URL + "cssd_image/"+getF_edt_item_code()+"_pic1"+".PNG");
-
                         //Picasso.get().load(String.valueOf(imageUrl)).into(img_item1);
-
                         Picasso.get().load(String.valueOf(imageUrl)).networkPolicy(NetworkPolicy.NO_CACHE)
                                 .memoryPolicy(MemoryPolicy.NO_CACHE)
                                 .into(img_item1);
