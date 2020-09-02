@@ -130,7 +130,6 @@ public class PayoutActivity extends AppCompatActivity {
 
     ArrayList<String> xDataUserCode = new ArrayList<String>();
     private String UserSelect;
-
     boolean dev = false;
 
     public static int devicemode = 0;

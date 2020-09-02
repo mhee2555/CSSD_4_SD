@@ -54,10 +54,10 @@ public class Payout_CreateNewDocActivity extends Activity {
     Button bt_ischeck;
     int mode;
     String B_ID ;
+    int devicemode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_createnewdoc_payout);
 
         Bundle bd = getIntent().getExtras();
         if (bd != null){
@@ -66,7 +66,14 @@ public class Payout_CreateNewDocActivity extends Activity {
             Po_date = bd.getString("date");
             mode = bd.getInt("mode");
             B_ID = bd.getString("B_ID");
+
             Log.d("bundle: ", "xSel:"+xSel+" Po_DeptID"+Po_DeptID+" Po_date"+Po_date);
+            devicemode = bd.getInt("devicemode");
+            if(devicemode==PayoutActivity.IsT2){
+                setContentView(R.layout.activity_createnewdoc_payout);
+            }else{
+                setContentView(R.layout.activity_createnewdoc_payout_l2);
+            }
         }
 
         initialize();
@@ -166,7 +173,7 @@ public class Payout_CreateNewDocActivity extends Activity {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                // loading.dismiss();vv
+                // loading.dismiss();
                 try {
                     Response_Aux newsData;
                     JSONObject jsonObj = new JSONObject(s);
@@ -235,7 +242,7 @@ public class Payout_CreateNewDocActivity extends Activity {
                         resultspayoutdetail.add( newsData );
                     }
                     ListView lv = (ListView) findViewById(R.id.list_payoutdocdetail);
-                    lv.setAdapter(new payout_createdocdetailAdapter(Payout_CreateNewDocActivity.this, resultspayoutdetail));
+                    lv.setAdapter(new payout_createdocdetailAdapter(Payout_CreateNewDocActivity.this, resultspayoutdetail,devicemode));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -267,6 +274,7 @@ public class Payout_CreateNewDocActivity extends Activity {
         i.putExtra("xSel", "10");
         i.putExtra("ED_Dept",Po_DeptID);
         i.putExtra("B_ID", B_ID);
+        i.putExtra("devicemode",devicemode );
         startActivityForResult(i,1035);
 
     }
@@ -336,9 +344,9 @@ public class Payout_CreateNewDocActivity extends Activity {
                 data.put("xQTY",params[2]);
                 data.put("xdept",params[3]);
                 if(B_ID!=null){data.put("B_ID",B_ID);}
-                Log.d("input insert : ",data+"" );
+                Log.d("input_insert : ",data+"" );
                 String result = ruc.sendPostRequest(iFt.setinsertpayoutdetail(),data);
-                Log.d("output result : ",result );
+                Log.d("output_result : ",result );
                 return  result;
             }
         }
@@ -413,5 +421,3 @@ public class Payout_CreateNewDocActivity extends Activity {
     }
 
 }
-
-

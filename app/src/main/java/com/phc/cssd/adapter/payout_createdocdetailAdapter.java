@@ -16,9 +16,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.phc.core.connect.HTTPConnect;
+import com.phc.cssd.PayoutActivity;
 import com.phc.cssd.Payout_CreateNewDocActivity;
 import com.phc.cssd.R;
 import com.phc.cssd.properties.Response_Aux;
@@ -40,17 +42,19 @@ public class payout_createdocdetailAdapter extends ArrayAdapter {
     xControl xCtl = new xControl();
     private ArrayList<Response_Aux> listData ;
     //private ArrayList<Response_Aux_itemstock> listData2 ;
-    private Activity context;
+    Activity context;
     ListView Lv2;
     String Usage_code;
     int no;
+    int devicemode;
 
-    public payout_createdocdetailAdapter(Activity aActivity, ArrayList<Response_Aux> listData) {
+    public payout_createdocdetailAdapter(Activity aActivity, ArrayList<Response_Aux> listData,int devicemode) {
         super(aActivity, 0, listData);
         this.context = aActivity;
         this.listData = listData;
         this.Lv2 = Lv2;
         this.Usage_code = Usage_code;
+        this.devicemode =devicemode ;
     }
 
     @Override
@@ -69,6 +73,7 @@ public class payout_createdocdetailAdapter extends ArrayAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View v = inflater.inflate(R.layout.list_additemdetail_payout, parent, false);
         TextView txt_itemcode_po = (TextView) v.findViewById(R.id.txt_itemcode_po);
+
         final EditText etxt_num_po = (EditText) v.findViewById(R.id.etxt_num_po);
         Button bt_del_po = (Button) v.findViewById(R.id.bt_del_po);
         //txt_itemcode_po.setText( listData.get(position).getFields1());
@@ -82,6 +87,11 @@ public class payout_createdocdetailAdapter extends ArrayAdapter {
         newsData.setFields3(c.getString("xQty"));
         newsData.setFields4(c.getString("xIsStatus"));
         newsData.setFields5(c.getString("xID"));*/
+
+        if(devicemode== PayoutActivity.IsL2){
+            RelativeLayout M = (RelativeLayout) v.findViewById(R.id.M);
+            M.setVisibility(View.GONE);
+        }
 
         etxt_num_po.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             public void onFocusChange(View v, boolean hasFocus){
@@ -115,6 +125,7 @@ public class payout_createdocdetailAdapter extends ArrayAdapter {
                             }
                             Log.d("onKey: ", "DocNo:"+listData.get(position).getFields6()+" QTY:"+etxt_num_po.getText()+" ItemStock :"+listData.get(position).getFields7());
                             Update_PayoutDetail(listData.get(position).getFields6(),etxt_num_po.getText()+"",listData.get(position).getFields7());
+
                             //searchbox.requestFocus();
                             return true;
                         default:
@@ -124,6 +135,7 @@ public class payout_createdocdetailAdapter extends ArrayAdapter {
                 return false;
             }
         });
+
         bt_del_po.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
