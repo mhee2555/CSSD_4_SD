@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -134,6 +135,13 @@ public class search_PayoutItemAdapter extends ArrayAdapter {
                     itemnum.setText("จำนวน");
                     number.setText("1");
 
+                    number.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ((EditText)v).selectAll();
+                        }
+                    });
+
                     bt_save.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -155,6 +163,7 @@ public class search_PayoutItemAdapter extends ArrayAdapter {
                     });
 
                     dialog.show();
+
                 }
             });
         }
