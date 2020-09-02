@@ -332,7 +332,6 @@
         <activity
             android:name=".Payout_additemActivity"
             android:colorBackgroundCacheHint="@null"
-            android:screenOrientation="sensorLandscape"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
@@ -352,7 +351,6 @@
         <activity
             android:name=".SearchItem_Payout"
             android:colorBackgroundCacheHint="@null"
-            android:screenOrientation="sensorLandscape"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />

@@ -1,65 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="50dp"
+    android:background="@drawable/rectangle"
     android:orientation="horizontal">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/txt_itemcode_po"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:background="@drawable/rectangle">
+        android:layout_marginStart="19dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:text="TextView"
+        android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/txt_itemcode_po"
-            android:layout_width="310dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="19dp"
-            android:gravity="center_vertical"
-            android:text="TextView"
-            android:textSize="14sp" />
+    <RelativeLayout
+        android:id="@+id/M"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/textView88"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="73dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="29dp"
             android:layout_marginTop="7dp"
             android:text="จำนวน" />
+
+        <TextView
+            android:id="@+id/bt_special"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/ic_export_blue" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp">
 
         <EditText
             android:id="@+id/etxt_num_po"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginEnd="28dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="1dp"
             android:background="@drawable/rectangle"
             android:ems="10"
             android:gravity="center"
             android:inputType="number" />
 
-        <TextView
-            android:id="@+id/bt_special"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="121dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/ic_export_blue" />
-
         <Button
             android:id="@+id/bt_del_po"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:layout_marginStart="45dp"
             android:background="@android:drawable/ic_delete" />
     </RelativeLayout>
 

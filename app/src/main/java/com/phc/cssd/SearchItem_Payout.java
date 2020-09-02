@@ -47,6 +47,8 @@ public class SearchItem_Payout extends Activity {
     String B_ID;
     ArrayList<Response_Aux> resultsDepartment = new ArrayList<Response_Aux>();
     Button bt_back_searchsendsterile;
+    private int devicemode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +59,7 @@ public class SearchItem_Payout extends Activity {
             xSel =  bd.getString("xSel");
             SS_DeptID = bd.getString("ED_Dept");
             B_ID = bd.getString("B_ID");
-            int devicemode = bd.getInt("devicemode");
+            devicemode = bd.getInt("devicemode");
             if(devicemode==PayoutActivity.IsL2){
                 LinearLayout l1 = (LinearLayout) findViewById(R.id.list1);
                 LinearLayout H = (LinearLayout) findViewById(R.id.H);
@@ -161,7 +163,7 @@ public class SearchItem_Payout extends Activity {
                     }
 
                     ListView lv = (ListView) findViewById(R.id.list_searsendsterile);
-                    lv.setAdapter(new search_PayoutItemAdapter(SearchItem_Payout.this, ArrayData));
+                    lv.setAdapter(new search_PayoutItemAdapter(SearchItem_Payout.this, ArrayData,devicemode));
 //
                 } catch (JSONException e) {
                     e.printStackTrace();
