@@ -2232,98 +2232,58 @@ public class PayoutActivity extends AppCompatActivity {
 
     public void savepayout(){
         final String xDocNo = this.DocNo;
-        Log.d("ttest_save_doc","savepayout DocNo : "+DocNo);
-        if(checkSavepayout()){
-            Log.d("ttest_save_doc","savepayout1 DocNo : "+DocNo);
-            Log.d("OOOO","Print 1...");
-            final AlertDialog.Builder alertDialog = new AlertDialog.Builder(PayoutActivity.this);
-            LayoutInflater inflater = getLayoutInflater();
-            final View convertView = (View) inflater.inflate(R.layout.list_dialog_printreport, null);
-            alertDialog.setView(convertView);
-            int cnt=0;
-            final AlertDialog p = alertDialog.show();
-            TextView textView167 = (TextView) convertView.findViewById(R.id.textView167);
-            ImageView bt_back = (ImageView) convertView.findViewById(R.id.bt_back);
-            spCount = (Spinner) convertView.findViewById(R.id.spCount);
-            textView167.setText("ต้องการจ่ายเอกสารหรือไม่");
-            List<String> list = new ArrayList<String>();
-            for(int i=1;i<=(PrintCnt+1);i++){
-                list.add(i+"");
-                cnt=i;
-            }
-            ArrayAdapter<String> SpinnerList = new ArrayAdapter<String>(getApplication(),
-                    android.R.layout.simple_dropdown_item_1line, list);
-            spCount.setAdapter( SpinnerList );
-            spCount.setSelection(cnt-1);
-            bt_back.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    p.dismiss();
-                }
-            });
-            ImageView bt_finish = (ImageView) convertView.findViewById(R.id.bt_finish);
-            bt_finish.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    if(bt_switch.isChecked())
-                        ImportPayout("1",xDocNo,"notype");
-                    else
-                        ImportPayout("2",xDocNo,"notype");
-                    GetReport(xDocNo,userid,resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields1(),"1", spCount.getSelectedItem().toString() ,(PrintCnt+1)+"");
-                    textViewDocNo.setText("");
-                    spinner03.setSelection(0);
-//                    xDataUserCode.add("");
-                    ListPayoutDetail("");
-                    payoutnotfully("");
-                    p.dismiss();
-                }
-            });
-        }else{
-            Log.d("ttest_save_doc","savepayout2 DocNo : "+xDocNo);
-            Log.d("OOOO","Print 2...");
-            final AlertDialog.Builder alertDialog = new AlertDialog.Builder(PayoutActivity.this);
-            LayoutInflater inflater = getLayoutInflater();
-            final View convertView = (View) inflater.inflate(R.layout.list_dialog_printreport, null);
-            alertDialog.setView(convertView);
-            final AlertDialog p = alertDialog.show();
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(PayoutActivity.this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View convertView = (View) inflater.inflate(R.layout.list_dialog_printreport, null);
+        alertDialog.setView(convertView);
+        int cnt=0;
+        final AlertDialog p = alertDialog.show();
+        LinearLayout f = (LinearLayout) convertView.findViewById(R.id.f);
+        TextView textView167 = (TextView) convertView.findViewById(R.id.textView167);
+        ImageView bt_back = (ImageView) convertView.findViewById(R.id.bt_back);
+        spCount = (Spinner) convertView.findViewById(R.id.spCount);
 
-            TextView textView167 = (TextView) convertView.findViewById(R.id.textView167);
-            ImageView bt_back = (ImageView) convertView.findViewById(R.id.bt_back);
-            spCount = (Spinner) convertView.findViewById(R.id.spCount);
-            textView167.setText("เอกสารยังเช็คไม่ครบต้องการจ่ายเอกสารหรือไม่");
-            List<String> list = new ArrayList<String>();
-            int cnt=0;
-            for(int i=1;i<=(PrintCnt+1);i++){
-                list.add(i+"");
-                cnt=i;
-            }
-            ArrayAdapter<String> SpinnerList = new ArrayAdapter<String>(getApplication(),
-                    android.R.layout.simple_dropdown_item_1line, list);
-            spCount.setAdapter( SpinnerList );
-            spCount.setSelection(cnt-1);
-            bt_back.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    p.dismiss();
-                }
-            });
-            ImageView bt_finish = (ImageView) convertView.findViewById(R.id.bt_finish);
-            bt_finish.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    if(bt_switch.isChecked()) {
-                        ImportPayout("1",xDocNo,"notype");
-                    }else{
-                        ImportPayout("1",xDocNo,"notype");
-                    }
-
-                    GetReport(xDocNo,userid,resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields1(),"1", spCount.getSelectedItem().toString() ,(PrintCnt+1)+"");
-                    textViewDocNo.setText("");
-                    spinner03.setSelection(0);
-//                    xDataUserCode.add("");
-                    ListPayoutDetail("");
-                    payoutnotfully("");
-                    p.dismiss();
-                }
-            });
-
+        if(devicemode==IsL2){
+            final float scale = PayoutActivity.this.getResources().getDisplayMetrics().density;
+            float pixels = 270 * scale + 0.5f;
+            f.getLayoutParams().width = (int)(pixels);
         }
+
+        if(checkSavepayout())
+            textView167.setText("ต้องการจ่ายเอกสารหรือไม่");
+        else
+            textView167.setText("เอกสารยังเช็คไม่ครบต้องการจ่ายเอกสารหรือไม่");
+
+        List<String> list = new ArrayList<String>();
+        for(int i=1;i<=(PrintCnt+1);i++){
+            list.add(i+"");
+            cnt=i;
+        }
+        ArrayAdapter<String> SpinnerList = new ArrayAdapter<String>(getApplication(),
+                android.R.layout.simple_dropdown_item_1line, list);
+        spCount.setAdapter( SpinnerList );
+        spCount.setSelection(cnt-1);
+        bt_back.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                p.dismiss();
+            }
+        });
+        ImageView bt_finish = (ImageView) convertView.findViewById(R.id.bt_finish);
+        bt_finish.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(bt_switch.isChecked())
+                    ImportPayout("1",xDocNo,"notype");
+                else
+                    ImportPayout("2",xDocNo,"notype");
+                GetReport(xDocNo,userid,resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields1(),"1", spCount.getSelectedItem().toString() ,(PrintCnt+1)+"");
+                textViewDocNo.setText("");
+                spinner03.setSelection(0);
+//                    xDataUserCode.add("");
+                ListPayoutDetail("");
+                payoutnotfully("");
+                p.dismiss();
+            }
+        });
     }
 
     public void ListDepartment(final Spinner spn,final String date,final Activity context) {
