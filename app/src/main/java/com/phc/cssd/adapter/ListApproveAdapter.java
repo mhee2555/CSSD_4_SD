@@ -44,6 +44,7 @@ public class ListApproveAdapter extends ArrayAdapter {
         final TextView tFields1 = (TextView) v.findViewById(R.id.tFields1);
         final TextView tFields2 = (TextView) v.findViewById(R.id.tFields2);
         final ImageView imageView01 = (ImageView) v.findViewById(R.id.imageView1);
+        final ImageView ems = (ImageView) v.findViewById(R.id.ems);
         final RelativeLayout Re1 = (RelativeLayout) v.findViewById(R.id.Re1);
 
 
@@ -52,6 +53,12 @@ public class ListApproveAdapter extends ArrayAdapter {
         tFields1.setText( listData.get(position).getFields2() );
         tFields2.setText( listData.get(position).getFields6() );
         Re1.setBackgroundResource(R.drawable.rectangle_red);
+
+        if (listData.get(position).getFields15().equals("0")){
+            ems.setVisibility(View.GONE);
+        }else {
+            ems.setVisibility(View.VISIBLE);
+        }
 
         return v;
     }
