@@ -358,6 +358,7 @@ public class Payout_additemActivity extends Activity {
         i.putExtra("xSel", "9");
         i.putExtra("ED_Dept",Po_DeptID);
         i.putExtra("B_ID",B_ID);
+        i.putExtra("devicemode",devicemode );
         startActivityForResult(i,1975);
 
     }
