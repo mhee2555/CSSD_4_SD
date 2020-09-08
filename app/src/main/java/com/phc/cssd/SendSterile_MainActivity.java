@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -59,6 +60,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -198,6 +200,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     String EmpCode = "";
     String Usage = "";
     String Type = "";
+    String serialNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,6 +220,28 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         etxt_dept.setTitle("เลือกแผนก");
         etxt_dept.setPositiveButton("");
         etxt_dept.requestFocus();
+    }
+
+    public String getSerialNumber() {
+        try {
+            Class<?> c = Class.forName("android.os.SystemProperties");
+            Method get = c.getMethod("get", String.class);
+            serialNumber = (String) get.invoke(c, "gsm.sn1");
+            if (serialNumber.equals(""))
+                serialNumber = (String) get.invoke(c, "ril.serialnumber");
+            if (serialNumber.equals(""))
+                serialNumber = (String) get.invoke(c, "ro.serialno");
+            if (serialNumber.equals(""))
+                serialNumber = (String) get.invoke(c, "sys.serialnumber");
+            if (serialNumber.equals(""))
+                serialNumber = Build.SERIAL;
+            if (serialNumber.equals(""))
+                serialNumber = null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            serialNumber = null;
+        }
+        return serialNumber;
     }
 
     @Override
