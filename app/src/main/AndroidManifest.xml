@@ -11,75 +11,75 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.phc.cssd.MainActivity">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
         </activity>
         <activity
-            android:name=".MasterDropdown1"
+            android:name="com.phc.cssd.MasterDropdown1"
             android:screenOrientation="sensorLandscape"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".dialog_linen_detail"
+            android:name="com.phc.cssd.dialog_linen_detail"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog1"
             tools:ignore="LockedOrientationActivity" />
         <activity android:name=".PairItemToSterileBasket"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar" />
         <activity
-            android:name=".dialog_remark_sendsterile"
+            android:name="com.phc.cssd.dialog_remark_sendsterile"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog1"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".dialog_Load_Img"
+            android:name="com.phc.cssd.dialog_Load_Img"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Create_UserSendActivity"
+            android:name="com.phc.cssd.Create_UserSendActivity"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog1"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".dialog_usagecode_ems_sterile_approve"
+            android:name="com.phc.cssd.dialog_usagecode_ems_sterile_approve"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog1"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".loaner.LoanerMainActivity"
+            android:name="com.phc.cssd.loaner.LoanerMainActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".dialog_usagecode_ems_sterile"
+            android:name="com.phc.cssd.dialog_usagecode_ems_sterile"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog1"
             tools:ignore="LockedOrientationActivity" />
 <!--        <activity android:name=".adapter.ListUsageEms"-->
 <!--            tools:ignore="Instantiatable" />-->
         <activity
-            android:name=".dialog_usagecode_ems"
+            android:name="com.phc.cssd.dialog_usagecode_ems"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog1"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".dialog_additemstock"
+            android:name="com.phc.cssd.dialog_additemstock"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog"
             tools:ignore="LockedOrientationActivity" />
 <!--        <activity android:name=".adapter.ListApproveSterileAdapter"-->
 <!--            tools:ignore="Instantiatable" />-->
         <activity
-            android:name=".dialog_approve_sterile"
+            android:name="com.phc.cssd.dialog_approve_sterile"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog"
             tools:ignore="LockedOrientationActivity" />
 <!--        <activity android:name=".adapter.ListUsageCount"-->
 <!--            tools:ignore="Instantiatable" />-->
         <activity
-            android:name=".dialog_itemstock"
+            android:name="com.phc.cssd.dialog_itemstock"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog"
             tools:ignore="LockedOrientationActivity" />
@@ -87,7 +87,7 @@
 <!--            android:name=".adapter.ListUsageCount"-->
 <!--            tools:ignore="DuplicateActivity" />-->
         <activity
-            android:name=".dialog_check_usage_count"
+            android:name="com.phc.cssd.dialog_check_usage_count"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog1"
             tools:ignore="LockedOrientationActivity" />
@@ -96,297 +96,297 @@
 <!--        <activity android:name=".adapter.WashDetailBasketAdapter"-->
 <!--            tools:ignore="Instantiatable" />-->
         <activity
-            android:name=".SearchItem_SendSterile_New"
+            android:name="com.phc.cssd.SearchItem_SendSterile_New"
             android:colorBackgroundCacheHint="@null"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".CheckList"
+            android:name="com.phc.cssd.CheckList"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".CheckNoWashType"
+            android:name="com.phc.cssd.CheckNoWashType"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 <!--        <activity android:name=".adapter.AdapterItemdetaill"-->
 <!--            tools:ignore="Instantiatable" />-->
         <activity
-            android:name=".Itemdetail_Recall_Activity"
+            android:name="com.phc.cssd.Itemdetail_Recall_Activity"
             android:theme="@style/myDialog" />
 <!--        <activity android:name=".adapter.AdapterRecallNew"-->
 <!--            tools:ignore="Instantiatable" />-->
-        <activity android:name=".Export_database" />
+        <activity android:name="com.phc.cssd.Export_database" />
         <activity
-            android:name=".CssdEditSterile"
+            android:name="com.phc.cssd.CssdEditSterile"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".CssdTakeBack"
+            android:name="com.phc.cssd.CssdTakeBack"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".CssdQr"
+            android:name="com.phc.cssd.CssdQr"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".CssdQrUser"
+            android:name="com.phc.cssd.CssdQrUser"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".SettingExprieActivity"
+            android:name="com.phc.cssd.SettingExprieActivity"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 <!--        <activity android:name=".adapter.sendsterile_washdocdetail_adapte_2"-->
 <!--            tools:ignore="Instantiatable" />-->
         <activity
-            android:name=".MasterData_2Field"
+            android:name="com.phc.cssd.MasterData_2Field"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".Item"
+            android:name="com.phc.cssd.Item"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".Login"
+            android:name="com.phc.cssd.Login"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-        <activity android:name=".Menu" />
+        <activity android:name="com.phc.cssd.Menu" />
         <activity
-            android:name=".MasterDropdown"
+            android:name="com.phc.cssd.MasterDropdown"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".ItemSet"
+            android:name="com.phc.cssd.ItemSet"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity android:name=".ImportSendSterile" />
+        <activity android:name="com.phc.cssd.ImportSendSterile" />
         <activity
-            android:name=".CssdSterile"
+            android:name="com.phc.cssd.CssdSterile"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".Barcode_itemstock"
+            android:name="com.phc.cssd.Barcode_itemstock"
             android:colorBackgroundCacheHint="@null"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".Search_item"
+            android:name="com.phc.cssd.Search_item"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".CssdWash"
+            android:name="com.phc.cssd.CssdWash"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity android:name=".ItemStock" />
-        <activity android:name=".test" />
+        <activity android:name="com.phc.cssd.ItemStock" />
+        <activity android:name="com.phc.cssd.test" />
         <activity
-            android:name=".EnterNumber"
+            android:name="com.phc.cssd.EnterNumber"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar" />
         <activity
-            android:name=".SendSterile_MainActivity"
+            android:name="com.phc.cssd.SendSterile_MainActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".SterileSeachActivity"
+            android:name="com.phc.cssd.SterileSeachActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".PayoutActivity"
+            android:name="com.phc.cssd.PayoutActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity android:name=".WashingProcessActivity" />
+        <activity android:name="com.phc.cssd.WashingProcessActivity" />
         <activity
-            android:name=".master_data.ItemTypeActivity"
+            android:name="com.phc.cssd.master_data.ItemTypeActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".master_data.PackingmapActivity"
+            android:name="com.phc.cssd.master_data.PackingmapActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".master_data.OrganizationActivity"
+            android:name="com.phc.cssd.master_data.OrganizationActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".master_data.SterileprocessActivity"
+            android:name="com.phc.cssd.master_data.SterileprocessActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".master_data.SterilemachineActivity"
+            android:name="com.phc.cssd.master_data.SterilemachineActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".master_data.SpecialActivity"
+            android:name="com.phc.cssd.master_data.SpecialActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".master_data.UnitsActivity"
+            android:name="com.phc.cssd.master_data.UnitsActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".master_data.OccurenceActivity"
+            android:name="com.phc.cssd.master_data.OccurenceActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".master_data.UserActivity"
+            android:name="com.phc.cssd.master_data.UserActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".master_data.EmployeeActivity"
+            android:name="com.phc.cssd.master_data.EmployeeActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".master_data.SupplierActivity"
+            android:name="com.phc.cssd.master_data.SupplierActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".master_data.WashingProcessActivity"
+            android:name="com.phc.cssd.master_data.WashingProcessActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".MasterDataActivity" />
-        <activity android:name=".dialog_recall" />
-        <activity android:name=".Recall" />
-        <activity android:name=".register" />
-        <activity android:name=".Itemstock_manage" />
-        <activity android:name=".PreviewSticker_main" />
-        <activity android:name=".Recall_dept" />
+        <activity android:name="com.phc.cssd.MasterDataActivity" />
+        <activity android:name="com.phc.cssd.dialog_recall" />
+        <activity android:name="com.phc.cssd.Recall" />
+        <activity android:name="com.phc.cssd.register" />
+        <activity android:name="com.phc.cssd.Itemstock_manage" />
+        <activity android:name="com.phc.cssd.PreviewSticker_main" />
+        <activity android:name="com.phc.cssd.Recall_dept" />
         <activity
-            android:name=".SettingActivity"
+            android:name="com.phc.cssd.SettingActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity android:name=".Main2Activity" />
+        <activity android:name="com.phc.cssd.Main2Activity" />
         <activity
-            android:name=".CssdSearchSterile"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name=".CssdCreateItemStock"
+            android:name="com.phc.cssd.CssdSearchSterile"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".master_data.DepartmentActivity"
+            android:name="com.phc.cssd.CssdCreateItemStock"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
+            android:name="com.phc.cssd.master_data.DepartmentActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".master_data.RegisterActivity"
+            android:name="com.phc.cssd.master_data.RegisterActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".master_data.LabelActivity"
+            android:name="com.phc.cssd.master_data.LabelActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".master_data.SterlieProgramActivity"
+            android:name="com.phc.cssd.master_data.SterlieProgramActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".master_data.WashMachineActivity"
+            android:name="com.phc.cssd.master_data.WashMachineActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".master_data.WashProcessActivity"
+            android:name="com.phc.cssd.master_data.WashProcessActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".master_data.WashProgramActivity"
+            android:name="com.phc.cssd.master_data.WashProgramActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ReportActivity"
+            android:name="com.phc.cssd.ReportActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".master_data.TimeTableActivity"
+            android:name="com.phc.cssd.master_data.TimeTableActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".master_data.employee_search"
+            android:name="com.phc.cssd.master_data.employee_search"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".CssdPrintSterile"
+            android:name="com.phc.cssd.CssdPrintSterile"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar" />
         <activity
-            android:name=".ApproveStockActivity"
+            android:name="com.phc.cssd.ApproveStockActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".dialog_search_itemname"
+            android:name="com.phc.cssd.dialog_search_itemname"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".dialog_search_itemname_risk"
+            android:name="com.phc.cssd.dialog_search_itemname_risk"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".dialog_itemstock_cssd_recall"
+            android:name="com.phc.cssd.dialog_itemstock_cssd_recall"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".dialog_search_recall"
+            android:name="com.phc.cssd.dialog_search_recall"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/myDialog"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".master_data.OccurenceTypeActivity"
+            android:name="com.phc.cssd.master_data.OccurenceTypeActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".USBActivity" />
+        <activity android:name="com.phc.cssd.USBActivity" />
         <activity
-            android:name=".master_data.ResterileTypeActivity"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name=".master_data.SterileProgramItemActivity"
+            android:name="com.phc.cssd.master_data.ResterileTypeActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".CssdCreateItemStockDepartment"
+            android:name="com.phc.cssd.master_data.SterileProgramItemActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="com.phc.cssd.CssdCreateItemStockDepartment"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar" />
-        <activity android:name=".MasterData_3Field" />
-        <activity android:name=".Occurance_MainActivity" />
+        <activity android:name="com.phc.cssd.MasterData_3Field" />
+        <activity android:name="com.phc.cssd.Occurance_MainActivity" />
         <activity
-            android:name=".CssdWashDetailManagement"
+            android:name="com.phc.cssd.CssdWashDetailManagement"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".CssdSterileDraft"
+            android:name="com.phc.cssd.CssdSterileDraft"
             android:screenOrientation="sensorLandscape"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".CssdNewItemStock"
+            android:name="com.phc.cssd.CssdNewItemStock"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".CssdPreviewItemSterile"
+            android:name="com.phc.cssd.CssdPreviewItemSterile"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Payout_additemActivity"
+            android:name="com.phc.cssd.Payout_additemActivity"
             android:colorBackgroundCacheHint="@null"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Payout_CreateNewDocActivity"
+            android:name="com.phc.cssd.Payout_CreateNewDocActivity"
             android:colorBackgroundCacheHint="@null"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".SearchItem_SendSterile"
+            android:name="com.phc.cssd.SearchItem_SendSterile"
             android:colorBackgroundCacheHint="@null"
             android:screenOrientation="sensorLandscape"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".SearchItem_Payout"
+            android:name="com.phc.cssd.SearchItem_Payout"
             android:colorBackgroundCacheHint="@null"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".PrintLabelActivity"
+            android:name="com.phc.cssd.PrintLabelActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
-        <activity android:name=".CssdPrintLabel" />
-        <activity android:name=".CssdEthernet" />
-        <activity android:name=".CssdNotification" />
+        <activity android:name="com.phc.cssd.CssdPrintLabel" />
+        <activity android:name="com.phc.cssd.CssdEthernet" />
+        <activity android:name="com.phc.cssd.CssdNotification" />
         <activity
-            android:name=".DeleteSterile_Activity"
+            android:name="com.phc.cssd.DeleteSterile_Activity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".SetPositionStickerActivity"
+            android:name="com.phc.cssd.SetPositionStickerActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".CheckQR_Approve"
+            android:name="com.phc.cssd.CheckQR_Approve"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Item_newlayout"
+            android:name="com.phc.cssd.Item_newlayout"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".master_data.MachineAndSterile"
+            android:name="com.phc.cssd.master_data.MachineAndSterile"
             android:screenOrientation="sensorLandscape"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".master_data.MachineAndWash"
+            android:name="com.phc.cssd.master_data.MachineAndWash"
             android:screenOrientation="sensorLandscape"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             tools:ignore="LockedOrientationActivity" />
-            <activity android:name=".util.newVdownloadActivity">
+            <activity android:name="com.phc.cssd.util.newVdownloadActivity">
                     <intent-filter>
                             <action android:name="android.intent.action.MAIN" />
                             <action android:name="android.intent.action.VIEW" />
@@ -395,7 +395,7 @@
                             <category android:name="android.intent.category.LAUNCHER" />
                     </intent-filter>
             </activity>
-            <activity android:name=".CssdCheckList"
+            <activity android:name="com.phc.cssd.CssdCheckList"
                 android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
                 android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
 

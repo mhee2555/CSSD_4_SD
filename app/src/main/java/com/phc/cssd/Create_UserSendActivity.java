@@ -1,24 +1,18 @@
 package com.phc.cssd;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.phc.core.connect.HTTPConnect;
-import com.phc.cssd.master_data.RegisterActivity;
 import com.phc.cssd.url.Url;
 import com.phc.cssd.url.getUrl;
-import com.phc.cssd.url.xControl;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import org.json.JSONArray;

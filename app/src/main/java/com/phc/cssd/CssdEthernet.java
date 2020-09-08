@@ -7,7 +7,7 @@ import android.os.StrictMode;
 
 import com.example.tscdll.TscWifiActivity;
 //import com.example.tscwifidll.TscWifiActivity;
-import com.phc.cssd.R;
+
 
 public class CssdEthernet extends Activity {
 

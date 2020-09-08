@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 
 import com.phc.core.connect.HTTPConnect;
 import com.phc.core.string.Cons;
-import com.phc.cssd.adapter.ListUsageCount;
 import com.phc.cssd.model.ModelUsageCount;
 import com.phc.cssd.url.Url;
 
@@ -24,7 +22,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 

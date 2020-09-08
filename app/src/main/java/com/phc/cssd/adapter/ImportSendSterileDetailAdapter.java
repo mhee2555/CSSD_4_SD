@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.phc.cssd.CssdSterile;
 import com.phc.cssd.CssdWash;
 import com.phc.cssd.R;
 import com.phc.cssd.model.ModelSendSterileDetail;

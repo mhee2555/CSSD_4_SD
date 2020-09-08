@@ -21,11 +21,9 @@ import android.widget.Toast;
 
 import com.phc.cssd.CssdEditSterile;
 import com.phc.cssd.CssdSterile;
-import com.phc.cssd.CssdWash;
 import com.phc.cssd.R;
 import com.phc.cssd.model.ModelImportWashDetail;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 

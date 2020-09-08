@@ -10,7 +10,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.phc.cssd.CssdEditSterile;
-import com.phc.cssd.CssdSterile;
 import com.phc.cssd.R;
 import com.phc.cssd.model.ModelItemStock;
 

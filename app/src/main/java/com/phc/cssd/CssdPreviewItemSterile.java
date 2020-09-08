@@ -25,16 +25,8 @@ import com.phc.core.connect.HTTPConnect;
 import com.phc.core.data.AsonData;
 import com.phc.cssd.adapter.CssdPreviewItemSterile_List_ItemSet_Adapter;
 import com.phc.cssd.adapter.CssdPreviewItemSterile_List_ItemSterile_Adapter;
-import com.phc.cssd.adapter.ItemDetailAdapter;
-import com.phc.cssd.adapter.SterileDetailAdapter;
-import com.phc.cssd.adapter.SterileDetailBigSizeAdapter;
-import com.phc.cssd.adapter.SterileDetailGridViewAdapter;
 import com.phc.cssd.model.ModelItemDetail;
-import com.phc.cssd.model.ModelItems;
-import com.phc.cssd.model.ModelItems;
-import com.phc.cssd.model.ModelMasterData;
 import com.phc.cssd.model.ModelPreviewItemSterile;
-import com.phc.cssd.model.ModelSterileProgram;
 import com.phc.cssd.url.Url;
 
 import java.net.URL;

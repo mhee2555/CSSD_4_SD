@@ -1,11 +1,9 @@
 package com.phc.cssd;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -31,16 +29,12 @@ import com.phc.core.data.AsonData;
 import com.phc.core.string.Cons;
 
 import com.phc.cssd.adapter.ImportWashDetailAdapter;
-import com.phc.cssd.adapter.ImportWashDetailBigSizeAdapter;
-import com.phc.cssd.adapter.ImportWashDetailGridViewAdapter;
 import com.phc.cssd.adapter.ListEdit_L_Adapter;
 import com.phc.cssd.adapter.ListEdit_R_Adapter;
 import com.phc.cssd.data.Master;
-import com.phc.cssd.model.Model;
 import com.phc.cssd.model.ModelImportWashDetail;
 import com.phc.cssd.model.ModelItemStock;
 
-import com.phc.cssd.model.ModelWashDetail;
 import com.phc.cssd.url.Url;
 
 import org.json.JSONArray;
@@ -50,7 +44,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 public class CssdEditSterile extends Activity {

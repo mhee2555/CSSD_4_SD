@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.phc.cssd.CssdSearchSterile;
-import com.phc.cssd.CssdSterile;
 import com.phc.cssd.R;
 import com.phc.cssd.model.ModelImportWashDetail;
 import com.phc.cssd.model.ModelSterileDetail;

@@ -12,7 +12,6 @@ import com.downloadapk.util.checkSelfPermissionCompat
 import com.downloadapk.util.requestPermissionsCompat
 import com.downloadapk.util.shouldShowRequestPermissionRationaleCompat
 import com.downloadapk.util.showSnackbar
-import com.phc.cssd.Login
 import com.phc.cssd.MainActivity
 import com.phc.cssd.R
 import com.phc.cssd.url.getUrl

@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,18 +14,11 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.phc.core.string.Cons;
 import com.phc.cssd.CssdCheckList;
-import com.phc.cssd.CssdPrintSterile;
-import com.phc.cssd.CssdSterile;
 import com.phc.cssd.R;
-import com.phc.cssd.SendSterile_MainActivity;
 import com.phc.cssd.model.ModelCheckList;
-import com.phc.cssd.properties.pCustomer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CheckListAdapter extends ArrayAdapter {
