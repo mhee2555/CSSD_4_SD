@@ -4937,7 +4937,7 @@ public class CssdSterile extends AppCompatActivity {
         final String p_doc_date = txt_doc_date.getText().toString();
 
         class CreateSterile extends AsyncTask<String, Void, String> {
-
+            private ProgressDialog dialog = new ProgressDialog(CssdSterile.this);
             //------------------------------------------------
             // Background Worker Process Variable
             private boolean Success = false;
@@ -4954,7 +4954,7 @@ public class CssdSterile extends AppCompatActivity {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
+                dialog.dismiss();
                 AsonData ason = new AsonData(result);
 
                 Success = ason.isSuccess();
@@ -5182,7 +5182,7 @@ public class CssdSterile extends AppCompatActivity {
         final String p_doc_date = txt_doc_date.getText().toString();
 
         class CreateSterile extends AsyncTask<String, Void, String> {
-
+            private ProgressDialog dialog = new ProgressDialog(CssdSterile.this);
             //------------------------------------------------
             // Background Worker Process Variable
             private boolean Success = false;
@@ -5199,7 +5199,7 @@ public class CssdSterile extends AppCompatActivity {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
+                dialog.dismiss();
                 AsonData ason = new AsonData(result);
 
                 Success = ason.isSuccess();
@@ -5442,6 +5442,7 @@ public class CssdSterile extends AppCompatActivity {
 
         class CreateSterile extends AsyncTask<String, Void, String> {
 
+            private ProgressDialog dialog = new ProgressDialog(CssdSterile.this);
             //------------------------------------------------
             // Background Worker Process Variable
             private boolean Success = false;
@@ -5458,7 +5459,7 @@ public class CssdSterile extends AppCompatActivity {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
+                dialog.dismiss();
                 AsonData ason = new AsonData(result);
 
                 Success = ason.isSuccess();
