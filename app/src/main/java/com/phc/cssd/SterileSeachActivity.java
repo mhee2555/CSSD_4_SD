@@ -252,6 +252,7 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
                         newData.setFields4( resultssteriledetail.get(n).getFields4() );
                         newData.setFields5( resultssteriledetail.get(n).getFields5() );
                         newData.setFields6( resultssteriledetail.get(n).getFields6() );
+                        newData.setFields15( resultssteriledetail.get(n).getFields15() );
                         resultsOccurance.add( newData );
                         xIsOccurance++;
                     }
