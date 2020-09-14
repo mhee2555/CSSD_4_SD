@@ -117,7 +117,7 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
         txtitemname.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                (( SendSterile_MainActivity )aActivity).LoadImg( listData.get(position).getItemcode(),"1",listData.get(position).getUsageCode(),listData.get(position).getItemname());
+                (( SendSterile_MainActivity )aActivity).LoadImg( listData.get(position).getItemcode(),"1",listData.get(position).getUsageCode(),listData.get(position).getItemname(),"noremark");
             }
         });
         txtUcode.setText("รหัสใช้งาน : "+listData.get(position).getUsageCode());

@@ -10,9 +10,14 @@ public class Url {
     //public static final String URL = "http://192.168.1.64:80/cssd/";
 
     public static final String URL = getUrl.xUrl;
+    public static final String URL_MOBILE = getUrl.xUrl;
 
     public static String getImageURL(){
         return URL + "cssd_image/";
+    }
+
+    public static String getImageURLMobile(){
+        return URL_MOBILE + "images/";
     }
 
 }

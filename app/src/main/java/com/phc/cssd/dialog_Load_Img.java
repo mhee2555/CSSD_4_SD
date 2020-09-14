@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.phc.core.connect.HTTPConnect;
@@ -25,9 +26,10 @@ import java.util.HashMap;
 
 public class dialog_Load_Img extends Activity {
 
-    String itemcode,sel,usagecode,itemname;
+    String itemcode,sel,usagecode,itemname,type;
     TextView itemname_set,usagecode_set,sub_itemname_set,unit_set;
     ImageView img;
+    LinearLayout L1;
 
     private HTTPConnect httpConnect = new HTTPConnect();
     private String TAG_RESULTS = "result";
@@ -49,6 +51,7 @@ public class dialog_Load_Img extends Activity {
         usagecode = intent.getStringExtra("usagecode");
         itemname = intent.getStringExtra("itemname");
         sel = intent.getStringExtra("sel");
+        type = intent.getStringExtra("type");
     }
 
     public void initialize() {
@@ -57,6 +60,7 @@ public class dialog_Load_Img extends Activity {
         sub_itemname_set = (TextView) findViewById(R.id.sub_itemname_set);
         unit_set = (TextView) findViewById(R.id.unit_set);
         img = (ImageView) findViewById(R.id.img);
+        L1 = (LinearLayout) findViewById(R.id.L1);
     }
 
     public void ShowDetail() {
@@ -72,37 +76,47 @@ public class dialog_Load_Img extends Activity {
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
                         try {
-                            if (sel.equals("2")){
-                                itemname_set.setText("ชื่อรายการเซ็ท : " + c.getString("itemnamesel2"));
+                            if (!type.equals("remark")){
+                                if (sel.equals("2")){
+                                    itemname_set.setText("ชื่อรายการเซ็ท : " + c.getString("itemnamesel2"));
+                                }else {
+                                    itemname_set.setText("ชื่อรายการเซ็ท : " + itemname);
+                                }
+                                usagecode_set.setText("รหัสใช้งาน : " + usagecode);
+                                if (sel.equals("1")){
+                                    sub_itemname_set.setVisibility(View.GONE);
+                                }else {
+                                    sub_itemname_set.setText("รายละเอียดเซ็ท : " + itemname);
+                                }
+                                if (c.getString("ID").equals("null")){
+                                    unit_set.setText("Unit : ไม่มีข้อมูล");
+                                }else {
+                                    unit_set.setText("Unit : "+ c.getString("ID"));
+                                }
                             }else {
-                                itemname_set.setText("ชื่อรายการเซ็ท : " + itemname);
+                                L1.setVisibility(View.GONE);
                             }
-                            usagecode_set.setText("รหัสใช้งาน : " + usagecode);
-                            if (sel.equals("1")){
-                                sub_itemname_set.setVisibility(View.GONE);
+                            if (!type.equals("remark")){
+                                URL imageUrl = new URL(Url.URL + "cssd_image/"+c.getString("Picture"));
+                                System.out.println(Url.URL + "cssd_image/"+c.getString("Picture"));
+                                if (!c.getString("Picture").equals("")){
+                                    img.setBackgroundResource(R.color.colorWhite);
+                                    Picasso.get().load(String.valueOf(imageUrl)).networkPolicy(NetworkPolicy.NO_CACHE)
+                                            .memoryPolicy(MemoryPolicy.NO_CACHE)
+                                            .into(img);
+                                }
                             }else {
-                                sub_itemname_set.setText("รายละเอียดเซ็ท : " + itemname);
+                                URL imageUrl = new URL("http://poseintelligence.dyndns.biz:8181/cssd_php_m1_paydep_siriraj/images/"+c.getString("Picture"));
+                                System.out.println(Url.URL + "cssd_image/"+c.getString("Picture"));
+                                if (!c.getString("Picture").equals("")){
+                                    img.setBackgroundResource(R.color.colorWhite);
+                                    Picasso.get().load(String.valueOf(imageUrl)).networkPolicy(NetworkPolicy.NO_CACHE)
+                                            .memoryPolicy(MemoryPolicy.NO_CACHE)
+                                            .into(img);
+                                }
                             }
-                            if (c.getString("ID").equals("null")){
-                                unit_set.setText("Unit : ไม่มีข้อมูล");
-                            }else {
-                                unit_set.setText("Unit : "+ c.getString("ID"));
-                            }
-
-                            URL imageUrl = new URL(Url.URL + "cssd_image/"+c.getString("Picture"));
-                            System.out.println(Url.URL + "cssd_image/"+c.getString("Picture"));
-
-                            if (!c.getString("Picture").equals("")){
-                                img.setBackgroundResource(R.color.colorWhite);
-                                Picasso.get().load(String.valueOf(imageUrl)).networkPolicy(NetworkPolicy.NO_CACHE)
-                                        .memoryPolicy(MemoryPolicy.NO_CACHE)
-                                        .into(img);
-                            }
-
-
                         } catch (Exception e) {
                             e.printStackTrace();
-                            //return;
                         }
                     }
                 } catch (JSONException e) {
@@ -114,6 +128,12 @@ public class dialog_Load_Img extends Activity {
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
+                if(type != null){
+                    data.put("type",type);
+                }else {
+                    data.put("type","");
+                }
+
                 if(usagecode != null){
                     data.put("usagecode",usagecode);
                 }else {
@@ -135,7 +155,11 @@ public class dialog_Load_Img extends Activity {
                 data.put("sel",sel);
                 String result = null;
                 try {
-                    result = httpConnect.sendPostRequest(Url.URL + "cssd_show_detail_item_send.php", data);
+                    if (type.equals("remark")){
+                        result = httpConnect.sendPostRequest(Url.URL + "cssd_show_detail_item_send.php", data);
+                    }else {
+                        result = httpConnect.sendPostRequest(Url.URL + "cssd_show_detail_item_send.php", data);
+                    }
                     Log.d("FKJDHJKDH",data+"");
                     Log.d("FKJDHJKDH",result+"");
                 }catch(Exception e){

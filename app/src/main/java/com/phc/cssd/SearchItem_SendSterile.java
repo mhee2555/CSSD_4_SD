@@ -80,6 +80,7 @@ public class SearchItem_SendSterile extends Activity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 ListData(etxt_searchsendsterile.getText().toString().replace(' ','%'),DepID);
+
             }
 
             @Override

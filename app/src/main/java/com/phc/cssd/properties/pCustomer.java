@@ -59,7 +59,22 @@ public class pCustomer {
     private String IsDenger;
     private boolean CheckAll;
     private String RemarkAdmin;
+    private String IsPicture;
+    private String RemarkItemCode;
+    private String RemarkDocNo;
 
+
+    public String getRemarkDocNo() { return RemarkDocNo; }
+
+    public void setRemarkDocNo(String remarkDocNo) { RemarkDocNo = remarkDocNo; }
+
+    public String getRemarkItemCode() { return RemarkItemCode; }
+
+    public void setRemarkItemCode(String remarkItemCode) { RemarkItemCode = remarkItemCode; }
+
+    public String getIsPicture() { return IsPicture; }
+
+    public void setIsPicture(String isPicture) { IsPicture = isPicture; }
 
     public String getRemarkAdmin() { return RemarkAdmin; }
 

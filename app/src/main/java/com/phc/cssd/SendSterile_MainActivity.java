@@ -1276,6 +1276,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         xST.setXqty(c.getString("Qty"));
                         xST.setUsageCode(UsageCode);
                         xST.setRemarkAdmin(c.getString("RemarkAdmin"));
+                        xST.setIsPicture(c.getString("IsPicture"));
+                        xST.setRemarkItemCode(c.getString("RemarkItemCode"));
+                        xST.setRemarkDocNo(c.getString("DocNo"));
                         pCus.add(xST);
                         cnt++;
                     }
@@ -3375,13 +3378,29 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         obj.execute();
     }
 
-    public void LoadImg(final String itemcode,final String sel,final String usagecode,final String itemname) {
-        Intent intent = new Intent(SendSterile_MainActivity.this, dialog_Load_Img.class);
-        intent.putExtra("itemcode", itemcode);
-        intent.putExtra("usagecode", usagecode);
-        intent.putExtra("itemname", itemname);
-        intent.putExtra("sel",sel);
-        startActivity(intent);
+    public void LoadImg(final String itemcode,final String sel,final String usagecode,final String itemname,final String type) {
+        Log.d("FKJDHJKDH",type+"");
+        Log.d("FKJDHJKDH",itemcode+"");
+        Log.d("FKJDHJKDH",sel+"");
+        Log.d("FKJDHJKDH",usagecode+"");
+        Log.d("FKJDHJKDH",itemname+"");
+        if (type.equals("remark")){
+            Intent intent = new Intent(SendSterile_MainActivity.this, dialog_Load_Img.class);
+            intent.putExtra("itemcode", itemcode);
+            intent.putExtra("usagecode", usagecode);
+            intent.putExtra("itemname", itemname);
+            intent.putExtra("sel",sel);
+            intent.putExtra("type",type);
+            startActivity(intent);
+        }else {
+            Intent intent = new Intent(SendSterile_MainActivity.this, dialog_Load_Img.class);
+            intent.putExtra("itemcode", itemcode);
+            intent.putExtra("usagecode", usagecode);
+            intent.putExtra("itemname", itemname);
+            intent.putExtra("sel",sel);
+            intent.putExtra("type",type);
+            startActivity(intent);
+        }
     }
 
     public void OpenDialog(final String Itemname , final String type) {

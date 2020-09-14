@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -65,6 +66,7 @@ public class SendSterile_DocListDetailAdapter extends ArrayAdapter {
         TextView textView49 = (TextView) v.findViewById(R.id.textView49);
         RelativeLayout R1 = (RelativeLayout) v.findViewById(R.id.R1);
         final CheckBox checkBoxsub = (CheckBox ) v.findViewById(R.id.checkBoxsub);
+        final Button Open_pic = (Button) v.findViewById(R.id.Open_pic);
 
         R1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +104,17 @@ public class SendSterile_DocListDetailAdapter extends ArrayAdapter {
             checkBoxsub.setChecked(false);
         }
 
+        if (listData.get(position).getIsPicture().equals("0")){
+            Open_pic.setVisibility(View.GONE);
+        }
+
+        Open_pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((SendSterile_MainActivity)aActivity).LoadImg(listData.get(position).getRemarkItemCode(),listData.get(position).getRemarkDocNo(),listData.get(position).getItemID(),listData.get(position).getUsageCode(),"remark");
+            }
+        });
+
         checkBoxsub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,7 +128,7 @@ public class SendSterile_DocListDetailAdapter extends ArrayAdapter {
         txtitemname.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((SendSterile_MainActivity)aActivity).LoadImg(listData.get(position).getItemcode(),"2",listData.get(position).getUsageCode(),listData.get(position).getItemname());
+                ((SendSterile_MainActivity)aActivity).LoadImg(listData.get(position).getItemcode(),"2",listData.get(position).getUsageCode(),listData.get(position).getItemname(),"noremark");
             }
         });
         txtxqty.setText( listData.get(position).getXqty() );
