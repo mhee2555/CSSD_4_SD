@@ -3379,13 +3379,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     }
 
     public void LoadImg(final String itemcode,final String sel,final String usagecode,final String itemname,final String type) {
-        Log.d("FKJDHJKDH",type+"");
-        Log.d("FKJDHJKDH",itemcode+"");
-        Log.d("FKJDHJKDH",sel+"");
-        Log.d("FKJDHJKDH",usagecode+"");
-        Log.d("FKJDHJKDH",itemname+"");
         if (type.equals("remark")){
-            Intent intent = new Intent(SendSterile_MainActivity.this, dialog_Load_Img.class);
+            Intent intent = new Intent(SendSterile_MainActivity.this, dialog_Load_Img_Remark.class);
             intent.putExtra("itemcode", itemcode);
             intent.putExtra("usagecode", usagecode);
             intent.putExtra("itemname", itemname);
