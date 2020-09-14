@@ -38,7 +38,7 @@ public class dialog_Load_Img_Remark extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dialog_load_img);
+        setContentView(R.layout.activity_dialog_load_img_remark);
         byIntent();
         initialize();
         ShowDetail();
