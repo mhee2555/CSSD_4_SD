@@ -49,7 +49,7 @@ public class getUrl {
 //        return "http://192.168.1.132/cssd_siriraj/";
 //        return "http://192.168.1.104/cssd_vcy_test/";
         // PRESENT
-//        return "http://poseintelligence.dyndns.biz/cssd_php_m1_paydep_siriraj/";
+//        return "http://poseintelligence.dyndns.biz/cssd_siriraj/";
     }
     // ----------------------------------------------------
     // Get Project Setting

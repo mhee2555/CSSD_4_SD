@@ -1800,7 +1800,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         ru.execute(DocNo, RowID);
     }
 
-    public void DeleteDetail_l2(String DocNo,String RowID) {
+    public void DeleteDetail_l2(final String DocNo, String RowID) {
         class DeleteDetail_l2 extends AsyncTask<String, Void, String> {
             @Override
             protected void onPreExecute() {
@@ -1831,12 +1831,23 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         pCus.add(xST);
                     }
 
-                    getlistcreate(txtDocno, ED_Dept);
-                    getlistcreate_l2(txtDocno);
-                    getlistdata(deptsp_id, edittext.getText().toString(), "");
-                    getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
+//                    getlistcreate(txtDocno, ED_Dept);
+//                    getlistcreate_l2(txtDocno);
+//                    getlistdata(deptsp_id, edittext.getText().toString(), "");
+//                    getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
+//                    cleardoc();
+//                    etxt_docno.setText(txtDocno);
+//                    DelRowId.clear();
+//                    DelAlldata.clear();
+
+                    getlistcreate(DocNo, ED_Dept);
+                    getlistcreate_l2(DocNo);
+                    ShowDetailScan(DocNo);
+                    ShowUserSend();
+//                    getlistdata(deptsp_id, edittext.getText().toString(), "");
+//                    getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
                     cleardoc();
-                    etxt_docno.setText(txtDocno);
+                    etxt_docno.setText(DocNo);
                     DelRowId.clear();
                     DelAlldata.clear();
                 } catch (JSONException e) {
