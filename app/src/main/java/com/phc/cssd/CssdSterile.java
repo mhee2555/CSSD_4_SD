@@ -224,6 +224,7 @@ public class CssdSterile extends AppCompatActivity {
     String condition2 = "";
     String condition3 = "";
     String condition4 = "";
+    String condition5 = "";
     private Runnable runnable_1;
     private Runnable runnable_2;
     private Runnable runnable_3;
@@ -7329,9 +7330,10 @@ public class CssdSterile extends AppCompatActivity {
                         condition2 = c.getString("condition2");
                         condition3 = c.getString("condition3");
                         condition4 = c.getString("condition4");
+                        condition5 = c.getString("condition5");
                     }
                     if (DIALOG_ACTIVE == true){
-                        if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0")){
+                        if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0") || !condition5.equals("0")){
                             Intent intent = new Intent(CssdSterile.this, dialog_check_usage_count.class);
                             intent.putExtra("UsageCode", UsageCode);
                             intent.putExtra("cnt", Cnt);
@@ -7343,6 +7345,7 @@ public class CssdSterile extends AppCompatActivity {
                             intent.putExtra("condition2",condition2);
                             intent.putExtra("condition3",condition3);
                             intent.putExtra("condition4",condition4);
+                            intent.putExtra("condition5",condition5);
                             startActivity(intent);
                             DIALOG_ACTIVE = false;
                         }
@@ -7384,7 +7387,6 @@ public class CssdSterile extends AppCompatActivity {
         i.putExtra("MacNo", MacNo);
         i.putExtra("B_ID", B_ID);
         startActivityForResult(i, 1035);
-
     }
 
     public void selectBasket(final String BasketCode, final EditText edt_basketcode) {

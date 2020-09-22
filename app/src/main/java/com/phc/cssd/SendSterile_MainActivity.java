@@ -183,6 +183,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     String condition2 = "";
     String condition3 = "";
     String condition4 = "";
+    String condition5 = "";
     CheckBox checkBoxall;
     String CheckAll = "0";
     String Usagecode = "";
@@ -3048,9 +3049,10 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         condition2 = c.getString("condition2");
                         condition3 = c.getString("condition3");
                         condition4 = c.getString("condition4");
+                        condition5 = c.getString("condition5");
                     }
                     if (DIALOG_ACTIVE == true){
-                        if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0")){
+                        if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0") || !condition5.equals("0")){
                             Intent intent = new Intent(SendSterile_MainActivity.this, dialog_check_usage_count.class);
                             intent.putExtra("UsageCode", UsageCode);
                             intent.putExtra("cnt", Cnt);
@@ -3062,6 +3064,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                             intent.putExtra("condition2",condition2);
                             intent.putExtra("condition3",condition3);
                             intent.putExtra("condition4",condition4);
+                            intent.putExtra("condition5",condition5);
                             startActivity(intent);
                             DIALOG_ACTIVE = false;
                         }

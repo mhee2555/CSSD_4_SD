@@ -220,7 +220,7 @@
                         android:layout_height="60dp"
                         android:gravity="left|center"
                         android:maxLines="1"
-                        android:text="ครบรอบส่งคืน"
+                        android:text="Remark"
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/index3"
                         android:textColor="@color/colorBlack"
@@ -292,7 +292,7 @@
                         android:layout_height="60dp"
                         android:gravity="left|center"
                         android:maxLines="1"
-                        android:text="Remark"
+                        android:text="ครบรอบส่งคืน"
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/index4"
                         android:textColor="@color/colorBlack"
@@ -332,16 +332,81 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/back"
-            android:layout_width="150dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/bt_back_n">
+        <LinearLayout
+            android:id="@+id/P5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        </Button>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <TextView
+                    android:id="@+id/index5"
+                    android:layout_width="40dp"
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="5."
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20dp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/text5"
+                    android:layout_width="170dp"
+                    android:layout_height="60dp"
+                    android:gravity="left|center"
+                    android:maxLines="1"
+                    android:text="หมดอายุ"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/index5"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20dp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/qty5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:gravity="left|center"
+                    android:maxLines="1"
+                    android:text="                         "
+                    android:layout_marginStart="35dp"
+                    android:layout_toEndOf="@+id/text5"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20dp">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:gravity="left|center"
+                    android:maxLines="1"
+                    android:text="PCS/SET"
+                    android:layout_marginStart="380dp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20dp">
+
+                </TextView>
+
+            </RelativeLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bt_back_n">
+
+    </Button>
 
 </LinearLayout>
