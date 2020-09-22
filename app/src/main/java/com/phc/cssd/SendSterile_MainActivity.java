@@ -197,6 +197,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     String serialNumber;
     //private SlidrInterface slidr;
 
+    float x1,x2,y1,y2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -218,12 +220,41 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         etxt_dept.requestFocus();
     }
 
-//    public boolean onTouchEvent(MotionEvent touchEvent){
-//        switch (touchEvent.getAction()){
-//            case MotionEvent.ACTION_DOWN:
-//
-//        })
-//    }
+    public boolean onTouchEvent(MotionEvent touchEvent) {
+        switch (touchEvent.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                x1 = touchEvent.getX();
+                y1 = touchEvent.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2 = touchEvent.getX();
+                y2 = touchEvent.getY();
+                if (x1 < x2) {
+                    Intent i = new Intent(SendSterile_MainActivity.this, CssdWash.class);
+                    i.putExtra("userid", "1");
+                    i.putExtra("user_name", "BANK");
+                    i.putExtra("IsAdmin", IsAdmin);
+                    i.putExtra("B_ID", B_ID);
+                    i.putExtra("EmpCode", EmpCode);
+                    startActivity(i);
+                    finish();
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                } else if (x1 > x2) {
+                    Intent intent = new Intent(SendSterile_MainActivity.this, CssdWash.class);
+                    intent.putExtra("userid", "1");
+                    intent.putExtra("user_name", "BANK");
+                    intent.putExtra("IsAdmin", IsAdmin);
+                    intent.putExtra("B_ID", B_ID);
+                    intent.putExtra("EmpCode", EmpCode);
+                    startActivity(intent);
+                    finish();
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+                break;
+        }
+        return false;
+    }
+
 
     public String getSerialNumber() {
         try {

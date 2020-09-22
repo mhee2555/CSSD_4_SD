@@ -180,8 +180,7 @@
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar" />
         <activity
             android:name="com.phc.cssd.SendSterile_MainActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            android:theme="@style/AppTheme.SlidrActivityTheme"></activity>
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name="com.phc.cssd.SterileSeachActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
