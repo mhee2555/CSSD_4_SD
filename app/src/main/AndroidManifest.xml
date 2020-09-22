@@ -150,7 +150,7 @@
         <activity
             android:name="com.phc.cssd.Login"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-        <activity android:name="com.phc.cssd.Menu" />
+        <activity android:name="com.phc.cssd.Menu"></activity>
         <activity
             android:name="com.phc.cssd.MasterDropdown"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
@@ -180,7 +180,8 @@
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar" />
         <activity
             android:name="com.phc.cssd.SendSterile_MainActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            android:theme="@style/AppTheme.SlidrActivityTheme"></activity>
         <activity
             android:name="com.phc.cssd.SterileSeachActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />

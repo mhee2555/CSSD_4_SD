@@ -47,6 +47,8 @@ import com.phc.cssd.url.Url;
 import com.phc.cssd.url.getUrl;
 import com.phc.cssd.properties.pCustomer;
 import com.phc.cssd.url.xControl;
+import com.r0adkll.slidr.Slidr;
+import com.r0adkll.slidr.model.SlidrInterface;
 import com.stargreatsoftware.sgtreeview.TreeViewAdapter;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import org.json.JSONArray;
@@ -193,6 +195,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     String Usage = "";
     String Type = "";
     String serialNumber;
+    //private SlidrInterface slidr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,6 +206,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
         }
         getSupportActionBar().hide();
+        //slidr = Slidr.attach(this);
         byIntent();
         initialize();
         bin_all.setVisibility(View.INVISIBLE);
@@ -213,6 +217,13 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         etxt_dept.setPositiveButton("");
         etxt_dept.requestFocus();
     }
+
+//    public boolean onTouchEvent(MotionEvent touchEvent){
+//        switch (touchEvent.getAction()){
+//            case MotionEvent.ACTION_DOWN:
+//
+//        })
+//    }
 
     public String getSerialNumber() {
         try {

@@ -6,6 +6,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.SlidrActivityTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
     <style name="CheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
     </style>
 

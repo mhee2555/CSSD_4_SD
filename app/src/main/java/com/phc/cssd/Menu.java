@@ -25,6 +25,8 @@ import com.phc.core.data.AsonData;
 import com.phc.core.string.Cons;
 import com.phc.cssd.url.Url;
 import com.phc.cssd.url.getUrl;
+import com.r0adkll.slidr.Slidr;
+import com.r0adkll.slidr.model.SlidrInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
