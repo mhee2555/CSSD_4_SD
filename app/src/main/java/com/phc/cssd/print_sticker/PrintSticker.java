@@ -358,7 +358,7 @@ public class PrintSticker {
             try {
                 ModelSterileDetail m = (ModelSterileDetail) li.next();
                 String Itemname[] = TextTwoLine.make2line(m.getItemname());
-                Tsc.sendpicture(25, 30, TextAsBitmap.getTextBitmap1(Itemname[0], 27));
+                Tsc.sendpicture(25, 32, TextAsBitmap.getTextBitmap1(Itemname[0], 27));
                 Tsc.sendpicture(25, 80, TextAsBitmap.getTextBitmap(m.getUsageCode(), 26));
                 Tsc.sendpicture(25, 125, TextAsBitmap.getTextBitmap(m.getUsr_prepare()+" - เตรียม ", 26));
                 Tsc.sendpicture(25, 170, TextAsBitmap.getTextBitmap(m.getUsr_approve()+" - ตรวจ ", 26));

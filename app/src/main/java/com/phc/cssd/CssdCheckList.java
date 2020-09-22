@@ -191,7 +191,6 @@ public class CssdCheckList extends Activity {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
                             if (COUNT_PROCESS < 2){
-                                Log.d("KFHKDHD",COUNT_PROCESS+"");
                                 checkInput(edt_usage_code.getText().toString());
                                 DIALOG_ACTIVE = true;
                             }else {
