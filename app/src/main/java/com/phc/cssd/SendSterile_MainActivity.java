@@ -3127,8 +3127,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         condition2 = c.getString("condition2");
                         condition3 = c.getString("condition3");
                         condition4 = c.getString("condition4");
+                        condition5 = c.getString("condition5");
                     }
-                    if (condition1 != "0" || condition2 != "0" || condition3 != "0" || condition4 != "0"){
+                    if (condition1 != "0" || condition2 != "0" || condition3 != "0" || condition4 != "0" || condition5 != "0"){
                         if (!ED_Dept.equals("") && !ED_Dept.equals("0")) {
                             if (txt_get_ucode.getText().toString().length() == 12 && !etxt_docno.getText().toString().equals("")) {
                                 CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
