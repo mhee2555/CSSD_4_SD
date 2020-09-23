@@ -141,24 +141,22 @@
 
                 <TextView
                     android:id="@+id/textView18"
-                    android:layout_width="0dp"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/textView20"
                     android:layout_alignTop="@+id/newSS"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="0dp"
                     android:layout_marginRight="5dp"
-                    android:layout_weight="0.1"
-                    android:text="ผู้ส่ง(แผนก)"
+                    android:text="HN คนไข้"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:visibility="gone"/>
+                    android:textStyle="bold" />
 
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/txt_usr_send"
-                    style="@style/spinner_style_register"
-                    android:layout_width="210dp"
+                    android:background="@drawable/text_edit"
+                    android:layout_width="10dp"
                     android:layout_height="35dp"
                     android:layout_marginTop="0dp"
                     android:layout_marginRight="0dp"
@@ -166,6 +164,32 @@
                     android:textColor="@android:color/black"
                     android:textSize="17sp"
                     android:visibility="gone"/>
+
+                <EditText
+                    android:id="@+id/hn_code"
+                    android:background="@drawable/text_edit"
+                    android:layout_width="220dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="17sp" />
+
+                <Button
+                    android:id="@+id/newSS"
+                    android:layout_width="225dp"
+                    android:layout_height="35dp"
+                    android:layout_alignStart="@+id/next"
+                    android:layout_alignTop="@+id/hn_code"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="20dp"
+                    android:text="ทำใหม่"
+                    android:background="@drawable/bt_create04"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txt_usr_send_"
@@ -180,19 +204,6 @@
                     android:visibility="gone"
                     android:textSize="14sp" />
 
-                <Button
-                    android:id="@+id/newSS"
-                    android:layout_width="225dp"
-                    android:layout_height="35dp"
-                    android:layout_alignStart="@+id/next"
-                    android:layout_alignTop="@+id/txt_usr_send"
-                    android:layout_marginLeft="358dp"
-                    android:layout_marginRight="20dp"
-                    android:text="ทำใหม่"
-                    android:background="@drawable/bt_create04"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -599,6 +610,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/L2_Send"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginTop="18dp"
@@ -611,6 +623,22 @@
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/txt_setdetail_l4_1"
+                            android:layout_width="150dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginLeft="170dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:hint="Scan Qr Wash Tag"
+                            android:paddingStart="8dp"
+                            android:background="@drawable/text_edit"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/textView47"
@@ -665,7 +693,22 @@
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
+                        <Spinner
+                            android:id="@+id/textView46_1"
+                            android:layout_width="150dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="5dp"
+                            style="@style/spinner_style_register"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
                     </RelativeLayout>
+
                     <ListView
                         android:id="@+id/list_docno_detail"
                         android:layout_width="match_parent"
@@ -953,16 +996,19 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/L1_Send"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginTop="18dp"
                     android:layout_marginRight="25dp"
                     android:layout_marginBottom="22dp"
                     android:layout_weight="0.4"
+                    android:padding="5dp"
                     android:background="@drawable/rectangle"
                     android:orientation="vertical">
 
                     <RelativeLayout
+                        android:id="@+id/R1_Send"
                         android:layout_width="wrap_content"
                         android:layout_height="60dp">
 

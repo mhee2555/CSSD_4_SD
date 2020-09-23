@@ -17,6 +17,8 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,6 +28,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -47,8 +50,6 @@ import com.phc.cssd.url.Url;
 import com.phc.cssd.url.getUrl;
 import com.phc.cssd.properties.pCustomer;
 import com.phc.cssd.url.xControl;
-import com.r0adkll.slidr.Slidr;
-import com.r0adkll.slidr.model.SlidrInterface;
 import com.stargreatsoftware.sgtreeview.TreeViewAdapter;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import org.json.JSONArray;
@@ -112,9 +113,12 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     public ArrayList<String> DelRowId = new ArrayList<String>();
     public boolean IsAdmin;
     TextView txt_setdetail_l2;
+    TextView txt_setdetail_l2_1;
     TextView txt_setdetail_l3;
     TextView txt_setdetail_l4;
+    EditText txt_setdetail_l4_1;
     TextView textView46;
+    Spinner textView46_1;
     TextView textView47;
     TextView textView48;
     Button bin_all;
@@ -198,6 +202,18 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     //private SlidrInterface slidr;
 
     float x1,x2,y1,y2;
+    RelativeLayout R1;
+    LinearLayout L1_Send,L2_Send;
+    int MIN_DISTANCE = 150;
+
+    ArrayList<String> basket_ar_text = new ArrayList<>();
+    ArrayList<String> basket_ar_value = new ArrayList<String>();
+
+    Animation from_slie_right;
+    Animation from_slie_left;
+
+    int Count_left;
+    int Count_right;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -220,41 +236,28 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         etxt_dept.requestFocus();
     }
 
-    public boolean onTouchEvent(MotionEvent touchEvent) {
-        switch (touchEvent.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                x1 = touchEvent.getX();
-                y1 = touchEvent.getY();
-                break;
-            case MotionEvent.ACTION_UP:
-                x2 = touchEvent.getX();
-                y2 = touchEvent.getY();
-                if (x1 < x2) {
-                    Intent i = new Intent(SendSterile_MainActivity.this, CssdWash.class);
-                    i.putExtra("userid", "1");
-                    i.putExtra("user_name", "BANK");
-                    i.putExtra("IsAdmin", IsAdmin);
-                    i.putExtra("B_ID", B_ID);
-                    i.putExtra("EmpCode", EmpCode);
-                    startActivity(i);
-                    finish();
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                } else if (x1 > x2) {
-                    Intent intent = new Intent(SendSterile_MainActivity.this, CssdWash.class);
-                    intent.putExtra("userid", "1");
-                    intent.putExtra("user_name", "BANK");
-                    intent.putExtra("IsAdmin", IsAdmin);
-                    intent.putExtra("B_ID", B_ID);
-                    intent.putExtra("EmpCode", EmpCode);
-                    startActivity(intent);
-                    finish();
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }
-                break;
-        }
-        return false;
-    }
-
+//    public boolean onTouchEvent(MotionEvent touchEvent){
+//        switch (touchEvent.getAction()){
+//            case MotionEvent.ACTION_DOWN:
+//                x1 = txt_setdetail_l2.getX();
+//                y1 = txt_setdetail_l2.getY();
+//                Log.d("KFDJDL",x1+"");
+//                Log.d("KFDJDL",y1+"");
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                Log.d("KFDJDL",x2+"");
+//                Log.d("KFDJDL",y2+"");
+//                x2 = txt_setdetail_l2.getX();
+//                y2 = txt_setdetail_l2.getY();
+//                if (x1 < x2){
+//                    Toast.makeText(SendSterile_MainActivity.this, "1", Toast.LENGTH_SHORT).show();
+//                }else if (x1 > x2){
+//                    Toast.makeText(SendSterile_MainActivity.this, "2", Toast.LENGTH_SHORT).show();
+//                }
+//                break;
+//        }
+//        return false;
+//    }
 
     public String getSerialNumber() {
         try {
@@ -295,6 +298,48 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         EmpCode = intent.getStringExtra("EmpCode");
     }
 
+    public void SelectBasket() {
+        class Add extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                try {
+                    JSONObject jsonObj = new JSONObject(s);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    basket_ar_text.clear();
+                    basket_ar_value.clear();
+                    int count = 0;
+                    basket_ar_text.add("-");
+                    basket_ar_value.add("0");
+                    for (int i = 0; i < rs.length(); i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        if (c.getString("result").equals("A")) {
+                            basket_ar_text.add(c.getString("BuildingName"));
+                            basket_ar_value.add(c.getString("ID"));
+                        }
+                        count++;
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(SendSterile_MainActivity.this, android.R.layout.simple_spinner_dropdown_item, basket_ar_text);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    textView46_1.setAdapter(adapter);
+                    textView46_1.setSelection(0);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String, String>();
+                String result = httpConnect.sendPostRequest(Url.URL + "cssd_select_basket_send.php", data);
+                Log.d("KDFJDKJ",result);
+                return result;
+            }
+        }
+        Add ru = new Add();
+        ru.execute();
+    }
+
     public void initialize() {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         checkBoxall = (CheckBox) findViewById(R.id.checkBoxall);
@@ -327,9 +372,275 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        
+        txt_setdetail_l2 = (TextView) findViewById(R.id.txt_setdetail_l2);
+        txt_setdetail_l3 = (TextView) findViewById(R.id.txt_setdetail_l3);
+        txt_setdetail_l4 = (TextView) findViewById(R.id.txt_setdetail_l4);
+        txt_setdetail_l4_1 = (EditText ) findViewById(R.id.txt_setdetail_l4_1);
+        txt_setdetail_l4_1.setVisibility(View.GONE);
+        textView46 = (TextView) findViewById(R.id.textView46);
+        textView46_1 = (Spinner) findViewById(R.id.textView46_1);
+        textView46_1.setVisibility(View.GONE);
         etxt_date = ( TextView ) findViewById(R.id.etxt_date);
+        L1_Send = ( LinearLayout ) findViewById(R.id.L1_Send);
+        L2_Send = ( LinearLayout ) findViewById(R.id.L2_Send);
 
+        textView46.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction())
+                {
+                    case MotionEvent.ACTION_DOWN:
+                        x1 = event.getX();
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        x2 = event.getX();
+                        float xx = x2 - x1;
+                        if (Math.abs(xx) > MIN_DISTANCE)
+                        {
+                            if(xx < 0){
+                                Count_right = 1;
+                                Count_left = 0;
+                                if (Count_right == 1){
+                                    SelectBasket();
+                                    from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
+
+                                    textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    textView46_1.setVisibility(View.VISIBLE);
+                                    textView46_1.startAnimation(from_slie_right);
+
+                                    txt_setdetail_l4_1.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    txt_setdetail_l4_1.setVisibility(View.VISIBLE);
+                                    txt_setdetail_l4_1.startAnimation(from_slie_right);
+
+                                    textView46.setVisibility(View.GONE);
+                                    checkBoxall.setVisibility(View.GONE);
+                                    textView48.setVisibility(View.GONE);
+                                    txt_setdetail_l4.setVisibility(View.GONE);
+                                    textView47.setVisibility(View.GONE);
+                                    txt_setdetail_l3.setVisibility(View.GONE);
+                                }
+                            }else{
+                                Count_right = 0;
+                                Count_left = 1;
+                                if (Count_left == 1){
+                                    from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
+                                    textView46_1.setVisibility(View.GONE);
+                                    txt_setdetail_l4_1.setVisibility(View.GONE);
+
+                                    textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    textView46.setVisibility(View.VISIBLE);
+                                    textView46.startAnimation(from_slie_left);
+
+                                    checkBoxall.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    checkBoxall.setVisibility(View.VISIBLE);
+                                    checkBoxall.startAnimation(from_slie_left);
+
+                                    textView48.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    textView48.setVisibility(View.VISIBLE);
+                                    textView48.startAnimation(from_slie_left);
+
+                                    txt_setdetail_l4.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    txt_setdetail_l4.setVisibility(View.VISIBLE);
+                                    txt_setdetail_l4.startAnimation(from_slie_left);
+
+                                    textView47.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    textView47.setVisibility(View.VISIBLE);
+                                    textView47.startAnimation(from_slie_left);
+
+                                    txt_setdetail_l3.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    txt_setdetail_l3.setVisibility(View.VISIBLE);
+                                    txt_setdetail_l3.startAnimation(from_slie_left);
+                                }
+                            }
+                        }
+                }
+                return false;
+            }
+        });
+
+        L2_Send.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction())
+                {
+                    case MotionEvent.ACTION_DOWN:
+                        x1 = event.getX();
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        x2 = event.getX();
+                        float xx = x2 - x1;
+                        if (Math.abs(xx) > MIN_DISTANCE)
+                        {
+                            if(xx < 0){
+                                Count_right = 1;
+                                Count_left = 0;
+                                if (Count_right == 1){
+                                    SelectBasket();
+                                    from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
+
+                                    textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    textView46_1.setVisibility(View.VISIBLE);
+                                    textView46_1.startAnimation(from_slie_right);
+
+                                    txt_setdetail_l4_1.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    txt_setdetail_l4_1.setVisibility(View.VISIBLE);
+                                    txt_setdetail_l4_1.startAnimation(from_slie_right);
+
+                                    textView46.setVisibility(View.GONE);
+                                    checkBoxall.setVisibility(View.GONE);
+                                    textView48.setVisibility(View.GONE);
+                                    txt_setdetail_l4.setVisibility(View.GONE);
+                                    textView47.setVisibility(View.GONE);
+                                    txt_setdetail_l3.setVisibility(View.GONE);
+                                }
+                            }else{
+                                Count_right = 0;
+                                Count_left = 1;
+                                if (Count_left == 1){
+                                    from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
+                                    textView46_1.setVisibility(View.GONE);
+                                    txt_setdetail_l4_1.setVisibility(View.GONE);
+
+                                    textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    textView46.setVisibility(View.VISIBLE);
+                                    textView46.startAnimation(from_slie_left);
+
+                                    checkBoxall.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    checkBoxall.setVisibility(View.VISIBLE);
+                                    checkBoxall.startAnimation(from_slie_left);
+
+                                    textView48.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    textView48.setVisibility(View.VISIBLE);
+                                    textView48.startAnimation(from_slie_left);
+
+                                    txt_setdetail_l4.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    txt_setdetail_l4.setVisibility(View.VISIBLE);
+                                    txt_setdetail_l4.startAnimation(from_slie_left);
+
+                                    textView47.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    textView47.setVisibility(View.VISIBLE);
+                                    textView47.startAnimation(from_slie_left);
+
+                                    txt_setdetail_l3.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    txt_setdetail_l3.setVisibility(View.VISIBLE);
+                                    txt_setdetail_l3.startAnimation(from_slie_left);
+                                }
+                            }
+                        }
+                }
+                return false;
+            }
+        });
+
+        list_docno_detail.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction())
+                {
+                    case MotionEvent.ACTION_DOWN:
+                        x1 = event.getX();
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        x2 = event.getX();
+                        float xx = x2 - x1;
+                        if (Math.abs(xx) > MIN_DISTANCE)
+                        {
+                            if(xx < 0){
+                                Count_right = 1;
+                                Count_left = 0;
+                                if (Count_right == 1){
+                                    SelectBasket();
+                                    from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
+
+                                    textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    textView46_1.setVisibility(View.VISIBLE);
+                                    textView46_1.startAnimation(from_slie_right);
+
+                                    txt_setdetail_l4_1.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    txt_setdetail_l4_1.setVisibility(View.VISIBLE);
+                                    txt_setdetail_l4_1.startAnimation(from_slie_right);
+
+                                    textView46.setVisibility(View.GONE);
+                                    checkBoxall.setVisibility(View.GONE);
+                                    textView48.setVisibility(View.GONE);
+                                    txt_setdetail_l4.setVisibility(View.GONE);
+                                    textView47.setVisibility(View.GONE);
+                                    txt_setdetail_l3.setVisibility(View.GONE);
+                                }
+                            }else{
+                                Count_right = 0;
+                                Count_left = 1;
+                                if (Count_left == 1){
+                                    from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
+                                    textView46_1.setVisibility(View.GONE);
+                                    txt_setdetail_l4_1.setVisibility(View.GONE);
+
+                                    textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    textView46.setVisibility(View.VISIBLE);
+                                    textView46.startAnimation(from_slie_left);
+
+                                    checkBoxall.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    checkBoxall.setVisibility(View.VISIBLE);
+                                    checkBoxall.startAnimation(from_slie_left);
+
+                                    textView48.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    textView48.setVisibility(View.VISIBLE);
+                                    textView48.startAnimation(from_slie_left);
+
+                                    txt_setdetail_l4.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    txt_setdetail_l4.setVisibility(View.VISIBLE);
+                                    txt_setdetail_l4.startAnimation(from_slie_left);
+
+                                    textView47.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    textView47.setVisibility(View.VISIBLE);
+                                    textView47.startAnimation(from_slie_left);
+
+                                    txt_setdetail_l3.animate().translationX(0).setDuration(800).setStartDelay(800);
+                                    txt_setdetail_l3.setVisibility(View.VISIBLE);
+                                    txt_setdetail_l3.startAnimation(from_slie_left);
+                                }
+                            }
+                        }
+                }
+                return false;
+            }
+        });
+
+//        L2_Send.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                switch(event.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                        x1 = event.getX();
+//                        y1 = event.getY();
+//                        Log.d("KFDJDL"+"x1",x1+"");
+//                        Log.d("KFDJDL"+"y1",y1+"");
+//                        if (x1 < x2){
+//                            Toast.makeText(SendSterile_MainActivity.this, "1", Toast.LENGTH_SHORT).show();
+//                        }else if (x1 > x2){
+//                            Toast.makeText(SendSterile_MainActivity.this, "2", Toast.LENGTH_SHORT).show();
+//                        }
+//                        break;
+//                }
+//                return false;
+//            }
+//        });
+
+//        L1_Send.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                switch(event.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                        Toast.makeText(SendSterile_MainActivity.this, "1", Toast.LENGTH_SHORT).show();
+//                        return true; // if you want to handle the touch event
+//                    case MotionEvent.ACTION_UP:
+//                        Toast.makeText(SendSterile_MainActivity.this, "2", Toast.LENGTH_SHORT).show();
+//                        return true; // if you want to handle the touch event
+//                }
+//                return false;
+//            }
+//        });
 //        txt_usr_receive.setOnClickListener(new View.OnClickListener(){
 //            public void onClick(View v){
 //                if(!etxt_docno.getText().toString().equals("")){
@@ -362,7 +673,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 if(etxt_docno.getText().toString().equals("")){
                     Toast.makeText(SendSterile_MainActivity.this, "ยังไม่ได้เพิ่มรายการ กรุณาเพิ่มรายการ", Toast.LENGTH_SHORT).show();
-
                 }else{
                     txt_usr_send_old = xDepSend.get(txt_usr_send.getSelectedItem());
                     if(txt_usr_send_old == null){txt_usr_send_old ="";}
@@ -401,10 +711,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         getuserCode();
         etxt_docno = ( TextView ) findViewById(R.id.etxt_docno);
         txt_tel_dep = ( TextView ) findViewById(R.id.txt_tel_dep);
-        txt_setdetail_l2 = (TextView) findViewById(R.id.txt_setdetail_l2);
-        txt_setdetail_l3 = (TextView) findViewById(R.id.txt_setdetail_l3);
-        txt_setdetail_l4 = (TextView) findViewById(R.id.txt_setdetail_l4);
-        textView46 = (TextView) findViewById(R.id.textView46);
+
+
         textView47 = (TextView) findViewById(R.id.textView47);
         textView48 = (TextView) findViewById(R.id.textView48);
         etxt_sumqty = ( TextView ) findViewById(R.id.etxt_sumqty);
@@ -3277,14 +3585,16 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         condition2 = c.getString("condition2");
                         condition3 = c.getString("condition3");
                         condition4 = c.getString("condition4");
+                        condition5 = c.getString("condition5");
                     }
                     if (DIALOG_ACTIVE = true){
-                        if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0")){
+                        if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0") || !condition5.equals("0")){
                             Intent intent = new Intent(SendSterile_MainActivity.this, dialog_check_usage_count.class);
                             intent.putExtra("condition1",condition1);
                             intent.putExtra("condition2",condition2);
                             intent.putExtra("condition3",condition3);
                             intent.putExtra("condition4",condition4);
+                            intent.putExtra("condition5",condition5);
                             intent.putExtra("page","0");
                             startActivity(intent);
                             DIALOG_ACTIVE = false;

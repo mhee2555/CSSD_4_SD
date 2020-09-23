@@ -8,6 +8,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,7 +93,8 @@ public class SendSterile_DocListDetailAdapter extends ArrayAdapter {
 //        }
 
         if (CheckAll == CheckAllAd) {
-            if (!listData.get(position).getRemarkAdmin().equals("0")){
+            Log.d("YUYU",listData.get(position).getRemarkItemCode()+"");
+            if (!listData.get(position).getRemarkItemCode().equals("null")){
                 checkBoxsub.setChecked(false);
                 txtitemname.setTextColor(Color.RED);
                 txtxqty.setTextColor(Color.RED);
