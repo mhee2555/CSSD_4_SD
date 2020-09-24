@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SystemSettingActivity"></activity>
+        <activity android:name=".SystemSettingToolsActivity"></activity>
+        <activity android:name=".SystemSettingActivity" />
         <activity android:name=".MainActivity">
 
             <!-- <intent-filter> -->
@@ -398,7 +399,7 @@
         <activity
             android:name=".CssdCheckList"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"></activity>
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
