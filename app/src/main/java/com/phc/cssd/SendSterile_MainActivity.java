@@ -354,7 +354,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         IsStatus = "0";
         rv = ( RecyclerView ) findViewById(R.id.rv);
         list_docno_detail = ( ListView ) findViewById(R.id.list_docno_detail);
-        xedit_detail = ( ListView ) findViewById(R.id.xedit_detail);
         txt_get_ucode = ( EditText ) findViewById(R.id.txt_get_ucode);
         searchbox = ( EditText ) findViewById(R.id.searchbox);
         edittext = ( TextView ) findViewById(R.id.Birthday);
@@ -372,7 +371,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        
+
         txt_setdetail_l2 = (TextView) findViewById(R.id.txt_setdetail_l2);
         txt_setdetail_l3 = (TextView) findViewById(R.id.txt_setdetail_l3);
         txt_setdetail_l4 = (TextView) findViewById(R.id.txt_setdetail_l4);
@@ -453,7 +452,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         });
 
         getuserCode();
-        etxt_docno = ( TextView ) findViewById(R.id.etxt_docno);
+
         txt_tel_dep = ( TextView ) findViewById(R.id.txt_tel_dep);
 
 
@@ -479,6 +478,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         finddoc_l2 = ( Button ) findViewById(R.id.finddoc_l2);
         textView19 = ( TextView ) findViewById(R.id.textView19);
         list_docno_detail = ( ListView ) findViewById(R.id.list_docno_detail);
+
+        etxt_docno = ( TextView ) findViewById(R.id.etxt_docno);
+        xedit_detail = ( ListView ) findViewById(R.id.xedit_detail);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -922,8 +924,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                                     updateSendSterile(Master.user_send, emp_id, etxt_docno.getText().toString());
                                                     pCus.clear();
                                                     selectedArray.clear();
-                                                    ListView lv = ( ListView ) findViewById(R.id.xedit_detail);
-                                                    lv.setAdapter(new SendSterile_EditItemAdapter(SendSterile_MainActivity.this, pCus, selectedArray));
+                                                    xedit_detail.setAdapter(new SendSterile_EditItemAdapter(SendSterile_MainActivity.this, pCus, selectedArray));
                                                     cleardoc();
                                                     updateDate2();
                                                     getlistdata(deptsp_id, edittext.getText().toString(), searchbox.getText().toString());
@@ -2132,8 +2133,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 data.put("DocNo", DocNo);
                 data.put("B_ID",B_ID);
                 String result = ruc.sendPostRequest(iFt.getitemdetail_sendsterile(), data);
-                Log.d("YUYU",data+"");
-                Log.d("YUYU",result);
+                Log.d("LDLJLCJD",data+"");
+                Log.d("LDLJLCJD",result);
                 return result;
             }
         }
@@ -2259,8 +2260,18 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         cnt++;
                     }
                     etxt_sumqty.setText(cnt + "");
-                    final ListView lv = ( ListView ) findViewById(R.id.xedit_detail);
-                    lv.setAdapter(new sendsterile_washdocdetail_adapte_2(SendSterile_MainActivity.this, pCus,ssStatus,B_ID,IsDel));
+                    xedit_detail.setAdapter(new sendsterile_washdocdetail_adapte_2(SendSterile_MainActivity.this, pCus,ssStatus,B_ID,IsDel));
+//                    xedit_detail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                        @Override
+//                        public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+//                            Object o = xedit_detail.getItemAtPosition(position);
+//                            pCustomer newsData = ( pCustomer ) o;
+//                            String Usagecode = newsData.getUsageCode();
+//                            String Dept = newsData.getDept();
+//                            getlistdetail(Usagecode,etxt_docno.getText().toString());
+//                            UsageCode(Usagecode,Dept,etxt_docno.getText().toString());
+//                        }
+//                    });
                 } catch (JSONException e) {
 
                     e.printStackTrace();
@@ -2766,8 +2777,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         JSONObject c = setRs.getJSONObject(i);
                         pCustomer xCus = new pCustomer();
                     }
-                    ListView lv = ( ListView ) findViewById(R.id.xedit_detail);
-                    lv.setAdapter(new SendSterile_EditItemAdapter(SendSterile_MainActivity.this, pCus, selectedArray));
+                    xedit_detail.setAdapter(new SendSterile_EditItemAdapter(SendSterile_MainActivity.this, pCus, selectedArray));
                     Toast.makeText(SendSterile_MainActivity.this,"บันทึกเอกสารแล้ว",Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                 }
@@ -2805,8 +2815,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         JSONObject c = setRs.getJSONObject(i);
                         pCustomer xCus = new pCustomer();
                     }
-                    ListView lv = ( ListView ) findViewById(R.id.xedit_detail);
-                    lv.setAdapter(new SendSterile_EditItemAdapter(SendSterile_MainActivity.this, pCus, selectedArray));
+                    xedit_detail.setAdapter(new SendSterile_EditItemAdapter(SendSterile_MainActivity.this, pCus, selectedArray));
                     Toast.makeText(SendSterile_MainActivity.this, "บันทึกเอกสารแล้ว", Toast.LENGTH_SHORT).show();
 
                 } catch (Exception e) {
@@ -2833,8 +2842,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         txt_tel_dep.setText("");
         etxt_sumqty.setText("");
         final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
-        final ListView lv = ( ListView ) findViewById(R.id.xedit_detail);
-        lv.setAdapter(new SendSterile_EditDetailAdapter(SendSterile_MainActivity.this, pCus,IsAdmin));
+        xedit_detail.setAdapter(new SendSterile_EditDetailAdapter(SendSterile_MainActivity.this, pCus,IsAdmin));
         ListView lv2 = ( ListView ) findViewById(R.id.list_docno_detail);
         lv2.setAdapter(new SendSterile_DocListDetailAdapter(SendSterile_MainActivity.this, pCus, "0"));
     }
@@ -2848,8 +2856,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         txt_tel_dep.setText("");
         etxt_sumqty.setText("");
         selectedArray.clear();
-        ListView lv = ( ListView ) findViewById(R.id.xedit_detail);
-        lv.setAdapter(new SendSterile_EditItemAdapter(SendSterile_MainActivity.this, pCus, selectedArray));
+        xedit_detail.setAdapter(new SendSterile_EditItemAdapter(SendSterile_MainActivity.this, pCus, selectedArray));
     }
 
     public void checkdubplicate(final String ucode, String xdept) {
@@ -4279,5 +4286,4 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         DepID = Depid;
         DocNoSend = Docnosend;
     }
-
 }

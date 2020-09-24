@@ -18,8 +18,7 @@
         <RelativeLayout
             android:id="@+id/maindoc"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/docno"
@@ -47,7 +46,6 @@
                 android:text="26/07/2018"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
-
 
             <TextView
                 android:id="@+id/dept"
@@ -175,8 +173,6 @@
                 android:text="วันที่     :"
                 android:textSize="14sp" />
 
-
-
         </RelativeLayout>
 
         <RelativeLayout
@@ -216,6 +212,7 @@
 
 
         </RelativeLayout>
+
     </RelativeLayout>
 
 </RelativeLayout>
