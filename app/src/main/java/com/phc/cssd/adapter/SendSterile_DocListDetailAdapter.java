@@ -72,7 +72,7 @@ public class SendSterile_DocListDetailAdapter extends ArrayAdapter {
         R1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!listData.get(position).getRemarkAdmin().equals("0")){
+                if (!listData.get(position).getRemarkItemCode().equals("null")){
                     ((SendSterile_MainActivity)aActivity).OpenDialog(listData.get(position).getItemname(),"1");
                 }
             }
