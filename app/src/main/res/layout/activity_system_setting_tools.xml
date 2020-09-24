@@ -33,7 +33,7 @@
         android:id="@+id/Li1"
         android:layout_width="1075dp"
         android:layout_height="520dp"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="115dp"
         android:layout_marginLeft="100dp"
         android:orientation="vertical"
         android:visibility="visible">
@@ -50,22 +50,10 @@
 
                 <LinearLayout
                     android:id="@+id/L1"
-                    android:layout_width="570dp"
+                    android:layout_width="530dp"
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="60dp"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="1."
-                        android:textColor="@color/colorBlack"
-                        android:textStyle="bold"
-                        android:gravity="center"
-                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/text1"
@@ -73,6 +61,7 @@
                         android:layout_height="40dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginTop="10dp"
+                        android:paddingStart="10dp"
                         android:text="กำหนดการแจ้งเตือน Remark ครั้งถัดไปในหน้าจัดเซ็ต"
                         android:textColor="@color/colorBlack"
                         android:gravity="center|left"
@@ -103,21 +92,10 @@
 
                 <LinearLayout
                     android:id="@+id/L2"
-                    android:layout_width="570dp"
+                    android:layout_below="@+id/L1"
+                    android:layout_width="530dp"
                     android:layout_height="60dp"
                     android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="60dp"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="2."
-                        android:textColor="@color/colorBlack"
-                        android:textStyle="bold"
-                        android:gravity="center"
-                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/text2"
@@ -125,6 +103,7 @@
                         android:layout_height="40dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginTop="10dp"
+                        android:paddingStart="10dp"
                         android:text="กำหนดการ Approve Remark ทีละรายการ"
                         android:textColor="@color/colorBlack"
                         android:gravity="center|left"
@@ -155,21 +134,10 @@
 
                 <LinearLayout
                     android:id="@+id/L3"
-                    android:layout_width="570dp"
+                    android:layout_below="@+id/L2"
+                    android:layout_width="530dp"
                     android:layout_height="60dp"
                     android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView7"
-                        android:layout_width="60dp"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="3."
-                        android:textColor="@color/colorBlack"
-                        android:textStyle="bold"
-                        android:gravity="center"
-                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/text3"
@@ -177,6 +145,7 @@
                         android:layout_height="40dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginTop="10dp"
+                        android:paddingStart="10dp"
                         android:text="กำหนดการส่งล้าง-จ่ายโดยไม่เชื่อมแผนก"
                         android:textColor="@color/colorBlack"
                         android:gravity="center|left"
@@ -184,6 +153,216 @@
 
                     <Switch
                         android:id="@+id/sw3"
+                        android:text="ปิด"
+                        android:textSize="16sp"
+                        android:layout_width="75dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp">
+
+                    </Switch>
+
+                    <TextView
+                        android:text="เปิด"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="35dp"
+                        android:layout_height="40dp">
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/L4"
+                    android:layout_below="@+id/L3"
+                    android:layout_width="530dp"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/text4"
+                        android:layout_width="370dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="10dp"
+                        android:paddingStart="10dp"
+                        android:text=""
+                        android:textColor="@color/colorBlack"
+                        android:gravity="center|left"
+                        android:textSize="16sp" />
+
+                    <Switch
+                        android:id="@+id/sw4"
+                        android:text="ปิด"
+                        android:textSize="16sp"
+                        android:layout_width="75dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp">
+
+                    </Switch>
+
+                    <TextView
+                        android:text="เปิด"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="35dp"
+                        android:layout_height="40dp">
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/L5"
+                    android:layout_below="@+id/L4"
+                    android:layout_width="530dp"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/text5"
+                        android:layout_width="370dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="10dp"
+                        android:paddingStart="10dp"
+                        android:text=""
+                        android:textColor="@color/colorBlack"
+                        android:gravity="center|left"
+                        android:textSize="16sp" />
+
+                    <Switch
+                        android:id="@+id/sw5"
+                        android:text="ปิด"
+                        android:textSize="16sp"
+                        android:layout_width="75dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp">
+
+                    </Switch>
+
+                    <TextView
+                        android:text="เปิด"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="35dp"
+                        android:layout_height="40dp">
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/L6"
+                    android:layout_below="@+id/L5"
+                    android:layout_width="530dp"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/text6"
+                        android:layout_width="370dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="10dp"
+                        android:paddingStart="10dp"
+                        android:text=""
+                        android:textColor="@color/colorBlack"
+                        android:gravity="center|left"
+                        android:textSize="16sp" />
+
+                    <Switch
+                        android:id="@+id/sw6"
+                        android:text="ปิด"
+                        android:textSize="16sp"
+                        android:layout_width="75dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp">
+
+                    </Switch>
+
+                    <TextView
+                        android:text="เปิด"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="35dp"
+                        android:layout_height="40dp">
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/L7"
+                    android:layout_below="@+id/L6"
+                    android:layout_width="530dp"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/text7"
+                        android:layout_width="370dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="10dp"
+                        android:paddingStart="10dp"
+                        android:text=""
+                        android:textColor="@color/colorBlack"
+                        android:gravity="center|left"
+                        android:textSize="16sp" />
+
+                    <Switch
+                        android:id="@+id/sw7"
+                        android:text="ปิด"
+                        android:textSize="16sp"
+                        android:layout_width="75dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp">
+
+                    </Switch>
+
+                    <TextView
+                        android:text="เปิด"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="35dp"
+                        android:layout_height="40dp">
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/L8"
+                    android:layout_below="@+id/L7"
+                    android:layout_width="530dp"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/text8"
+                        android:layout_width="370dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="10dp"
+                        android:paddingStart="10dp"
+                        android:text=""
+                        android:textColor="@color/colorBlack"
+                        android:gravity="center|left"
+                        android:textSize="16sp" />
+
+                    <Switch
+                        android:id="@+id/sw8"
                         android:text="ปิด"
                         android:textSize="16sp"
                         android:layout_width="75dp"
