@@ -19,10 +19,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.phc.core.connect.HTTPConnect;
 import com.phc.core.data.AsonData;
 import com.phc.core.string.Cons;
+import com.phc.cssd.data.Master;
 import com.phc.cssd.url.Url;
 import com.phc.cssd.url.getUrl;
 import com.r0adkll.slidr.Slidr;
@@ -46,6 +48,7 @@ public class Menu extends AppCompatActivity {
     private TextView txt_version;
     private TextView txt_b;
     private ImageView imv_logout;
+    private ImageView imv_logo;
     private ImageView img_take_back;
     private ImageView img_edit_sterile;
     private ImageView key_hack;
@@ -110,7 +113,43 @@ public class Menu extends AppCompatActivity {
         h.removeCallbacks(r);
     }
 
+    private void openQR(){
+        Intent i = new Intent(Menu.this, CssdQr.class);
+        i.putExtra("B_ID", B_ID);
+        i.putExtra("data", "Admin");
+        startActivityForResult(i,1111);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            String RETURN_DATA = null;
+            String RETURN_VALUE = null;
+            try {
+                RETURN_DATA = data.getStringExtra("RETURN_DATA");
+                RETURN_VALUE = data.getStringExtra("RETURN_VALUE");
+            }catch(Exception e){
+                return;
+            }
+            if (resultCode == 1111) {
+                Toast.makeText(Menu.this, "ถูกต้อง !!", Toast.LENGTH_SHORT).show();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            return;
+        }
+    }
+
     private void byWidget() {
+        imv_logo = (ImageView) findViewById(R.id.imv_logo);
+        imv_logo.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                openQR();
+                return false;
+            }
+        });
         txt_version = (TextView) findViewById(R.id.txt_version);
         txt_username = (TextView) findViewById(R.id.txt_username);
         txt_wash_remain = (TextView) findViewById(R.id.txt_wash_remain);

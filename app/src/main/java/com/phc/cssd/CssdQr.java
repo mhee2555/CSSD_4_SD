@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -110,18 +111,28 @@ public class CssdQr extends Activity {
                         JSONObject c = rs.getJSONObject(i);
 
                         if(c.getString("result").equals("A")) {
-
-                            Intent intent = new Intent();
-                            intent.putExtra("RETURN_DATA", c.getString("data"));
-                            intent.putExtra("RETURN_VALUE", c.getString("value"));
-                            setResult(Master.getResult(data), intent);
-
-                            finish();
+                            if (data.equals("Admin")){
+                                if (c.getString("data").equals("1")){
+                                    Intent intent = new Intent();
+                                    intent.putExtra("RETURN_DATA", c.getString("data"));
+                                    intent.putExtra("RETURN_VALUE", c.getString("value"));
+                                    setResult(1111, intent);
+                                    finish();
+                                }else {
+                                    Toast.makeText(CssdQr.this, "บุคคลทั่วไปไม่มีสิทธิ์เข้าถึงได้ !!", Toast.LENGTH_SHORT).show();
+                                    txt_input.setText("");
+                                    txt_input.requestFocus();
+                                }
+                            }else {
+                                Intent intent = new Intent();
+                                intent.putExtra("RETURN_DATA", c.getString("data"));
+                                intent.putExtra("RETURN_VALUE", c.getString("value"));
+                                setResult(Master.getResult(data), intent);
+                                finish();
+                            }
                         }else{
                             Toast.makeText(CssdQr.this, "ไม่พบข้อมูล !!", Toast.LENGTH_SHORT).show();
-
                             txt_input.setText("");
-
                             txt_input.requestFocus();
                         }
                     }
@@ -145,10 +156,16 @@ public class CssdQr extends Activity {
                     d.put("p_data", data);
                     d.put("p_filter", filter);
                     d.put("p_qr", qr);
+                }else {
+                    file = "cssd_check_admin.php";
+                    d.put("p_data", data);
+                    d.put("p_qr", qr);
                 }
 
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + file, d);
+                    Log.d("KDJDLJD",d+"");
+                    Log.d("KDJDLJD",result+"");
                 }catch(Exception e){
                     e.printStackTrace();
                 }
