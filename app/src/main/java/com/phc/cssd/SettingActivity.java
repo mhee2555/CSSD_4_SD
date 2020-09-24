@@ -370,6 +370,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.ic_hospital_002:
                 Log.d("test", "ic_hospital_002!");
                 gotoActivity(DepartmentActivity.class);
+
                 break;
             case R.id.ic_hospital_003:
                 Log.d("test", "ic_hospital_003!");
