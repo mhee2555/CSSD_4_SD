@@ -93,8 +93,8 @@ public class SendSterile_DocListDetailAdapter extends ArrayAdapter {
 //        }
 
         if (CheckAll == CheckAllAd) {
-            Log.d("YUYU",listData.get(position).getRemarkItemCode()+"");
-            if (!listData.get(position).getRemarkItemCode().equals("null")){
+            Log.d("YUYU",listData.get(position).getRemarkAdmin()+"");
+            if (!listData.get(position).getRemarkAdmin().equals("0")){
                 checkBoxsub.setChecked(false);
                 txtitemname.setTextColor(Color.RED);
                 txtxqty.setTextColor(Color.RED);

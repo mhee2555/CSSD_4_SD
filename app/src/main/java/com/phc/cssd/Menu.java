@@ -133,7 +133,10 @@ public class Menu extends AppCompatActivity {
                 return;
             }
             if (resultCode == 1111) {
-                Toast.makeText(Menu.this, "ถูกต้อง !!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Menu.this,SystemSettingToolsActivity.class);
+                intent.putExtra("RETURN_DATA", RETURN_DATA);
+                intent.putExtra("RETURN_VALUE", RETURN_VALUE);
+                startActivity(intent);
             }
         }catch(Exception e){
             e.printStackTrace();
