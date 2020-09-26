@@ -91,7 +91,6 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
         final int xps = position;
         final ImageView resterile_IV = (ImageView)v.findViewById(R.id.w_resterile);
         final TextView txtitemname = (TextView)v.findViewById(R.id.w_itemname);
-
         final TextView txtUcode= (TextView) v.findViewById(R.id.w_ucode);
         final TextView ucount= (TextView) v.findViewById(R.id.ucount);
         final TextView w_date= (TextView) v.findViewById(R.id.w_date);
@@ -107,11 +106,13 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
         final Button btdel =(Button) v.findViewById(R.id.w_btdel);
 
         bt_risk.setEnabled(false);
+
         if (listData.get(position).getIsDenger().equals("0")){
             bt_risk.setBackgroundResource(R.drawable.ic_risk_icon_gray);
         }else {
             bt_risk.setBackgroundResource(R.drawable.ic_risk_icon);
         }
+
         txtitemname.setPaintFlags(txtitemname.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         txtitemname.setText(listData.get(position).getItemname());
         txtitemname.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +121,7 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
                 (( SendSterile_MainActivity )aActivity).LoadImg( listData.get(position).getItemcode(),"1",listData.get(position).getUsageCode(),listData.get(position).getItemname(),"noremark");
             }
         });
+
         txtUcode.setText("รหัสใช้งาน : "+listData.get(position).getUsageCode());
         itemqty.setText("[ "+listData.get(position).getItemCount()+" ]");
         w_date.setText(" ("+listData.get(position).getPackdate()+" วัน"+" )");

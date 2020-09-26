@@ -244,7 +244,7 @@ public class CssdCheckList extends Activity {
                     }
                 }else {
                     edt_usage_code.requestFocus();
-                return true;
+                    return true;
                 }
                 return false;
             }

@@ -79,34 +79,6 @@
                     android:layout_alignTop="@+id/txt_usr_send"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="0dp"
-                    android:text="รายการเซ็ท"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/txt_get_ucode"
-                    android:layout_width="210dp"
-                    android:layout_height="35dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginLeft="17dp"
-                    android:background="@drawable/text_edit"
-                    android:ems="10"
-                    android:paddingLeft="15dp"
-                    android:hint="สแกนรหัสใช้งาน"
-                    android:inputType="textPersonName" />
-
-                <TextView
-                    android:id="@+id/textView17"
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/txt_usr_send"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginRight="5dp"
                     android:text="ผู้รับ(จ่ายกลาง)"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
@@ -127,6 +99,44 @@
                     android:inputType="textPersonName"  />
 
                 <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/txt_usr_send"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginRight="5dp"
+                    android:text="ตะกร้า"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/basket"
+                    android:layout_width="175dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="7dp"
+                    android:background="@drawable/dropdowns2"
+                    android:ems="10"
+                    android:hint="สแกนตะกร้า"
+                    android:paddingLeft="15dp"
+                    android:inputType="textPersonName" />
+
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spin_basket"
+                    android:layout_width="45dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="-1dp"
+                    android:layout_marginRight="20dp"
+                    android:foreground="@drawable/dropdowns1"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="17sp" />
+
+                <TextView
                     android:id="@+id/etxt_date"
                     android:layout_width="0dp"
                     android:layout_height="35dp"
@@ -140,7 +150,6 @@
                     android:visibility="gone"/>
 
                 <TextView
-                    android:id="@+id/textView18"
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/textView20"
@@ -148,7 +157,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="0dp"
                     android:layout_marginRight="5dp"
-                    android:text="HN คนไข้"
+                    android:text="รายการเซ็ท"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -166,16 +175,17 @@
                     android:visibility="gone"/>
 
                 <EditText
-                    android:id="@+id/hn_code"
-                    android:background="@drawable/text_edit"
+                    android:id="@+id/txt_get_ucode"
+                    android:background="@drawable/shape_qr_line"
                     android:layout_width="220dp"
                     android:layout_height="35dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginRight="0dp"
                     android:layout_marginLeft="5dp"
-                    android:gravity="center"
+                    android:hint="สแกนรหัสใช้งาน"
+                    android:paddingLeft="15dp"
                     android:textColor="@android:color/black"
-                    android:textSize="17sp" />
+                    android:textSize="17sp"
+                    android:ems="10"
+                    android:inputType="textPersonName"/>
 
                 <Button
                     android:id="@+id/newSS"
@@ -213,17 +223,8 @@
                 android:weightSum="1.1">
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_weight="0.1"
-                    android:orientation="horizontal"></LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="350dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.2"
-                    android:gravity="right"
                     android:orientation="vertical">
 
                     <RelativeLayout
@@ -240,18 +241,16 @@
                             android:gravity="center"
                             android:textStyle="bold"
                             android:textSize="16dp"
-                            android:layout_marginLeft="100dp"
+                            android:layout_marginLeft="140dp"
                             android:layout_marginTop="10dp"
-                            android:layout_marginRight="20dp"
                             android:background="@drawable/bt_create03" />
 
                         <Button
                             android:id="@+id/bt_search_sendsterile"
                             android:layout_width="200dp"
                             android:layout_height="35dp"
-                            android:layout_marginLeft="100dp"
+                            android:layout_marginLeft="140dp"
                             android:layout_marginTop="10dp"
-                            android:layout_marginRight="20dp"
                             android:background="@drawable/bt_create03"
                             android:gravity="center"
                             android:text="เพิ่มรายการ"
@@ -260,18 +259,17 @@
                             android:textStyle="bold" />
                     </RelativeLayout>
 
-
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/textView19"
-                    android:layout_width="0dp"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/next"
                     android:layout_alignEnd="@+id/textView17"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"
-                    android:layout_weight="0.1"
+                    android:layout_marginLeft="20dp"
                     android:text="แผนก"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
@@ -281,24 +279,23 @@
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/etxt_dept"
                     style="@style/spinner_style_register"
-                    android:layout_width="0dp"
+                    android:layout_width="220dp"
                     android:layout_height="35dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="7dp"
-                    android:layout_weight="0.2"
                     android:gravity="center"
                     android:textColor="@android:color/black"
                     android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/textView20"
-                    android:layout_width="0dp"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/txt_get_ucode"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_weight="0.1"
                     android:text="จำนวนรายการ"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
@@ -306,11 +303,10 @@
 
                 <TextView
                     android:id="@+id/etxt_sumqty"
-                    android:layout_width="0dp"
+                    android:layout_width="220dp"
                     android:layout_height="35dp"
                     android:layout_marginLeft="18dp"
                     android:layout_marginTop="10dp"
-                    android:layout_weight="0.2"
                     android:background="@drawable/text_edit"
                     android:gravity="center"
                     android:textColor="@android:color/black"
@@ -318,14 +314,13 @@
 
                 <Button
                     android:id="@+id/next"
-                    android:layout_width="0dp"
+                    android:layout_width="225dp"
                     android:layout_height="35dp"
                     android:layout_alignTop="@+id/etxt_sumqty"
                     android:layout_alignParentEnd="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="20dp"
-                    android:layout_weight="0.2"
                     android:text="เสร็จสิ้น"
                     android:background="@drawable/bt_finished2"
                     android:textColor="@color/colorWhite"

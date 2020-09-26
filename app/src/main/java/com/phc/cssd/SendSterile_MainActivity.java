@@ -215,6 +215,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     int Count_left;
     int Count_right;
 
+    private SearchableSpinner spin_basket;
+    private EditText basket;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -227,6 +230,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         //slidr = Slidr.attach(this);
         byIntent();
         initialize();
+        SelectBasket();
         bin_all.setVisibility(View.INVISIBLE);
         bin_all_black.setVisibility(View.VISIBLE);
         bin_all_1.setVisibility(View.INVISIBLE);
@@ -310,7 +314,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     basket_ar_text.clear();
                     basket_ar_value.clear();
                     int count = 0;
-                    basket_ar_text.add("-");
+                    basket_ar_text.add("");
                     basket_ar_value.add("0");
                     for (int i = 0; i < rs.length(); i++) {
                         JSONObject c = rs.getJSONObject(i);
@@ -322,8 +326,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(SendSterile_MainActivity.this, android.R.layout.simple_spinner_dropdown_item, basket_ar_text);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    textView46_1.setAdapter(adapter);
-                    textView46_1.setSelection(0);
+                    spin_basket.setAdapter(adapter);
+                    spin_basket.setSelection(0);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -383,6 +387,62 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         etxt_date = ( TextView ) findViewById(R.id.etxt_date);
         L1_Send = ( LinearLayout ) findViewById(R.id.L1_Send);
         L2_Send = ( LinearLayout ) findViewById(R.id.L2_Send);
+        spin_basket = (SearchableSpinner) findViewById(R.id.spin_basket);
+        basket = (EditText ) findViewById(R.id.basket);
+        basket.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode) {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+                            if (txt_usr_receive.getText().toString().equals("")){
+                                Toast.makeText(SendSterile_MainActivity.this, "กรุณาสแกนชื่อผู้รับ(จ่ายกลาง)", Toast.LENGTH_SHORT).show();
+                                basket.setText("");
+                                txt_usr_receive.requestFocus();
+                            }else {
+                                CheckBasket(basket.getText().toString());
+                            }
+                            return true;
+                        default:
+                            txt_usr_receive.requestFocus();
+                            break;
+                    }
+                }else {
+                    txt_usr_receive.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
+//        spin_basket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> arg, View v1, int index1, long arg4) {
+//                String Basket = String.valueOf(spin_basket.getSelectedItem());
+//                if (basket.getText().toString().equals("")){
+//                    basket.setText(Basket);
+//                }else {
+//                    basket.setText("");
+//                    basket.setText(Basket);
+//                }
+//            }
+//        });
+
+        spin_basket.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String Basket = String.valueOf(spin_basket.getSelectedItem());
+                if (basket.getText().toString().equals("")){
+                    basket.setText(Basket);
+                }else {
+                    basket.setText(Basket);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 //        txt_usr_receive.setOnClickListener(new View.OnClickListener(){
 //            public void onClick(View v){
@@ -487,7 +547,10 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 Object o = lv.getItemAtPosition(position);
                 pCustomer newsData = ( pCustomer ) o;
-                CheckStatusDocNo();
+                String StatusDoc = newsData.getIsStatus();
+                if (StatusDoc.equals("0")){
+                    CheckStatusDocNo();
+                }
                 list_docno_detail.setAdapter(null);
                 textView48.setText("" + "0" + " ชิ้น" + " ]");
                 txt_setdetail_l4.setText("" + "0" + " ชิ้น" + " ]");
@@ -1003,8 +1066,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
-                            if (txt_usr_receive.getText().toString().equals("")){
-                                Toast.makeText(SendSterile_MainActivity.this, "กรุณาสแกนชื่อผู้รับ(จ่ายกลาง)", Toast.LENGTH_SHORT).show();
+                            if (basket.getText().toString().equals("")){
+                                Toast.makeText(SendSterile_MainActivity.this, "กรุณาสแกนตะกร้า", Toast.LENGTH_SHORT).show();
                                 txt_get_ucode.setText("");
                                 txt_get_ucode.requestFocus();
                             }else {
@@ -4285,5 +4348,61 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         Usagecode = UsageCode;
         DepID = Depid;
         DocNoSend = Docnosend;
+    }
+
+    public void CheckBasket(final String Basket) {
+        class CheckBasket extends AsyncTask<String, Void, String> {
+            private ProgressDialog dialog = new ProgressDialog(SendSterile_MainActivity.this);
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                this.dialog.setMessage(Cons.WAIT_FOR_PROCESS);
+                this.dialog.show();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        if (c.getString("finish").equals("true")){
+                            basket.setText(c.getString("BasketName"));
+                            txt_get_ucode.requestFocus();
+                        }else {
+                            basket.requestFocus();
+                            Toast.makeText(SendSterile_MainActivity.this, "ไม่พบข้อมูล", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }finally {
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("basket",Basket);
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_check_basket_send.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        CheckBasket obj = new CheckBasket();
+        obj.execute();
     }
 }

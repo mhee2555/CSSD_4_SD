@@ -62,7 +62,7 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginTop="10dp"
                         android:paddingStart="10dp"
-                        android:text="กำหนดการแจ้งเตือน Remark ครั้งถัดไปในหน้าจัดเซ็ต"
+                        android:text=""
                         android:textColor="@color/colorBlack"
                         android:gravity="center|left"
                         android:textSize="16sp" />
@@ -78,6 +78,7 @@
                     </Switch>
 
                     <TextView
+                        android:id="@+id/text1_1"
                         android:text="เปิด"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp"
@@ -104,7 +105,7 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginTop="10dp"
                         android:paddingStart="10dp"
-                        android:text="กำหนดการ Approve Remark ทีละรายการ"
+                        android:text=""
                         android:textColor="@color/colorBlack"
                         android:gravity="center|left"
                         android:textSize="16sp" />
@@ -120,6 +121,7 @@
                     </Switch>
 
                     <TextView
+                        android:id="@+id/text2_2"
                         android:text="เปิด"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp"
@@ -146,7 +148,7 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginTop="10dp"
                         android:paddingStart="10dp"
-                        android:text="กำหนดการส่งล้าง-จ่ายโดยไม่เชื่อมแผนก"
+                        android:text=""
                         android:textColor="@color/colorBlack"
                         android:gravity="center|left"
                         android:textSize="16sp" />
@@ -162,6 +164,7 @@
                     </Switch>
 
                     <TextView
+                        android:id="@+id/text3_3"
                         android:text="เปิด"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp"
@@ -204,6 +207,7 @@
                     </Switch>
 
                     <TextView
+                        android:id="@+id/text4_4"
                         android:text="เปิด"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp"
@@ -246,6 +250,7 @@
                     </Switch>
 
                     <TextView
+                        android:id="@+id/text5_5"
                         android:text="เปิด"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp"
@@ -288,6 +293,7 @@
                     </Switch>
 
                     <TextView
+                        android:id="@+id/text6_6"
                         android:text="เปิด"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp"
@@ -330,6 +336,7 @@
                     </Switch>
 
                     <TextView
+                        android:id="@+id/text7_7"
                         android:text="เปิด"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp"
@@ -372,6 +379,7 @@
                     </Switch>
 
                     <TextView
+                        android:id="@+id/text8_8"
                         android:text="เปิด"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp"

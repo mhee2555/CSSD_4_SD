@@ -32,6 +32,7 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
     LinearLayout L1,L2,L3,L4,L5,L6,L7,L8;
 
     TextView text1,text2,text3,text4,text5,text6,text7,text8;
+    TextView text1_1,text2_2,text3_3,text4_4,text5_5,text6_6,text7_7,text8_8;
 
     Switch sw1,sw2,sw3,sw4,sw5,sw6,sw7,sw8;
 
@@ -57,6 +58,7 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
 
     public void initialize() {
         imageBack = (ImageView) findViewById(R.id.imageBack);
+
         L1 = (LinearLayout) findViewById(R.id.L1);
         L2 = (LinearLayout) findViewById(R.id.L2);
         L3 = (LinearLayout) findViewById(R.id.L3);
@@ -65,6 +67,7 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
         L6 = (LinearLayout) findViewById(R.id.L6);
         L7 = (LinearLayout) findViewById(R.id.L7);
         L8 = (LinearLayout) findViewById(R.id.L8);
+
         text1 = (TextView) findViewById(R.id.text1);
         text2 = (TextView) findViewById(R.id.text2);
         text3 = (TextView) findViewById(R.id.text3);
@@ -73,6 +76,16 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
         text6 = (TextView) findViewById(R.id.text6);
         text7 = (TextView) findViewById(R.id.text7);
         text8 = (TextView) findViewById(R.id.text8);
+
+        text1_1 = (TextView) findViewById(R.id.text1_1);
+        text2_2 = (TextView) findViewById(R.id.text2_2);
+        text3_3 = (TextView) findViewById(R.id.text3_3);
+        text4_4 = (TextView) findViewById(R.id.text4_4);
+        text5_5 = (TextView) findViewById(R.id.text5_5);
+        text6_6 = (TextView) findViewById(R.id.text6_6);
+        text7_7 = (TextView) findViewById(R.id.text7_7);
+        text8_8 = (TextView) findViewById(R.id.text8_8);
+
         sw1 = (Switch) findViewById(R.id.sw1);
         sw1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,6 +174,25 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        sw1.setVisibility(View.GONE);
+        sw2.setVisibility(View.GONE);
+        sw3.setVisibility(View.GONE);
+        sw4.setVisibility(View.GONE);
+        sw5.setVisibility(View.GONE);
+        sw6.setVisibility(View.GONE);
+        sw7.setVisibility(View.GONE);
+        sw8.setVisibility(View.GONE);
+
+        text1_1.setVisibility(View.GONE);
+        text2_2.setVisibility(View.GONE);
+        text3_3.setVisibility(View.GONE);
+        text4_4.setVisibility(View.GONE);
+        text5_5.setVisibility(View.GONE);
+        text6_6.setVisibility(View.GONE);
+        text7_7.setVisibility(View.GONE);
+        text8_8.setVisibility(View.GONE);
+
         imageBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -223,7 +255,6 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
                 return result;
             }
         }
-
         setboolean obj = new setboolean();
         obj.execute();
     }
@@ -245,7 +276,14 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
                         if (!c.getString("Name").equals("")){
+                            text1_1.setVisibility(View.VISIBLE);
+                            sw1.setVisibility(View.VISIBLE);
                             text1.setText(c.getString("Name"));
+                            if (c.getString("IsStatus").equals("0")){
+                                sw1.setChecked(false);
+                            }else {
+                                sw1.setChecked(true);
+                            }
                         }else {
                             L1.setVisibility(View.GONE);
                         }
@@ -293,7 +331,14 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
                         if (!c.getString("Name").equals("")){
+                            text2_2.setVisibility(View.VISIBLE);
+                            sw2.setVisibility(View.VISIBLE);
                             text2.setText(c.getString("Name"));
+                            if (c.getString("IsStatus").equals("0")){
+                                sw2.setChecked(false);
+                            }else {
+                                sw2.setChecked(true);
+                            }
                         }else {
                             L2.setVisibility(View.GONE);
                         }
@@ -341,7 +386,14 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
                         if (!c.getString("Name").equals("")){
+                            text3_3.setVisibility(View.VISIBLE);
+                            sw3.setVisibility(View.VISIBLE);
                             text3.setText(c.getString("Name"));
+                            if (c.getString("IsStatus").equals("0")){
+                                sw3.setChecked(false);
+                            }else {
+                                sw3.setChecked(true);
+                            }
                         }else {
                             L3.setVisibility(View.GONE);
                         }
@@ -389,7 +441,14 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
                         if (!c.getString("Name").equals("")){
+                            text4_4.setVisibility(View.VISIBLE);
+                            sw4.setVisibility(View.VISIBLE);
                             text4.setText(c.getString("Name"));
+                            if (c.getString("IsStatus").equals("0")){
+                                sw4.setChecked(false);
+                            }else {
+                                sw4.setChecked(true);
+                            }
                         }else {
                             L4.setVisibility(View.GONE);
                         }
@@ -437,7 +496,14 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
                         if (!c.getString("Name").equals("")){
+                            text5_5.setVisibility(View.VISIBLE);
+                            sw5.setVisibility(View.VISIBLE);
                             text5.setText(c.getString("Name"));
+                            if (c.getString("IsStatus").equals("0")){
+                                sw5.setChecked(false);
+                            }else {
+                                sw5.setChecked(true);
+                            }
                         }else {
                             L5.setVisibility(View.GONE);
                         }
@@ -485,7 +551,14 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
                         if (!c.getString("Name").equals("")){
+                            text6_6.setVisibility(View.VISIBLE);
+                            sw6.setVisibility(View.VISIBLE);
                             text6.setText(c.getString("Name"));
+                            if (c.getString("IsStatus").equals("0")){
+                                sw6.setChecked(false);
+                            }else {
+                                sw6.setChecked(true);
+                            }
                         }else {
                             L6.setVisibility(View.GONE);
                         }
@@ -533,7 +606,14 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
                         if (!c.getString("Name").equals("")){
+                            text7_7.setVisibility(View.VISIBLE);
+                            sw7.setVisibility(View.VISIBLE);
                             text7.setText(c.getString("Name"));
+                            if (c.getString("IsStatus").equals("0")){
+                                sw7.setChecked(false);
+                            }else {
+                                sw7.setChecked(true);
+                            }
                         }else {
                             L7.setVisibility(View.GONE);
                         }
@@ -581,7 +661,14 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
                         if (!c.getString("Name").equals("")){
+                            text8_8.setVisibility(View.VISIBLE);
+                            sw8.setVisibility(View.VISIBLE);
                             text8.setText(c.getString("Name"));
+                            if (c.getString("IsStatus").equals("0")){
+                                sw8.setChecked(false);
+                            }else {
+                                sw8.setChecked(true);
+                            }
                         }else {
                             L8.setVisibility(View.GONE);
                         }
