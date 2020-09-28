@@ -1127,7 +1127,8 @@
         android:layout_toEndOf="@+id/imageBack"
         android:background="@drawable/bt_1"
         android:text="Loaner"
-        android:textColor="@color/colorWhite" />
+        android:textColor="@color/colorWhite"
+        android:visibility="gone"/>
 
     <ImageView
         android:id="@+id/bt_delsterile"

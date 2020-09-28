@@ -89,9 +89,9 @@ public class dialog_Load_Img_Remark extends Activity {
                                     sub_itemname_set.setText("รายละเอียดเซ็ท : " + itemname);
                                 }
                                 if (c.getString("ID").equals("null")){
-                                    unit_set.setText("Unit : ไม่มีข้อมูล");
+                                    unit_set.setText("Sterile Detail (SD) : ไม่มีข้อมูล");
                                 }else {
-                                    unit_set.setText("Unit : "+ c.getString("ID"));
+                                    unit_set.setText("Sterile Detail (SD) : "+ c.getString("ID"));
                                 }
                             }else {
                                 L1.setVisibility(View.GONE);

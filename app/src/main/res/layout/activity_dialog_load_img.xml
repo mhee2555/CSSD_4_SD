@@ -71,7 +71,7 @@
                         android:layout_height="35dp"
                         android:fontFamily="@font/kanit"
                         android:gravity="left"
-                        android:text="Unit : "
+                        android:text="Sterile Detail (SD) : "
                         android:textColor="@color/colorWhite"
                         android:textSize="18dp"
                         android:layout_marginTop="5dp"

@@ -116,9 +116,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     TextView txt_setdetail_l2_1;
     TextView txt_setdetail_l3;
     TextView txt_setdetail_l4;
-    EditText txt_setdetail_l4_1;
     TextView textView46;
-    Spinner textView46_1;
+    TextView textView46_1;
     TextView textView47;
     TextView textView48;
     Button bin_all;
@@ -238,6 +237,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         etxt_dept.setTitle("เลือกแผนก");
         etxt_dept.setPositiveButton("");
         etxt_dept.requestFocus();
+        spin_basket.setTitle("เลือกตะกร้า");
+        spin_basket.setPositiveButton("");
+        spin_basket.requestFocus();
     }
 
 //    public boolean onTouchEvent(MotionEvent touchEvent){
@@ -379,10 +381,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         txt_setdetail_l2 = (TextView) findViewById(R.id.txt_setdetail_l2);
         txt_setdetail_l3 = (TextView) findViewById(R.id.txt_setdetail_l3);
         txt_setdetail_l4 = (TextView) findViewById(R.id.txt_setdetail_l4);
-        txt_setdetail_l4_1 = (EditText ) findViewById(R.id.txt_setdetail_l4_1);
-        txt_setdetail_l4_1.setVisibility(View.GONE);
         textView46 = (TextView) findViewById(R.id.textView46);
-        textView46_1 = (Spinner) findViewById(R.id.textView46_1);
+        textView46_1 = (TextView) findViewById(R.id.textView46_1);
         textView46_1.setVisibility(View.GONE);
         etxt_date = ( TextView ) findViewById(R.id.etxt_date);
         L1_Send = ( LinearLayout ) findViewById(R.id.L1_Send);
@@ -394,21 +394,23 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
                     switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
+                            return false;
                         case KeyEvent.KEYCODE_ENTER:
-                            if (txt_usr_receive.getText().toString().equals("")){
-                                Toast.makeText(SendSterile_MainActivity.this, "กรุณาสแกนชื่อผู้รับ(จ่ายกลาง)", Toast.LENGTH_SHORT).show();
-                                basket.setText("");
-                                txt_usr_receive.requestFocus();
-                            }else {
-                                CheckBasket(basket.getText().toString());
-                            }
+//                            if (txt_usr_receive.getText().toString().equals("")){
+//                                Toast.makeText(SendSterile_MainActivity.this, "กรุณาสแกนชื่อผู้รับ(จ่ายกลาง)", Toast.LENGTH_SHORT).show();
+//                                basket.setText("");
+//                                txt_usr_receive.requestFocus();
+//                            }else {
+//                                CheckBasket(basket.getText().toString());
+//                            }
+                            CheckBasket(basket.getText().toString());
                             return true;
                         default:
-                            txt_usr_receive.requestFocus();
+                            basket.requestFocus();
                             break;
                     }
                 }else {
-                    txt_usr_receive.requestFocus();
+                    basket.requestFocus();
                     return true;
                 }
                 return false;
@@ -433,7 +435,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 String Basket = String.valueOf(spin_basket.getSelectedItem());
                 if (basket.getText().toString().equals("")){
                     basket.setText(Basket);
+                    textView46_1.setText(Basket);
                 }else {
+                    textView46_1.setText(Basket);
                     basket.setText(Basket);
                 }
             }
@@ -547,10 +551,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 Object o = lv.getItemAtPosition(position);
                 pCustomer newsData = ( pCustomer ) o;
-                String StatusDoc = newsData.getIsStatus();
-                if (StatusDoc.equals("0")){
-                    CheckStatusDocNo();
-                }
                 list_docno_detail.setAdapter(null);
                 textView48.setText("" + "0" + " ชิ้น" + " ]");
                 txt_setdetail_l4.setText("" + "0" + " ชิ้น" + " ]");
@@ -586,6 +586,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 txt_usr_receive.setContentDescription(newsData.getUserReceive());
                 txt_usr_send.setSelection(listUSendID.indexOf(newsData.getUserSend())+1);
                 IsItemClick = true;
+                CheckStatusDocNo();
                 ShowDetail();
                 ShowUserSend();
             }
@@ -924,6 +925,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 DelRowId.clear();
                 DelAlldata.clear();
                 txt_usr_receive.requestFocus();
+                basket.setText("");
             }
         });
 
@@ -1066,7 +1068,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
-                            if (basket.getText().toString().equals("")){
+                            if (txt_usr_receive.getText().toString().equals("")){
                                 Toast.makeText(SendSterile_MainActivity.this, "กรุณาสแกนตะกร้า", Toast.LENGTH_SHORT).show();
                                 txt_get_ucode.setText("");
                                 txt_get_ucode.requestFocus();
@@ -1291,16 +1293,11 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 Count_right = 1;
                                 Count_left = 0;
                                 if (Count_right == 1){
-                                    SelectBasket();
                                     from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
 
                                     textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46_1.setVisibility(View.VISIBLE);
                                     textView46_1.startAnimation(from_slie_right);
-
-                                    txt_setdetail_l4_1.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l4_1.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l4_1.startAnimation(from_slie_right);
 
                                     textView46.setVisibility(View.GONE);
                                     checkBoxall.setVisibility(View.GONE);
@@ -1315,81 +1312,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 if (Count_left == 1){
                                     from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
                                     textView46_1.setVisibility(View.GONE);
-                                    txt_setdetail_l4_1.setVisibility(View.GONE);
-
-                                    textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView46.setVisibility(View.VISIBLE);
-                                    textView46.startAnimation(from_slie_left);
-
-                                    checkBoxall.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    checkBoxall.setVisibility(View.VISIBLE);
-                                    checkBoxall.startAnimation(from_slie_left);
-
-                                    textView48.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView48.setVisibility(View.VISIBLE);
-                                    textView48.startAnimation(from_slie_left);
-
-                                    txt_setdetail_l4.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l4.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l4.startAnimation(from_slie_left);
-
-                                    textView47.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView47.setVisibility(View.VISIBLE);
-                                    textView47.startAnimation(from_slie_left);
-
-                                    txt_setdetail_l3.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l3.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l3.startAnimation(from_slie_left);
-                                }
-                            }
-                        }
-                }
-                return false;
-            }
-        });
-
-        txt_setdetail_l4_1.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction())
-                {
-                    case MotionEvent.ACTION_DOWN:
-                        x1 = event.getX();
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        x2 = event.getX();
-                        float xx = x2 - x1;
-                        if (Math.abs(xx) > MIN_DISTANCE)
-                        {
-                            if(xx < 0){
-                                Count_right = 1;
-                                Count_left = 0;
-                                if (Count_right == 1){
-                                    SelectBasket();
-                                    from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
-
-                                    textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView46_1.setVisibility(View.VISIBLE);
-                                    textView46_1.startAnimation(from_slie_right);
-
-                                    txt_setdetail_l4_1.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l4_1.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l4_1.startAnimation(from_slie_right);
-
-                                    textView46.setVisibility(View.GONE);
-                                    checkBoxall.setVisibility(View.GONE);
-                                    textView48.setVisibility(View.GONE);
-                                    txt_setdetail_l4.setVisibility(View.GONE);
-                                    textView47.setVisibility(View.GONE);
-                                    txt_setdetail_l3.setVisibility(View.GONE);
-                                }
-                            }else{
-                                Count_right = 0;
-                                Count_left = 1;
-                                if (Count_left == 1){
-                                    from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
-                                    textView46_1.setVisibility(View.GONE);
-                                    txt_setdetail_l4_1.setVisibility(View.GONE);
 
                                     textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46.setVisibility(View.VISIBLE);
@@ -1439,16 +1361,11 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 Count_right = 1;
                                 Count_left = 0;
                                 if (Count_right == 1){
-                                    SelectBasket();
                                     from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
 
                                     textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46_1.setVisibility(View.VISIBLE);
                                     textView46_1.startAnimation(from_slie_right);
-
-                                    txt_setdetail_l4_1.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l4_1.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l4_1.startAnimation(from_slie_right);
 
                                     textView46.setVisibility(View.GONE);
                                     checkBoxall.setVisibility(View.GONE);
@@ -1463,7 +1380,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 if (Count_left == 1){
                                     from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
                                     textView46_1.setVisibility(View.GONE);
-                                    txt_setdetail_l4_1.setVisibility(View.GONE);
 
                                     textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46.setVisibility(View.VISIBLE);
@@ -1513,16 +1429,11 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 Count_right = 1;
                                 Count_left = 0;
                                 if (Count_right == 1){
-                                    SelectBasket();
                                     from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
 
                                     textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46_1.setVisibility(View.VISIBLE);
                                     textView46_1.startAnimation(from_slie_right);
-
-                                    txt_setdetail_l4_1.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l4_1.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l4_1.startAnimation(from_slie_right);
 
                                     textView46.setVisibility(View.GONE);
                                     checkBoxall.setVisibility(View.GONE);
@@ -1537,7 +1448,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 if (Count_left == 1){
                                     from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
                                     textView46_1.setVisibility(View.GONE);
-                                    txt_setdetail_l4_1.setVisibility(View.GONE);
 
                                     textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46.setVisibility(View.VISIBLE);
@@ -1587,16 +1497,11 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 Count_right = 1;
                                 Count_left = 0;
                                 if (Count_right == 1){
-                                    SelectBasket();
                                     from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
 
                                     textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46_1.setVisibility(View.VISIBLE);
                                     textView46_1.startAnimation(from_slie_right);
-
-                                    txt_setdetail_l4_1.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l4_1.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l4_1.startAnimation(from_slie_right);
 
                                     textView46.setVisibility(View.GONE);
                                     checkBoxall.setVisibility(View.GONE);
@@ -1611,7 +1516,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 if (Count_left == 1){
                                     from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
                                     textView46_1.setVisibility(View.GONE);
-                                    txt_setdetail_l4_1.setVisibility(View.GONE);
 
                                     textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46.setVisibility(View.VISIBLE);
@@ -1661,16 +1565,11 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 Count_right = 1;
                                 Count_left = 0;
                                 if (Count_right == 1){
-                                    SelectBasket();
                                     from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
 
                                     textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46_1.setVisibility(View.VISIBLE);
                                     textView46_1.startAnimation(from_slie_right);
-
-                                    txt_setdetail_l4_1.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l4_1.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l4_1.startAnimation(from_slie_right);
 
                                     textView46.setVisibility(View.GONE);
                                     checkBoxall.setVisibility(View.GONE);
@@ -1685,7 +1584,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 if (Count_left == 1){
                                     from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
                                     textView46_1.setVisibility(View.GONE);
-                                    txt_setdetail_l4_1.setVisibility(View.GONE);
 
                                     textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46.setVisibility(View.VISIBLE);
@@ -1735,16 +1633,11 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 Count_right = 1;
                                 Count_left = 0;
                                 if (Count_right == 1){
-                                    SelectBasket();
                                     from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
 
                                     textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46_1.setVisibility(View.VISIBLE);
                                     textView46_1.startAnimation(from_slie_right);
-
-                                    txt_setdetail_l4_1.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l4_1.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l4_1.startAnimation(from_slie_right);
 
                                     textView46.setVisibility(View.GONE);
                                     checkBoxall.setVisibility(View.GONE);
@@ -1759,7 +1652,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 if (Count_left == 1){
                                     from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
                                     textView46_1.setVisibility(View.GONE);
-                                    txt_setdetail_l4_1.setVisibility(View.GONE);
 
                                     textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46.setVisibility(View.VISIBLE);
@@ -1809,16 +1701,11 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 Count_right = 1;
                                 Count_left = 0;
                                 if (Count_right == 1){
-                                    SelectBasket();
                                     from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
 
                                     textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46_1.setVisibility(View.VISIBLE);
                                     textView46_1.startAnimation(from_slie_right);
-
-                                    txt_setdetail_l4_1.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l4_1.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l4_1.startAnimation(from_slie_right);
 
                                     textView46.setVisibility(View.GONE);
                                     checkBoxall.setVisibility(View.GONE);
@@ -1833,7 +1720,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 if (Count_left == 1){
                                     from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
                                     textView46_1.setVisibility(View.GONE);
-                                    txt_setdetail_l4_1.setVisibility(View.GONE);
 
                                     textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46.setVisibility(View.VISIBLE);
@@ -1883,16 +1769,11 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 Count_right = 1;
                                 Count_left = 0;
                                 if (Count_right == 1){
-                                    SelectBasket();
                                     from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
 
                                     textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46_1.setVisibility(View.VISIBLE);
                                     textView46_1.startAnimation(from_slie_right);
-
-                                    txt_setdetail_l4_1.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l4_1.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l4_1.startAnimation(from_slie_right);
 
                                     textView46.setVisibility(View.GONE);
                                     checkBoxall.setVisibility(View.GONE);
@@ -1907,7 +1788,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 if (Count_left == 1){
                                     from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
                                     textView46_1.setVisibility(View.GONE);
-                                    txt_setdetail_l4_1.setVisibility(View.GONE);
 
                                     textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46.setVisibility(View.VISIBLE);
@@ -1957,16 +1837,11 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 Count_right = 1;
                                 Count_left = 0;
                                 if (Count_right == 1){
-                                    SelectBasket();
                                     from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
 
                                     textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46_1.setVisibility(View.VISIBLE);
                                     textView46_1.startAnimation(from_slie_right);
-
-                                    txt_setdetail_l4_1.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l4_1.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l4_1.startAnimation(from_slie_right);
 
                                     textView46.setVisibility(View.GONE);
                                     checkBoxall.setVisibility(View.GONE);
@@ -1981,7 +1856,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 if (Count_left == 1){
                                     from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
                                     textView46_1.setVisibility(View.GONE);
-                                    txt_setdetail_l4_1.setVisibility(View.GONE);
 
                                     textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46.setVisibility(View.VISIBLE);
@@ -3990,8 +3864,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 String result = null;
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_display_usage_count.php", data);
-                    Log.d("DJKHDK",data+"");
-                    Log.d("DJKHDK",result+"");
+                    Log.d("LDJLCDJ",data+"");
+                    Log.d("LDJLCDJ",result+"");
                 }catch(Exception e){
                     e.printStackTrace();
                 }
@@ -4370,6 +4244,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         JSONObject c = rs.getJSONObject(i);
                         if (c.getString("finish").equals("true")){
                             basket.setText(c.getString("BasketName"));
+                            textView46_1.setText(c.getString("BasketName"));
                             txt_get_ucode.requestFocus();
                         }else {
                             basket.requestFocus();

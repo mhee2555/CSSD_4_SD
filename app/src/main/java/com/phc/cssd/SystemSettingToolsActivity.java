@@ -31,6 +31,7 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
 
     LinearLayout L1,L2,L3,L4,L5,L6,L7,L8;
 
+    TextView no1,no2,no3,no4,no5,no6,no7,no8;
     TextView text1,text2,text3,text4,text5,text6,text7,text8;
     TextView text1_1,text2_2,text3_3,text4_4,text5_5,text6_6,text7_7,text8_8;
 
@@ -67,6 +68,15 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
         L6 = (LinearLayout) findViewById(R.id.L6);
         L7 = (LinearLayout) findViewById(R.id.L7);
         L8 = (LinearLayout) findViewById(R.id.L8);
+
+        no1 = (TextView) findViewById(R.id.no1);
+        no2 = (TextView) findViewById(R.id.no2);
+        no3 = (TextView) findViewById(R.id.no3);
+        no4 = (TextView) findViewById(R.id.no4);
+        no5 = (TextView) findViewById(R.id.no5);
+        no6 = (TextView) findViewById(R.id.no6);
+        no7 = (TextView) findViewById(R.id.no7);
+        no8 = (TextView) findViewById(R.id.no8);
 
         text1 = (TextView) findViewById(R.id.text1);
         text2 = (TextView) findViewById(R.id.text2);
@@ -204,7 +214,6 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
     public void setboolean(final String type,final String Set){
         class setboolean extends AsyncTask<String, Void, String> {
             private ProgressDialog dialog = new ProgressDialog(SystemSettingToolsActivity.this);
-
             // variable
             @Override
             protected void onPreExecute() {
@@ -276,6 +285,7 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
                         if (!c.getString("Name").equals("")){
+                            no1.setText("1.");
                             text1_1.setVisibility(View.VISIBLE);
                             sw1.setVisibility(View.VISIBLE);
                             text1.setText(c.getString("Name"));
@@ -331,6 +341,11 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
                         if (!c.getString("Name").equals("")){
+                            if (L1.getVisibility() == View.GONE){
+                                no2.setText("1.");
+                            }else {
+                                no2.setText("2.");
+                            }
                             text2_2.setVisibility(View.VISIBLE);
                             sw2.setVisibility(View.VISIBLE);
                             text2.setText(c.getString("Name"));
@@ -386,6 +401,19 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
                         if (!c.getString("Name").equals("")){
+                            if (L1.getVisibility() == View.GONE){
+                                if (L2.getVisibility() == View.GONE){
+                                    no3.setText("1.");
+                                }else {
+                                    no3.setText("2.");
+                                }
+                            }else {
+                                if (L2.getVisibility() == View.GONE){
+                                    no3.setText("2.");
+                                }else {
+                                    no3.setText("3.");
+                                }
+                            }
                             text3_3.setVisibility(View.VISIBLE);
                             sw3.setVisibility(View.VISIBLE);
                             text3.setText(c.getString("Name"));
@@ -441,6 +469,31 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
                         if (!c.getString("Name").equals("")){
+                            if (L1.getVisibility() == View.GONE){
+                                if (L2.getVisibility() == View.GONE){
+                                    if (L3.getVisibility() == View.GONE){
+                                        no4.setText("1.");
+                                    }else {
+                                        no4.setText("2.");
+                                    }
+                                }else {
+                                    if (L1.getVisibility() == View.GONE){
+                                        no4.setText("2.");
+                                    }else {
+                                        no4.setText("3.");
+                                    }
+                                }
+                            }else {
+                                if (L2.getVisibility() == View.GONE){
+                                    if (L3.getVisibility() == View.GONE){
+                                        no4.setText("2.");
+                                    }else {
+                                        no4.setText("3.");
+                                    }
+                                }else {
+                                    no4.setText("4.");
+                                }
+                            }
                             text4_4.setVisibility(View.VISIBLE);
                             sw4.setVisibility(View.VISIBLE);
                             text4.setText(c.getString("Name"));
@@ -496,6 +549,43 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
                         if (!c.getString("Name").equals("")){
+                            if (L1.getVisibility() == View.GONE){
+                                if (L2.getVisibility() == View.GONE){
+                                    if (L3.getVisibility() == View.GONE){
+                                        if (L4.getVisibility() == View.GONE){
+                                            no5.setText("1.");
+                                        }else {
+                                            no5.setText("2.");
+                                        }
+                                    }else {
+                                        no5.setText("3.");
+                                    }
+                                }else {
+                                    no5.setText("4.");
+                                }
+                            }else {
+                                if (L2.getVisibility() == View.GONE){
+                                    if (L3.getVisibility() == View.GONE){
+                                        if (L4.getVisibility() == View.GONE){
+                                            no5.setText("2.");
+                                        }else {
+                                            no5.setText("3.");
+                                        }
+                                    }else {
+                                        if (L4.getVisibility() == View.GONE){
+                                            no5.setText("3.");
+                                        }else {
+                                            no5.setText("4.");
+                                        }
+                                    }
+                                }else {
+                                    if (L4.getVisibility() == View.GONE){
+                                        no5.setText("4.");
+                                    }else {
+                                        no5.setText("5.");
+                                    }
+                                }
+                            }
                             text5_5.setVisibility(View.VISIBLE);
                             sw5.setVisibility(View.VISIBLE);
                             text5.setText(c.getString("Name"));
@@ -551,6 +641,47 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
                         if (!c.getString("Name").equals("")){
+                            if (L1.getVisibility() == View.GONE){
+                                if (L2.getVisibility() == View.GONE){
+                                    if (L3.getVisibility() == View.GONE){
+                                        if (L4.getVisibility() == View.GONE){
+                                            if (L5.getVisibility() == View.GONE){
+                                                no6.setText("1.");
+                                            }else {
+                                                no6.setText("2.");
+                                            }
+                                        }else {
+                                            no6.setText("3.");
+                                        }
+                                    }else {
+                                        no6.setText("4.");
+                                    }
+                                }else {
+                                    if (L5.getVisibility() == View.GONE){
+                                        no6.setText("3.");
+                                    }else {
+                                        no6.setText("5.");
+                                    }
+                                }
+                            }else {
+                                if (L2.getVisibility() == View.GONE){
+                                    if (L3.getVisibility() == View.GONE){
+                                        if (L4.getVisibility() == View.GONE){
+                                            if (L5.getVisibility() == View.GONE){
+                                                no6.setText("2.");
+                                            }else {
+                                                no6.setText("3.");
+                                            }
+                                        }else {
+                                            no6.setText("4.");
+                                        }
+                                    }else {
+                                        no6.setText("5.");
+                                    }
+                                }else {
+                                    no6.setText("6.");
+                                }
+                            }
                             text6_6.setVisibility(View.VISIBLE);
                             sw6.setVisibility(View.VISIBLE);
                             text6.setText(c.getString("Name"));
@@ -606,6 +737,55 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
                         if (!c.getString("Name").equals("")){
+                            if (L1.getVisibility() == View.GONE){
+                                if (L2.getVisibility() == View.GONE){
+                                    if (L3.getVisibility() == View.GONE){
+                                        if (L4.getVisibility() == View.GONE){
+                                            if (L5.getVisibility() == View.GONE){
+                                               if (L6.getVisibility() == View.GONE){
+                                                   no7.setText("1.");
+                                               }else {
+                                                   no7.setText("2.");
+                                               }
+                                            }else {
+                                                no7.setText("3.");
+                                            }
+                                        }else {
+                                            no7.setText("4.");
+                                        }
+                                    }else {
+                                        no7.setText("5.");
+                                    }
+                                }else {
+                                    no7.setText("6.");
+                                }
+                            }else {
+                                if (L2.getVisibility() == View.GONE){
+                                    if (L3.getVisibility() == View.GONE){
+                                        if (L4.getVisibility() == View.GONE){
+                                            if (L5.getVisibility() == View.GONE){
+                                               if (L6.getVisibility() == View.GONE){
+                                                   no7.setText("2.");
+                                               }else {
+                                                   no7.setText("3.");
+                                               }
+                                            }else {
+                                                no7.setText("4.");
+                                            }
+                                        }else {
+                                            no7.setText("5.");
+                                        }
+                                    }else {
+                                        if (L6.getVisibility() == View.GONE){
+                                            no7.setText("4.");
+                                        }else {
+                                            no7.setText("6.");
+                                        }
+                                    }
+                                }else {
+                                    no7.setText("7.");
+                                }
+                            }
                             text7_7.setVisibility(View.VISIBLE);
                             sw7.setVisibility(View.VISIBLE);
                             text7.setText(c.getString("Name"));
@@ -661,6 +841,67 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
                         if (!c.getString("Name").equals("")){
+                            if (L1.getVisibility() == View.GONE){
+                                if (L2.getVisibility() == View.GONE){
+                                    if (L3.getVisibility() == View.GONE){
+                                        if (L4.getVisibility() == View.GONE){
+                                            if (L5.getVisibility() == View.GONE){
+                                                if (L6.getVisibility() == View.GONE){
+                                                    if (L7.getVisibility() == View.GONE){
+                                                        no8.setText("1.");
+                                                    }else {
+                                                        no8.setText("2.");
+                                                    }
+                                                }else {
+                                                    no8.setText("3.");
+                                                }
+                                            }else {
+                                                no8.setText("4.");
+                                            }
+                                        }else {
+                                            no8.setText("5.");
+                                        }
+                                    }else {
+                                        no8.setText("6.");
+                                    }
+                                }else {
+                                    if (L7.getVisibility() == View.GONE){
+                                        no8.setText("4.");
+                                    }else {
+                                        no8.setText("7.");
+                                    }
+                                }
+                            }else {
+                                if (L2.getVisibility() == View.GONE){
+                                    if (L3.getVisibility() == View.GONE){
+                                        if (L4.getVisibility() == View.GONE){
+                                            if (L5.getVisibility() == View.GONE){
+                                                if (L6.getVisibility() == View.GONE){
+                                                    if (L7.getVisibility() == View.GONE){
+                                                        no8.setText("2.");
+                                                    }else {
+                                                        no8.setText("3.");
+                                                    }
+                                                }else {
+                                                    no8.setText("4.");
+                                                }
+                                            }else {
+                                                if (L7.getVisibility() == View.GONE){
+                                                    no8.setText("4.");
+                                                }else {
+                                                    no8.setText("5.");
+                                                }
+                                            }
+                                        }else {
+                                            no8.setText("6.");
+                                        }
+                                    }else {
+                                        no8.setText("7.");
+                                    }
+                                }else {
+                                    no8.setText("8.");
+                                }
+                            }
                             text8_8.setVisibility(View.VISIBLE);
                             sw8.setVisibility(View.VISIBLE);
                             text8.setText(c.getString("Name"));
