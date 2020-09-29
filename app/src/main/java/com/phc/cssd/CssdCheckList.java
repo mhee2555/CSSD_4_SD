@@ -77,6 +77,7 @@ public class CssdCheckList extends Activity {
     private TextView txt_item_detail;
     private String RETURN_VALUE = "";
     private String RETURN_ADMIN = "";
+    private String RETURN_INCHARG = "";
     private String RETURN_ITEMCODE = "";
     private String RETURN_ITEMDETAIL = "";
     private String RETURN_ROWID = "";
@@ -389,6 +390,7 @@ public class CssdCheckList extends Activity {
         try {
             RETURN_VALUE = data.getStringExtra("RETURN_VALUE");
             RETURN_ADMIN = data.getStringExtra("RETURN_ADMIN");
+            RETURN_INCHARG = data.getStringExtra("RETURN_INCHARG");
             RETURN_ITEMCODE = data.getStringExtra("RETURN_ITEMCODE");
             RETURN_ITEMDETAIL = data.getStringExtra("RETURN_ITEMDETAIL");
             RETURN_ROWID = data.getStringExtra("RETURN_ROWID");
@@ -397,7 +399,11 @@ public class CssdCheckList extends Activity {
                 if (RETURN_ADMIN.equals("1")){
                     CancelRemark(RETURN_ITEMCODE,RETURN_ITEMDETAIL,RETURN_ROWID,RETURN_TYPE);
                 }else {
-                    Toast.makeText(CssdCheckList.this, "ผู้ใช้ทั่วไปไม่สามารถยกเลิก Remark ได้ !!", Toast.LENGTH_SHORT).show();
+                    if (RETURN_INCHARG.equals("2")){
+                        CancelRemark(RETURN_ITEMCODE,RETURN_ITEMDETAIL,RETURN_ROWID,RETURN_TYPE);
+                    }else {
+                        Toast.makeText(CssdCheckList.this, "ผู้ใช้ทั่วไปไม่สามารถยกเลิก Remark ได้ !!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         }catch(Exception e){

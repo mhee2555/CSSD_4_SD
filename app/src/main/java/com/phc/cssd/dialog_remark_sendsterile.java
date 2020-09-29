@@ -47,6 +47,7 @@ public class dialog_remark_sendsterile extends Activity {
     private String data = "";
     private String RETURN_VALUE = "";
     private String RETURN_ADMIN = "";
+    private String RETURN_INCHARG = "";
     private String TAG_RESULTS = "result";
     private JSONArray rs = null;
     private HTTPConnect httpConnect = new HTTPConnect();
@@ -252,11 +253,16 @@ public class dialog_remark_sendsterile extends Activity {
         try {
             RETURN_VALUE = data.getStringExtra("RETURN_VALUE");
             RETURN_ADMIN = data.getStringExtra("RETURN_ADMIN");
+            RETURN_INCHARG = data.getStringExtra("RETURN_INCHARG");
             if (resultCode == 1006) {
                 if (RETURN_ADMIN.equals("1")){
                     CancelRemark(datacheck,text_remark.getText().toString(),DocNoSend,Usagecode,Itemname,DepID);
                 }else {
-                    Toast.makeText(dialog_remark_sendsterile.this, "ผู้ใช้ทั่วไปไม่สามารถยกเลิก Remark ได้ !!", Toast.LENGTH_SHORT).show();
+                    if (RETURN_INCHARG.equals("2")){
+                        CancelRemark(datacheck,text_remark.getText().toString(),DocNoSend,Usagecode,Itemname,DepID);
+                    }else {
+                        Toast.makeText(dialog_remark_sendsterile.this, "ผู้ใช้ทั่วไปไม่สามารถยกเลิก Remark ได้ !!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         }catch(Exception e){
