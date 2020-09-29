@@ -72,7 +72,6 @@ public class CheckListAdapter extends ArrayAdapter {
             }
         });
 
-
         R1.setOnLongClickListener(new View.OnLongClickListener() {
             public boolean onLongClick(View v) {
                 if (model.getNameType().equals("")) {
@@ -96,15 +95,11 @@ public class CheckListAdapter extends ArrayAdapter {
                             ((CssdCheckList)acc).onListClick(img_set, img_detail);
                         }
                     });
-
                     quitDialog.show();
                 }
-
                 return false;
             }
         });
-
-        Log.d("FKJDHJKDH",model.getNameType()+"");
 
         if (!model.getNameType().equals("") && model.getAdminApprove().equals("0")){
             txtitemname.setTextColor(Color.RED);
@@ -168,8 +163,6 @@ public class CheckListAdapter extends ArrayAdapter {
         txt_remark_admin.setText(listData.get(position).getAdminRemark());
         txt_remark_type.setText(listData.get(position).getNameType());
         txt_remark_date.setText(listData.get(position).getDateRemark());
-
         return v;
     }
-
 }
