@@ -2052,6 +2052,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         xST.setIsPicture(c.getString("IsPicture"));
                         xST.setRemarkItemCode(c.getString("RemarkItemCode"));
                         xST.setRemarkDocNo(c.getString("DocNo"));
+                        xST.setQtyItemDetail(c.getString("QtyItemDetail"));
                         pCus.add(xST);
                         cnt++;
                     }
@@ -3058,16 +3059,13 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         Log.d("KDJDHF",xSel);
     }
 
-
     public void getlistdata_l2(String department_id, String Date, String sreach) {
         class getlistdata_l2 extends AsyncTask<String, Void, String> {
-
             // variable
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
             }
-
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
@@ -3554,7 +3552,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 data.put("p_doc_no", doc_no);
                 data.put("B_ID",B_ID);
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_update_send_sterile.php", data);
-
+                Log.d("DLHJF",data+"");
+                Log.d("DLHJF",result+"");
                 return result;
             }
 
@@ -4193,7 +4192,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         }
     }
 
-    public void OpenDialog(final String Itemname , final String type) {
+    public void OpenDialog(final String Itemname ,final String type, final String Qty, final String Qty_save) {
         Intent intent = new Intent(SendSterile_MainActivity.this, dialog_remark_sendsterile.class);
         intent.putExtra("Itemname", Itemname);
         intent.putExtra("Usagecode", Usagecode);
@@ -4204,6 +4203,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         intent.putExtra("IsStatus",IsStatus);
         intent.putExtra("DocNo",etxt_docno.getText().toString());
         intent.putExtra("Type",type);
+        intent.putExtra("Qty",Qty);
+        intent.putExtra("Qty_save",Qty_save);
         intent.putExtra("context", String.valueOf(SendSterile_MainActivity.this));
         startActivityForResult(intent,1005);
     }

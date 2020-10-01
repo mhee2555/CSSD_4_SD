@@ -5,8 +5,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,12 +33,12 @@ public class dialog_remark_sendsterile extends Activity {
 
     LinearLayout R1,R2,R3;
     CheckBox check1,check2,check3,check4,check5,check6;
-    EditText text_remark,userdep;
+    EditText text_remark,userdep,qty_item;
     Button summit,cancle;
     ImageView close;
 
     String Itemname,Usagecode,DepID,DocNoSend,IsStatus,DocNo;
-    String datacheck,EmpCode,Type;
+    String datacheck,EmpCode,Type,Xqty,Qty_save;
     String IsSave = "0";
 
     boolean IsAdmin = false;
@@ -77,9 +80,18 @@ public class dialog_remark_sendsterile extends Activity {
         EmpCode = intent.getStringExtra("EmpCode");
         Type = intent.getStringExtra("Type");
         DocNo = intent.getStringExtra("DocNo");
+        Xqty = intent.getStringExtra("Qty");
+        Qty_save = intent.getStringExtra("Qty_save");
     }
 
     public void initialize() {
+        qty_item = (EditText ) findViewById(R.id.qty_item);
+        if (Qty_save.equals("0")){
+            qty_item.setText(Xqty);
+        }else {
+            qty_item.setText(Qty_save);
+        }
+
         check1 = (CheckBox) findViewById(R.id.check1);
         check2 = (CheckBox) findViewById(R.id.check2);
         check3 = (CheckBox) findViewById(R.id.check3);
@@ -97,6 +109,7 @@ public class dialog_remark_sendsterile extends Activity {
         if (Type.equals("1")){
             ShowDetail(DocNoSend,Itemname);
         }
+
         SaveRemarkDocNoStart(DocNoSend,Usagecode,Itemname);
 
         check1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -180,29 +193,83 @@ public class dialog_remark_sendsterile extends Activity {
         R1 = (LinearLayout) findViewById(R.id.R1);
         R2 = (LinearLayout) findViewById(R.id.R2);
         R3 = (LinearLayout) findViewById(R.id.R3);
+
         text_remark = (EditText) findViewById(R.id.text_remark);
+
         userdep = (EditText) findViewById(R.id.userdep);
+
         summit = (Button) findViewById(R.id.summit);
         summit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (check1.isChecked()){
-                    datacheck = "1";
-                }else if (check2.isChecked()){
-                    datacheck = "2";
-                }else if (check3.isChecked()){
-                    datacheck = "3";
-                }else if (check4.isChecked()){
-                    datacheck = "4";
-                }else if (check5.isChecked()){
-                    datacheck = "5";
-                }else if (check6.isChecked()){
-                    datacheck = "6";
-                }
-                if (userdep.getText().toString().equals("")){
-                    Toast.makeText(dialog_remark_sendsterile.this, "กรุณากรอกชื่อเจ้าหน้าที่", Toast.LENGTH_SHORT).show();
+                if (!IsStatus.equals("1")){
+                    if (check1.isChecked()){
+                        datacheck = "1";
+                    }else if (check2.isChecked()){
+                        datacheck = "2";
+                    }else if (check3.isChecked()){
+                        datacheck = "3";
+                    }else if (check4.isChecked()){
+                        datacheck = "4";
+                    }else if (check5.isChecked()){
+                        datacheck = "5";
+                    }else if (check6.isChecked()){
+                        datacheck = "6";
+                    }
+
+                    if (qty_item.getText().toString().equals("0") || qty_item.getText().toString().equals("")){
+                        Toast.makeText(dialog_remark_sendsterile.this, "ตัวเลขจำนวนไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
+                    }else {
+                        if (userdep.getText().toString().equals("")){
+                            Toast.makeText(dialog_remark_sendsterile.this, "กรุณากรอกชื่อเจ้าหน้าที่", Toast.LENGTH_SHORT).show();
+                        }else {
+                            String Qty = qty_item.getText().toString();
+                            Log.d("KDJCL",Qty_save);
+                            Log.d("KDJCL",Xqty);
+                            if (Qty_save.equals("0")){
+                                if (Integer.parseInt(Qty) > Integer.parseInt(Xqty)) {
+                                    if (Qty_save.equals("0")){
+                                        qty_item.setText(Xqty);
+                                    }else {
+                                        qty_item.setText(Qty_save);
+                                    }
+                                    qty_item.requestFocus();
+                                    qty_item.setTextColor(Color.RED);
+                                    Toast.makeText(dialog_remark_sendsterile.this, "ตัวเลขจำนวนมากกว่าที่กำหนด !!", Toast.LENGTH_SHORT).show();
+                                }else {
+                                    qty_item.setTextColor(Color.BLACK);
+                                    Log.d("KDJCL",DocNoSend);
+                                    if (DocNoSend.equals("")){
+                                        SaveRemarkDocNo(DocNoSend,Usagecode,Itemname);
+                                    }else {
+                                        CheckStatusDocNo(DocNoSend);
+                                    }
+                                }
+                            }else {
+                                if (Integer.parseInt(Qty) > Integer.parseInt(Qty_save)) {
+                                    if (Qty_save.equals("0")){
+                                        qty_item.setText(Xqty);
+                                    }else {
+                                        qty_item.setText(Qty_save);
+                                    }
+                                    qty_item.requestFocus();
+                                    qty_item.setTextColor(Color.RED);
+                                    Toast.makeText(dialog_remark_sendsterile.this, "ตัวเลขจำนวนมากกว่าที่กำหนด !!", Toast.LENGTH_SHORT).show();
+                                }else {
+                                    qty_item.setTextColor(Color.BLACK);
+                                    Log.d("KDJCL",DocNoSend);
+                                    if (DocNoSend.equals("")){
+                                        SaveRemarkDocNo(DocNoSend,Usagecode,Itemname);
+                                    }else {
+                                        CheckStatusDocNo(DocNoSend);
+                                    }
+                                }
+                            }
+
+                        }
+                    }
                 }else {
-                    CheckStatusDocNo(DocNoSend);
+                    Toast.makeText(dialog_remark_sendsterile.this, "ไม่สามารถบันทึก Remark ได้เนื่องจากเอกสารถูกบันทึกไปแล้ว !!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -211,32 +278,35 @@ public class dialog_remark_sendsterile extends Activity {
         cancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!userdep.getText().toString().equals("")){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(dialog_remark_sendsterile.this);
-                    builder.setCancelable(true);
-                    builder.setTitle("ยืนยัน");
-                    builder.setMessage("ยืนยันการยกเลิก Remark หรือไม่ !!");
-                    builder.setPositiveButton("ยืนยัน",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    openQR("admin");
-                                }
-                            });
-                    builder.setNegativeButton("ไม่ยืนยัน", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+                if (!IsStatus.equals("1")){
+                    if (!userdep.getText().toString().equals("")){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(dialog_remark_sendsterile.this);
+                        builder.setCancelable(true);
+                        builder.setTitle("ยืนยัน");
+                        builder.setMessage("ยืนยันการยกเลิก Remark หรือไม่ !!");
+                        builder.setPositiveButton("ยืนยัน",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        openQR("admin");
+                                    }
+                                });
+                        builder.setNegativeButton("ไม่ยืนยัน", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }else {
+                        finish();
+                    }
                 }else {
-                    finish();
+                    Toast.makeText(dialog_remark_sendsterile.this, "ไม่สามารถยกเลิก Remark ได้เนื่องจากเอกสารถูกบันทึกไปแล้ว !!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
     }
 
     private void openQR(final String admin){
@@ -432,11 +502,16 @@ public class dialog_remark_sendsterile extends Activity {
                 data.put("remarkselect",remarkselect);
                 data.put("noteremark",noteremark);
                 data.put("senddocno",senddocno);
-                data.put("usagecode",usagecode);
+                if (usagecode.equals("")){
+                    data.put("usagecode",Usagecode);
+                }else {
+                    data.put("usagecode",usagecode);
+                }
                 data.put("itemname",itemname);
                 data.put("depname",userdep.getText().toString());
                 data.put("EmpCode",EmpCode);
                 data.put("Type",Type);
+                data.put("Qty_save",qty_item.getText().toString());
                 String result = null;
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_save_remark_send.php", data);

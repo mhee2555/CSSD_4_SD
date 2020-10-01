@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.phc.cssd.CssdCheckList;
 import com.phc.cssd.R;
+import com.phc.cssd.SendSterile_MainActivity;
 import com.phc.cssd.model.ModelCheckList;
 
 import java.util.List;
@@ -60,7 +61,7 @@ public class CheckListAdapter extends ArrayAdapter {
         final TextView txt_remark_type = (TextView) v.findViewById(R.id.txt_remark_type);
         final TextView txt_remark_date = (TextView) v.findViewById(R.id.txt_remark_date);
         final RelativeLayout R1 = (RelativeLayout) v.findViewById(R.id.R1);
-        final CheckBox checkbox = (CheckBox ) v.findViewById(R.id.checkbox);
+        final CheckBox checkbox = (CheckBox) v.findViewById(R.id.checkbox);
 
         final String img_set = listData.get(position).getPicture_set();
         final String img_detail = listData.get(position).getPicture_detail();
@@ -68,7 +69,10 @@ public class CheckListAdapter extends ArrayAdapter {
         R1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((CssdCheckList)acc).onListClick(img_set, img_detail);
+                ((CssdCheckList)acc).onListClick(img_set,img_detail);
+                if (!listData.get(position).getQtyItemDetail().equals("0")){
+                    ((CssdCheckList)acc).OpenDialog(listData.get(position).getItemname(),"1",listData.get(position).getQty(),listData.get(position).getQtyItemDetail(),listData.get(position).getUsagecode());
+                }
             }
         });
 
@@ -152,6 +156,10 @@ public class CheckListAdapter extends ArrayAdapter {
             public void onClick(View view) {
                 listData.get(position).setCheck(checkbox.isChecked());
                 ((CssdCheckList)acc).onListClick(img_set, img_detail);
+
+                if (!checkbox.isChecked()){
+                    ((CssdCheckList)acc).OpenDialog(listData.get(position).getItemname(),"0",listData.get(position).getQty(),listData.get(position).getQtyItemDetail(),listData.get(position).getUsagecode());
+                }
             }
         });
 

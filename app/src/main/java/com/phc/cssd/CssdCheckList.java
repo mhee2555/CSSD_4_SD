@@ -56,7 +56,7 @@ public class CssdCheckList extends Activity {
     private boolean IsAdmin = false;
     private boolean Is_ById = false;
     private String ID = null;
-    private String UsageCode= null;
+    private String UsageCode = null;
 
     String condition1 = "";
     String condition2 = "";
@@ -109,7 +109,12 @@ public class CssdCheckList extends Activity {
         if(Is_ById) {
             displayCheckList();
         }
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //displayCheckList();
     }
 
     private void byIntent(){
@@ -301,7 +306,7 @@ public class CssdCheckList extends Activity {
                 try {
                     JSONObject jsonObj = new JSONObject(result);
                     rs = jsonObj.getJSONArray(TAG_RESULTS);
-                    String UsageCode = "";
+
                     String UsageItem = "";
 
                     for(int i=0;i<rs.length();i++) {
@@ -405,6 +410,8 @@ public class CssdCheckList extends Activity {
                         Toast.makeText(CssdCheckList.this, "ผู้ใช้ทั่วไปไม่สามารถยกเลิก Remark ได้ !!", Toast.LENGTH_SHORT).show();
                     }
                 }
+            }else if (resultCode == 1005){
+                displayCheckList();
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -710,9 +717,7 @@ public class CssdCheckList extends Activity {
     }
 
     public void displayCheckList() {
-
         class DisplayWashDetail extends AsyncTask<String, Void, String> {
-
             // variable
             @Override
             protected void onPreExecute() {
@@ -744,6 +749,8 @@ public class CssdCheckList extends Activity {
                             System.out.println();
                             list.add(
                                     new ModelCheckList(
+                                            edt_usage_code.getText().toString(),
+                                            c.getString("QtyItemDetail"),
                                             c.getString("AdminApprove"),
                                             c.getString("RowID"),
                                             c.getString("ID"),
@@ -789,8 +796,6 @@ public class CssdCheckList extends Activity {
                         e.printStackTrace();
                     }
                     String packer_code = (String) txt_packer.getContentDescription();
-                    System.out.println("packer_code = " + packer_code );
-                    System.out.println("packer_text = " + txt_packer.getText() );
                     if(ID != null && packer_code != null && !packer_code.equals("")){
                         updatePacker(ID, packer_code);
                     }
@@ -891,33 +896,24 @@ public class CssdCheckList extends Activity {
             protected void onPreExecute() {
                 super.onPreExecute();
             }
-
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-
                 focus();
-
             }
-
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
                 data.put("ID", ID);
                 data.put("p_user_id", p_user_id);
-
                 String result = null;
-
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_update_packer.php", data);
-
                 }catch(Exception e){
                     e.printStackTrace();
                 }
-
                 return result;
             }
-
             // =========================================================================================
         }
 
@@ -926,9 +922,7 @@ public class CssdCheckList extends Activity {
     }
 
     private void checkInput(final String Input){
-
         String packer_code = (String) txt_packer.getContentDescription();
-
         // Check Employee
         if(packer_code == null || packer_code.equals("")){
             checkPacker(Input);
@@ -940,55 +934,35 @@ public class CssdCheckList extends Activity {
             displayCheckList();
             return;
         }
-
         // Check Item Detail
         boolean IsCheck = false;
-
         try {
-
             String code = Input.length() > 6 ? Input.substring(0, 5) : Input;
-
             for(int i=0;i<MODEL_CHECK_LIST.size();i++){
-
                 //System.out.println(code + " = " + MODEL_CHECK_LIST.get(i).getItemcode());
-
                 if (code.equals(MODEL_CHECK_LIST.get(i).getItemcode())) {
-
                     IsCheck = true;
-
                     if(MODEL_CHECK_LIST.get(i).isCheck()){
                         Toast.makeText(CssdCheckList.this, "รายการนี้ได้ทำการยิงเช็คแล้ว !!", Toast.LENGTH_SHORT).show();
                         break;
                     }
-
                     // Set
                     MODEL_CHECK_LIST.get(i).setCheck(true);
-
                     // Display
                     ArrayAdapter<ModelCheckList> adapter;
                     adapter = new CheckListAdapter(CssdCheckList.this, MODEL_CHECK_LIST);
                     list_check.setAdapter(adapter);
-
                     try {
-                        /*
-                        URL url = new URL(Url.getImageURL() + MODEL_CHECK_LIST.get(i).getPicture_set());
-                        Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                        img_item_all.setImageBitmap(bmp);
-                         */
-
                         URL url_ = new URL(Url.getImageURL() + MODEL_CHECK_LIST.get(i).getPicture_detail());
                         Bitmap bmp_ = BitmapFactory.decodeStream(url_.openConnection().getInputStream());
                         img_item.setImageBitmap(bmp_);
-
                     }catch(Exception e){
                         img_item_all.setImageResource(R.drawable.ic_preview);
                         img_item.setImageResource(R.drawable.ic_preview);
                     }
-
                     break;
                 }
             }
-
         }catch (Exception e){
             e.printStackTrace();
         }finally {
@@ -996,6 +970,23 @@ public class CssdCheckList extends Activity {
                 focus();
             }
         }
+    }
+
+    public void OpenDialog(final String Itemname ,final String type, final String Qty, final String Qty_save, final String Usagecode) {
+        Intent intent = new Intent(CssdCheckList.this, dialog_remark_sendsterile.class);
+        intent.putExtra("Itemname", Itemname);
+        intent.putExtra("Usagecode", Usagecode);
+        intent.putExtra("DepID", "");
+        intent.putExtra("DocNoSend", "");
+        intent.putExtra("EmpCode",RETURN_VALUE);
+        intent.putExtra("IsAdmin",IsAdmin);
+        intent.putExtra("IsStatus","0");
+        intent.putExtra("DocNo","");
+        intent.putExtra("Type",type);
+        intent.putExtra("Qty",Qty);
+        intent.putExtra("Qty_save",Qty_save);
+        intent.putExtra("context", String.valueOf(CssdCheckList.this));
+        startActivityForResult(intent,1005);
     }
 
     private void focus(){

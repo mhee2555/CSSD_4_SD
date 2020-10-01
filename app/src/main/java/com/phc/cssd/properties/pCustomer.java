@@ -62,7 +62,12 @@ public class pCustomer {
     private String IsPicture;
     private String RemarkItemCode;
     private String RemarkDocNo;
+    private String QtyItemDetail;
 
+
+    public String getQtyItemDetail() { return QtyItemDetail; }
+
+    public void setQtyItemDetail(String qtyItemDetail) { QtyItemDetail = qtyItemDetail; }
 
     public String getRemarkDocNo() { return RemarkDocNo; }
 

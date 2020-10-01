@@ -465,6 +465,16 @@ public class dialog_check_usage_count extends Activity {
             qty1.setText(condition1);
             qty3.setText(condition3);
             qty5.setText(condition5);
+        }else if (!condition1.equals("0") && condition2.equals("0") && condition3.equals("0") && condition4.equals("0") && !condition5.equals("0")){
+            P1.setVisibility(View.VISIBLE);
+            P2.setVisibility(View.GONE);
+            P3.setVisibility(View.GONE);
+            P4.setVisibility(View.GONE);
+            P5.setVisibility(View.VISIBLE);
+            index1.setText("1.");
+            index5.setText("2.");
+            qty1.setText(condition1);
+            qty5.setText(condition5);
         }
     }
 

@@ -73,7 +73,7 @@ public class SendSterile_DocListDetailAdapter extends ArrayAdapter {
             @Override
             public void onClick(View view) {
                 if (!listData.get(position).getRemarkAdmin().equals("0")){
-                    ((SendSterile_MainActivity)aActivity).OpenDialog(listData.get(position).getItemname(),"1");
+                    ((SendSterile_MainActivity)aActivity).OpenDialog(listData.get(position).getItemname(),"1",listData.get(position).getXqty(),listData.get(position).getQtyItemDetail());
                 }
             }
         });
@@ -121,7 +121,7 @@ public class SendSterile_DocListDetailAdapter extends ArrayAdapter {
             @Override
             public void onClick(View view) {
                 if (!checkBoxsub.isChecked()){
-                    ((SendSterile_MainActivity)aActivity).OpenDialog(listData.get(position).getItemname(),"0");
+                    ((SendSterile_MainActivity)aActivity).OpenDialog(listData.get(position).getItemname(),"0",listData.get(position).getXqty(),listData.get(position).getQtyItemDetail());
                 }
             }
         });
