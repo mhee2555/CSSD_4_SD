@@ -51,6 +51,7 @@ public class dialog_remark_sendsterile extends Activity {
     private String RETURN_VALUE = "";
     private String RETURN_ADMIN = "";
     private String RETURN_INCHARG = "";
+    private String RETURN_EMCODE = "";
     private String TAG_RESULTS = "result";
     private JSONArray rs = null;
     private HTTPConnect httpConnect = new HTTPConnect();
@@ -237,13 +238,8 @@ public class dialog_remark_sendsterile extends Activity {
                                     qty_item.setTextColor(Color.RED);
                                     Toast.makeText(dialog_remark_sendsterile.this, "ตัวเลขจำนวนมากกว่าที่กำหนด !!", Toast.LENGTH_SHORT).show();
                                 }else {
+                                    openQR_Save("admin_save");
                                     qty_item.setTextColor(Color.BLACK);
-                                    Log.d("KDJCL",DocNoSend);
-                                    if (DocNoSend.equals("")){
-                                        SaveRemarkDocNo(DocNoSend,Usagecode,Itemname);
-                                    }else {
-                                        CheckStatusDocNo(DocNoSend);
-                                    }
                                 }
                             }else {
                                 if (Integer.parseInt(Qty) > Integer.parseInt(Qty_save)) {
@@ -256,13 +252,8 @@ public class dialog_remark_sendsterile extends Activity {
                                     qty_item.setTextColor(Color.RED);
                                     Toast.makeText(dialog_remark_sendsterile.this, "ตัวเลขจำนวนมากกว่าที่กำหนด !!", Toast.LENGTH_SHORT).show();
                                 }else {
+                                    openQR_Save("admin_save");
                                     qty_item.setTextColor(Color.BLACK);
-                                    Log.d("KDJCL",DocNoSend);
-                                    if (DocNoSend.equals("")){
-                                        SaveRemarkDocNo(DocNoSend,Usagecode,Itemname);
-                                    }else {
-                                        CheckStatusDocNo(DocNoSend);
-                                    }
                                 }
                             }
 
@@ -315,6 +306,12 @@ public class dialog_remark_sendsterile extends Activity {
         startActivityForResult(i,1006);
     }
 
+    private void openQR_Save(final String admin){
+        Intent i = new Intent(dialog_remark_sendsterile.this, CssdQrUser.class);
+        i.putExtra("data", admin);
+        startActivityForResult(i,1007);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -324,6 +321,7 @@ public class dialog_remark_sendsterile extends Activity {
             RETURN_VALUE = data.getStringExtra("RETURN_VALUE");
             RETURN_ADMIN = data.getStringExtra("RETURN_ADMIN");
             RETURN_INCHARG = data.getStringExtra("RETURN_INCHARG");
+            RETURN_EMCODE = data.getStringExtra("RETURN_EMCODE");
             if (resultCode == 1006) {
                 if (RETURN_ADMIN.equals("1")){
                     CancelRemark(datacheck,text_remark.getText().toString(),DocNoSend,Usagecode,Itemname,DepID);
@@ -332,6 +330,25 @@ public class dialog_remark_sendsterile extends Activity {
                         CancelRemark(datacheck,text_remark.getText().toString(),DocNoSend,Usagecode,Itemname,DepID);
                     }else {
                         Toast.makeText(dialog_remark_sendsterile.this, "ผู้ใช้ทั่วไปไม่สามารถยกเลิก Remark ได้ !!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }else if (resultCode == 1007){
+                Log.d("DKCSD",Usagecode);
+                if (RETURN_ADMIN.equals("1")){
+                    if (DocNoSend.equals("")){
+                        SaveRemarkDocNo(DocNoSend,Usagecode,Itemname);
+                    }else {
+                        CheckStatusDocNo(DocNoSend);
+                    }
+                }else {
+                    if (RETURN_INCHARG.equals("2")){
+                        if (DocNoSend.equals("")){
+                            SaveRemarkDocNo(DocNoSend,Usagecode,Itemname);
+                        }else {
+                            CheckStatusDocNo(DocNoSend);
+                        }
+                    }else {
+                        Toast.makeText(dialog_remark_sendsterile.this, "ผู้ใช้ทั่วไปไม่สามารถสร้าง Remark ได้ !!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -502,14 +519,14 @@ public class dialog_remark_sendsterile extends Activity {
                 data.put("remarkselect",remarkselect);
                 data.put("noteremark",noteremark);
                 data.put("senddocno",senddocno);
-                if (usagecode.equals("")){
-                    data.put("usagecode",Usagecode);
-                }else {
-                    data.put("usagecode",usagecode);
-                }
+                data.put("usagecode",usagecode);
                 data.put("itemname",itemname);
                 data.put("depname",userdep.getText().toString());
-                data.put("EmpCode",EmpCode);
+                if (EmpCode != null){
+                    data.put("EmpCode",RETURN_EMCODE);
+                }else {
+                    data.put("EmpCode","");
+                }
                 data.put("Type",Type);
                 data.put("Qty_save",qty_item.getText().toString());
                 String result = null;

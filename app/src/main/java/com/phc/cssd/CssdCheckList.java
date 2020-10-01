@@ -73,6 +73,7 @@ public class CssdCheckList extends Activity {
     private ImageView imv_new;
     private EditText edt_usage_code;
     private TextView txt_packer;
+    private TextView txt_usagecode_scan;
     private TextView txt_item_name;
     private TextView txt_item_detail;
     private String RETURN_VALUE = "";
@@ -130,7 +131,7 @@ public class CssdCheckList extends Activity {
     private void byWidget(){
 
         list_check = (ListView) findViewById(R.id.list_check);
-
+        txt_usagecode_scan = (TextView) findViewById(R.id.txt_usagecode_scan);
         imv_print = (ImageView) findViewById(R.id.imv_print);
 
         img_item = (ImageView)findViewById(R.id.img_item);
@@ -749,7 +750,6 @@ public class CssdCheckList extends Activity {
                             System.out.println();
                             list.add(
                                     new ModelCheckList(
-                                            edt_usage_code.getText().toString(),
                                             c.getString("QtyItemDetail"),
                                             c.getString("AdminApprove"),
                                             c.getString("RowID"),
@@ -931,6 +931,7 @@ public class CssdCheckList extends Activity {
         // Check Usage
         if(ID == null){
             UsageCode = Input;
+            txt_usagecode_scan.setText(edt_usage_code.getText().toString());
             displayCheckList();
             return;
         }
@@ -972,10 +973,10 @@ public class CssdCheckList extends Activity {
         }
     }
 
-    public void OpenDialog(final String Itemname ,final String type, final String Qty, final String Qty_save, final String Usagecode) {
+    public void OpenDialog(final String Itemname ,final String type, final String Qty, final String Qty_save) {
         Intent intent = new Intent(CssdCheckList.this, dialog_remark_sendsterile.class);
         intent.putExtra("Itemname", Itemname);
-        intent.putExtra("Usagecode", Usagecode);
+        intent.putExtra("Usagecode", txt_usagecode_scan.getText().toString());
         intent.putExtra("DepID", "");
         intent.putExtra("DocNoSend", "");
         intent.putExtra("EmpCode",RETURN_VALUE);

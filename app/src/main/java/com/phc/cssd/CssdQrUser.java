@@ -107,7 +107,7 @@ public class CssdQrUser extends Activity {
                     for(int i=0;i<rs.length();i++){
                         JSONObject c = rs.getJSONObject(i);
                         if(c.getString("result").equals("A")) {
-                            if (data.equals("admin")){
+                            if (data.equals("admin")) {
                                 Intent intent = new Intent();
                                 intent.putExtra("RETURN_DATA", c.getString("data"));
                                 intent.putExtra("RETURN_VALUE", c.getString("value"));
@@ -118,6 +118,19 @@ public class CssdQrUser extends Activity {
                                 intent.putExtra("RETURN_ROWID", RowID);
                                 intent.putExtra("RETURN_TYPE", type);
                                 setResult(1006, intent);
+                                finish();
+                            } else if (data.equals("admin_save")){
+                                Intent intent = new Intent();
+                                intent.putExtra("RETURN_DATA", c.getString("data"));
+                                intent.putExtra("RETURN_VALUE", c.getString("value"));
+                                intent.putExtra("RETURN_ADMIN", c.getString("admin"));
+                                intent.putExtra("RETURN_EMCODE", c.getString("EmpCode"));
+                                intent.putExtra("RETURN_INCHARG", c.getString("IsInCharg"));
+                                intent.putExtra("RETURN_ITEMCODE", itemcode);
+                                intent.putExtra("RETURN_ITEMDETAIL", itemdetail);
+                                intent.putExtra("RETURN_ROWID", RowID);
+                                intent.putExtra("RETURN_TYPE", type);
+                                setResult(1007, intent);
                                 finish();
                             }else {
                                 Intent intent = new Intent();

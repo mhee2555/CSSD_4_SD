@@ -18,11 +18,9 @@ public class ModelCheckList {
     String RowID;
     String AdminApprove;
     String QtyItemDetail;
-    String Usagecode;
     boolean IsCheck = false;
 
-    public ModelCheckList(String Usagecode, String QtyItemDetail ,String AdminApprove, String RowID, String ID, String send_ID, String itemcode, String itemname, String Item_Detail_ID,String qty, String adminRemark, String dateRemark, String remark, String nameType, String picture_set, String picture_detail, String usage_item_code, String usage_item_name, boolean isCheck) {
-        this.Usagecode = Usagecode;
+    public ModelCheckList(String QtyItemDetail ,String AdminApprove, String RowID, String ID, String send_ID, String itemcode, String itemname, String Item_Detail_ID,String qty, String adminRemark, String dateRemark, String remark, String nameType, String picture_set, String picture_detail, String usage_item_code, String usage_item_name, boolean isCheck) {
         this.QtyItemDetail = QtyItemDetail;
         this.AdminApprove = AdminApprove;
         this.RowID = RowID;
@@ -42,10 +40,6 @@ public class ModelCheckList {
         this.usage_item_name = usage_item_name;
         IsCheck = isCheck;
     }
-
-    public String getUsagecode() { return Usagecode; }
-
-    public void setUsagecode(String usagecode) { Usagecode = usagecode; }
 
     public String getQtyItemDetail() { return QtyItemDetail; }
 

@@ -71,7 +71,7 @@ public class CheckListAdapter extends ArrayAdapter {
             public void onClick(View view) {
                 ((CssdCheckList)acc).onListClick(img_set,img_detail);
                 if (!listData.get(position).getQtyItemDetail().equals("0")){
-                    ((CssdCheckList)acc).OpenDialog(listData.get(position).getItemname(),"1",listData.get(position).getQty(),listData.get(position).getQtyItemDetail(),listData.get(position).getUsagecode());
+                    ((CssdCheckList)acc).OpenDialog(listData.get(position).getItemname(),"1",listData.get(position).getQty(),listData.get(position).getQtyItemDetail());
                 }
             }
         });
@@ -158,7 +158,7 @@ public class CheckListAdapter extends ArrayAdapter {
                 ((CssdCheckList)acc).onListClick(img_set, img_detail);
 
                 if (!checkbox.isChecked()){
-                    ((CssdCheckList)acc).OpenDialog(listData.get(position).getItemname(),"0",listData.get(position).getQty(),listData.get(position).getQtyItemDetail(),listData.get(position).getUsagecode());
+                    ((CssdCheckList)acc).OpenDialog(listData.get(position).getItemname(),"0",listData.get(position).getQty(),listData.get(position).getQtyItemDetail());
                 }
             }
         });
