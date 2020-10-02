@@ -144,7 +144,8 @@ public class SendSterile_DocListDetailAdapter extends ArrayAdapter {
             txtxqty.setText("(ขาด"+x2+")");
         }else {
             if (x2 != 0){
-                txtxqty.setText(x1+" (ขาด"+x2+")");
+                int x1_1 = x1 - x2;
+                txtxqty.setText(x1_1+" (ขาด"+x2+")");
             }else {
                 txtxqty.setText(listData.get(position).getXqty());
             }

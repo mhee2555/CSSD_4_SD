@@ -175,7 +175,8 @@ public class CheckListAdapter extends ArrayAdapter {
             txt_qty.setText("(ขาด"+x2+")");
         }else {
             if (x2 != 0){
-                txt_qty.setText(x1+" (ขาด"+x2+")");
+                int x1_1 = x1 - x2;
+                txt_qty.setText(x1_1+" (ขาด"+x2+")");
             }else {
                 txt_qty.setText(listData.get(position).getQty());
             }

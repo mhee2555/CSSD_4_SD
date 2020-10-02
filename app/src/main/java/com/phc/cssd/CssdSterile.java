@@ -5279,19 +5279,15 @@ public class CssdSterile extends AppCompatActivity {
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
-
                 data.put("p_UserCode", userid);
                 data.put("p_SterileProgramID", p_SterileProgramID);
                 data.put("p_SterileMachineID", p_SterileMachineID);
-
                 if(!p_doc_date.equals("")) {
                     data.put("p_doc_date", DateTime.convertDate(p_doc_date));
                 }
-
                 if(B_ID != null){
                     data.put("p_bid", B_ID);
                 }
-
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_create_sterile.php", data);
                 Log.d("BANK123",data+"");
                 Log.d("BANK123",result);
@@ -5299,14 +5295,10 @@ public class CssdSterile extends AppCompatActivity {
             }
 
             private List<ModelSterile> getModelSterile() throws Exception{
-
                 List<ModelSterile> list = new ArrayList<>();
-
                 try {
                     int index = 0;
-
                     for(int i=0;i<data.size();i+=size){
-
                         list.add(
                                 getSterile(
                                         data.get(i),
@@ -5340,19 +5332,14 @@ public class CssdSterile extends AppCompatActivity {
                                         index
                                 )
                         );
-
                         index++;
                     }
-
                     // //////System.out.println("list = " + list.size());
-
                 }catch(Exception e){
                     e.printStackTrace();
                 }
-
                 return list;
             }
-
             private ModelSterile getSterile(
                     String ID,
                     String DocNo,
@@ -5416,33 +5403,22 @@ public class CssdSterile extends AppCompatActivity {
                         index
                 );
             }
-
-            // =========================================================================================
+            // =====================================================================================
         }
-
         CreateSterile obj = new CreateSterile();
         obj.execute();
     }
-
     // =============================================================================================
     // -- Create Sterile Test Machine ...
     // =============================================================================================
-
     public void createSterile(final int p_SterileProcessID) {
         final String usr_prepare = txt_usr_prepare.getContentDescription().toString();
-        //final String usr_sterile = txt_usr_sterile.getContentDescription().toString();
         final String usr_approve = txt_usr_approve.getContentDescription().toString();
         final String test_program_id = txt_test_program.getContentDescription().toString();
-
-        //System.out.println("test_program_id = " + test_program_id);
-
-
         final String x = txt_doc_date.getText().toString();
         final String xdt = txt_doc_date.getText().toString();
         final String p_SterileMachineID = getMachineId(STERILE_MACHINE_NUMBER_ACTIVE);
-
         class CreateSterile extends AsyncTask<String, Void, String> {
-
             private ProgressDialog dialog = new ProgressDialog(CssdSterile.this);
             //------------------------------------------------
             // Background Worker Process Variable
@@ -5450,23 +5426,19 @@ public class CssdSterile extends AppCompatActivity {
             private ArrayList<String> data = null;
             private int size = 0;
             //------------------------------------------------
-
             // variable
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
             }
-
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
                 dialog.dismiss();
                 AsonData ason = new AsonData(result);
-
                 Success = ason.isSuccess();
                 size = ason.getSize();
                 data = ason.getASONData();
-
                 if(Success && data != null) {
                     try {
                         MODEL_STERILE = getModelSterile();
@@ -5474,20 +5446,15 @@ public class CssdSterile extends AppCompatActivity {
                         e.printStackTrace();
                         return;
                     }
-
                     List<ModelSterile> DATA_MODEL = MODEL_STERILE;
-
                     Iterator i = DATA_MODEL.iterator();
-
                     if(i.hasNext()) {
                         try {
                             ModelSterile m = (ModelSterile) i.next();
                             String p_doc_no = m.getDocNo();
-
                             if(p_doc_no == null  || p_doc_no.equals("") || p_doc_no.equals("-")){
                                 return;
                             }
-
                             // Display Sterile
                             displaySterile(
                                     p_doc_no,
@@ -5509,19 +5476,14 @@ public class CssdSterile extends AppCompatActivity {
                                     m.getTestProgramName(),
                                     m.getUsr_beforeapprove()
                             );
-
-
                             setMachine(p_doc_no);
                             startMachine(getDocNo());
-
                             if (isTestBNT){
                                 isTestMac = true;
                             }else{
                                 isTestMac = false;
                             }
-
                             getQR(p_doc_no, "s1", "");
-
                         }catch(Exception e){
                             e.printStackTrace();
                             return;
@@ -5529,15 +5491,12 @@ public class CssdSterile extends AppCompatActivity {
                     }
                 }
             }
-
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
-
                 data.put("p_UserCode", userid);
                 data.put("p_SterileProcessID", Integer.toString(p_SterileProcessID));
                 data.put("p_SterileMachineID", p_SterileMachineID);
-
                 data.put("p_usr_prepare", usr_prepare );
                 data.put("p_usr_approve", usr_approve );
                 data.put("p_usr_sterile", usr_approve );
@@ -5555,21 +5514,14 @@ public class CssdSterile extends AppCompatActivity {
                 }
 
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_create_test_machine_sterile.php", data);
-//                Log.d("BANKT2",data+"");
-//                Log.d("BANKT2",result);
-
                 return result;
             }
 
             private List<ModelSterile> getModelSterile() throws Exception{
-
                 List<ModelSterile> list = new ArrayList<>();
-
                 try {
                     int index = 0;
-
                     for(int i=0;i<data.size();i+=size){
-
                         list.add(
                                 getSterile(
                                         data.get(i),
@@ -5603,19 +5555,14 @@ public class CssdSterile extends AppCompatActivity {
                                         index
                                 )
                         );
-
                         index++;
                     }
-
                     // //////System.out.println("list = " + list.size());
-
                 }catch(Exception e){
                     e.printStackTrace();
                 }
-
                 return list;
             }
-
             private ModelSterile getSterile(
                     String ID,
                     String DocNo,
@@ -5679,22 +5626,16 @@ public class CssdSterile extends AppCompatActivity {
                         index
                 );
             }
-
             // =========================================================================================
         }
-
         CreateSterile obj = new CreateSterile();
         obj.execute();
     }
-
     // =============================================================================================
     // -- Display Sterile
     // =============================================================================================
-
     public void onDisplay(final String p_docno) {
-
         class DisplaySterile extends AsyncTask<String, Void, String> {
-
             //------------------------------------------------
             // Background Worker Process Variable
             private boolean Success = false;
