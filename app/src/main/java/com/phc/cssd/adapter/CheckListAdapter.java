@@ -156,16 +156,30 @@ public class CheckListAdapter extends ArrayAdapter {
             public void onClick(View view) {
                 listData.get(position).setCheck(checkbox.isChecked());
                 ((CssdCheckList)acc).onListClick(img_set, img_detail);
-
-                if (!checkbox.isChecked()){
-                    ((CssdCheckList)acc).OpenDialog(listData.get(position).getItemname(),"0",listData.get(position).getQty(),listData.get(position).getQtyItemDetail());
+                if (model.getNameType().equals("")){
+                    if (!checkbox.isChecked()){
+                        ((CssdCheckList)acc).OpenDialog(listData.get(position).getItemname(),"0",listData.get(position).getQty(),listData.get(position).getQtyItemDetail());
+                    }
                 }
             }
         });
 
         txtitemname.setPaintFlags(txtitemname.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         txtitemname.setText(listData.get(position).getItemcode() + " - " + listData.get(position).getItemname());
-        txt_qty.setText(listData.get(position).getQty());
+
+        Log.d("LJDLJF",listData.get(position).getQty());
+        Log.d("LJDLJF",listData.get(position).getQtyItemDetail());
+        int x1 = Integer.parseInt(listData.get(position).getQty());
+        int x2 = Integer.parseInt(listData.get(position).getQtyItemDetail());
+        if (x1 == x2){
+            txt_qty.setText("(ขาด"+x2+")");
+        }else {
+            if (x2 != 0){
+                txt_qty.setText(x1+" (ขาด"+x2+")");
+            }else {
+                txt_qty.setText(listData.get(position).getQty());
+            }
+        }
         checkbox.setChecked(listData.get(position).isCheck());
         txt_remark.setText(listData.get(position).getRemark());
         txt_remark_admin.setText(listData.get(position).getAdminRemark());

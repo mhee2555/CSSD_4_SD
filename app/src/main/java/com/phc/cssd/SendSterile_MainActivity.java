@@ -2042,6 +2042,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
                     final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
                     int cnt = 0;
+                    int Total = 0;
+                    int Total1 = 0;
                     for (int i = 0; i < setRs.length(); i++) {
                         JSONObject c = setRs.getJSONObject(i);
                         pCustomer xST = new pCustomer();
@@ -2054,7 +2056,13 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         xST.setRemarkDocNo(c.getString("DocNo"));
                         xST.setQtyItemDetail(c.getString("QtyItemDetail"));
                         pCus.add(xST);
-                        cnt++;
+                        Total = Integer.parseInt(c.getString("Qty"));
+                        Total1 = Integer.parseInt(c.getString("QtyItemDetail"));
+                        if (Total == Total1){
+
+                        }else {
+                            cnt++;
+                        }
                     }
                     textView47.setText("[ " +cnt+ "  รายการ  /");
                     txt_setdetail_l3.setText("[ " +cnt+ "  รายการ  /");
@@ -2120,6 +2128,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String, String>();
                 data.put("UsageCode", UsageCode);
+                data.put("DocNo",DocNo);
                 data.put("B_ID",B_ID);
                 String result = ruc.sendPostRequest(iFt.getitemdetail_sendsterile1(), data);
                 Log.d("YUYU",data+"");
@@ -3503,6 +3512,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     //updateSendSterile(Master.user_send, RETURN_VALUE, DocNo);
                 }else if (resultCode == 1005){
                     getlistdetail(usagecode,DocNoSend);
+                    getlistdetailqty(usagecode);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

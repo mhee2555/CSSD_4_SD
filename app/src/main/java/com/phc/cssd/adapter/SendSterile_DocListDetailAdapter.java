@@ -120,8 +120,10 @@ public class SendSterile_DocListDetailAdapter extends ArrayAdapter {
         checkBoxsub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!checkBoxsub.isChecked()){
-                    ((SendSterile_MainActivity)aActivity).OpenDialog(listData.get(position).getItemname(),"0",listData.get(position).getXqty(),listData.get(position).getQtyItemDetail());
+                if (listData.get(position).getRemarkAdmin().equals("0")){
+                    if (!checkBoxsub.isChecked()){
+                        ((SendSterile_MainActivity)aActivity).OpenDialog(listData.get(position).getItemname(),"0",listData.get(position).getXqty(),listData.get(position).getQtyItemDetail());
+                    }
                 }
             }
         });
@@ -133,8 +135,20 @@ public class SendSterile_DocListDetailAdapter extends ArrayAdapter {
                 ((SendSterile_MainActivity)aActivity).LoadImg(listData.get(position).getItemcode(),"2",listData.get(position).getUsageCode(),listData.get(position).getItemname(),"noremark");
             }
         });
-        txtxqty.setText( listData.get(position).getXqty() );
+
+        Log.d("LJDLJF",listData.get(position).getXqty());
+        Log.d("LJDLJF",listData.get(position).getQtyItemDetail());
+        int x1 = Integer.parseInt(listData.get(position).getXqty());
+        int x2 = Integer.parseInt(listData.get(position).getQtyItemDetail());
+        if (x1 == x2){
+            txtxqty.setText("(ขาด"+x2+")");
+        }else {
+            if (x2 != 0){
+                txtxqty.setText(x1+" (ขาด"+x2+")");
+            }else {
+                txtxqty.setText(listData.get(position).getXqty());
+            }
+        }
         return v;
     }
-
 }

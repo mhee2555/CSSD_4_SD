@@ -154,7 +154,6 @@ public class CssdCheckList extends Activity {
     }
 
     private void byEvent(){
-
         imageBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,9 +168,7 @@ public class CssdCheckList extends Activity {
                 quitDialog.setTitle(Cons.TITLE);
                 quitDialog.setIcon(R.drawable.pose_favicon_2x);
                 quitDialog.setMessage("ค้นหา Usage Code เพื่อทำการเช็คอุปกรณ์ใหม่ ?");
-
                 quitDialog.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
-
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         clearAll();
@@ -179,15 +176,12 @@ public class CssdCheckList extends Activity {
                         COUNT_PROCESS = 0;
                     }
                 });
-
                 quitDialog.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
-
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                     }
                 });
-
                 quitDialog.show();
             }
         });
@@ -372,6 +366,7 @@ public class CssdCheckList extends Activity {
         txt_packer.setText("ผู้ห่อ : -");
         txt_packer.setContentDescription("");
         txt_item_name.setText("ชื่อเซ็ท : -");
+        txt_usagecode_scan.setText("");
         txt_item_detail.setText("รายการในเซ็ท 0 รายการ   จำนวนทั้งหมด 0 ชิ้น");
         checkbox.setChecked(false);
         list_check.setAdapter(null);
@@ -737,6 +732,10 @@ public class CssdCheckList extends Activity {
                     String img_set = "";
                     String resultdata = "";
                     int sum_qty = 0;
+                    int sum_qty_Detail = 0;
+                    int Total = 0;
+                    int Total1 = 0;
+                    int cnt = 0;
                     List<ModelCheckList> list = new ArrayList<>();
                     for (int i = 0; i < rs.length(); i++) {
                         JSONObject c = rs.getJSONObject(i);
@@ -745,6 +744,7 @@ public class CssdCheckList extends Activity {
                             usage_item_name = c.getString("usage_item_name");
                             img_set = c.getString("Picture_set");
                             sum_qty += c.getInt("Qty");
+                            sum_qty_Detail += c.getInt("QtyItemDetail");
                             resultdata = c.getString("result");
                             ID = c.getString("ID");
                             System.out.println();
@@ -770,6 +770,13 @@ public class CssdCheckList extends Activity {
                                             c.getString("NameType").equals("-")
                                     )
                             );
+                            Total = Integer.parseInt(c.getString("Qty"));
+                            Total1 = Integer.parseInt(c.getString("QtyItemDetail"));
+                            if (Total == Total1){
+
+                            }else {
+                                cnt++;
+                            }
                         }
                     }
                     // Model
@@ -781,8 +788,9 @@ public class CssdCheckList extends Activity {
                         if (resultdata.equals("A")){
                             CheckDialog(edt_usage_code.getText().toString());
                         }
+                        int Sum = sum_qty - sum_qty_Detail;
                         txt_item_name.setText("ชื่อเซ็ท : " + usage_item_code + " - " + usage_item_name);
-                        txt_item_detail.setText("รายการในเซ็ท " + MODEL_CHECK_LIST.size() + " รายการ   จำนวนทั้งหมด " + sum_qty + " ชิ้น");
+                        txt_item_detail.setText("รายการในเซ็ท " + cnt + " รายการ   จำนวนทั้งหมด " + Sum + " ชิ้น");
                         try {
                             URL url = new URL(Url.getImageURL() + img_set);
                             Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
@@ -947,7 +955,7 @@ public class CssdCheckList extends Activity {
                         Toast.makeText(CssdCheckList.this, "รายการนี้ได้ทำการยิงเช็คแล้ว !!", Toast.LENGTH_SHORT).show();
                         break;
                     }
-                    // Set
+                    // Setimv_new
                     MODEL_CHECK_LIST.get(i).setCheck(true);
                     // Display
                     ArrayAdapter<ModelCheckList> adapter;
