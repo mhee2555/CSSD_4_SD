@@ -13,8 +13,10 @@ import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -69,6 +71,7 @@ public class CssdWash extends AppCompatActivity {
     String condition3 = "";
     String condition4 = "";
     String condition5 = "";
+    String user_name = "";
     int cnt = 0;
     Boolean WASH = true;
     private TextView occupancy_rate;
@@ -253,6 +256,8 @@ public class CssdWash extends AppCompatActivity {
     private boolean IsUsedProcessTimeByWashType = true;
     private boolean IsShowBasket = false;
 
+    float x1,x2,y1,y2;
+
     String EmpCode;
     // =============================================================================================
     public void onDestroy() {
@@ -297,6 +302,61 @@ public class CssdWash extends AppCompatActivity {
 
     }
 
+    public boolean onTouchEvent(MotionEvent touchEvent){
+        switch (touchEvent.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                x1 = touchEvent.getX();
+                y1 = touchEvent.getY();
+                Log.d("KFDJDL",x1+"");
+                Log.d("KFDJDL",y1+"");
+                break;
+            case MotionEvent.ACTION_UP:
+                Log.d("KFDJDL",x2+"");
+                Log.d("KFDJDL",y2+"");
+                x2 = touchEvent.getX();
+                y2 = touchEvent.getY();
+                if (x1 < x2){
+                    Intent i = new Intent(CssdWash.this, SendSterile_MainActivity.class);
+                    i.putExtra("userid", userid);
+                    i.putExtra("user_name", user_name);
+                    i.putExtra("IsAdmin", IsAdmin);
+                    i.putExtra("EmpCode", EmpCode);
+                    Log.d("FKJDHJKDH",EmpCode+"");
+                    i.putExtra("B_ID", B_ID);
+                    startActivity(i);
+                    finish();
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                    clearForm();
+                    clearMachine(1);
+                    clearMachine(2);
+                    clearMachine(3);
+                    clearMachine(4);
+                    clearMachine(5);
+                    clearMachine(6);
+                    clearMachine(7);
+                    clearMachine(8);
+                    clearMachine(9);
+                    clearMachine(10);
+                    handler_1 . removeCallbacks(runnable_1);
+                    handler_2 . removeCallbacks(runnable_2);
+                    handler_3 . removeCallbacks(runnable_3);
+                    handler_4 . removeCallbacks(runnable_4);
+                    handler_5 . removeCallbacks(runnable_5);
+                    handler_6 . removeCallbacks(runnable_6);
+                    handler_7 . removeCallbacks(runnable_7);
+                    handler_8 . removeCallbacks(runnable_8);
+                    handler_9 . removeCallbacks(runnable_9);
+                    handler_10 . removeCallbacks(runnable_10);
+                    defaultTabMachine();
+                    hideMachineAll();
+                    list_import_send_sterile.setAdapter(null);
+                }else if (x1 > x2){
+                }
+                break;
+        }
+        return false;
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -307,6 +367,7 @@ public class CssdWash extends AppCompatActivity {
         // Argument
         Intent intent = getIntent();
         userid = intent.getStringExtra("userid");
+        user_name = intent.getStringExtra("user_name");
         IsAdmin = intent.getBooleanExtra("IsAdmin", false);
         B_ID = intent.getStringExtra("B_ID");
         EmpCode = intent.getStringExtra("EmpCode");
@@ -3974,6 +4035,7 @@ public class CssdWash extends AppCompatActivity {
     private void openSendSterile(){
         Intent i = new Intent(CssdWash.this, SendSterile_MainActivity.class);
         i.putExtra("userid", userid);
+        i.putExtra("user_name", user_name);
         i.putExtra("IsAdmin", IsAdmin);
         i.putExtra("EmpCode", EmpCode);
         Log.d("FKJDHJKDH",EmpCode+"");

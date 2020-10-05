@@ -750,6 +750,8 @@ public class CssdCheckList extends Activity {
                             System.out.println();
                             list.add(
                                     new ModelCheckList(
+                                            c.getString("RemarkDocNo"),
+                                            c.getString("IsPicture"),
                                             c.getString("QtyItemDetail"),
                                             c.getString("AdminApprove"),
                                             c.getString("RowID"),
@@ -790,7 +792,7 @@ public class CssdCheckList extends Activity {
                         }
                         int Sum = sum_qty - sum_qty_Detail;
                         txt_item_name.setText("ชื่อเซ็ท : " + usage_item_code + " - " + usage_item_name);
-                        txt_item_detail.setText("รายการในเซ็ท " + cnt + " รายการ   จำนวนทั้งหมด " + Sum + " ชิ้น");
+                        txt_item_detail.setText("รายการในเซ็ท    " + cnt + "    รายการ       จำนวนทั้งหมด    " + Sum + "    ชิ้น");
                         try {
                             URL url = new URL(Url.getImageURL() + img_set);
                             Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
@@ -1019,5 +1021,25 @@ public class CssdCheckList extends Activity {
                 edt_usage_code.requestFocus();
             }
         }, 500);
+    }
+
+    public void LoadImg(final String itemcode,final String sel,final String itemname,final String type) {
+        if (type.equals("remark")){
+            Intent intent = new Intent(CssdCheckList.this, dialog_Load_Img_Remark.class);
+            intent.putExtra("itemcode", itemcode);
+            intent.putExtra("usagecode", txt_usagecode_scan.getText().toString());
+            intent.putExtra("itemname", itemname);
+            intent.putExtra("sel",sel);
+            intent.putExtra("type",type);
+            startActivity(intent);
+        }else {
+            Intent intent = new Intent(CssdCheckList.this, dialog_Load_Img.class);
+            intent.putExtra("itemcode", itemcode);
+            intent.putExtra("usagecode", txt_usagecode_scan.getText().toString());
+            intent.putExtra("itemname", itemname);
+            intent.putExtra("sel",sel);
+            intent.putExtra("type",type);
+            startActivity(intent);
+        }
     }
 }

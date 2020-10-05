@@ -887,6 +887,7 @@
                             android:layout_centerVertical="true"
                             android:layout_margin="5dp"
                             android:listSelector="#02fff6" />
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -955,9 +956,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_marginTop="5dp"
                             android:layout_marginLeft="450dp"
-                            android:background="@drawable/ic_bin2_2"
-                            />
-
+                            android:background="@drawable/ic_bin2_2" />
 
                     </RelativeLayout>
 

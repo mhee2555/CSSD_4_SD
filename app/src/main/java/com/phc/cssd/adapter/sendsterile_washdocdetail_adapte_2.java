@@ -52,6 +52,7 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
     boolean IsAlert =true;
     String Isdel = null;
     String Isdel1 = "1";
+    boolean IsCheck = false;
     getUrl iFt = new getUrl();
     HTTPConnect ruc = new HTTPConnect();
     xControl xCtl = new xControl();
@@ -89,21 +90,28 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
         final View v = inflater.inflate(R.layout.activity_sendsterile_washdocdetail_adapter2, parent, false);
         final pCustomer pCus = listData.get(position);
         final int xps = position;
-        final ImageView resterile_IV = (ImageView)v.findViewById(R.id.w_resterile);
-        final TextView txtitemname = (TextView)v.findViewById(R.id.w_itemname);
-        final TextView txtUcode= (TextView) v.findViewById(R.id.w_ucode);
-        final TextView ucount= (TextView) v.findViewById(R.id.ucount);
-        final TextView w_date= (TextView) v.findViewById(R.id.w_date);
-        final TextView itemqty = (TextView) v.findViewById(R.id.itemqty);
-        final TextView txtxremark_detail = (TextView) v.findViewById(R.id.w_remark_detail);
-        final TextView textView53 = (TextView) v.findViewById(R.id.textView53);
-        final TextView r_name = (TextView) v.findViewById(R.id.w_r_name);
-        final TextView bt_note = (TextView) v.findViewById(R.id.w_bt_note);
-        final TextView bt_risk = (TextView) v.findViewById(R.id.w_bt_risk);
-        final TextView bt_ems = (TextView) v.findViewById(R.id.w_bt_ems);
-        final CheckBox del_multi = (CheckBox) v.findViewById(R.id.del_multi);
-        final RelativeLayout back = ( RelativeLayout ) v.findViewById(R.id.back);
-        final Button btdel =(Button) v.findViewById(R.id.w_btdel);
+
+        TextView w_itemname = (TextView) v.findViewById(R.id.w_itemname);
+        TextView w_remark_detail = (TextView) v.findViewById(R.id.w_remark_detail);
+
+        ImageView resterile_IV = (ImageView)v.findViewById(R.id.w_resterile);
+        TextView txtitemname = (TextView)v.findViewById(R.id.w_itemname);
+        TextView txtUcode= (TextView) v.findViewById(R.id.w_ucode);
+        TextView ucount= (TextView) v.findViewById(R.id.ucount);
+        TextView w_date= (TextView) v.findViewById(R.id.w_date);
+        TextView itemqty = (TextView) v.findViewById(R.id.itemqty);
+        TextView txtxremark_detail = (TextView) v.findViewById(R.id.w_remark_detail);
+        TextView textView53 = (TextView) v.findViewById(R.id.textView53);
+        TextView r_name = (TextView) v.findViewById(R.id.w_r_name);
+        TextView bt_note = (TextView) v.findViewById(R.id.w_bt_note);
+        TextView bt_risk = (TextView) v.findViewById(R.id.w_bt_risk);
+        TextView bt_ems = (TextView) v.findViewById(R.id.w_bt_ems);
+        final ImageView del_multi_un = (ImageView) v.findViewById(R.id.del_multi_un);
+        final ImageView del_multi = (ImageView) v.findViewById(R.id.del_multi);
+        RelativeLayout back = ( RelativeLayout ) v.findViewById(R.id.back);
+        ImageView btdel =(ImageView ) v.findViewById(R.id.w_btdel);
+
+        del_multi.setVisibility(View.GONE);
 
         bt_risk.setEnabled(false);
 
@@ -113,18 +121,22 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
             bt_risk.setBackgroundResource(R.drawable.ic_risk_icon);
         }
 
-        txtitemname.setPaintFlags(txtitemname.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        txtitemname.setText(listData.get(position).getItemname());
-        txtitemname.setOnClickListener(new View.OnClickListener() {
+        w_itemname.setPaintFlags(w_itemname.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        w_itemname.setText(listData.get(position).getItemname());
+        w_itemname.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 (( SendSterile_MainActivity )aActivity).LoadImg( listData.get(position).getItemcode(),"1",listData.get(position).getUsageCode(),listData.get(position).getItemname(),"noremark");
             }
         });
+        txtitemname.setPaintFlags(txtitemname.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        txtitemname.setText(listData.get(position).getItemname());
+
 
         txtUcode.setText("รหัสใช้งาน : "+listData.get(position).getUsageCode());
         itemqty.setText("[ "+listData.get(position).getItemCount()+" ]");
         w_date.setText(" ("+listData.get(position).getPackdate()+" วัน"+" )");
+        w_remark_detail.setText(listData.get(position).getXremark());
         txtxremark_detail.setText(listData.get(position).getXremark());
         ArrayList<Response_Aux> resultsR = xCtl.getListResterileType();
         ArrayList<Response_Aux> resultsO = xCtl.getListOccuranceType();
@@ -135,14 +147,14 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
             ucount.setVisibility(View.VISIBLE);
         }
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((SendSterile_MainActivity)aActivity).getlistdetailqty(listData.get(position).getUsageCode());
-                ((SendSterile_MainActivity)aActivity).getlistdetail(listData.get(position).getUsageCode(),listData.get(position).getDocno());
-                ((SendSterile_MainActivity)aActivity).UsageCode(listData.get(position).getUsageCode(),listData.get(position).getDept(),listData.get(position).getDocno());
-            }
-        });
+//        back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ((SendSterile_MainActivity)aActivity).getlistdetailqty(listData.get(position).getUsageCode());
+//                ((SendSterile_MainActivity)aActivity).getlistdetail(listData.get(position).getUsageCode(),listData.get(position).getDocno());
+//                ((SendSterile_MainActivity)aActivity).UsageCode(listData.get(position).getUsageCode(),listData.get(position).getDept(),listData.get(position).getDocno());
+//            }
+//        });
 
         if(!(listData.get(position).getIsStatus().equals("0"))){
             resterile_IV.setEnabled(false);
@@ -172,24 +184,24 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
             if (!(IsEdit&&Isadmin)) {
                 btdel.setEnabled(false);
                 btdel.setVisibility(View.GONE);
-                del_multi.setVisibility(View.GONE);
-                del_multi.setEnabled(false);
+                del_multi_un.setVisibility(View.GONE);
+                del_multi_un.setEnabled(false);
             }else {
                 if (Isdel == Isdel1) {
                     btdel.setVisibility(View.INVISIBLE);
-                    del_multi.setVisibility(View.VISIBLE);
+                    del_multi_un.setVisibility(View.VISIBLE);
                 } else {
                     btdel.setVisibility(View.VISIBLE);
-                    del_multi.setVisibility(View.INVISIBLE);
+                    del_multi_un.setVisibility(View.INVISIBLE);
                 }
             }
         }else {
             if (Isdel == Isdel1) {
                 btdel.setVisibility(View.INVISIBLE);
-                del_multi.setVisibility(View.VISIBLE);
+                del_multi_un.setVisibility(View.VISIBLE);
             } else {
                 btdel.setVisibility(View.VISIBLE);
-                del_multi.setVisibility(View.INVISIBLE);
+                del_multi_un.setVisibility(View.INVISIBLE);
             }
         }
 
@@ -246,19 +258,18 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
             }
         });
 
-        del_multi.setOnClickListener(new View.OnClickListener() {
+        del_multi_un.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                (( SendSterile_MainActivity ) aActivity).DelAll(listData.get(position).getDocno(), listData.get(position).getSs_rowid());
-            }
-        });
-
-        v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                ((SendSterile_MainActivity)aActivity).getlistdetail(listData.get(position).getUsageCode(),"");
-                ((SendSterile_MainActivity)aActivity).UsageCode(listData.get(position).getUsageCode(),listData.get(position).getDept(),listData.get(position).getDocno());
+                if (del_multi.getVisibility() == View.GONE){
+                    IsCheck = true;
+                    del_multi.setVisibility(View.VISIBLE);
+                    (( SendSterile_MainActivity ) aActivity).DelAll(listData.get(position).getDocno(), listData.get(position).getSs_rowid());
+                }else {
+                    IsCheck = false;
+                    del_multi.setVisibility(View.GONE);
+                    (( SendSterile_MainActivity ) aActivity).DelAll(listData.get(position).getDocno(), listData.get(position).getSs_rowid());
+                }
             }
         });
 
@@ -294,16 +305,16 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
                 if (IsStatusDoc.equals("0")) {
                     button1.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
-                            bt_ems.setBackgroundResource(R.drawable.ic_stopwatchx64_red2);
-                            updateremarkems(listData.get(position).getUsageCode(), note1.getText().toString(), "1");
+//                            bt_ems.setBackgroundResource(R.drawable.ic_stopwatchx64_red2);
+                            (( SendSterile_MainActivity ) aActivity).updateremarkems(listData.get(position).getUsageCode(), note1.getText().toString(), "1");
                             (( SendSterile_MainActivity ) aActivity).getlistcreate(listData.get(position).getDocno(), listData.get(position).getDept());
                             dialog.dismiss();
                         }
                     });
                     button5.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
-                            bt_ems.setBackgroundResource(R.drawable.ic_stopwatchx64_gray2);
-                            updateremarkems(listData.get(position).getUsageCode(), note1.getText().toString(), "0");
+//                            bt_ems.setBackgroundResource(R.drawable.ic_stopwatchx64_gray2);
+                            (( SendSterile_MainActivity ) aActivity).updateremarkems(listData.get(position).getUsageCode(), note1.getText().toString(), "0");
                             (( SendSterile_MainActivity ) aActivity).getlistcreate(listData.get(position).getDocno(), listData.get(position).getDept());
                             dialog.dismiss();
                         }
@@ -348,10 +359,10 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
                     public void onClick(View v) {
                         if(!ResterileType.getSelectedItem().equals("-")) {
                             listData.get(position).setIsSterile("1");
-                            resterile_IV.setImageResource(R.drawable.ic_r_red);
+//                            resterile_IV.setImageResource(R.drawable.ic_r_red);
                         }
-                        UpIsSterile(listData.get(position).getSs_rowid().toString(),listData.get(position).getIsSterile(),listData.get( position ).getResteriletype());
-                        r_name.setText(listData.get(position).getResterilename());
+                        (( SendSterile_MainActivity ) aActivity).UpIsSterile(listData.get(position).getSs_rowid().toString(),listData.get(position).getIsSterile(),listData.get( position ).getResteriletype());
+//                        r_name.setText(listData.get(position).getResterilename());
                         dialog.dismiss();
                     }
                 });
@@ -361,11 +372,11 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
                     public void onClick(View v) {
                         if(!ResterileType.getSelectedItem().equals("-")) {
                             listData.get(position).setIsSterile("0");
-                            resterile_IV.setImageResource(R.drawable.ic_r_grey);
+//                            resterile_IV.setImageResource(R.drawable.ic_r_grey);
                         }
-                        UpSterile(listData.get(position).getSs_rowid().toString(),listData.get(position).getIsSterile(),listData.get( position ).getResteriletype());
-                        resterile_IV.setImageResource(R.drawable.ic_r_grey);
-                        r_name.setText("");
+                        (( SendSterile_MainActivity )aActivity).UpSterile(listData.get(position).getSs_rowid().toString(),listData.get(position).getIsSterile(),listData.get( position ).getResteriletype());
+//                        resterile_IV.setImageResource(R.drawable.ic_r_grey);
+//                        r_name.setText("");
                         dialog.dismiss();
                     }
                 });
@@ -373,64 +384,6 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
             }
         });
 
-
-//        bt_risk.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                final Dialog dialog = new Dialog(aActivity);
-//                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                dialog.setContentView(R.layout.risk_dialog_sendsterile);
-//                dialog.setCancelable(true);
-//                dialog.setTitle("ประเภทความเสี่ยง...");
-//
-//                final Spinner OccuranceType = (Spinner) dialog.findViewById(R.id.spn_list);
-//                xCtl.ListOccuranceType(OccuranceType, aActivity );
-//                final ArrayList<Response_Aux> resultsOccuranceType = xCtl.getListOccuranceType();
-//                OccuranceType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//                    @Override
-//                    public void onItemSelected(AdapterView<?> parent, View view, int pn, long id) {
-//                        listData.get(position).setOccurancetype(resultsOccuranceType.get(pn).getFields1());
-//                        listData.get(position).setOccurancename(OccuranceType.getSelectedItem().toString());
-//                    }
-//
-//                    @Override
-//                    public void onNothingSelected(AdapterView<?> parent) {
-//                        //Another interface callback
-//                    }
-//                });
-//                Button button1 = (Button) dialog.findViewById(R.id.button1);
-//                button1.setOnClickListener(new View.OnClickListener() {
-//                    public void onClick(View v) {
-//                        listData.get(position).setOccuranceID(listData.get(position).getOccurancetype());
-//                        createoccurance(listData.get(position).getUcode(),listData.get(position).getDocno(),listData.get(position).getDept(),listData.get(position).getItemID(),listData.get(position).getOccurancetype());
-//                        bt_risk.setBackgroundResource(R.drawable.ic_risk_icon);
-//                        txtitemname.setTextColor(Color.RED);
-//                        txtUcode.setTextColor(Color.RED);
-//                        txtxremark_detail.setTextColor(Color.RED);
-//                        textView53.setTextColor(Color.RED);
-//                        w_date.setTextColor(Color.RED);
-//                        dialog.dismiss();
-//                    }
-//                });
-//
-//                Button button5 = (Button) dialog.findViewById(R.id.button5);
-//                button5.setOnClickListener(new View.OnClickListener() {
-//                    public void onClick(View v) {
-//                        listData.get(position).setOccuranceID(listData.get(position).getOccurancetype());
-//                        createoccurance1(listData.get(position).getUcode(),listData.get(position).getDocno(),listData.get(position).getDept(),listData.get(position).getItemID(),listData.get(position).getOccurancetype());
-//                        bt_risk.setBackgroundResource(R.drawable.ic_risk_icon_gray);
-//                        txtitemname.setTextColor(Color.BLACK);
-//                        txtUcode.setTextColor(Color.BLACK);
-//                        txtxremark_detail.setTextColor(Color.BLACK);
-//                        textView53.setTextColor(Color.BLACK);
-//                        w_date.setTextColor(Color.BLACK);
-//                        dialog.dismiss();
-//                    }
-//                });
-//                dialog.show();
-//            }
-//        });
 
         if (listData.get(position).getXremark().equals("")){
             bt_note.setBackgroundResource(R.drawable.ic_list_grey);
@@ -454,9 +407,9 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
                 button1.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         listData.get(position).setXremark(note1.getText().toString());
-                        updateremark(listData.get(position).getSs_rowid(),listData.get(position).getXremark(),"2");
+                        (( SendSterile_MainActivity ) aActivity).updateremark(listData.get(position).getSs_rowid(),listData.get(position).getXremark(),"2");
                         (( SendSterile_MainActivity ) aActivity).getlistcreate(listData.get(position).getDocno(), listData.get(position).getDept());
-                        txtxremark_detail.setText(listData.get(position).getXremark());
+//                        txtxremark_detail.setText(listData.get(position).getXremark());
                         dialog.dismiss();
                     }
                 });
@@ -464,7 +417,7 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
                 Button button5 = (Button) dialog.findViewById(R.id.button5);
                 button5.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-                        txtxremark_detail.setText(listData.get(position).getXremark());
+//                        txtxremark_detail.setText(listData.get(position).getXremark());
                         dialog.dismiss();
                     }
                 });
@@ -474,317 +427,4 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
         return v;
     }
 
-    public void UpSterile(String UsageCode,String Check,String ss) {
-        class UpSterile extends AsyncTask<String, Void, String> {
-            // variable
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                try{
-                    JSONObject jsonObj = new JSONObject(s);
-                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
-                    final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
-                    String bo = "";
-                    for(int i=0;i<setRs.length();i++) {
-                        JSONObject c = setRs.getJSONObject(i);
-                        bo=c.getString("flag");
-                    }
-                }catch (JSONException e){
-                }
-            }
-
-            //class connect php RegisterUserClass important !!!!!!!
-            @Override
-            protected String doInBackground(String... params) {
-                HashMap<String, String> data = new HashMap<String,String>();
-                data.put("ID",params[0]);
-                data.put("Check",params[1]);
-                data.put("ss",params[2]);
-                data.put("B_ID",B_ID);
-                String result = ruc.sendPostRequest(iFt.UpdateSterile(),data);
-                Log.d("BANK",data+"");
-                Log.d("BANK",result);
-                return result;
-            }
-        }
-        UpSterile ru = new UpSterile();
-        ru.execute(UsageCode,Check,ss);
-    }
-
-    public void UpIsSterile(String UsageCode,String Check,String ss) {
-        class UpIsSterile extends AsyncTask<String, Void, String> {
-            // variable
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                try{
-                    JSONObject jsonObj = new JSONObject(s);
-                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
-                    final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
-                    String bo = "";
-                    for(int i=0;i<setRs.length();i++) {
-                        JSONObject c = setRs.getJSONObject(i);
-                        bo=c.getString("flag");
-                    }
-                }catch (JSONException e){
-                }
-            }
-
-            //class connect php RegisterUserClass important !!!!!!!
-            @Override
-            protected String doInBackground(String... params) {
-                HashMap<String, String> data = new HashMap<String,String>();
-                data.put("ID",params[0]);
-                data.put("Check",params[1]);
-                data.put("ss",params[2]);
-                data.put("B_ID",B_ID);
-                String result = ruc.sendPostRequest(iFt.UpdateIsSterile(),data);
-                Log.d("BANK",data+"");
-                Log.d("BANK",result);
-                return result;
-            }
-        }
-        UpIsSterile ru = new UpIsSterile();
-        ru.execute(UsageCode,Check,ss);
-    }
-
-
-    public void updateremark(String DocNo, final String remark, String check) {
-        class updateremark extends AsyncTask<String, Void, String> {
-            // variable
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                try{
-                    JSONObject jsonObj = new JSONObject(s);
-                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
-                    final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
-                    String bo = "";
-                    // //Log.d("BBBB", "Hello" );
-                    for(int i=0;i<setRs.length();i++) {
-                        JSONObject c = setRs.getJSONObject(i);
-                        bo=c.getString("flag");
-                    }
-                }catch (JSONException e){
-                }
-            }
-            @Override
-            protected String doInBackground(String... params) {
-                HashMap<String, String> data = new HashMap<String,String>();
-                data.put("DocNo",params[0]);
-                data.put("remark",params[1]);
-                data.put("check",params[2]);
-                data.put("B_ID",B_ID);
-                String result = ruc.sendPostRequest(iFt.updateremark(),data);
-                Log.d("KJDGJD",data+"");
-                Log.d("KJDGJD",result+"");
-                return result;
-            }
-        }
-        updateremark ru = new updateremark();
-        ru.execute(DocNo,remark,check);
-    }
-
-    public void updateremarkems(String DocNo, String remark, final String xsel) {
-        class updateremarkems extends AsyncTask<String, Void, String> {
-            // variable
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                try{
-                    JSONObject jsonObj = new JSONObject(s);
-                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
-                    final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
-                    String bo = "";
-                    for(int i=0;i<setRs.length();i++) {
-                        JSONObject c = setRs.getJSONObject(i);
-                        bo=c.getString("flag");
-                        if (bo.equals("true") && xsel.equals("1")){
-                            Toast.makeText(getContext(), "บันทึกสำเร็จ", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }catch (JSONException e){
-                }
-            }
-            @Override
-            protected String doInBackground(String... params) {
-                HashMap<String, String> data = new HashMap<String,String>();
-                data.put("DocNo",params[0]);
-                data.put("remark",params[1]);
-                data.put("xsel",params[2]);
-                data.put("B_ID",B_ID);
-                String result = ruc.sendPostRequest(iFt.updateremarkems(),data);
-                Log.d("JFJDH",data+"");
-                Log.d("JFJDH",result+"");
-                return result;
-            }
-        }
-        updateremarkems ru = new updateremarkems();
-        ru.execute(DocNo,remark,xsel);
-    }
-
-    public void createoccurance(String usercode,String docno,String dept,String itemcode,String octype) {
-        class UpIsSterile extends AsyncTask<String, Void, String> {
-            // variable
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                try{
-                    JSONObject jsonObj = new JSONObject(s);
-                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
-                    final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
-                    String bo = "";
-                    for(int i=0;i<setRs.length();i++) {
-                        JSONObject c = setRs.getJSONObject(i);
-                        bo=c.getString("bool");
-                    }
-
-                }catch (JSONException e){
-                }
-            }
-
-            //class connect php RegisterUserClass important !!!!!!!
-            @Override
-            protected String doInBackground(String... params) {
-                HashMap<String, String> data = new HashMap<String,String>();
-                data.put("usercode",params[0]);
-                data.put("docno",params[1]);
-                data.put("dept",params[2]);
-                data.put("itemcode",params[3]);
-                data.put("octype",params[4]);
-                data.put("B_ID",B_ID);
-                String result = ruc.sendPostRequest(iFt.create_oc_sendsterile(),data);
-                return result;
-            }
-        }
-        UpIsSterile ru = new UpIsSterile();
-        ru.execute(usercode,docno,dept,itemcode,octype);
-    }
-
-    public void DeleteDetail_l2(String DocNo, String RowID) {
-        class DeleteDetail_l2 extends AsyncTask<String, Void, String> {
-            // variable
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                try{
-                    JSONObject jsonObj = new JSONObject(s);
-                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
-                    final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
-                    String bo = "";
-                    //Log.d("BBBB", "Hello" );
-                    String txtDocno = "";
-                    for(int i=0;i<setRs.length();i++) {
-                        JSONObject c = setRs.getJSONObject(i);
-                        pCustomer xST = new pCustomer();
-                        bo=c.getString("flag");
-                        xST.setUsageCode(c.getString("UsageCode"));
-                        xST.setItemcode(c.getString("ItemCode"));
-                        xST.setItemname(c.getString("itemname"));
-                        xST.setXqty(c.getString("Qty"));
-                        xST.setIsSterile(c.getString("IsSterile"));
-                        xST.setXremark(c.getString("Remark"));
-                        xST.setDocno(c.getString("DocNo"));
-                        txtDocno=c.getString("DocNo");
-                        pCus.add(xST);
-                    }
-
-                }catch (JSONException e){
-
-                }
-            }
-
-            //class connect php RegisterUserClass important !!!!!!!
-            @Override
-            protected String doInBackground(String... params) {
-                HashMap<String, String> data = new HashMap<String,String>();
-                data.put("DocNo",params[0]);
-                data.put("RowID",params[1]);
-                data.put("B_ID",B_ID);
-                String result = ruc.sendPostRequest(Url.URL + "sendsterile/cssd_del_send_sterile_2.php", data);
-                return result;
-            }
-        }
-        DeleteDetail_l2 ru = new DeleteDetail_l2();
-        ru.execute(DocNo,RowID);
-    }
-
-    public void createoccurance1(String usercode,String docno,String dept,String itemcode,String octype) {
-        class createoccurance1 extends AsyncTask<String, Void, String> {
-            // variable
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                try{
-                    JSONObject jsonObj = new JSONObject(s);
-                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
-                    final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
-                    String bo = "";
-                    for(int i=0;i<setRs.length();i++) {
-                        JSONObject c = setRs.getJSONObject(i);
-                        bo=c.getString("bool");
-                    }
-
-                }catch (JSONException e){
-                }
-            }
-
-            //class connect php RegisterUserClass important !!!!!!!
-            @Override
-            protected String doInBackground(String... params) {
-                HashMap<String, String> data = new HashMap<String,String>();
-                data.put("usercode",params[0]);
-                data.put("docno",params[1]);
-                data.put("dept",params[2]);
-                data.put("itemcode",params[3]);
-                data.put("octype",params[4]);
-                data.put("B_ID",B_ID);
-                String result = ruc.sendPostRequest(iFt.create_oc_sendsterile1(),data);
-                return result;
-            }
-        }
-        createoccurance1 ru = new createoccurance1();
-        ru.execute(usercode,docno,dept,itemcode,octype);
-    }
 }

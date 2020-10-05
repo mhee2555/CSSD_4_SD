@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -106,6 +107,12 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
     String DocNo="";
     String DocDate="";
     String xQty="0";
+
+    String EmpCode = "";
+    String user_name = "";
+    private String ED_UserCode = "";
+    public boolean IsAdmin;
+
     int xIsStatus = 0;
     int xIsOccurance = 0;
     String ListRowID = "";
@@ -124,6 +131,8 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
     String B_ID ;
     private Switch switchGroup;
     boolean isSterileDetailGroup = true;
+    float x1,x2,y1,y2;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -235,6 +244,29 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
         initialize();
     }
 
+    public boolean onTouchEvent(MotionEvent touchEvent){
+        switch (touchEvent.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                x1 = touchEvent.getX();
+                y1 = touchEvent.getY();
+                Log.d("KFDJDL",x1+"");
+                Log.d("KFDJDL",y1+"");
+                break;
+            case MotionEvent.ACTION_UP:
+                Log.d("KFDJDL",x2+"");
+                Log.d("KFDJDL",y2+"");
+                x2 = touchEvent.getX();
+                y2 = touchEvent.getY();
+                if (x1 < x2){
+
+                }else if (x1 > x2){
+                    gotoActivity(PayoutActivity.class);
+                }
+                break;
+        }
+        return false;
+    }
+
     public void initialize(){
         b_Occurance.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -325,6 +357,19 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
                 }
             }
         });
+    }
+
+    public void byIntent() {
+        intent = getIntent();
+        Bundle bd = getIntent().getExtras();
+        if (bd != null) {
+            ED_UserCode = bd.getString("userid");
+            IsAdmin = bd.getBoolean("IsAdmin");
+        }
+        B_ID = intent.getStringExtra("B_ID");
+        EmpCode = intent.getStringExtra("EmpCode");
+        userid = intent.getStringExtra("userid");
+        user_name = intent.getStringExtra("user_name");
     }
 
     private void CImg(){
@@ -1237,6 +1282,18 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
         }
         ShowAlertRemart obj = new ShowAlertRemart();
         obj.execute();
+    }
+
+    private void gotoActivity(Class c){
+        Intent intent = new Intent(SterileSeachActivity.this, c);
+        intent.putExtra("userid", userid);
+        intent.putExtra("user_name", user_name);
+        intent.putExtra("IsAdmin", IsAdmin);
+        intent.putExtra("B_ID", B_ID);
+        intent.putExtra("EmpCode", EmpCode);
+        startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     @Override

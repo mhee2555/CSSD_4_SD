@@ -5249,10 +5249,8 @@ public class CssdSterile extends AppCompatActivity {
                                     m.getTestProgramName(),
                                     m.getUsr_beforeapprove()
                             );
-
                             // SetData Machine
                             setMachine(p_doc_no);
-
                             if(DATA == null) {
                                 // Add Sterile Detail (Import Wash Detail)
                                 addSterileDetail(p_doc_no);
@@ -5264,14 +5262,12 @@ public class CssdSterile extends AppCompatActivity {
                                     addSterileDetailAdvance(p_doc_no, DATA, "cssd_add_sterile_detail_by_import_no_wash.php");
                                 }
                             }
-
                         }catch(Exception e){
                             e.printStackTrace();
                             return;
                         }
                     }
                 }else{
-
                     Toast.makeText(CssdSterile.this, "ไม่สามารถสร้างเอกสารฆ่าเชื้อได้ !!" , Toast.LENGTH_SHORT).show();
                 }
             }

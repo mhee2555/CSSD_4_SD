@@ -106,6 +106,18 @@
             android:textColor="@android:color/black"
             android:textSize="12dp" />
 
+        <Button
+            android:id="@+id/Open_pic"
+            android:layout_width="70dp"
+            android:layout_height="35dp"
+            android:text="ดูรูปภาพ"
+            android:layout_marginTop="18dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="35dp"
+            android:textColor="@android:color/black"
+            android:textSize="10dp" />
+
         <CheckBox
             android:id="@+id/checkbox"
             android:layout_width="wrap_content"

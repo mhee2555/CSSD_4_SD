@@ -135,7 +135,7 @@
         <activity
             android:name=".SettingExprieActivity"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" /> <!-- <activity android:name=".adapter.sendsterile_washdocdetail_adapte_2" -->
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <!-- tools:ignore="Instantiatable" /> -->
         <activity
             android:name=".MasterData_2Field"

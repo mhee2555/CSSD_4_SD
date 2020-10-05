@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -62,9 +63,20 @@ public class CheckListAdapter extends ArrayAdapter {
         final TextView txt_remark_date = (TextView) v.findViewById(R.id.txt_remark_date);
         final RelativeLayout R1 = (RelativeLayout) v.findViewById(R.id.R1);
         final CheckBox checkbox = (CheckBox) v.findViewById(R.id.checkbox);
-
+        final Button Open_pic = (Button) v.findViewById(R.id.Open_pic);
         final String img_set = listData.get(position).getPicture_set();
         final String img_detail = listData.get(position).getPicture_detail();
+
+        if (listData.get(position).getIsPicture().equals("0")){
+            Open_pic.setVisibility(View.GONE);
+        }
+
+        Open_pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((CssdCheckList)acc).LoadImg(listData.get(position).getItemcode(),listData.get(position).getRemarkDocNo(),listData.get(position).getItemname(),"remark");
+            }
+        });
 
         R1.setOnClickListener(new View.OnClickListener() {
             @Override

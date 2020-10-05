@@ -15,6 +15,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -67,6 +68,7 @@ public class PayoutActivity extends AppCompatActivity {
     String DocNoIsCheck = "0";
     String userid;
     int PrintCnt = 0;
+    Intent intent;
     int chk_txt_qty = 0;
     int chk_txt_xqty = 0;
     int WithdrawMode = 0;
@@ -88,6 +90,7 @@ public class PayoutActivity extends AppCompatActivity {
     private int year;
     private int month;
     private int day;
+    float x1,x2,y1,y2;
 
     TextView gDate;
     boolean mode_check = true;
@@ -121,6 +124,9 @@ public class PayoutActivity extends AppCompatActivity {
     String B_ID;
     String B_IDTT;
 
+    String EmpCode = "";
+    String user_name = "";
+    private String ED_UserCode = "";
 
     ArrayList<String> xDataUserCode = new ArrayList<String>();
     private String UserSelect;
@@ -761,11 +767,41 @@ public class PayoutActivity extends AppCompatActivity {
         spinner03.setSelection(0);
     }
 
-//    @Override
-//    public void onRestart(){
-//        super.onRestart();
-//        onSearch();
-//    }
+    public void byIntent() {
+        intent = getIntent();
+        Bundle bd = getIntent().getExtras();
+        if (bd != null) {
+            ED_UserCode = bd.getString("userid");
+            IsAdmin = bd.getBoolean("IsAdmin");
+        }
+        B_ID = intent.getStringExtra("B_ID");
+        EmpCode = intent.getStringExtra("EmpCode");
+        userid = intent.getStringExtra("userid");
+        user_name = intent.getStringExtra("user_name");
+    }
+
+    public boolean onTouchEvent(MotionEvent touchEvent){
+        switch (touchEvent.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                x1 = touchEvent.getX();
+                y1 = touchEvent.getY();
+                Log.d("KFDJDL",x1+"");
+                Log.d("KFDJDL",y1+"");
+                break;
+            case MotionEvent.ACTION_UP:
+                Log.d("KFDJDL",x2+"");
+                Log.d("KFDJDL",y2+"");
+                x2 = touchEvent.getX();
+                y2 = touchEvent.getY();
+                if (x1 < x2){
+                    gotoActivity(SterileSeachActivity.class);
+                }else if (x1 > x2){
+
+                }
+                break;
+        }
+        return false;
+    }
 
     boolean Resume1st =true;
     @Override
@@ -2340,6 +2376,17 @@ public class PayoutActivity extends AppCompatActivity {
         ru.execute();
     }
 
+    private void gotoActivity(Class c){
+        Intent intent = new Intent(PayoutActivity.this, c);
+        intent.putExtra("userid", userid);
+        intent.putExtra("user_name", user_name);
+        intent.putExtra("IsAdmin", IsAdmin);
+        intent.putExtra("B_ID", B_ID);
+        intent.putExtra("EmpCode", EmpCode);
+        startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 
 /*
     public void savepayout(){

@@ -101,7 +101,7 @@ public class sendsterile_washdocdetail_adapter extends ArrayAdapter {
         final CheckBox del_multi = (CheckBox) v.findViewById(R.id.del_multi);
         final RelativeLayout back = ( RelativeLayout ) v.findViewById(R.id.back);
 
-        Button btdel =(Button) v.findViewById(R.id.w_btdel);
+        ImageView btdel =(ImageView) v.findViewById(R.id.w_btdel);
         txtitemname.setText(listData.get(position).getItemname());
         txtUcode.setText("รหัสใช้งาน : "+listData.get(position).getUsageCode());
         itemqty.setText("[ "+listData.get(position).getItemCount()+" ]");

@@ -102,7 +102,7 @@
                 android:layout_marginEnd= "5dp"
                 />
 
-            <Button
+            <ImageView
                 android:id="@+id/w_btdel"
                 android:layout_width="20dp"
                 android:layout_height="20dp"

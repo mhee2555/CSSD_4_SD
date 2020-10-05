@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -65,20 +66,12 @@ public class SendSterile_DocListDetailAdapter extends ArrayAdapter {
         TextView txtitemname = (TextView) v.findViewById(R.id.itemname);
         TextView txtxqty = (TextView) v.findViewById(R.id.xqty);
         TextView textView49 = (TextView) v.findViewById(R.id.textView49);
-        RelativeLayout R1 = (RelativeLayout) v.findViewById(R.id.R1);
-        final CheckBox checkBoxsub = (CheckBox ) v.findViewById(R.id.checkBoxsub);
-        final Button Open_pic = (Button) v.findViewById(R.id.Open_pic);
+        final ImageView checkBoxsub = (ImageView) v.findViewById(R.id.checkBoxsub);
+        final ImageView un_checkBoxsub = (ImageView) v.findViewById(R.id.un_checkBoxsub);
+        final ImageView Open_pic = (ImageView) v.findViewById(R.id.Open_pic);
+        final TextView Open_pic_Text = (TextView) v.findViewById(R.id.Open_pic_Text);
 
-        R1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!listData.get(position).getRemarkAdmin().equals("0")){
-                    ((SendSterile_MainActivity)aActivity).OpenDialog(listData.get(position).getItemname(),"1",listData.get(position).getXqty(),listData.get(position).getQtyItemDetail());
-                }
-            }
-        });
-
-        checkBoxsub.setChecked(true);
+        checkBoxsub.setVisibility(View.GONE);
 
 //        if (!listData.get(position).getRemarkAdmin().equals("0")){
 //            checkBoxsub.setChecked(false);
@@ -95,19 +88,23 @@ public class SendSterile_DocListDetailAdapter extends ArrayAdapter {
         if (CheckAll == CheckAllAd) {
             Log.d("YUYU",listData.get(position).getRemarkAdmin()+"");
             if (!listData.get(position).getRemarkAdmin().equals("0")){
-                checkBoxsub.setChecked(false);
+                checkBoxsub.setVisibility(View.GONE);
+                un_checkBoxsub.setVisibility(View.VISIBLE);
                 txtitemname.setTextColor(Color.RED);
                 txtxqty.setTextColor(Color.RED);
                 textView49.setTextColor(Color.RED);
             }else {
-                checkBoxsub.setChecked(true);
+                checkBoxsub.setVisibility(View.VISIBLE);
+                un_checkBoxsub.setVisibility(View.GONE);
             }
         } else {
-            checkBoxsub.setChecked(false);
+            checkBoxsub.setVisibility(View.GONE);
+            un_checkBoxsub.setVisibility(View.VISIBLE);
         }
 
         if (listData.get(position).getIsPicture().equals("0")){
             Open_pic.setVisibility(View.GONE);
+            Open_pic_Text.setVisibility(View.GONE);
         }
 
         Open_pic.setOnClickListener(new View.OnClickListener() {
@@ -121,12 +118,18 @@ public class SendSterile_DocListDetailAdapter extends ArrayAdapter {
             @Override
             public void onClick(View view) {
                 if (listData.get(position).getRemarkAdmin().equals("0")){
-                    if (!checkBoxsub.isChecked()){
+                    if (un_checkBoxsub.getVisibility() == View.GONE){
+                        checkBoxsub.setVisibility(View.GONE);
+                        un_checkBoxsub.setVisibility(View.VISIBLE);
                         ((SendSterile_MainActivity)aActivity).OpenDialog(listData.get(position).getItemname(),"0",listData.get(position).getXqty(),listData.get(position).getQtyItemDetail());
+                    }else {
+                        checkBoxsub.setVisibility(View.VISIBLE);
+                        un_checkBoxsub.setVisibility(View.GONE);
                     }
                 }
             }
         });
+
         txtitemname.setPaintFlags(txtitemname.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         txtitemname.setText(listData.get(position).getItemname());
         txtitemname.setOnClickListener(new View.OnClickListener() {
@@ -141,11 +144,11 @@ public class SendSterile_DocListDetailAdapter extends ArrayAdapter {
         int x1 = Integer.parseInt(listData.get(position).getXqty());
         int x2 = Integer.parseInt(listData.get(position).getQtyItemDetail());
         if (x1 == x2){
-            txtxqty.setText("(ขาด"+x2+")");
+            txtxqty.setText("ขาด "+x2);
         }else {
             if (x2 != 0){
                 int x1_1 = x1 - x2;
-                txtxqty.setText(x1_1+" (ขาด"+x2+")");
+                txtxqty.setText(x1_1+" ( ขาด "+x2+" )");
             }else {
                 txtxqty.setText(listData.get(position).getXqty());
             }

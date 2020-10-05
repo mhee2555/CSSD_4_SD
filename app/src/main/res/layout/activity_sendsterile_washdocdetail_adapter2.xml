@@ -1,29 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="90dp"
-    android:listSelector="#02fff6"
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/listmain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="5dp"
-        android:listSelector="#02fff6"
         android:background="@drawable/rectangle">
 
         <RelativeLayout
-            android:id="@+id/back"
+            android:id="@+id/maindoc"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="0dp"
-            android:layout_toEndOf="@+id/center">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/w_itemname"
@@ -31,12 +26,13 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="4dp"
-                android:text="TextView"
-                android:inputType="textMultiLine"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:paddingLeft="2dp"
+                android:text="SS00710-0001"
                 android:textColor="@android:color/black"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -54,11 +50,14 @@
             <TextView
                 android:id="@+id/w_remark_detail"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_alignTop="@+id/textView53"
-                android:layout_marginLeft="5dp"
-                android:layout_toEndOf="@+id/textView53"
-                android:textColor="@android:color/black" />
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/docno"
+                android:layout_marginStart="120dp"
+                android:paddingLeft="5dp"
+                android:text="26/07/2018"
+                android:textColor="@android:color/black"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/w_date"
@@ -95,16 +94,27 @@
                 android:textColor="@color/colorRedNew"
                 android:textStyle="bold" />
 
-            <CheckBox
+            <ImageView
                 android:id="@+id/del_multi"
-                android:layout_width="30dp"
+                android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:background="@drawable/check"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="3dp"
                 android:layout_marginEnd= "5dp" />
 
-            <Button
+            <ImageView
+                android:id="@+id/del_multi_un"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/uncheck"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd= "5dp" />
+
+            <ImageView
                 android:id="@+id/w_btdel"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -114,14 +124,12 @@
                 android:layout_marginEnd="37dp"
                 android:background="@android:drawable/ic_delete" />
 
-
             <ImageView
                 android:id="@+id/w_resterile"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-
                 android:layout_marginEnd="65dp"
                 app:srcCompat="@drawable/ic_r_grey" />
 

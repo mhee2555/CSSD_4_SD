@@ -1,9 +1,5 @@
 package com.phc.cssd.adapter;
 
-/**
- * Created by HPBO on 1/11/2018.
- */
-
 import android.app.Dialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -33,11 +29,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-/**
- * Created by User on 20/7/2560.
- */
-
 
 public class SendSterile_DocListAdapter extends ArrayAdapter {
 
@@ -205,7 +196,4 @@ public class SendSterile_DocListAdapter extends ArrayAdapter {
         updateremark ru = new updateremark();
         ru.execute(DocNo,remark,check);
     }
-
-
-
 }

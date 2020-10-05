@@ -1,82 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/R1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/rectangle"
-        android:clickable="true">
+        android:background="@drawable/rectangle">
 
-        <TextView
-            android:id="@+id/itemname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:paddingLeft="5dp"
-            android:paddingTop="5dp"
-            android:text="TextView"
-            android:textColor="@android:color/black"
-            android:textSize="13sp"
-            android:textStyle="bold" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView49"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/itemname"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:paddingRight="10dp"
-            android:text="จำนวน:"
-            android:textColor="@android:color/black"
-            android:textSize="12dp" />
+            <TextView
+                android:id="@+id/itemname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:text="TextView"
+                android:textColor="@android:color/black"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/xqty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@+id/textView49"
-            android:text="TextView"
-            android:textColor="@android:color/black"
-            android:textSize="12dp" />
+            <TextView
+                android:id="@+id/textView49"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/itemname"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:paddingRight="10dp"
+                android:text="จำนวน:"
+                android:textColor="@android:color/black"
+                android:textSize="12dp" />
 
-        <CheckBox
-            android:id="@+id/checkBoxsub"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:textColor="@android:color/black"
-            android:textSize="12dp" />
+            <TextView
+                android:id="@+id/xqty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
+                android:layout_toEndOf="@+id/textView49"
+                android:text="TextView"
+                android:textColor="@android:color/black"
+                android:textSize="12dp" />
 
-        <Button
-            android:id="@+id/Open_pic"
-            android:layout_width="70dp"
-            android:layout_height="35dp"
-            android:text="ดูรูปภาพ"
-            android:layout_marginTop="18dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="35dp"
-            android:textColor="@android:color/black"
-            android:textSize="10dp" />
+            <ImageView
+                android:id="@+id/checkBoxsub"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/check"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd= "8dp"
+                android:layout_marginBottom="5dp"/>
+
+            <ImageView
+                android:id="@+id/un_checkBoxsub"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/uncheck"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd= "8dp"
+                android:layout_marginBottom="5dp"/>
+
+            <ImageView
+                android:id="@+id/Open_pic"
+                android:layout_width="70dp"
+                android:layout_height="27dp"
+                android:layout_marginTop="18dp"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/button_pic"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="40dp" />
+
+            <TextView
+                android:id="@+id/Open_pic_Text"
+                android:layout_width="70dp"
+                android:layout_height="23dp"
+                android:text="ดูรูปภาพ"
+                android:textColor="@android:color/black"
+                android:textSize="12dp"
+                android:layout_marginEnd="28dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:textStyle="bold">
+
+            </TextView>
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

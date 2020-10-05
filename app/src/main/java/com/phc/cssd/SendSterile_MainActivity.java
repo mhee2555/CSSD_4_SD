@@ -68,6 +68,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     private int Delete_multiple_items = ConfigProgram.Delete_multiple_items;
     HashMap<String, String> DelAlldata = new HashMap<String,String>();
     getUrl iFt = new getUrl();
+    String user_name = "";
+    String userid = "";
     HTTPConnect ruc = new HTTPConnect();
     xControl xCtl = new xControl();
     private String TAG_RESULTS = "result";
@@ -242,28 +244,28 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         spin_basket.requestFocus();
     }
 
-//    public boolean onTouchEvent(MotionEvent touchEvent){
-//        switch (touchEvent.getAction()){
-//            case MotionEvent.ACTION_DOWN:
-//                x1 = txt_setdetail_l2.getX();
-//                y1 = txt_setdetail_l2.getY();
-//                Log.d("KFDJDL",x1+"");
-//                Log.d("KFDJDL",y1+"");
-//                break;
-//            case MotionEvent.ACTION_UP:
-//                Log.d("KFDJDL",x2+"");
-//                Log.d("KFDJDL",y2+"");
-//                x2 = txt_setdetail_l2.getX();
-//                y2 = txt_setdetail_l2.getY();
-//                if (x1 < x2){
-//                    Toast.makeText(SendSterile_MainActivity.this, "1", Toast.LENGTH_SHORT).show();
-//                }else if (x1 > x2){
-//                    Toast.makeText(SendSterile_MainActivity.this, "2", Toast.LENGTH_SHORT).show();
-//                }
-//                break;
-//        }
-//        return false;
-//    }
+    public boolean onTouchEvent(MotionEvent touchEvent){
+        switch (touchEvent.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                x1 = touchEvent.getX();
+                y1 = touchEvent.getY();
+                Log.d("KFDJDL",x1+"");
+                Log.d("KFDJDL",y1+"");
+                break;
+            case MotionEvent.ACTION_UP:
+                Log.d("KFDJDL",x2+"");
+                Log.d("KFDJDL",y2+"");
+                x2 = touchEvent.getX();
+                y2 = touchEvent.getY();
+                if (x1 < x2){
+
+                }else if (x1 > x2){
+                    gotoActivity(CssdWash.class);
+                }
+                break;
+        }
+        return false;
+    }
 
     public String getSerialNumber() {
         try {
@@ -302,6 +304,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         }
         B_ID = intent.getStringExtra("B_ID");
         EmpCode = intent.getStringExtra("EmpCode");
+        userid = intent.getStringExtra("userid");
+        user_name = intent.getStringExtra("user_name");
     }
 
     public void SelectBasket() {
@@ -359,7 +363,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         bin_all_black_1 = (Button) findViewById(R.id.bin_all_black_1);
         IsStatus = "0";
         rv = ( RecyclerView ) findViewById(R.id.rv);
-        list_docno_detail = ( ListView ) findViewById(R.id.list_docno_detail);
         txt_get_ucode = ( EditText ) findViewById(R.id.txt_get_ucode);
         searchbox = ( EditText ) findViewById(R.id.searchbox);
         edittext = ( TextView ) findViewById(R.id.Birthday);
@@ -493,20 +496,14 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         txt_usr_send.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                 if(position!=0){
-
                     String emp_id = xDepSend.get(txt_usr_send.getSelectedItem());
-
                     updateSendSterile(Master.user_send, emp_id, etxt_docno.getText().toString());
-
                     if(IsAdmin && txt_usr_send_on_Click && (!txt_usr_send_old.equals(emp_id))){
                         addEvenlog("SS","","Edit UserSend ID from "+txt_usr_send_old+" to "+emp_id);
                         txt_usr_send_on_Click = false;
                     }
-
                 }
-
             }
 
             @Override
@@ -514,12 +511,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
 
             }
         });
-
         getuserCode();
-
         txt_tel_dep = ( TextView ) findViewById(R.id.txt_tel_dep);
-
-
         textView47 = (TextView) findViewById(R.id.textView47);
         textView48 = (TextView) findViewById(R.id.textView48);
         etxt_sumqty = ( TextView ) findViewById(R.id.etxt_sumqty);
@@ -527,6 +520,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         bt_search_sendsteril = ( Button ) findViewById(R.id.bt_search_sendsterile);
         bt_search_sendsteril1 = ( Button ) findViewById(R.id.bt_search_sendsteril1);
         lv = ( ListView ) findViewById(R.id.list_docno);
+        xedit_detail = ( ListView ) findViewById(R.id.xedit_detail);
         L1 = ( LinearLayout ) findViewById(R.id.layout_1);
         L2 = ( LinearLayout ) findViewById(R.id.layout_2);
         txt_menu_set = ( TextView ) findViewById(R.id.txt_menu_set);
@@ -542,9 +536,43 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         finddoc_l2 = ( Button ) findViewById(R.id.finddoc_l2);
         textView19 = ( TextView ) findViewById(R.id.textView19);
         list_docno_detail = ( ListView ) findViewById(R.id.list_docno_detail);
-
         etxt_docno = ( TextView ) findViewById(R.id.etxt_docno);
-        xedit_detail = ( ListView ) findViewById(R.id.xedit_detail);
+
+        xedit_detail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                Object o = xedit_detail.getItemAtPosition(position);
+                pCustomer newsData = ( pCustomer ) o;
+                String Usage = newsData.getUsageCode();
+                String Dep = newsData.getDept();
+                String DocNo = newsData.getDocno();
+                getlistdetailqty(Usage);
+                getlistdetail(Usage,DocNo);
+                UsageCode(Usage,Dep,DocNo);
+
+                textView46.setVisibility(View.VISIBLE);
+                checkBoxall.setVisibility(View.VISIBLE);
+                textView48.setVisibility(View.VISIBLE);
+                txt_setdetail_l4.setVisibility(View.VISIBLE);
+                textView47.setVisibility(View.VISIBLE);
+                txt_setdetail_l3.setVisibility(View.VISIBLE);
+            }
+        });
+
+        list_docno_detail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                Object o = list_docno_detail.getItemAtPosition(position);
+                pCustomer newsData = ( pCustomer ) o;
+                String RemarkAdmin = newsData.getRemarkAdmin();
+                String Itemname = newsData.getItemname();
+                String Xqty = newsData.getXqty();
+                String QtyItemDetail = newsData.getQtyItemDetail();
+                if (!RemarkAdmin.equals("0")){
+                    OpenDialog(Itemname,"1",Xqty,QtyItemDetail);
+                }
+            }
+        });
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -984,9 +1012,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                                 if (!IsStatus.equals("1")) {
                                                     savedoc(etxt_docno.getText().toString());
                                                     final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
-                                                    updateSendSterile(Master.user_receive, txt_usr_receive.getContentDescription() + "", etxt_docno.getText() + "");
+                                                    //updateSendSterile(Master.user_receive, txt_usr_receive.getContentDescription() + "", etxt_docno.getText() + "");
                                                     String emp_id = xDepSend.get(txt_usr_send.getSelectedItem());
-                                                    updateSendSterile(Master.user_send, emp_id, etxt_docno.getText().toString());
+                                                    //updateSendSterile(Master.user_send, emp_id, etxt_docno.getText().toString());
                                                     pCus.clear();
                                                     selectedArray.clear();
                                                     xedit_detail.setAdapter(new SendSterile_EditItemAdapter(SendSterile_MainActivity.this, pCus, selectedArray));
@@ -1295,6 +1323,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 if (Count_right == 1){
                                     from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
 
+                                    ListView lv = ( ListView ) findViewById(R.id.list_docno_detail);
+                                    lv.setAdapter(null);
+
                                     textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46_1.setVisibility(View.VISIBLE);
                                     textView46_1.startAnimation(from_slie_right);
@@ -1310,6 +1341,10 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 Count_right = 0;
                                 Count_left = 1;
                                 if (Count_left == 1){
+                                    getlistdetailqty(Usagecode);
+                                    getlistdetail(Usagecode,DocNo);
+                                    UsageCode(Usagecode,DepID,DocNo);
+
                                     from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
                                     textView46_1.setVisibility(View.GONE);
 
@@ -1363,6 +1398,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 if (Count_right == 1){
                                     from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
 
+                                    ListView lv = ( ListView ) findViewById(R.id.list_docno_detail);
+                                    lv.setAdapter(null);
+
                                     textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46_1.setVisibility(View.VISIBLE);
                                     textView46_1.startAnimation(from_slie_right);
@@ -1378,6 +1416,10 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 Count_right = 0;
                                 Count_left = 1;
                                 if (Count_left == 1){
+                                    getlistdetailqty(Usagecode);
+                                    getlistdetail(Usagecode,DocNo);
+                                    UsageCode(Usagecode,DepID,DocNo);
+
                                     from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
                                     textView46_1.setVisibility(View.GONE);
 
@@ -1431,6 +1473,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 if (Count_right == 1){
                                     from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
 
+                                    ListView lv = ( ListView ) findViewById(R.id.list_docno_detail);
+                                    lv.setAdapter(null);
+
                                     textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46_1.setVisibility(View.VISIBLE);
                                     textView46_1.startAnimation(from_slie_right);
@@ -1446,6 +1491,10 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 Count_right = 0;
                                 Count_left = 1;
                                 if (Count_left == 1){
+                                    getlistdetailqty(Usagecode);
+                                    getlistdetail(Usagecode,DocNo);
+                                    UsageCode(Usagecode,DepID,DocNo);
+
                                     from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
                                     textView46_1.setVisibility(View.GONE);
 
@@ -1499,6 +1548,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 if (Count_right == 1){
                                     from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
 
+                                    ListView lv = ( ListView ) findViewById(R.id.list_docno_detail);
+                                    lv.setAdapter(null);
+
                                     textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46_1.setVisibility(View.VISIBLE);
                                     textView46_1.startAnimation(from_slie_right);
@@ -1514,6 +1566,10 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 Count_right = 0;
                                 Count_left = 1;
                                 if (Count_left == 1){
+                                    getlistdetailqty(Usagecode);
+                                    getlistdetail(Usagecode,DocNo);
+                                    UsageCode(Usagecode,DepID,DocNo);
+
                                     from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
                                     textView46_1.setVisibility(View.GONE);
 
@@ -1567,6 +1623,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 if (Count_right == 1){
                                     from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
 
+                                    ListView lv = ( ListView ) findViewById(R.id.list_docno_detail);
+                                    lv.setAdapter(null);
+
                                     textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46_1.setVisibility(View.VISIBLE);
                                     textView46_1.startAnimation(from_slie_right);
@@ -1582,6 +1641,10 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 Count_right = 0;
                                 Count_left = 1;
                                 if (Count_left == 1){
+                                    getlistdetailqty(Usagecode);
+                                    getlistdetail(Usagecode,DocNo);
+                                    UsageCode(Usagecode,DepID,DocNo);
+
                                     from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
                                     textView46_1.setVisibility(View.GONE);
 
@@ -1635,6 +1698,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 if (Count_right == 1){
                                     from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
 
+                                    ListView lv = ( ListView ) findViewById(R.id.list_docno_detail);
+                                    lv.setAdapter(null);
+
                                     textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46_1.setVisibility(View.VISIBLE);
                                     textView46_1.startAnimation(from_slie_right);
@@ -1650,6 +1716,10 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 Count_right = 0;
                                 Count_left = 1;
                                 if (Count_left == 1){
+                                    getlistdetailqty(Usagecode);
+                                    getlistdetail(Usagecode,DocNo);
+                                    UsageCode(Usagecode,DepID,DocNo);
+
                                     from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
                                     textView46_1.setVisibility(View.GONE);
 
@@ -1703,6 +1773,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 if (Count_right == 1){
                                     from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
 
+                                    ListView lv = ( ListView ) findViewById(R.id.list_docno_detail);
+                                    lv.setAdapter(null);
+
                                     textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46_1.setVisibility(View.VISIBLE);
                                     textView46_1.startAnimation(from_slie_right);
@@ -1718,6 +1791,10 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 Count_right = 0;
                                 Count_left = 1;
                                 if (Count_left == 1){
+                                    getlistdetailqty(Usagecode);
+                                    getlistdetail(Usagecode,DocNo);
+                                    UsageCode(Usagecode,DepID,DocNo);
+
                                     from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
                                     textView46_1.setVisibility(View.GONE);
 
@@ -1771,6 +1848,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 if (Count_right == 1){
                                     from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
 
+                                    ListView lv = ( ListView ) findViewById(R.id.list_docno_detail);
+                                    lv.setAdapter(null);
+
                                     textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46_1.setVisibility(View.VISIBLE);
                                     textView46_1.startAnimation(from_slie_right);
@@ -1786,6 +1866,10 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 Count_right = 0;
                                 Count_left = 1;
                                 if (Count_left == 1){
+                                    getlistdetailqty(Usagecode);
+                                    getlistdetail(Usagecode,DocNo);
+                                    UsageCode(Usagecode,DepID,DocNo);
+
                                     from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
                                     textView46_1.setVisibility(View.GONE);
 
@@ -1839,6 +1923,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 if (Count_right == 1){
                                     from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
 
+                                    ListView lv = ( ListView ) findViewById(R.id.list_docno_detail);
+                                    lv.setAdapter(null);
+
                                     textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
                                     textView46_1.setVisibility(View.VISIBLE);
                                     textView46_1.startAnimation(from_slie_right);
@@ -1854,6 +1941,10 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 Count_right = 0;
                                 Count_left = 1;
                                 if (Count_left == 1){
+                                    getlistdetailqty(Usagecode);
+                                    getlistdetail(Usagecode,DocNo);
+                                    UsageCode(Usagecode,DepID,DocNo);
+
                                     from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
                                     textView46_1.setVisibility(View.GONE);
 
@@ -2066,8 +2157,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     }
                     textView47.setText("[ " +cnt+ "  รายการ  /");
                     txt_setdetail_l3.setText("[ " +cnt+ "  รายการ  /");
-                    ListView lv = ( ListView ) findViewById(R.id.list_docno_detail);
-                    lv.setAdapter(new SendSterile_DocListDetailAdapter(SendSterile_MainActivity.this, pCus,CheckAll));
+                    list_docno_detail.setAdapter(new SendSterile_DocListDetailAdapter(SendSterile_MainActivity.this, pCus,CheckAll));
                 } catch (JSONException e) {
                 }
             }
@@ -2208,17 +2298,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     }
                     etxt_sumqty.setText(cnt + "");
                     xedit_detail.setAdapter(new sendsterile_washdocdetail_adapte_2(SendSterile_MainActivity.this, pCus,ssStatus,B_ID,IsDel));
-//                    xedit_detail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                        @Override
-//                        public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-//                            Object o = xedit_detail.getItemAtPosition(position);
-//                            pCustomer newsData = ( pCustomer ) o;
-//                            String Usagecode = newsData.getUsageCode();
-//                            String Dept = newsData.getDept();
-//                            getlistdetail(Usagecode,etxt_docno.getText().toString());
-//                            UsageCode(Usagecode,Dept,etxt_docno.getText().toString());
-//                        }
-//                    });
                 } catch (JSONException e) {
 
                     e.printStackTrace();
@@ -4290,5 +4369,189 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         }
         CheckBasket obj = new CheckBasket();
         obj.execute();
+    }
+
+    public void UpSterile(String UsageCode,String Check,String ss) {
+        class UpSterile extends AsyncTask<String, Void, String> {
+            // variable
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                try{
+                    JSONObject jsonObj = new JSONObject(s);
+                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
+                    final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
+                    String bo = "";
+                    for(int i=0;i<setRs.length();i++) {
+                        JSONObject c = setRs.getJSONObject(i);
+                        bo=c.getString("flag");
+                    }
+                }catch (JSONException e){
+                }
+            }
+
+            //class connect php RegisterUserClass important !!!!!!!
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("ID",params[0]);
+                data.put("Check",params[1]);
+                data.put("ss",params[2]);
+                data.put("B_ID",B_ID);
+                String result = ruc.sendPostRequest(iFt.UpdateSterile(),data);
+                Log.d("BANK",data+"");
+                Log.d("BANK",result);
+                return result;
+            }
+        }
+        UpSterile ru = new UpSterile();
+        ru.execute(UsageCode,Check,ss);
+    }
+
+    public void UpIsSterile(String UsageCode,String Check,String ss) {
+        class UpIsSterile extends AsyncTask<String, Void, String> {
+            // variable
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                try{
+                    JSONObject jsonObj = new JSONObject(s);
+                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
+                    final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
+                    String bo = "";
+                    for(int i=0;i<setRs.length();i++) {
+                        JSONObject c = setRs.getJSONObject(i);
+                        bo=c.getString("flag");
+                    }
+                }catch (JSONException e){
+                }
+            }
+
+            //class connect php RegisterUserClass important !!!!!!!
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("ID",params[0]);
+                data.put("Check",params[1]);
+                data.put("ss",params[2]);
+                data.put("B_ID",B_ID);
+                String result = ruc.sendPostRequest(iFt.UpdateIsSterile(),data);
+                Log.d("BANK",data+"");
+                Log.d("BANK",result);
+                return result;
+            }
+        }
+        UpIsSterile ru = new UpIsSterile();
+        ru.execute(UsageCode,Check,ss);
+    }
+
+    public void updateremark(String DocNo, final String remark, String check) {
+        class updateremark extends AsyncTask<String, Void, String> {
+            // variable
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                try{
+                    JSONObject jsonObj = new JSONObject(s);
+                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
+                    final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
+                    String bo = "";
+                    // //Log.d("BBBB", "Hello" );
+                    for(int i=0;i<setRs.length();i++) {
+                        JSONObject c = setRs.getJSONObject(i);
+                        bo=c.getString("flag");
+                    }
+                }catch (JSONException e){
+                }
+            }
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("DocNo",params[0]);
+                data.put("remark",params[1]);
+                data.put("check",params[2]);
+                data.put("B_ID",B_ID);
+                String result = ruc.sendPostRequest(iFt.updateremark(),data);
+                Log.d("KJDGJD",data+"");
+                Log.d("KJDGJD",result+"");
+                return result;
+            }
+        }
+        updateremark ru = new updateremark();
+        ru.execute(DocNo,remark,check);
+    }
+
+    public void updateremarkems(String DocNo, String remark, final String xsel) {
+        class updateremarkems extends AsyncTask<String, Void, String> {
+            // variable
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                try{
+                    JSONObject jsonObj = new JSONObject(s);
+                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
+                    final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
+                    String bo = "";
+                    for(int i=0;i<setRs.length();i++) {
+                        JSONObject c = setRs.getJSONObject(i);
+                        bo=c.getString("flag");
+                        if (bo.equals("true") && xsel.equals("1")){
+                            Toast.makeText(SendSterile_MainActivity.this, "บันทึกสำเร็จ", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }catch (JSONException e){
+                }
+            }
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("DocNo",params[0]);
+                data.put("remark",params[1]);
+                data.put("xsel",params[2]);
+                data.put("B_ID",B_ID);
+                String result = ruc.sendPostRequest(iFt.updateremarkems(),data);
+                Log.d("JFJDH",data+"");
+                Log.d("JFJDH",result+"");
+                return result;
+            }
+        }
+        updateremarkems ru = new updateremarkems();
+        ru.execute(DocNo,remark,xsel);
+    }
+
+    private void gotoActivity(Class c){
+        Intent intent = new Intent(SendSterile_MainActivity.this, c);
+        intent.putExtra("userid", userid);
+        intent.putExtra("user_name", user_name);
+        intent.putExtra("IsAdmin", IsAdmin);
+        intent.putExtra("B_ID", B_ID);
+        intent.putExtra("EmpCode", EmpCode);
+        startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }

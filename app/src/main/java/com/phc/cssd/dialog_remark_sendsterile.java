@@ -103,6 +103,10 @@ public class dialog_remark_sendsterile extends Activity {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.putExtra("usagecode",Usagecode);
+                intent.putExtra("DocNoSend",DocNoSend);
+                setResult(1005, intent);
                 finish();
             }
         });
