@@ -197,15 +197,10 @@ public class CheckListAdapter extends ArrayAdapter {
                 }
             }
         });
-
         txtitemname.setPaintFlags(txtitemname.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         txtitemname.setText(listData.get(position).getItemcode() + " - " + listData.get(position).getItemname());
-
-        Log.d("LJDLJF",listData.get(position).getQty());
-        Log.d("LJDLJF",listData.get(position).getQtyItemDetail());
         int x1 = Integer.parseInt(listData.get(position).getQty());
         int x2 = Integer.parseInt(listData.get(position).getQtyItemDetail());
-
         if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
             if (x1 == x2){
                 txt_qty.setText("(ขาด"+x2+")");
@@ -234,6 +229,9 @@ public class CheckListAdapter extends ArrayAdapter {
             checkbox.setVisibility(View.GONE);
             un_checkbox.setVisibility(View.VISIBLE);
         }
+
+//        listData.get(position).isCheck();
+//        listData.get(position).setCheck(true);
 
         txt_remark.setText(listData.get(position).getRemark());
         txt_remark_admin.setText(listData.get(position).getAdminRemark());

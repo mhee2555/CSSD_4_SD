@@ -353,20 +353,31 @@ public class CssdCheckList extends Activity {
                                             ch1_un.setVisibility(View.GONE);
                                             ch1.setVisibility(View.VISIBLE);
                                             edt_usage_code.setText("");
+                                            edt_usage_code.requestFocus();
+                                            return true;
                                         }
                                     }else if (edt_usage_code.getText().toString().equals("2")){
                                         if (ch2_un.getVisibility() == View.VISIBLE){
                                             ch2_un.setVisibility(View.GONE);
                                             ch2.setVisibility(View.VISIBLE);
                                             edt_usage_code.setText("");
+                                            edt_usage_code.requestFocus();
+                                            return true;
                                         }
                                     }else if (edt_usage_code.getText().toString().equals("3")){
                                         if (ch3_un.getVisibility() == View.VISIBLE){
                                             ch3_un.setVisibility(View.GONE);
                                             ch3.setVisibility(View.VISIBLE);
                                             edt_usage_code.setText("");
+                                            edt_usage_code.requestFocus();
+                                            return true;
                                         }
+                                    }else {
+                                        edt_usage_code.setText("");
+                                        edt_usage_code.requestFocus();
+                                        Toast.makeText(CssdCheckList.this, "ไม่พบข้อมูล !!", Toast.LENGTH_SHORT).show();
                                     }
+                                    return true;
                                 }else {
                                     if (COUNT_PROCESS > 2){
                                         for (int i = 0 ; i < MODEL_CHECK_LIST.size() ; i ++){
@@ -427,7 +438,8 @@ public class CssdCheckList extends Activity {
 
         imv_print.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onPrint();
+                CheckValidation();
+                //onPrint();
             }
         });
 
@@ -1229,5 +1241,126 @@ public class CssdCheckList extends Activity {
             intent.putExtra("type",type);
             startActivity(intent);
         }
+    }
+
+    public void CheckValidation() {
+        class CheckValidation extends AsyncTask<String, Void, String> {
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+            @Override
+            protected void onPostExecute(String s) {
+                try {
+                    JSONObject jsonObj = new JSONObject(s);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    boolean Check1 = false;
+                    boolean Check2 = false;
+                    boolean Check3 = false;
+                    for (int i = 0; i < rs.length(); i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        if (c.getString("IsInternalIndicatorCheck").equals("1")){
+                            if (ch1.getVisibility() == View.VISIBLE){
+                                Check1 = true;
+                            }else {
+                                Check1 = false;
+                            }
+                        }else {
+                            if (ch1.getVisibility() == View.GONE){
+                                Check1 = true;
+                            }else {
+                                Check1 = false;
+                            }
+                        }
+
+                        if (c.getString("IsFillterCheck").equals("1")){
+                            if (ch2.getVisibility() == View.VISIBLE){
+                                Check2 = true;
+                            }else {
+                                Check2 = false;
+                            }
+                        }else {
+                            if (ch2.getVisibility() == View.GONE){
+                                Check2 = true;
+                            }else {
+                                Check2 = false;
+                            }
+                        }
+
+                        if (c.getString("IsLabelingCheck").equals("1")){
+                            if (ch3.getVisibility() == View.VISIBLE){
+                                Check3 = true;
+                            }else {
+                                Check3 = false;
+                            }
+                        }else {
+                            if (ch3.getVisibility() == View.GONE){
+                                Check3 = true;
+                            }else {
+                                Check3 = false;
+                            }
+                        }
+
+                        if (Check1 == true){
+                            if (c.getString("IsInternalIndicatorCheck").equals("1")){
+                                Check1 = true;
+                            }else {
+                                Check1 = false;
+                            }
+                        }
+
+                        if (Check2 == true){
+                            if (c.getString("IsFillterCheck").equals("1")){
+                                Check2 = true;
+                            }else {
+                                Check2 = false;
+                            }
+                        }
+
+                        if (Check3 == true){
+                            if (c.getString("IsLabelingCheck").equals("1")){
+                                Check3 = true;
+                            }else {
+                                Check3 = false;
+                            }
+                        }
+                    }
+
+                    if (Check1 == true || Check2 == true || Check3 == true){
+                        Check1 = true;
+                        Check2 = true;
+                        Check3 = true;
+                    }
+
+                    if (Check1 == true && Check2 == true && Check3 == true){
+                        onPrint();
+                    }else {
+                        Toast.makeText(CssdCheckList.this, "กรุณาเช็ค / สแกน VALIDATION SHEET ให้ครบ !!", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("usagecode", txt_usagecode_scan.getText().toString());
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_check_validation.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+
+        CheckValidation obj = new CheckValidation();
+        obj.execute();
     }
 }
