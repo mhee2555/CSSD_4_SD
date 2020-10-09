@@ -10,8 +10,6 @@
     android:background="@drawable/bg_recall">
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:orientation="horizontal"
         android:layout_height="fill_parent"
         android:layout_width="fill_parent"
@@ -124,99 +122,27 @@
 
 
             <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
                 android:orientation="vertical"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="0dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_height="90dp"
+                android:layout_height="145dp"
                 android:layout_width="match_parent">
-
-                <TextView
-                    android:id="@+id/txt_item_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/form_label"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:textSize="16dp"
-                    android:gravity="center_vertical"
-                    android:maxLines="1"
-                    android:text="ชื่อเซ็ท : -" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="30dp">
 
                     <TextView
-                        android:id="@+id/txt_usagecode"
+                        android:id="@+id/txt_packer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/form_label"
+                        android:layout_marginLeft="8dp"
                         android:layout_marginTop="4dp"
-                        android:layout_marginLeft="8dp"
-                        android:textSize="16dp"
-                        android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:text="รหัสใช้งาน : " />
-
-                    <TextView
-                        android:id="@+id/txt_item_detail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/form_label"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginLeft="8dp"
-                        android:textSize="16dp"
-                        android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:text="รายการในเซ็ท 0 รายการ   จำนวนทั้งหมด 0 ชิ้น" />
-
-                    <TextView
-                        android:id="@+id/txt_usagecode_scan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/form_label"
-                        android:layout_toEndOf="@id/txt_usagecode"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginLeft="8dp"
-                        android:textSize="16dp"
-                        android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:text="" />
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent">
-
-                <TextView
-                    android:id="@+id/txt_packer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginBottom="0dp"
-                    android:text="ผู้ห่อ : - "
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp" />
-
-                <RelativeLayout
-                    android:id="@+id/linear_layout_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="0dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="8dp">
+                        android:text="ผู้ห่อ : - "
+                        android:textColor="@android:color/black"
+                        android:textSize="16dp" />
 
                     <EditText
                         android:id="@+id/edt_usage_code"
@@ -230,17 +156,216 @@
                         android:color="@color/form_label"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
+                        android:hint="Scan QR Code"
                         android:singleLine="true" />
 
                     <Button
                         android:id="@+id/btn_search_item"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginEnd="6dp"
                         android:layout_marginTop="2dp"
                         android:background="@drawable/ic_qrcode2" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/txt_item_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginLeft="8dp"
+                        android:textSize="16dp"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="ชื่อเซ็ท : -" />
+
+                    <TextView
+                        android:id="@+id/txt_usagecode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginLeft="8dp"
+                        android:textSize="16dp"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="รหัสใช้งาน : " />
+
+                    <TextView
+                        android:id="@+id/txt_item_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:layout_marginTop="40dp"
+                        android:layout_toEndOf="@+id/txt_usagecode_scan"
+                        android:layout_marginLeft="8dp"
+                        android:textSize="16dp"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="0 รายการ / 0 ชิ้น" />
+
+                    <TextView
+                        android:id="@+id/txt_usagecode_scan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:layout_toEndOf="@+id/txt_usagecode"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginLeft="8dp"
+                        android:textSize="16dp"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="" />
+
+                    <ImageView
+                        android:id="@+id/ch3_un"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="430dp"
+                        android:layout_marginTop="85dp"
+                        android:background="@drawable/uncheck"
+                        android:buttonTint="@color/colorBlack"
+                        android:textColor="@color/colorBlack"
+                        android:checked="false"
+                        android:enabled="true"
+                        android:text="Labeling Check"
+                        android:textSize="15dp" />
+
+                    <ImageView
+                        android:id="@+id/ch3"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="430dp"
+                        android:layout_marginTop="85dp"
+                        android:background="@drawable/check"
+                        android:buttonTint="@color/colorBlack"
+                        android:textColor="@color/colorBlack"
+                        android:checked="false"
+                        android:enabled="true"
+                        android:text="Labeling Check"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/test_ch3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="450dp"
+                        android:text="Labeling Check"
+                        android:paddingStart="10dp"
+                        android:layout_marginTop="85dp"
+                        android:textSize="15dp"
+                        android:textColor="@color/colorBlack">
+
+                    </TextView>
+
+                    <ImageView
+                        android:id="@+id/ch2"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="250dp"
+                        android:layout_marginTop="85dp"
+                        android:background="@drawable/check"
+                        android:buttonTint="@color/colorBlack"
+                        android:textColor="@color/colorBlack"
+                        android:checked="false"
+                        android:enabled="true"
+                        android:text="Fillter Check"
+                        android:textSize="15dp" />
+
+                    <ImageView
+                        android:id="@+id/ch2_un"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="250dp"
+                        android:layout_marginTop="85dp"
+                        android:background="@drawable/uncheck"
+                        android:buttonTint="@color/colorBlack"
+                        android:textColor="@color/colorBlack"
+                        android:checked="false"
+                        android:enabled="true"
+                        android:text="Fillter Check"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/test_ch2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="270dp"
+                        android:text="Fillter Check"
+                        android:paddingStart="10dp"
+                        android:layout_marginTop="85dp"
+                        android:textSize="15dp"
+                        android:textColor="@color/colorBlack">
+
+                    </TextView>
+
+                    <ImageView
+                        android:id="@+id/ch1"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:buttonTint="@color/colorBlack"
+                        android:textColor="@color/colorBlack"
+                        android:checked="false"
+                        android:enabled="true"
+                        android:layout_marginTop="85dp"
+                        android:background="@drawable/check"
+                        android:layout_marginLeft="8dp"
+                        android:text="Internal Indicator Check"
+                        android:textSize="15dp" />
+
+                    <ImageView
+                        android:id="@+id/ch1_un"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:buttonTint="@color/colorBlack"
+                        android:textColor="@color/colorBlack"
+                        android:checked="false"
+                        android:enabled="true"
+                        android:layout_marginTop="85dp"
+                        android:background="@drawable/uncheck"
+                        android:layout_marginLeft="8dp"
+                        android:text="Internal Indicator Check"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/test_ch1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="35dp"
+                        android:text="Internal Indicator Check"
+                        android:layout_marginTop="85dp"
+                        android:textSize="15dp"
+                        android:textColor="@color/colorBlack">
+
+                    </TextView>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <RelativeLayout
+                    android:id="@+id/linear_layout_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp">
 
                 </RelativeLayout>
 
@@ -286,8 +411,6 @@
                         android:textColor="@android:color/black"
                         android:textSize="12dp" />
 
-
-
                 </LinearLayout>
 
                 <ListView
@@ -297,7 +420,7 @@
                     android:layout_below="@+id/textView46"
                     android:layout_alignParentStart="true"
                     android:layout_marginLeft="5dp"
-                    android:listSelector="@android:color/transparent"
+                    android:listSelector="#02fff6"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="10dp"
                     android:numColumns="1" />

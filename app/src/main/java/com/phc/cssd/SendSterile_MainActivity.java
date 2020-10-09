@@ -550,12 +550,16 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 getlistdetail(Usage,DocNo);
                 UsageCode(Usage,Dep,DocNo);
 
-                textView46.setVisibility(View.VISIBLE);
-                checkBoxall.setVisibility(View.VISIBLE);
-                textView48.setVisibility(View.VISIBLE);
-                txt_setdetail_l4.setVisibility(View.VISIBLE);
-                textView47.setVisibility(View.VISIBLE);
-                txt_setdetail_l3.setVisibility(View.VISIBLE);
+                if (textView46_1.getVisibility() == View.VISIBLE){
+                    textView46_1.setVisibility(View.GONE);
+                    textView46.setVisibility(View.VISIBLE);
+                    checkBoxall.setVisibility(View.VISIBLE);
+                    textView48.setVisibility(View.VISIBLE);
+                    txt_setdetail_l4.setVisibility(View.VISIBLE);
+                    textView47.setVisibility(View.VISIBLE);
+                    txt_setdetail_l3.setVisibility(View.VISIBLE);
+                }
+
             }
         });
 
@@ -4391,6 +4395,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     for(int i=0;i<setRs.length();i++) {
                         JSONObject c = setRs.getJSONObject(i);
                         bo=c.getString("flag");
+                        getlistcreate(etxt_docno.getText().toString().trim(), ED_Dept);
                     }
                 }catch (JSONException e){
                 }
@@ -4434,6 +4439,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     for(int i=0;i<setRs.length();i++) {
                         JSONObject c = setRs.getJSONObject(i);
                         bo=c.getString("flag");
+                        getlistcreate(etxt_docno.getText().toString().trim(), ED_Dept);
                     }
                 }catch (JSONException e){
                 }
@@ -4478,6 +4484,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     for(int i=0;i<setRs.length();i++) {
                         JSONObject c = setRs.getJSONObject(i);
                         bo=c.getString("flag");
+                        getlistcreate(etxt_docno.getText().toString().trim(), ED_Dept);
                     }
                 }catch (JSONException e){
                 }
@@ -4520,6 +4527,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         JSONObject c = setRs.getJSONObject(i);
                         bo=c.getString("flag");
                         if (bo.equals("true") && xsel.equals("1")){
+                            getlistcreate(etxt_docno.getText().toString().trim(), ED_Dept);
                             Toast.makeText(SendSterile_MainActivity.this, "บันทึกสำเร็จ", Toast.LENGTH_SHORT).show();
                         }
                     }

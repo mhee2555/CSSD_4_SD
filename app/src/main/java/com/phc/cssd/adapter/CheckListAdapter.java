@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -61,59 +62,24 @@ public class CheckListAdapter extends ArrayAdapter {
         final TextView txt_remark_admin = (TextView) v.findViewById(R.id.txt_remark_admin);
         final TextView txt_remark_type = (TextView) v.findViewById(R.id.txt_remark_type);
         final TextView txt_remark_date = (TextView) v.findViewById(R.id.txt_remark_date);
-        final RelativeLayout R1 = (RelativeLayout) v.findViewById(R.id.R1);
-        final CheckBox checkbox = (CheckBox) v.findViewById(R.id.checkbox);
-        final Button Open_pic = (Button) v.findViewById(R.id.Open_pic);
+        final ImageView checkbox = (ImageView) v.findViewById(R.id.checkbox);
+        final ImageView un_checkbox = (ImageView) v.findViewById(R.id.un_checkbox);
+        final ImageView Open_pic = (ImageView) v.findViewById(R.id.Open_pic);
+        final TextView Open_pic_Text = (TextView) v.findViewById(R.id.Open_pic_Text);
         final String img_set = listData.get(position).getPicture_set();
         final String img_detail = listData.get(position).getPicture_detail();
 
+        checkbox.setVisibility(View.GONE);
+
         if (listData.get(position).getIsPicture().equals("0")){
             Open_pic.setVisibility(View.GONE);
+            Open_pic_Text.setVisibility(View.GONE);
         }
 
         Open_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((CssdCheckList)acc).LoadImg(listData.get(position).getItemcode(),listData.get(position).getRemarkDocNo(),listData.get(position).getItemname(),"remark");
-            }
-        });
-
-        R1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((CssdCheckList)acc).onListClick(img_set,img_detail);
-                if (!listData.get(position).getQtyItemDetail().equals("0")){
-                    ((CssdCheckList)acc).OpenDialog(listData.get(position).getItemname(),"1",listData.get(position).getQty(),listData.get(position).getQtyItemDetail());
-                }
-            }
-        });
-
-        R1.setOnLongClickListener(new View.OnLongClickListener() {
-            public boolean onLongClick(View v) {
-                if (model.getNameType().equals("")) {
-                    return false;
-                } else {
-                    AlertDialog.Builder quitDialog = new AlertDialog.Builder(acc);
-                    quitDialog.setTitle("แจ้งเตือน");
-                    quitDialog.setMessage("คุณต้องการ Delete Remark / Admin Approve หรือไม่ !!");
-                    quitDialog.setPositiveButton("Admin Approve", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ((CssdCheckList)acc).openQR("admin",listData.get(position).getItemcode(),listData.get(position).getItem_Detail_ID(),listData.get(position).getRowID(),"approve");
-                            ((CssdCheckList)acc).onListClick(img_set, img_detail);
-                        }
-                    });
-
-                    quitDialog.setNegativeButton("Delete Remark", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ((CssdCheckList)acc).openQR("admin",listData.get(position).getItemcode(),listData.get(position).getItem_Detail_ID(),listData.get(position).getRowID(),"delete");
-                            ((CssdCheckList)acc).onListClick(img_set, img_detail);
-                        }
-                    });
-                    quitDialog.show();
-                }
-                return false;
             }
         });
 
@@ -141,7 +107,9 @@ public class CheckListAdapter extends ArrayAdapter {
             txt_remark_admin.setTextColor(Color.GRAY);
             txt_remark_type.setTextColor(Color.GRAY);
             txt_remark_date.setTextColor(Color.GRAY);
-            checkbox.setChecked(true);
+            //checkbox.setChecked(true);
+            checkbox.setVisibility(View.VISIBLE);
+            un_checkbox.setVisibility(View.GONE);
             listData.get(position).setCheck(true);
         }else {
             listData.get(position).setRemark("-");
@@ -159,18 +127,72 @@ public class CheckListAdapter extends ArrayAdapter {
             txt_remark_admin.setTextColor(Color.BLACK);
             txt_remark_type.setTextColor(Color.BLACK);
             txt_remark_date.setTextColor(Color.BLACK);
-            checkbox.setChecked(true);
+            //checkbox.setChecked(true);
+            checkbox.setVisibility(View.VISIBLE);
+            un_checkbox.setVisibility(View.GONE);
             listData.get(position).setCheck(true);
         }
+
+//        checkbox.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                listData.get(position).setCheck(checkbox.isChecked());
+//                ((CssdCheckList)acc).onListClick(img_set, img_detail);
+//                if (model.getNameType().equals("")){
+//                    if (!checkbox.isChecked()){
+//                    }
+//                }
+//            }
+//        });
 
         checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listData.get(position).setCheck(checkbox.isChecked());
-                ((CssdCheckList)acc).onListClick(img_set, img_detail);
-                if (model.getNameType().equals("")){
-                    if (!checkbox.isChecked()){
-                        ((CssdCheckList)acc).OpenDialog(listData.get(position).getItemname(),"0",listData.get(position).getQty(),listData.get(position).getQtyItemDetail());
+                if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
+                    listData.get(position).setCheck(checkbox.getVisibility() == View.VISIBLE);
+                    ((CssdCheckList)acc).onListClick(img_set, img_detail);
+                    if (model.getNameType().equals("")){
+                        if (un_checkbox.getVisibility() == View.GONE){
+                            checkbox.setVisibility(View.GONE);
+                            un_checkbox.setVisibility(View.VISIBLE);
+                            ((CssdCheckList)acc).OpenDialog(listData.get(position).getItemname(),"0",listData.get(position).getQty(),listData.get(position).getQtyItemDetail());
+                        }else {
+                            checkbox.setVisibility(View.VISIBLE);
+                            un_checkbox.setVisibility(View.GONE);
+                        }
+                    }
+                }else {
+                    if (un_checkbox.getVisibility() == View.GONE){
+                        checkbox.setVisibility(View.GONE);
+                        un_checkbox.setVisibility(View.VISIBLE);
+                    }else {
+                        checkbox.setVisibility(View.VISIBLE);
+                        un_checkbox.setVisibility(View.GONE);
+                    }
+                }
+            }
+        });
+
+        un_checkbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (model.getNameType().equals("") && model.getAdminApprove().equals("0")){
+                    if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
+                        if (checkbox.getVisibility() == View.GONE){
+                            checkbox.setVisibility(View.VISIBLE);
+                            un_checkbox.setVisibility(View.GONE);
+                        }else {
+                            checkbox.setVisibility(View.GONE);
+                            un_checkbox.setVisibility(View.VISIBLE);
+                        }
+                    }else {
+                        if (checkbox.getVisibility() == View.GONE){
+                            checkbox.setVisibility(View.VISIBLE);
+                            un_checkbox.setVisibility(View.GONE);
+                        }else {
+                            checkbox.setVisibility(View.GONE);
+                            un_checkbox.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
             }
@@ -183,17 +205,36 @@ public class CheckListAdapter extends ArrayAdapter {
         Log.d("LJDLJF",listData.get(position).getQtyItemDetail());
         int x1 = Integer.parseInt(listData.get(position).getQty());
         int x2 = Integer.parseInt(listData.get(position).getQtyItemDetail());
-        if (x1 == x2){
-            txt_qty.setText("(ขาด"+x2+")");
-        }else {
-            if (x2 != 0){
-                int x1_1 = x1 - x2;
-                txt_qty.setText(x1_1+" (ขาด"+x2+")");
+
+        if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
+            if (x1 == x2){
+                txt_qty.setText("(ขาด"+x2+")");
             }else {
-                txt_qty.setText(listData.get(position).getQty());
+                if (x2 != 0){
+                    int x1_1 = x1 - x2;
+                    txt_qty.setText(x1_1+" (ขาด"+x2+")");
+                }else {
+                    txt_qty.setText(listData.get(position).getQty());
+                }
             }
+        }else {
+            txt_qty.setVisibility(View.GONE);
+            txt_caption_qty.setVisibility(View.GONE);
         }
-        checkbox.setChecked(listData.get(position).isCheck());
+
+        if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
+            if (listData.get(position).isCheck() == true){
+                checkbox.setVisibility(View.VISIBLE);
+                un_checkbox.setVisibility(View.GONE);
+            }else {
+                checkbox.setVisibility(View.GONE);
+                un_checkbox.setVisibility(View.VISIBLE);
+            }
+        }else {
+            checkbox.setVisibility(View.GONE);
+            un_checkbox.setVisibility(View.VISIBLE);
+        }
+
         txt_remark.setText(listData.get(position).getRemark());
         txt_remark_admin.setText(listData.get(position).getAdminRemark());
         txt_remark_type.setText(listData.get(position).getNameType());

@@ -1,133 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/R1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/rectangle"
-        android:clickable="true">
+        android:background="@drawable/rectangle">
 
-        <TextView
-            android:id="@+id/itemname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="2dp"
-            android:paddingLeft="5dp"
-            android:paddingTop="0dp"
-            android:text="Name"
-            android:textColor="@android:color/black"
-            android:textSize="13sp"
-            android:textStyle="bold" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/txt_caption_qty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/itemname"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="5dp"
-            android:paddingRight="10dp"
-            android:text="จำนวน : "
-            android:textColor="@android:color/black"
-            android:textSize="12dp" />
+            <TextView
+                android:id="@+id/itemname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="2dp"
+                android:paddingTop="0dp"
+                android:text="Name"
+                android:textColor="@android:color/black"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/txt_qty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp"
-            android:layout_toEndOf="@+id/txt_caption_qty"
-            android:text="0"
-            android:textColor="@android:color/black"
-            android:textSize="12dp" />
+            <TextView
+                android:id="@+id/txt_caption_qty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/itemname"
+                android:layout_marginBottom="20dp"
+                android:paddingRight="10dp"
+                android:text="จำนวน : "
+                android:textColor="@android:color/black"
+                android:textSize="12dp" />
 
-        <TextView
-            android:id="@+id/txt_remark_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp"
-            android:paddingLeft="12dp"
-            android:layout_toEndOf="@+id/txt_qty"
-            android:text="Remark"
-            android:textColor="@android:color/black"
-            android:textSize="12dp" />
+            <TextView
+                android:id="@+id/txt_qty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="20dp"
+                android:layout_toEndOf="@+id/txt_caption_qty"
+                android:text="0"
+                android:textColor="@android:color/black"
+                android:textSize="12dp" />
 
-        <TextView
-            android:id="@+id/txt_remark_admin"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp"
-            android:paddingLeft="12dp"
-            android:layout_toEndOf="@+id/txt_remark_type"
-            android:text="By Admin"
-            android:textColor="@android:color/black"
-            android:visibility="invisible"
-            android:textSize="12dp" />
+            <TextView
+                android:id="@+id/txt_remark_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="20dp"
+                android:paddingLeft="12dp"
+                android:layout_toEndOf="@+id/txt_qty"
+                android:text="Remark"
+                android:textColor="@android:color/black"
+                android:textSize="12dp" />
 
-        <TextView
-            android:id="@+id/txt_remark_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="21dp"
-            android:paddingLeft="4dp"
-            android:layout_toEndOf="@+id/txt_remark_admin"
-            android:text="08/08/2020 20:00"
-            android:textColor="@android:color/black"
-            android:textSize="9dp" />
+            <TextView
+                android:id="@+id/txt_remark_admin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="20dp"
+                android:paddingLeft="12dp"
+                android:layout_toEndOf="@+id/txt_remark_type"
+                android:text="By Admin"
+                android:textColor="@android:color/black"
+                android:visibility="invisible"
+                android:textSize="12dp" />
 
-        <TextView
-            android:id="@+id/txt_remark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/itemname"
-            android:layout_marginBottom="4dp"
-            android:layout_marginLeft="5dp"
-            android:paddingRight="10dp"
-            android:text="Note"
-            android:textColor="@android:color/black"
-            android:textSize="12dp" />
+            <TextView
+                android:id="@+id/txt_remark_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="21dp"
+                android:paddingLeft="4dp"
+                android:layout_toEndOf="@+id/txt_remark_admin"
+                android:text="08/08/2020 20:00"
+                android:textColor="@android:color/black"
+                android:textSize="9dp" />
 
-        <Button
-            android:id="@+id/Open_pic"
-            android:layout_width="70dp"
-            android:layout_height="35dp"
-            android:text="ดูรูปภาพ"
-            android:layout_marginTop="18dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="35dp"
-            android:textColor="@android:color/black"
-            android:textSize="10dp" />
+            <TextView
+                android:id="@+id/txt_remark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+               android:layout_marginTop="37dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="Note"
+                android:textColor="@android:color/black"
+                android:textSize="12dp" />
 
-        <CheckBox
-            android:id="@+id/checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:textColor="@android:color/black"
-            android:textSize="12dp" />
+            <ImageView
+                android:id="@+id/Open_pic"
+                android:layout_width="70dp"
+                android:layout_height="27dp"
+                android:layout_marginTop="18dp"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/button_pic"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="40dp" />
+
+            <TextView
+                android:id="@+id/Open_pic_Text"
+                android:layout_width="70dp"
+                android:layout_height="23dp"
+                android:text="ดูรูปภาพ"
+                android:textColor="@android:color/black"
+                android:textSize="12dp"
+                android:layout_marginEnd="28dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <ImageView
+                android:id="@+id/checkbox"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/check"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd= "8dp"
+                android:layout_marginBottom="5dp"/>
+
+            <ImageView
+                android:id="@+id/un_checkbox"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/uncheck"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd= "8dp"
+                android:layout_marginBottom="5dp"/>
+
+        </RelativeLayout>
 
     </RelativeLayout>
-
 
 </RelativeLayout>

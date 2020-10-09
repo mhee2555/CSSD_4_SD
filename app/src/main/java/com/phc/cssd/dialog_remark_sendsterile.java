@@ -100,6 +100,7 @@ public class dialog_remark_sendsterile extends Activity {
         check5 = (CheckBox) findViewById(R.id.check5);
         check6 = (CheckBox) findViewById(R.id.check6);
         close = (ImageView) findViewById(R.id.close);
+
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

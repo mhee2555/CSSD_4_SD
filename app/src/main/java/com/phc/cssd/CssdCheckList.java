@@ -16,8 +16,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +33,7 @@ import com.phc.cssd.adapter.CheckListAdapter;
 import com.phc.cssd.model.ModelCheckList;
 import com.phc.cssd.model.ModelWashDetailForPrint;
 import com.phc.cssd.print_sticker.PrintWash;
+import com.phc.cssd.properties.pCustomer;
 import com.phc.cssd.url.Url;
 
 import org.json.JSONArray;
@@ -63,6 +66,10 @@ public class CssdCheckList extends Activity {
     String condition3 = "";
     String condition4 = "";
     String condition5 = "";
+
+    ImageView ch1_un,ch2_un,ch3_un;
+    ImageView ch1,ch2,ch3;
+    TextView test_ch1,test_ch2,test_ch3;
 
     // Widget
     private String chk = "0";
@@ -129,8 +136,152 @@ public class CssdCheckList extends Activity {
     }
 
     private void byWidget(){
+        ch1_un = (ImageView ) findViewById(R.id.ch1_un);
+        ch2_un = (ImageView ) findViewById(R.id.ch2_un);
+        ch3_un = (ImageView ) findViewById(R.id.ch3_un);
+
+        ch1 = (ImageView ) findViewById(R.id.ch1);
+        ch2 = (ImageView ) findViewById(R.id.ch2);
+        ch3 = (ImageView ) findViewById(R.id.ch3);
+
+        test_ch1 = (TextView ) findViewById(R.id.test_ch1);
+        test_ch2 = (TextView ) findViewById(R.id.test_ch2);
+        test_ch3 = (TextView ) findViewById(R.id.test_ch3);
+
+        ch1.setVisibility(View.GONE);
+        ch2.setVisibility(View.GONE);
+        ch3.setVisibility(View.GONE);
+
+        ch1_un.setVisibility(View.GONE);
+        ch2_un.setVisibility(View.GONE);
+        ch3_un.setVisibility(View.GONE);
+
+        test_ch1.setVisibility(View.GONE);
+        test_ch2.setVisibility(View.GONE);
+        test_ch3.setVisibility(View.GONE);
+
+        ch1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ch1_un.getVisibility() == View.GONE){
+                    ch1_un.setVisibility(View.VISIBLE);
+                    ch1.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        ch2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ch2_un.getVisibility() == View.GONE){
+                    ch2_un.setVisibility(View.VISIBLE);
+                    ch2.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        ch3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ch3_un.getVisibility() == View.GONE){
+                    ch3_un.setVisibility(View.VISIBLE);
+                    ch3.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        ch1_un.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ch1.getVisibility() == View.GONE){
+                    ch1.setVisibility(View.VISIBLE);
+                    ch1_un.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        ch2_un.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ch2.getVisibility() == View.GONE){
+                    ch2.setVisibility(View.VISIBLE);
+                    ch2_un.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        ch3_un.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ch3.getVisibility() == View.GONE){
+                    ch3.setVisibility(View.VISIBLE);
+                    ch3_un.setVisibility(View.GONE);
+                }
+            }
+        });
 
         list_check = (ListView) findViewById(R.id.list_check);
+        list_check.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                Object o = list_check.getItemAtPosition(position);
+                ModelCheckList ModelCheckList = ( ModelCheckList ) o;
+                String img_set = ModelCheckList.getPicture_set();
+                String img_detail = ModelCheckList.getPicture_detail();
+                String getQtyItemDetail = ModelCheckList.getQtyItemDetail();
+                String Itemname = ModelCheckList.getItemname();
+                String Qty = ModelCheckList.getQty();
+                onListClick(img_set,img_detail);
+                if (!Itemname.equals("COMPLY STERIGAGE STEAM (SHORT)")){
+                    if (!getQtyItemDetail.equals("0")){
+                        OpenDialog(Itemname,"1",Qty,getQtyItemDetail);
+                    }
+                }
+            }
+        });
+
+        list_check.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            public boolean onItemLongClick(AdapterView<?> arg0, View v, final int position, long arg3) {
+                Object o = list_check.getItemAtPosition(position);
+                ModelCheckList ModelCheckList = ( ModelCheckList ) o;
+                String NameType = ModelCheckList.getNameType();
+                String Itemname = ModelCheckList.getItemname();
+                final String img_set = ModelCheckList.getPicture_set();
+                final String img_detail = ModelCheckList.getPicture_detail();
+                final String Itemcode = ModelCheckList.getItemcode();
+                final String Item_Detail_ID = ModelCheckList.getItem_Detail_ID();
+                final String RowID = ModelCheckList.getRowID();
+
+                if (!Itemname.equals("COMPLY STERIGAGE STEAM (SHORT)")){
+                    if (NameType.equals("")) {
+                        return false;
+                    } else {
+                        AlertDialog.Builder quitDialog = new AlertDialog.Builder(CssdCheckList.this);
+                        quitDialog.setTitle("แจ้งเตือน");
+                        quitDialog.setMessage("คุณต้องการ Delete Remark / Admin Approve หรือไม่ !!");
+                        quitDialog.setPositiveButton("Admin Approve", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                openQR("admin",Itemcode,Item_Detail_ID,RowID,"approve");
+                                onListClick(img_set, img_detail);
+                            }
+                        });
+
+                        quitDialog.setNegativeButton("Delete Remark", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                openQR("admin",Itemcode,Item_Detail_ID,RowID,"delete");
+                                onListClick(img_set, img_detail);
+                            }
+                        });
+                        quitDialog.show();
+                    }
+                }
+
+                return true;
+            }
+        });
+
         txt_usagecode_scan = (TextView) findViewById(R.id.txt_usagecode_scan);
         imv_print = (ImageView) findViewById(R.id.imv_print);
 
@@ -196,45 +347,67 @@ public class CssdCheckList extends Activity {
                                 checkInput(edt_usage_code.getText().toString());
                                 DIALOG_ACTIVE = true;
                             }else {
-                                if (COUNT_PROCESS > 2){
-                                    for (int i = 0 ; i < MODEL_CHECK_LIST.size() ; i ++){
-                                        MODEL_CHECK_LIST.get(i).getItemcode();
-                                        String Itemcode;
-                                        Itemcode = edt_usage_code.getText().toString().toUpperCase().substring(0,5);
-                                        if (Itemcode.equals(MODEL_CHECK_LIST.get(i).getItemcode())){
-                                            if (MODEL_CHECK_LIST.get(i).isCheck() == true){
-                                                chk = "2";
-                                            }else {
-                                                MODEL_CHECK_LIST.get(i).setCheck(true);
-                                                ArrayAdapter adapter = new CheckListAdapter(CssdCheckList.this, MODEL_CHECK_LIST);
-                                                list_check.setAdapter(adapter);
-                                                try {
-                                                    URL url = new URL(Url.getImageURL() + Itemcode+"_pic1.PNG");
-                                                    Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                                                    img_item.setImageBitmap(bmp);
-                                                }catch(Exception e){
-                                                    e.printStackTrace();
-                                                    img_item.setImageResource(R.drawable.ic_preview);
-                                                }
-                                                chk = "1";
-                                            }
+                                if (edt_usage_code.getText().toString().equals("1") || edt_usage_code.getText().toString().equals("2") || edt_usage_code.getText().toString().equals("3")){
+                                    if (edt_usage_code.getText().toString().equals("1")){
+                                        if (ch1_un.getVisibility() == View.VISIBLE){
+                                            ch1_un.setVisibility(View.GONE);
+                                            ch1.setVisibility(View.VISIBLE);
+                                            edt_usage_code.setText("");
+                                        }
+                                    }else if (edt_usage_code.getText().toString().equals("2")){
+                                        if (ch2_un.getVisibility() == View.VISIBLE){
+                                            ch2_un.setVisibility(View.GONE);
+                                            ch2.setVisibility(View.VISIBLE);
+                                            edt_usage_code.setText("");
+                                        }
+                                    }else if (edt_usage_code.getText().toString().equals("3")){
+                                        if (ch3_un.getVisibility() == View.VISIBLE){
+                                            ch3_un.setVisibility(View.GONE);
+                                            ch3.setVisibility(View.VISIBLE);
+                                            edt_usage_code.setText("");
                                         }
                                     }
-                                    if (chk.equals("1")){
-                                        Toast.makeText(CssdCheckList.this, "รายการถูกต้อง", Toast.LENGTH_SHORT).show();
-                                        chk.equals("0");
-                                        edt_usage_code.setText("");
-                                        edt_usage_code.requestFocus();
-                                    }else if (chk.equals("0")){
-                                        Toast.makeText(CssdCheckList.this, "รายการไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
-                                        edt_usage_code.setText("");
-                                        edt_usage_code.requestFocus();
-                                    }else if (chk.equals("2")){
-                                        Toast.makeText(CssdCheckList.this, "รายการซ้ำ", Toast.LENGTH_SHORT).show();
-                                        edt_usage_code.setText("");
-                                        edt_usage_code.requestFocus();
+                                }else {
+                                    if (COUNT_PROCESS > 2){
+                                        for (int i = 0 ; i < MODEL_CHECK_LIST.size() ; i ++){
+                                            MODEL_CHECK_LIST.get(i).getItemcode();
+                                            String Itemcode;
+                                            Itemcode = edt_usage_code.getText().toString().toUpperCase().substring(0,5);
+                                            if (Itemcode.equals(MODEL_CHECK_LIST.get(i).getItemcode())){
+                                                if (MODEL_CHECK_LIST.get(i).isCheck() == true){
+                                                    chk = "2";
+                                                }else {
+                                                    MODEL_CHECK_LIST.get(i).setCheck(true);
+                                                    ArrayAdapter adapter = new CheckListAdapter(CssdCheckList.this, MODEL_CHECK_LIST);
+                                                    list_check.setAdapter(adapter);
+                                                    try {
+                                                        URL url = new URL(Url.getImageURL() + Itemcode+"_pic1.PNG");
+                                                        Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                                                        img_item.setImageBitmap(bmp);
+                                                    }catch(Exception e){
+                                                        e.printStackTrace();
+                                                        img_item.setImageResource(R.drawable.ic_preview);
+                                                    }
+                                                    chk = "1";
+                                                }
+                                            }
+                                        }
+                                        if (chk.equals("1")){
+                                            Toast.makeText(CssdCheckList.this, "รายการถูกต้อง", Toast.LENGTH_SHORT).show();
+                                            chk.equals("0");
+                                            edt_usage_code.setText("");
+                                            edt_usage_code.requestFocus();
+                                        }else if (chk.equals("0")){
+                                            Toast.makeText(CssdCheckList.this, "รายการไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
+                                            edt_usage_code.setText("");
+                                            edt_usage_code.requestFocus();
+                                        }else if (chk.equals("2")){
+                                            Toast.makeText(CssdCheckList.this, "รายการซ้ำ", Toast.LENGTH_SHORT).show();
+                                            edt_usage_code.setText("");
+                                            edt_usage_code.requestFocus();
+                                        }
+                                        COUNT_PROCESS ++;
                                     }
-                                    COUNT_PROCESS ++;
                                 }
                                 return true;
                             }
@@ -367,9 +540,15 @@ public class CssdCheckList extends Activity {
         txt_packer.setContentDescription("");
         txt_item_name.setText("ชื่อเซ็ท : -");
         txt_usagecode_scan.setText("");
-        txt_item_detail.setText("รายการในเซ็ท 0 รายการ   จำนวนทั้งหมด 0 ชิ้น");
+        txt_item_detail.setText("0 รายการ / 0 ชิ้น");
         checkbox.setChecked(false);
         list_check.setAdapter(null);
+        ch1_un.setVisibility(View.GONE);
+        ch2_un.setVisibility(View.GONE);
+        ch3_un.setVisibility(View.GONE);
+        ch1.setVisibility(View.GONE);
+        ch2.setVisibility(View.GONE);
+        ch3.setVisibility(View.GONE);
     }
 
     public void openQR(final String admin,final String itemcode,final String itemdetail,final String RowID,final String type){
@@ -790,9 +969,18 @@ public class CssdCheckList extends Activity {
                         if (resultdata.equals("A")){
                             CheckDialog(edt_usage_code.getText().toString());
                         }
+                        ch1_un.setVisibility(View.VISIBLE);
+                        ch2_un.setVisibility(View.VISIBLE);
+                        ch3_un.setVisibility(View.VISIBLE);
+                        test_ch1.setVisibility(View.VISIBLE);
+                        test_ch2.setVisibility(View.VISIBLE);
+                        test_ch3.setVisibility(View.VISIBLE);
+                        ch1.setVisibility(View.GONE);
+                        ch2.setVisibility(View.GONE);
+                        ch3.setVisibility(View.GONE);
                         int Sum = sum_qty - sum_qty_Detail;
                         txt_item_name.setText("ชื่อเซ็ท : " + usage_item_code + " - " + usage_item_name);
-                        txt_item_detail.setText("รายการในเซ็ท    " + cnt + "    รายการ       จำนวนทั้งหมด    " + Sum + "    ชิ้น");
+                        txt_item_detail.setText("[ "+cnt+" รายการ  /  "+Sum +" ชิ้น ]");
                         try {
                             URL url = new URL(Url.getImageURL() + img_set);
                             Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
@@ -941,7 +1129,7 @@ public class CssdCheckList extends Activity {
         // Check Usage
         if(ID == null){
             UsageCode = Input;
-            txt_usagecode_scan.setText(edt_usage_code.getText().toString());
+            txt_usagecode_scan.setText(edt_usage_code.getText().toString().toUpperCase());
             displayCheckList();
             return;
         }

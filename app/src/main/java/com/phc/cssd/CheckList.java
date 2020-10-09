@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.phc.core.connect.HTTPConnect;
@@ -33,8 +34,12 @@ public class CheckList extends Activity {
     Button bt_cancel;
     Button bt_comfirm;
 
-    CheckBox type1;
-    CheckBox type2;
+    RadioButton type1;
+    RadioButton type2;
+
+    CheckBox ch1,ch2,ch3;
+
+    EditText num_round;
 
     String TypeItem;
     String TypeNum;
@@ -58,10 +63,14 @@ public class CheckList extends Activity {
 
     public void init(){
         etxt_qr = (EditText) findViewById(R.id.etxt_qr);
+        num_round = (EditText) findViewById(R.id.num_round);
         bt_cancel = (Button) findViewById(R.id.bt_cancel);
         bt_comfirm = (Button) findViewById(R.id.bt_comfirm);
-        type1 = (CheckBox) findViewById(R.id.type1);
-        type2 = (CheckBox) findViewById(R.id.type2);
+        type1 = (RadioButton) findViewById(R.id.type1);
+        type2 = (RadioButton) findViewById(R.id.type2);
+        ch1 = (CheckBox) findViewById(R.id.ch1);
+        ch2 = (CheckBox) findViewById(R.id.ch2);
+        ch3 = (CheckBox) findViewById(R.id.ch3);
 
         type1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -133,6 +142,22 @@ public class CheckList extends Activity {
                 HashMap<String, String> data = new HashMap<String,String>();
                 data.put("itemcode",itemcode);
                 data.put("TypeNum",TypeNum);
+                data.put("num_round",num_round.getText().toString());
+                if (ch1.isChecked() == true){
+                    data.put("ch1","1");
+                }else {
+                    data.put("ch1","0");
+                }
+                if (ch2.isChecked() == true){
+                    data.put("ch2","1");
+                }else {
+                    data.put("ch2","0");
+                }
+                if (ch3.isChecked() == true){
+                    data.put("ch3","1");
+                }else {
+                    data.put("ch3","0");
+                }
                 String result = null;
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_save_item_checklist.php", data);
@@ -175,6 +200,20 @@ public class CheckList extends Activity {
                             type1.setChecked(false);
                             type2.setChecked(false);
                         }
+
+                        if (c.getString("IsInternalIndicatorCheck").equals("1")){
+                            ch1.setChecked(true);
+                        }
+
+                        if (c.getString("IsFillterCheck").equals("1")){
+                            ch2.setChecked(true);
+                        }
+
+                        if (c.getString("IsLabelingCheck").equals("1")){
+                            ch3.setChecked(true);
+                        }
+
+                        num_round.setText(c.getString("IsRemarkRound"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
