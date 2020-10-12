@@ -2218,11 +2218,12 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             }
 
             //class connect php RegisterUserClass important !!!!!!!
+            @SuppressLint("WrongThread")
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String, String>();
                 data.put("UsageCode", UsageCode);
-                data.put("DocNo",DocNo);
+                data.put("DocNo",etxt_docno.getText().toString());
                 data.put("B_ID",B_ID);
                 String result = ruc.sendPostRequest(iFt.getitemdetail_sendsterile1(), data);
                 Log.d("YUYU",data+"");
