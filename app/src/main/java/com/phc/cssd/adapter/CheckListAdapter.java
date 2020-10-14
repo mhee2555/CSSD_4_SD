@@ -96,6 +96,11 @@ public class CheckListAdapter extends ArrayAdapter {
             listData.get(position).setAdminRemark("-");
             listData.get(position).setNameType("-");
             listData.get(position).setDateRemark("-");
+            if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
+                listData.get(position).setCheck(true);
+            }else {
+                listData.get(position).setCheck(false);
+            }
             txt_remark.setText(listData.get(position).getRemark());
             txt_remark_admin.setText(listData.get(position).getAdminRemark());
             txt_remark_type.setText(listData.get(position).getNameType());
@@ -110,8 +115,13 @@ public class CheckListAdapter extends ArrayAdapter {
             //checkbox.setChecked(true);
             checkbox.setVisibility(View.VISIBLE);
             un_checkbox.setVisibility(View.GONE);
-            listData.get(position).setCheck(true);
+            if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
+                listData.get(position).setCheck(true);
+            }else {
+                listData.get(position).setCheck(false);
+            }
         }else {
+            listData.get(position).setCheck(false);
             listData.get(position).setRemark("-");
             listData.get(position).setAdminRemark("-");
             listData.get(position).setNameType("-");
@@ -130,7 +140,11 @@ public class CheckListAdapter extends ArrayAdapter {
             //checkbox.setChecked(true);
             checkbox.setVisibility(View.VISIBLE);
             un_checkbox.setVisibility(View.GONE);
-            listData.get(position).setCheck(true);
+            if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
+                listData.get(position).setCheck(true);
+            }else {
+                listData.get(position).setCheck(false);
+            }
         }
 
 //        checkbox.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +176,7 @@ public class CheckListAdapter extends ArrayAdapter {
                         }
                     }
                 }else {
+                    listData.get(position).setCheck(true);
                     if (un_checkbox.getVisibility() == View.GONE){
                         checkbox.setVisibility(View.GONE);
                         un_checkbox.setVisibility(View.VISIBLE);
@@ -186,6 +201,7 @@ public class CheckListAdapter extends ArrayAdapter {
                             un_checkbox.setVisibility(View.VISIBLE);
                         }
                     }else {
+                        listData.get(position).setCheck(true);
                         if (checkbox.getVisibility() == View.GONE){
                             checkbox.setVisibility(View.VISIBLE);
                             un_checkbox.setVisibility(View.GONE);
@@ -217,22 +233,10 @@ public class CheckListAdapter extends ArrayAdapter {
             txt_caption_qty.setVisibility(View.GONE);
         }
 
-        if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
-            if (listData.get(position).isCheck() == true){
-                checkbox.setVisibility(View.VISIBLE);
-                un_checkbox.setVisibility(View.GONE);
-            }else {
-                checkbox.setVisibility(View.GONE);
-                un_checkbox.setVisibility(View.VISIBLE);
-            }
-        }else {
+        if (listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
             checkbox.setVisibility(View.GONE);
             un_checkbox.setVisibility(View.VISIBLE);
         }
-
-//        listData.get(position).isCheck();
-//        listData.get(position).setCheck(true);
-
         txt_remark.setText(listData.get(position).getRemark());
         txt_remark_admin.setText(listData.get(position).getAdminRemark());
         txt_remark_type.setText(listData.get(position).getNameType());

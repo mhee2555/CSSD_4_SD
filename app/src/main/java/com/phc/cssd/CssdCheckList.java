@@ -343,6 +343,7 @@ public class CssdCheckList extends Activity {
                     switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
+                            Log.d("FKJDHJKDH",COUNT_PROCESS+"");
                             if (COUNT_PROCESS < 2){
                                 checkInput(edt_usage_code.getText().toString());
                                 DIALOG_ACTIVE = true;
@@ -356,6 +357,8 @@ public class CssdCheckList extends Activity {
                                             edt_usage_code.requestFocus();
                                             return true;
                                         }
+                                        edt_usage_code.setText("");
+                                        edt_usage_code.requestFocus();
                                     }else if (edt_usage_code.getText().toString().equals("2")){
                                         if (ch2_un.getVisibility() == View.VISIBLE){
                                             ch2_un.setVisibility(View.GONE);
@@ -364,6 +367,8 @@ public class CssdCheckList extends Activity {
                                             edt_usage_code.requestFocus();
                                             return true;
                                         }
+                                        edt_usage_code.setText("");
+                                        edt_usage_code.requestFocus();
                                     }else if (edt_usage_code.getText().toString().equals("3")){
                                         if (ch3_un.getVisibility() == View.VISIBLE){
                                             ch3_un.setVisibility(View.GONE);
@@ -372,10 +377,8 @@ public class CssdCheckList extends Activity {
                                             edt_usage_code.requestFocus();
                                             return true;
                                         }
-                                    }else {
                                         edt_usage_code.setText("");
                                         edt_usage_code.requestFocus();
-                                        Toast.makeText(CssdCheckList.this, "ไม่พบข้อมูล !!", Toast.LENGTH_SHORT).show();
                                     }
                                     return true;
                                 }else {
@@ -561,6 +564,9 @@ public class CssdCheckList extends Activity {
         ch1.setVisibility(View.GONE);
         ch2.setVisibility(View.GONE);
         ch3.setVisibility(View.GONE);
+        test_ch1.setVisibility(View.GONE);
+        test_ch2.setVisibility(View.GONE);
+        test_ch3.setVisibility(View.GONE);
     }
 
     public void openQR(final String admin,final String itemcode,final String itemdetail,final String RowID,final String type){
@@ -748,7 +754,9 @@ public class CssdCheckList extends Activity {
             // Check List
             for(int i=0;i<MODEL_CHECK_LIST.size();i++){
 
-                if (!MODEL_CHECK_LIST.get(i).isCheck()) {
+                Log.d("VDLJVLDJ",MODEL_CHECK_LIST.get(i).getCheck()+" : "+MODEL_CHECK_LIST.get(i).getItemname());
+
+                if (!MODEL_CHECK_LIST.get(i).getCheck() == true && !MODEL_CHECK_LIST.get(i).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")) {
                     MsgCheck = "มีบางรายการยังไม่ได้ถูกเช็ค !!";
                     IsCheck = false;
                     break;
@@ -869,7 +877,6 @@ public class CssdCheckList extends Activity {
 
     public void updatePrintStatus(final String p_data) {
 
-        Log.d("ttest_UpdatePrint","p_data = "+p_data );
         class UpdatePrintStatus extends AsyncTask<String, Void, String> {
 
             // variable
@@ -1007,6 +1014,7 @@ public class CssdCheckList extends Activity {
                         }
                     } catch (Exception e) {
                         Toast.makeText(CssdCheckList.this, "ไม่พบข้อมูล !!", Toast.LENGTH_SHORT).show();
+                        COUNT_PROCESS = 1;
                         list_check.setAdapter(null);
                         e.printStackTrace();
                     }
@@ -1018,6 +1026,7 @@ public class CssdCheckList extends Activity {
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(CssdCheckList.this, "ไม่พบข้อมูล !!", Toast.LENGTH_SHORT).show();
+                    COUNT_PROCESS = 1;
                     list_check.setAdapter(null);
                     return;
                 }finally {
@@ -1263,28 +1272,43 @@ public class CssdCheckList extends Activity {
                     rs = jsonObj.getJSONArray(TAG_RESULTS);
                     for (int i = 0; i < rs.length(); i++) {
                         JSONObject c = rs.getJSONObject(i);
-                        if (c.getString("IsInternalIndicatorCheck").equals("1")){
+                        if (c.getString("flug").equals("true")){
+                            if (c.getString("IsInternalIndicatorCheck").equals("1")){
 
+                            }else {
+                                test_ch1.setVisibility(View.GONE);
+                                ch1_un.setVisibility(View.GONE);
+                                ch1.setVisibility(View.GONE);
+                            }
+
+                            if (c.getString("IsFillterCheck").equals("1")){
+
+                            }else {
+                                test_ch2.setVisibility(View.GONE);
+                                ch2_un.setVisibility(View.GONE);
+                                ch2.setVisibility(View.GONE);
+                            }
+
+                            if (c.getString("IsLabelingCheck").equals("1")){
+
+                            }else {
+                                test_ch3.setVisibility(View.GONE);
+                                ch3_un.setVisibility(View.GONE);
+                                ch3.setVisibility(View.GONE);
+                            }
                         }else {
                             test_ch1.setVisibility(View.GONE);
                             ch1_un.setVisibility(View.GONE);
                             ch1.setVisibility(View.GONE);
-                        }
-
-                        if (c.getString("IsFillterCheck").equals("1")){
-
-                        }else {
                             test_ch2.setVisibility(View.GONE);
                             ch2_un.setVisibility(View.GONE);
                             ch2.setVisibility(View.GONE);
-                        }
-
-                        if (c.getString("IsLabelingCheck").equals("1")){
-
-                        }else {
                             test_ch3.setVisibility(View.GONE);
                             ch3_un.setVisibility(View.GONE);
                             ch3.setVisibility(View.GONE);
+                            txt_usagecode_scan.setText("");
+                            Toast.makeText(CssdCheckList.this, "ไม่พบข้อมูล !!", Toast.LENGTH_SHORT).show();
+                            COUNT_PROCESS = 1;
                         }
                     }
                 } catch (Exception e) {

@@ -109,6 +109,8 @@ public class ModelCheckList {
 
     public boolean setCheck(boolean check) { IsCheck = check;return check; }
 
+    public boolean getCheck() { return IsCheck; }
+
     public String getID() {
         return ID;
     }
@@ -117,9 +119,7 @@ public class ModelCheckList {
         this.ID = ID;
     }
 
-    public String getSend_ID() {
-        return Send_ID;
-    }
+    public String getSend_ID() { return Send_ID; }
 
     public void setSend_ID(String send_ID) {
         Send_ID = send_ID;
