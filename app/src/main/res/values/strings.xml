@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CSSD_4_SD</string>
+    <string name="app_name">CSSD_4_SD_N</string>
     <string name="meta_position">meta_position</string>
     <string name="meta_title">meta_title</string>
     <string name="title_activity_sterile_main">SterileMainActivity</string>
