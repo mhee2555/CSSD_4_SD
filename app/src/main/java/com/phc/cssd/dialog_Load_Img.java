@@ -3,8 +3,11 @@ package com.phc.cssd;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,6 +33,8 @@ public class dialog_Load_Img extends Activity {
     TextView itemname_set,usagecode_set,sub_itemname_set,unit_set;
     ImageView img;
     LinearLayout L1;
+    String codeData_pic1;
+    String codeData_pic2;
 
     private HTTPConnect httpConnect = new HTTPConnect();
     private String TAG_RESULTS = "result";
@@ -101,18 +106,23 @@ public class dialog_Load_Img extends Activity {
                                 System.out.println(Url.URL + "cssd_image/"+c.getString("Picture"));
                                 if (!c.getString("Picture").equals("")){
                                     img.setBackgroundResource(R.color.colorWhite);
-                                    Picasso.get().load(String.valueOf(imageUrl)).networkPolicy(NetworkPolicy.NO_CACHE)
-                                            .memoryPolicy(MemoryPolicy.NO_CACHE)
-                                            .into(img);
+                                    codeData_pic1 = "data:image/jpeg;base64,"+c.getString("Picture");
+                                    codeData_pic1 = codeData_pic1.replace("data:image/jpeg;base64,","");
+                                    byte[] code_pic1 = Base64.decode(codeData_pic1,Base64.DEFAULT);
+                                    Bitmap bitmap_pic1 = BitmapFactory.decodeByteArray(code_pic1,0,code_pic1.length);
+                                    img.setImageBitmap(bitmap_pic1);
                                 }
+
                             }else {
                                 URL imageUrl = new URL("http://poseintelligence.dyndns.biz:8181/cssd_php_m1_paydep_siriraj/images/"+c.getString("Picture"));
                                 System.out.println(Url.URL + "cssd_image/"+c.getString("Picture"));
                                 if (!c.getString("Picture").equals("")){
                                     img.setBackgroundResource(R.color.colorWhite);
-                                    Picasso.get().load(String.valueOf(imageUrl)).networkPolicy(NetworkPolicy.NO_CACHE)
-                                            .memoryPolicy(MemoryPolicy.NO_CACHE)
-                                            .into(img);
+                                    codeData_pic1 = "data:image/jpeg;base64,"+c.getString("Picture");
+                                    codeData_pic1 = codeData_pic1.replace("data:image/jpeg;base64,","");
+                                    byte[] code_pic1 = Base64.decode(codeData_pic1,Base64.DEFAULT);
+                                    Bitmap bitmap_pic1 = BitmapFactory.decodeByteArray(code_pic1,0,code_pic1.length);
+                                    img.setImageBitmap(bitmap_pic1);
                                 }
                             }
                         } catch (Exception e) {
