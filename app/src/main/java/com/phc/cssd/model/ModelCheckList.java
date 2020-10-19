@@ -20,9 +20,15 @@ public class ModelCheckList {
     String QtyItemDetail;
     String IsPicture;
     String RemarkDocNo;
+    String configuration;
+    String IsRemarkRound_RemarlAdmin;
+    String IsRemarkRound;
     boolean IsCheck = false;
 
-    public ModelCheckList(String RemarkDocNo, String IsPicture, String QtyItemDetail, String AdminApprove, String RowID, String ID, String send_ID, String itemcode, String itemname, String Item_Detail_ID,String qty, String adminRemark, String dateRemark, String remark, String nameType, String picture_set, String picture_detail, String usage_item_code, String usage_item_name, boolean isCheck) {
+    public ModelCheckList(String configuration, String IsRemarkRound_RemarlAdmin, String IsRemarkRound, String RemarkDocNo, String IsPicture, String QtyItemDetail, String AdminApprove, String RowID, String ID, String send_ID, String itemcode, String itemname, String Item_Detail_ID,String qty, String adminRemark, String dateRemark, String remark, String nameType, String picture_set, String picture_detail, String usage_item_code, String usage_item_name, boolean isCheck) {
+        this.configuration = configuration;
+        this.IsRemarkRound_RemarlAdmin = IsRemarkRound_RemarlAdmin;
+        this.IsRemarkRound = IsRemarkRound;
         this.RemarkDocNo = RemarkDocNo;
         this.IsPicture = IsPicture;
         this.QtyItemDetail = QtyItemDetail;
@@ -43,6 +49,30 @@ public class ModelCheckList {
         this.usage_item_code = usage_item_code;
         this.usage_item_name = usage_item_name;
         IsCheck = isCheck;
+    }
+
+    public String getConfiguration() {
+        return configuration;
+    }
+
+    public void setConfiguration(String configuration) {
+        this.configuration = configuration;
+    }
+
+    public String getIsRemarkRound_RemarlAdmin() {
+        return IsRemarkRound_RemarlAdmin;
+    }
+
+    public void setIsRemarkRound_RemarlAdmin(String isRemarkRound_RemarlAdmin) {
+        IsRemarkRound_RemarlAdmin = isRemarkRound_RemarlAdmin;
+    }
+
+    public String getIsRemarkRound() {
+        return IsRemarkRound;
+    }
+
+    public void setIsRemarkRound(String isRemarkRound) {
+        IsRemarkRound = isRemarkRound;
     }
 
     public String getRemarkDocNo() { return RemarkDocNo; }

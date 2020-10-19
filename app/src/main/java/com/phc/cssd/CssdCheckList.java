@@ -605,7 +605,7 @@ public class CssdCheckList extends Activity {
                 }
             }else if (resultCode == 1005){
                 displayCheckList();
-                CheckValidation_Master();
+                //CheckValidation_Master();
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -630,22 +630,22 @@ public class CssdCheckList extends Activity {
                         JSONObject c = rs.getJSONObject(i);
                         if (c.getString("finish").equals("truedelete")){
                             displayCheckList();
-                            CheckValidation_Master();
+                            //CheckValidation_Master();
                             Toast.makeText(CssdCheckList.this, "ยกเลิก Remark สำเร็จ", Toast.LENGTH_SHORT).show();
                             IsSave = "1";
                         }else if (c.getString("finish").equals("falsedelete")){
                             displayCheckList();
-                            CheckValidation_Master();
+                            //CheckValidation_Master();
                             Toast.makeText(CssdCheckList.this, "ยกเลิก Remark ไม่สำเร็จ", Toast.LENGTH_SHORT).show();
                             IsSave = "0";
                         }else if (c.getString("finish").equals("trueapprove")){
                             displayCheckList();
-                            CheckValidation_Master();
+                            //CheckValidation_Master();
                             Toast.makeText(CssdCheckList.this, "Approve Remark สำเร็จ", Toast.LENGTH_SHORT).show();
                             IsSave = "1";
                         }else if (c.getString("finish").equals("falseapprove")){
                             displayCheckList();
-                            CheckValidation_Master();
+                            //CheckValidation_Master();
                             Toast.makeText(CssdCheckList.this, "Approve Remark ไม่สำเร็จ", Toast.LENGTH_SHORT).show();
                             IsSave = "0";
                         }
@@ -843,10 +843,12 @@ public class CssdCheckList extends Activity {
 
                 }
 
+                @SuppressLint("WrongThread")
                 @Override
                 protected String doInBackground(String... params) {
                     HashMap<String, String> data = new HashMap<String,String>();
                     data.put("ID", ID);
+                    data.put("usagecode",txt_usagecode_scan.getText().toString());
                     String result = null;
 
                     try {
@@ -953,6 +955,9 @@ public class CssdCheckList extends Activity {
                             System.out.println();
                             list.add(
                                     new ModelCheckList(
+                                            c.getString("configuration"),
+                                            c.getString("IsRemarkRound_RemarlAdmin"),
+                                            c.getString("IsRemarkRound"),
                                             c.getString("RemarkDocNo"),
                                             c.getString("IsPicture"),
                                             c.getString("QtyItemDetail"),
@@ -993,15 +998,19 @@ public class CssdCheckList extends Activity {
                         if (resultdata.equals("A")){
                             CheckDialog(edt_usage_code.getText().toString());
                         }
-                        ch1_un.setVisibility(View.VISIBLE);
-                        ch2_un.setVisibility(View.VISIBLE);
-                        ch3_un.setVisibility(View.VISIBLE);
-                        test_ch1.setVisibility(View.VISIBLE);
-                        test_ch2.setVisibility(View.VISIBLE);
-                        test_ch3.setVisibility(View.VISIBLE);
-                        ch1.setVisibility(View.GONE);
-                        ch2.setVisibility(View.GONE);
-                        ch3.setVisibility(View.GONE);
+                        Log.d("KDNCVJHD",COUNT_PROCESS+"");
+                        if (COUNT_PROCESS == 1){
+                            ch1_un.setVisibility(View.VISIBLE);
+                            ch2_un.setVisibility(View.VISIBLE);
+                            ch3_un.setVisibility(View.VISIBLE);
+                            test_ch1.setVisibility(View.VISIBLE);
+                            test_ch2.setVisibility(View.VISIBLE);
+                            test_ch3.setVisibility(View.VISIBLE);
+                            ch1.setVisibility(View.GONE);
+                            ch2.setVisibility(View.GONE);
+                            ch3.setVisibility(View.GONE);
+                        }
+
                         int Sum = sum_qty - sum_qty_Detail;
                         txt_item_name.setText("ชื่อเซ็ท : " + usage_item_code + " - " + usage_item_name);
                         txt_item_detail.setText("[ "+cnt+" รายการ  /  "+Sum +" ชิ้น ]");

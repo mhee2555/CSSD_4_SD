@@ -83,70 +83,166 @@ public class CheckListAdapter extends ArrayAdapter {
             }
         });
 
-        if (!model.getNameType().equals("") && model.getAdminApprove().equals("0")){
-            txtitemname.setTextColor(Color.RED);
-            txt_caption_qty.setTextColor(Color.RED);
-            txt_qty.setTextColor(Color.RED);
-            txt_remark.setTextColor(Color.RED);
-            txt_remark_admin.setTextColor(Color.RED);
-            txt_remark_type.setTextColor(Color.RED);
-            txt_remark_date.setTextColor(Color.RED);
-        }else if (model.getAdminApprove().equals("1")){
-            listData.get(position).setRemark("-");
-            listData.get(position).setAdminRemark("-");
-            listData.get(position).setNameType("-");
-            listData.get(position).setDateRemark("-");
-            if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
-                listData.get(position).setCheck(true);
+        Log.d("FKJDHJKDH",listData.get(position).getIsRemarkRound_RemarlAdmin()+" : "+listData.get(position).getIsRemarkRound());
+
+
+        if (listData.get(position).getConfiguration().equals("0") && !listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
+            if (!model.getNameType().equals("") && model.getAdminApprove().equals("0")){
+                txtitemname.setTextColor(Color.RED);
+                txt_caption_qty.setTextColor(Color.RED);
+                txt_qty.setTextColor(Color.RED);
+                txt_remark.setTextColor(Color.RED);
+                txt_remark_admin.setTextColor(Color.RED);
+                txt_remark_type.setTextColor(Color.RED);
+                txt_remark_date.setTextColor(Color.RED);
+            }else if (model.getAdminApprove().equals("1")){
+                listData.get(position).setRemark("-");
+                listData.get(position).setAdminRemark("-");
+                listData.get(position).setNameType("-");
+                listData.get(position).setDateRemark("-");
+                if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
+                    listData.get(position).setCheck(true);
+                }else {
+                    listData.get(position).setCheck(false);
+                }
+                txt_remark.setText(listData.get(position).getRemark());
+                txt_remark_admin.setText(listData.get(position).getAdminRemark());
+                txt_remark_type.setText(listData.get(position).getNameType());
+                txt_remark_date.setText(listData.get(position).getDateRemark());
+                txtitemname.setTextColor(Color.GRAY);
+                txt_caption_qty.setTextColor(Color.GRAY);
+                txt_qty.setTextColor(Color.GRAY);
+                txt_remark.setTextColor(Color.GRAY);
+                txt_remark_admin.setTextColor(Color.GRAY);
+                txt_remark_type.setTextColor(Color.GRAY);
+                txt_remark_date.setTextColor(Color.GRAY);
+                //checkbox.setChecked(true);
+                checkbox.setVisibility(View.VISIBLE);
+                un_checkbox.setVisibility(View.GONE);
+                if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
+                    listData.get(position).setCheck(true);
+                }else {
+                    listData.get(position).setCheck(false);
+                }
             }else {
                 listData.get(position).setCheck(false);
-            }
-            txt_remark.setText(listData.get(position).getRemark());
-            txt_remark_admin.setText(listData.get(position).getAdminRemark());
-            txt_remark_type.setText(listData.get(position).getNameType());
-            txt_remark_date.setText(listData.get(position).getDateRemark());
-            txtitemname.setTextColor(Color.GRAY);
-            txt_caption_qty.setTextColor(Color.GRAY);
-            txt_qty.setTextColor(Color.GRAY);
-            txt_remark.setTextColor(Color.GRAY);
-            txt_remark_admin.setTextColor(Color.GRAY);
-            txt_remark_type.setTextColor(Color.GRAY);
-            txt_remark_date.setTextColor(Color.GRAY);
-            //checkbox.setChecked(true);
-            checkbox.setVisibility(View.VISIBLE);
-            un_checkbox.setVisibility(View.GONE);
-            if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
-                listData.get(position).setCheck(true);
-            }else {
-                listData.get(position).setCheck(false);
+                listData.get(position).setRemark("-");
+                listData.get(position).setAdminRemark("-");
+                listData.get(position).setNameType("-");
+                listData.get(position).setDateRemark("-");
+                txt_remark.setText(listData.get(position).getRemark());
+                txt_remark_admin.setText(listData.get(position).getAdminRemark());
+                txt_remark_type.setText(listData.get(position).getNameType());
+                txt_remark_date.setText(listData.get(position).getDateRemark());
+                txtitemname.setTextColor(Color.BLACK);
+                txt_caption_qty.setTextColor(Color.BLACK);
+                txt_qty.setTextColor(Color.BLACK);
+                txt_remark.setTextColor(Color.BLACK);
+                txt_remark_admin.setTextColor(Color.BLACK);
+                txt_remark_type.setTextColor(Color.BLACK);
+                txt_remark_date.setTextColor(Color.BLACK);
+                //checkbox.setChecked(true);
+                checkbox.setVisibility(View.VISIBLE);
+                un_checkbox.setVisibility(View.GONE);
+                if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
+                    listData.get(position).setCheck(true);
+                }else {
+                    listData.get(position).setCheck(false);
+                }
             }
         }else {
-            listData.get(position).setCheck(false);
-            listData.get(position).setRemark("-");
-            listData.get(position).setAdminRemark("-");
-            listData.get(position).setNameType("-");
-            listData.get(position).setDateRemark("-");
-            txt_remark.setText(listData.get(position).getRemark());
-            txt_remark_admin.setText(listData.get(position).getAdminRemark());
-            txt_remark_type.setText(listData.get(position).getNameType());
-            txt_remark_date.setText(listData.get(position).getDateRemark());
-            txtitemname.setTextColor(Color.BLACK);
-            txt_caption_qty.setTextColor(Color.BLACK);
-            txt_qty.setTextColor(Color.BLACK);
-            txt_remark.setTextColor(Color.BLACK);
-            txt_remark_admin.setTextColor(Color.BLACK);
-            txt_remark_type.setTextColor(Color.BLACK);
-            txt_remark_date.setTextColor(Color.BLACK);
-            //checkbox.setChecked(true);
-            checkbox.setVisibility(View.VISIBLE);
-            un_checkbox.setVisibility(View.GONE);
-            if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
-                listData.get(position).setCheck(true);
+            if (!model.getNameType().equals("") && model.getAdminApprove().equals("0")){
+                int IsRemarkRound_RemarlAdmin = Integer.parseInt(listData.get(position).getIsRemarkRound_RemarlAdmin());
+                int IsRemarkRound = Integer.parseInt(listData.get(position).getIsRemarkRound());
+                if (IsRemarkRound_RemarlAdmin == IsRemarkRound){
+                    txtitemname.setTextColor(Color.RED);
+                    txt_caption_qty.setTextColor(Color.RED);
+                    txt_qty.setTextColor(Color.RED);
+                    txt_remark.setTextColor(Color.RED);
+                    txt_remark_admin.setTextColor(Color.RED);
+                    txt_remark_type.setTextColor(Color.RED);
+                    txt_remark_date.setTextColor(Color.RED);
+                }else {
+                    listData.get(position).setRemark("-");
+                    listData.get(position).setAdminRemark("-");
+                    listData.get(position).setNameType("-");
+                    listData.get(position).setDateRemark("-");
+                    if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
+                        listData.get(position).setCheck(true);
+                    }else {
+                        listData.get(position).setCheck(false);
+                    }
+                    txt_remark.setText(listData.get(position).getRemark());
+                    txt_remark_admin.setText(listData.get(position).getAdminRemark());
+                    txt_remark_type.setText(listData.get(position).getNameType());
+                    txt_remark_date.setText(listData.get(position).getDateRemark());
+                    txtitemname.setTextColor(Color.GRAY);
+                    txt_caption_qty.setTextColor(Color.GRAY);
+                    txt_qty.setTextColor(Color.GRAY);
+                    txt_remark.setTextColor(Color.GRAY);
+                    txt_remark_admin.setTextColor(Color.GRAY);
+                    txt_remark_type.setTextColor(Color.GRAY);
+                    txt_remark_date.setTextColor(Color.GRAY);
+                    //checkbox.setChecked(true);
+                    checkbox.setVisibility(View.VISIBLE);
+                    un_checkbox.setVisibility(View.GONE);
+                }
+            }else if (model.getAdminApprove().equals("1")){
+                listData.get(position).setRemark("-");
+                listData.get(position).setAdminRemark("-");
+                listData.get(position).setNameType("-");
+                listData.get(position).setDateRemark("-");
+                if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
+                    listData.get(position).setCheck(true);
+                }else {
+                    listData.get(position).setCheck(false);
+                }
+                txt_remark.setText(listData.get(position).getRemark());
+                txt_remark_admin.setText(listData.get(position).getAdminRemark());
+                txt_remark_type.setText(listData.get(position).getNameType());
+                txt_remark_date.setText(listData.get(position).getDateRemark());
+                txtitemname.setTextColor(Color.GRAY);
+                txt_caption_qty.setTextColor(Color.GRAY);
+                txt_qty.setTextColor(Color.GRAY);
+                txt_remark.setTextColor(Color.GRAY);
+                txt_remark_admin.setTextColor(Color.GRAY);
+                txt_remark_type.setTextColor(Color.GRAY);
+                txt_remark_date.setTextColor(Color.GRAY);
+                //checkbox.setChecked(true);
+                checkbox.setVisibility(View.VISIBLE);
+                un_checkbox.setVisibility(View.GONE);
+                if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
+                    listData.get(position).setCheck(true);
+                }else {
+                    listData.get(position).setCheck(false);
+                }
             }else {
                 listData.get(position).setCheck(false);
+                listData.get(position).setRemark("-");
+                listData.get(position).setAdminRemark("-");
+                listData.get(position).setNameType("-");
+                listData.get(position).setDateRemark("-");
+                txt_remark.setText(listData.get(position).getRemark());
+                txt_remark_admin.setText(listData.get(position).getAdminRemark());
+                txt_remark_type.setText(listData.get(position).getNameType());
+                txt_remark_date.setText(listData.get(position).getDateRemark());
+                txtitemname.setTextColor(Color.BLACK);
+                txt_caption_qty.setTextColor(Color.BLACK);
+                txt_qty.setTextColor(Color.BLACK);
+                txt_remark.setTextColor(Color.BLACK);
+                txt_remark_admin.setTextColor(Color.BLACK);
+                txt_remark_type.setTextColor(Color.BLACK);
+                txt_remark_date.setTextColor(Color.BLACK);
+                //checkbox.setChecked(true);
+                checkbox.setVisibility(View.VISIBLE);
+                un_checkbox.setVisibility(View.GONE);
+                if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
+                    listData.get(position).setCheck(true);
+                }else {
+                    listData.get(position).setCheck(false);
+                }
             }
         }
-
 //        checkbox.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
