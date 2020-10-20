@@ -340,8 +340,13 @@ public class CheckListAdapter extends ArrayAdapter {
         }
 
         if (listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
-            checkbox.setVisibility(View.GONE);
-            un_checkbox.setVisibility(View.VISIBLE);
+            if (listData.get(position).getInternal().equals("0")){
+                checkbox.setVisibility(View.GONE);
+                un_checkbox.setVisibility(View.VISIBLE);
+            }else {
+                checkbox.setVisibility(View.VISIBLE);
+                un_checkbox.setVisibility(View.GONE);
+            }
         }
         txt_remark.setText(listData.get(position).getRemark());
         txt_remark_admin.setText(listData.get(position).getAdminRemark());

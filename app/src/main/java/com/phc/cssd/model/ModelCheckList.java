@@ -23,6 +23,7 @@ public class ModelCheckList {
     String configuration;
     String IsRemarkRound_RemarlAdmin;
     String IsRemarkRound;
+    String Internal = "0";
     boolean IsCheck = false;
 
     public ModelCheckList(String configuration, String IsRemarkRound_RemarlAdmin, String IsRemarkRound, String RemarkDocNo, String IsPicture, String QtyItemDetail, String AdminApprove, String RowID, String ID, String send_ID, String itemcode, String itemname, String Item_Detail_ID,String qty, String adminRemark, String dateRemark, String remark, String nameType, String picture_set, String picture_detail, String usage_item_code, String usage_item_name, boolean isCheck) {
@@ -49,6 +50,14 @@ public class ModelCheckList {
         this.usage_item_code = usage_item_code;
         this.usage_item_name = usage_item_name;
         IsCheck = isCheck;
+    }
+
+    public String getInternal() {
+        return Internal;
+    }
+
+    public void setInternal(String internal) {
+        Internal = internal;
     }
 
     public String getConfiguration() {

@@ -166,6 +166,11 @@ public class CssdCheckList extends Activity {
                 if (ch1_un.getVisibility() == View.GONE){
                     ch1_un.setVisibility(View.VISIBLE);
                     ch1.setVisibility(View.GONE);
+                    for (int i = 0 ; i < MODEL_CHECK_LIST.size() ; i ++){
+                        MODEL_CHECK_LIST.get(i).setInternal("0");
+                        ArrayAdapter adapter = new CheckListAdapter(CssdCheckList.this, MODEL_CHECK_LIST);
+                        list_check.setAdapter(adapter);
+                    }
                 }
             }
         });
@@ -196,6 +201,11 @@ public class CssdCheckList extends Activity {
                 if (ch1.getVisibility() == View.GONE){
                     ch1.setVisibility(View.VISIBLE);
                     ch1_un.setVisibility(View.GONE);
+                    for (int i = 0 ; i < MODEL_CHECK_LIST.size() ; i ++){
+                        MODEL_CHECK_LIST.get(i).setInternal("1");
+                        ArrayAdapter adapter = new CheckListAdapter(CssdCheckList.this, MODEL_CHECK_LIST);
+                        list_check.setAdapter(adapter);
+                    }
                 }
             }
         });
