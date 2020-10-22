@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.phc.core.connect.HTTPConnect;
 import com.phc.cssd.R;
 import com.phc.cssd.adapter.AuxSterileProgramItem;
+import com.phc.cssd.adapter.AuxSterileProgramItem_Sterile;
 import com.phc.cssd.properties.Response_Aux;
 import com.phc.cssd.properties.Response_Item_sterileprogram;
 import com.phc.cssd.url.getUrl;
@@ -31,12 +32,15 @@ import java.util.HashMap;
 public class MachineAndWash extends Activity {
     ArrayList<Response_Item_sterileprogram> ArrayItem = new ArrayList<Response_Item_sterileprogram>();
     ArrayList<Response_Aux> ArrayProgram = new ArrayList<Response_Aux>();
+    ArrayList<Response_Aux> ArrayProgram_Sterile = new ArrayList<Response_Aux>();
     Button btnsave;
     ImageView backbtn;
     CheckBox cball;
+    CheckBox chx_all_1;
 
     ListView list_item;
     ListView list_program;
+    ListView list_program_1;
 
     String TAG_RESULTS="result";
     String Item_Code="";
@@ -67,10 +71,13 @@ public class MachineAndWash extends Activity {
             public void onClick(View v) {
                 if(getCountselected().equals("0")){
                     LinkProcess("",getCountselected(),Item_Code);
+                    LinkProcess_Sterile("",getCountselected_Sterile(),Item_Code);
                 }else{
                     LinkProcess(getSelectedcheckbox(),getCountselected(),Item_Code);
+                    LinkProcess_Sterile(getSelectedcheckbox_Sterile(),getCountselected_Sterile(),Item_Code);
                 }
                 ListData_Process(Item_Code);
+                ListData_Process_sterile(Item_Code);
                 cball.setChecked(false);
                 finish_close();
             }
@@ -78,13 +85,21 @@ public class MachineAndWash extends Activity {
 
 
         cball = (CheckBox) findViewById(R.id.chx_all);
+        chx_all_1 = (CheckBox) findViewById(R.id.chx_all_1);
         cball.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 toggleCheckboxAll_link(cball.isChecked());
             }
         });
+        chx_all_1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                toggleCheckboxAll_link_Sterile(chx_all_1.isChecked());
+            }
+        });
         ListData_Process(Item_Code);
+        ListData_Process_sterile(Item_Code);
     }
 
     private void finish_close(){
@@ -97,6 +112,14 @@ public class MachineAndWash extends Activity {
         }
         final ListView lv1 = (ListView) findViewById(R.id.list_program);
         lv1.setAdapter(new AuxSterileProgramItem( MachineAndWash.this, ArrayProgram));
+    }
+
+    private void toggleCheckboxAll_link_Sterile(Boolean temp) {
+        for (int i=0;i<ArrayProgram_Sterile.size();i++){
+            ArrayProgram_Sterile.get(i).setIs_Check(temp);
+        }
+        final ListView lv1 = (ListView) findViewById(R.id.list_program_1);
+        lv1.setAdapter(new AuxSterileProgramItem_Sterile( MachineAndWash.this, ArrayProgram_Sterile));
     }
 
     public String getSelectedcheckbox(){
@@ -113,11 +136,38 @@ public class MachineAndWash extends Activity {
         return Arraysel;
     }
 
+    public String getSelectedcheckbox_Sterile(){
+        String Arraysel = "";
+        for (int i=0;i<ArrayProgram_Sterile.size();i++){
+            if(i<ArrayProgram_Sterile.size()) {
+                if(ArrayProgram_Sterile.get(i).isIs_Check()) {
+                    Arraysel += ArrayProgram_Sterile.get(i).getFields2() + ",";
+                }
+            }
+        }
+        Arraysel = Arraysel.substring(0, Arraysel.length() - 1);
+        Log.d("Sel", Arraysel);
+        return Arraysel;
+    }
+
     public String getCountselected(){
         int count = 0;
         for (int i=0;i<ArrayProgram.size();i++){
             if(i<ArrayProgram.size()) {
                 if(ArrayProgram.get(i).isIs_Check()) {
+                    count++;
+                }
+            }
+        }
+        Log.d("SEL", count+"");
+        return String.valueOf(count);
+    }
+
+    public String getCountselected_Sterile(){
+        int count = 0;
+        for (int i=0;i<ArrayProgram_Sterile.size();i++){
+            if(i<ArrayProgram_Sterile.size()) {
+                if(ArrayProgram_Sterile.get(i).isIs_Check()) {
                     count++;
                 }
             }
@@ -161,6 +211,39 @@ public class MachineAndWash extends Activity {
         }
 
         LinkProcess ru = new LinkProcess();
+        ru.execute(SelectedCB,Countn,itemcode);
+    }
+
+    public void LinkProcess_Sterile(String SelectedCB,String Countn,String itemcode) {
+        class LinkProcess_Sterile extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                try {
+                    JSONObject jsonObj = new JSONObject(s);
+                    setRs = jsonObj.getJSONArray(TAG_RESULTS);
+                    String Depsel = "";
+                    for(int i=0;i<setRs.length();i++){
+                        JSONObject c = setRs.getJSONObject(i);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("Selected",params[0]);
+                data.put("Count",params[1]);
+                data.put("Itemcode",params[2]);
+                String result = ruc.sendPostRequest(iFt.reCreateSterleProgram_Item(),data);
+                return  result;
+            }
+        }
+
+        LinkProcess_Sterile ru = new LinkProcess_Sterile();
         ru.execute(SelectedCB,Countn,itemcode);
     }
 
@@ -258,6 +341,55 @@ public class MachineAndWash extends Activity {
         }
 
         ListData_Process ru = new ListData_Process();
+        ru.execute( Itemcode );
+    }
+
+    public void ListData_Process_sterile(String Itemcode) {
+        class ListData_Process_sterile extends AsyncTask<String, Void, String> {
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                //loading = ProgressDialog.show(MachineAndSterile.this, "Please Wait",null, true, true);
+            }
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                //loading.dismiss();
+                try {
+                    Response_Aux newsData;
+                    JSONObject jsonObj = new JSONObject(s);
+                    setRs = jsonObj.getJSONArray(TAG_RESULTS);
+                    ArrayProgram_Sterile.clear();
+                    for(int i=0;i<setRs.length();i++){
+                        newsData = new Response_Aux();
+                        JSONObject c = setRs.getJSONObject(i);
+                        newsData.setFields2(c.getString("Id"));
+                        newsData.setFields1(c.getString("SterileProgram"));
+                        if(c.getString("checked").equals("true")){
+                            newsData.setIs_Check(true);
+                        }
+                        ArrayProgram_Sterile.add( newsData );
+                    }
+                    final ListView lv1 = (ListView) findViewById(R.id.list_program_1);
+                    lv1.setAdapter(new AuxSterileProgramItem_Sterile( MachineAndWash.this, ArrayProgram_Sterile));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("Itemcode",params[0]);
+                String result = ruc.sendPostRequest(iFt.getListProgram_Item(),data);
+                Log.d("DKHVKCHD", result + "");
+                Log.d("DKHVKCHD", result + "");
+                return  result;
+            }
+        }
+
+        ListData_Process_sterile ru = new ListData_Process_sterile();
         ru.execute( Itemcode );
     }
 

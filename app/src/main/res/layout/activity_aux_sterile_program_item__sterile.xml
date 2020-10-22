@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tFields1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:text="TextView"
+            android:textSize="18sp" />
+
+        <CheckBox
+            android:id="@+id/chx_change"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:buttonTint="@color/colorBlue"
+            android:scaleX="1.4"
+            android:scaleY="1.4"/>
+    </LinearLayout>
+
+</LinearLayout>

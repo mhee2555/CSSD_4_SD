@@ -11,8 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SystemSettingToolsActivity"></activity>
-        <activity android:name=".SystemSettingActivity" />
+        <activity android:name=".adapter.AuxSterileProgramItem_Sterile"></activity>
+        <activity android:name=".SystemSettingToolsActivity" />
         <activity android:name=".MainActivity">
 
             <!-- <intent-filter> -->
@@ -135,8 +135,7 @@
         <activity
             android:name=".SettingExprieActivity"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <!-- tools:ignore="Instantiatable" /> -->
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" /> <!-- tools:ignore="Instantiatable" /> -->
         <activity
             android:name=".MasterData_2Field"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />

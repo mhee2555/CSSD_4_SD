@@ -5053,6 +5053,7 @@ public class CssdWash extends AppCompatActivity {
                 }
             }
 
+            @SuppressLint("WrongThread")
             @Override
             protected String doInBackground(String... params) {
 
@@ -5068,6 +5069,8 @@ public class CssdWash extends AppCompatActivity {
                 }else if (!edit_wash_type.getText().toString().equals("")){
                     data.put("p_id", Integer.toString(WASH_PROCESS_NUMBER_ACTIVE));
                 }else if (sel.equals("0") && !edit_wash_type.getText().toString().equals("")){
+                    data.put("p_id", Integer.toString(WASH_PROCESS_NUMBER_ACTIVE));
+                }else {
                     data.put("p_id", Integer.toString(WASH_PROCESS_NUMBER_ACTIVE));
                 }
 

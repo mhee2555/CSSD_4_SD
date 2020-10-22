@@ -119,6 +119,7 @@ public class Item_newlayout extends AppCompatActivity {
     private Button tab_detail_1;
     private Button tab_detail_2;
     private Button tab_detail_3;
+    private Button btn_create_item_stock_dept;
     private LinearLayout linear_layout_1;
     private LinearLayout linear_layout_2;
     private LinearLayout linear_layout_3;
@@ -150,8 +151,6 @@ public class Item_newlayout extends AppCompatActivity {
     private RadioButton radio_unused;
     private RadioButton radio_reused;
     private RadioButton radio_unreused;
-    private CheckBox radio_used_department;
-    private CheckBox radio_used_multiple_department;
     private CheckBox chkIsSpecial;
     private CheckBox chkNoWash;
     private CheckBox chkisWashdept;
@@ -201,7 +200,6 @@ public class Item_newlayout extends AppCompatActivity {
     getUrl iFt = new getUrl();
     private HTTPConnect httpConnect = new HTTPConnect();
     private String B_ID = null;
-    SearchableSpinner etxt_dept;
     ArrayAdapter<String> adapter_spinner;
     private ArrayList<String> array_deptsp = new ArrayList<String>();
     private ArrayList<String> list_sp = new ArrayList<String>();
@@ -223,10 +221,6 @@ public class Item_newlayout extends AppCompatActivity {
         initialize();
 
         StratPage();
-
-        etxt_dept.setTitle("เลือกแผนก");
-        etxt_dept.setPositiveButton("");
-        etxt_dept.requestFocus();
 
     }
 
@@ -270,6 +264,7 @@ public class Item_newlayout extends AppCompatActivity {
             tab_detail_1 = ( Button ) findViewById(R.id.tab_detail_1);
             tab_detail_2 = ( Button ) findViewById(R.id.tab_detail_2);
             tab_detail_3 = ( Button ) findViewById(R.id.tab_detail_3);
+            btn_create_item_stock_dept = ( Button ) findViewById(R.id.btn_create_item_stock_dept);
             linear_layout_1 = ( LinearLayout ) findViewById(R.id.linear_layout_1);
             linear_layout_2 = ( LinearLayout ) findViewById(R.id.linear_layout_2);
             linear_layout_3 = ( LinearLayout ) findViewById(R.id.linear_layout_3);
@@ -280,10 +275,6 @@ public class Item_newlayout extends AppCompatActivity {
             radio_unused = ( RadioButton ) findViewById(R.id.radio_unused);
             radio_reused = ( RadioButton ) findViewById(R.id.radio_reused);
             radio_unreused = ( RadioButton ) findViewById(R.id.radio_unreused);
-            radio_used_department = ( CheckBox ) findViewById(R.id.radio_used_department);
-            radio_used_multiple_department = ( CheckBox ) findViewById(R.id.radio_used_multiple_department);
-            radio_used_department.setChecked(true);
-            radio_used_multiple_department.setChecked(true);
             getDept();
             chkIsSpecial = ( CheckBox ) findViewById(R.id.chkIsSpecial);
             chkNoWash = ( CheckBox ) findViewById(R.id.chkNoWash);
@@ -300,7 +291,6 @@ public class Item_newlayout extends AppCompatActivity {
             txt_unit = ( TextView ) findViewById(R.id.txt_unit);
             edt_life = ( TextView ) findViewById(R.id.edt_life);
             txt_department = ( TextView ) findViewById(R.id.txt_department);
-            etxt_dept = ( SearchableSpinner ) findViewById(R.id.etxt_dept);
             list_set_item = ( ListView ) findViewById(R.id.list_set_item);
             img_item = ( ImageView ) findViewById(R.id.img_item);
             img_item1 = ( ImageView ) findViewById(R.id.img_item1);
@@ -378,7 +368,6 @@ public class Item_newlayout extends AppCompatActivity {
             //btn_create_item_stock.setBackgroundResource(R.drawable.button);
             // btn_open_sterile_program_item.setTextColor(Color.BLACK);
             //btn_create_item_stock.setTextColor(Color.BLACK);
-
 
             radio_type_one.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -566,7 +555,7 @@ public class Item_newlayout extends AppCompatActivity {
 
             btn_save_item.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    if (!edt_item_name.getText().toString().equals("")&&!txt_unit.getText().toString().equals("") &&!txt_label.getText().toString().equals("")&&!etxt_dept.getSelectedItem().equals("")) {
+                    if (!edt_item_name.getText().toString().equals("")&&!txt_unit.getText().toString().equals("") &&!txt_label.getText().toString().equals("")) {
                         if (edt_item_code1.getText().toString().length() < 6) {
                             Toast.makeText(Item_newlayout.this, "รหัสใช้งานต้องมีจำนวนอักษร 6 ตัวอักษรเท่านั้น !!", Toast.LENGTH_SHORT).show();
                         } else {
@@ -731,30 +720,6 @@ public class Item_newlayout extends AppCompatActivity {
                 }
             });
 
-//            txt_department.addTextChangedListener(new TextWatcher() {
-//                @Override
-//                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//                }
-//
-//                @Override
-//                public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                    if (s.toString().length() > 0) {
-//                        EditText9 = true;
-//                        if (checkAllTrue())
-//                            btn_save_item.setBackgroundResource(R.drawable.bt_save1);
-//                    } else {
-//                        EditText9 = false;
-//                        btn_save_item.setBackgroundResource(R.drawable.bt_save1_grey);
-//                    }
-//                }
-//
-//                @Override
-//                public void afterTextChanged(Editable s) {
-//
-//                }
-//            });
-
             limit_count.setOnFocusChangeListener(new View.OnFocusChangeListener(){
                 public void onFocusChange(View v, boolean hasFocus){
                     if (hasFocus) ((EditText)v).selectAll();
@@ -800,6 +765,7 @@ public class Item_newlayout extends AppCompatActivity {
                             btn_open_wash_program_item.setBackgroundResource(R.drawable.ss_bt_program_wash);
                             btn_open_sterile_program_item.setBackgroundResource(R.drawable.ss_bt_program);
                             btn_create_item_stock.setBackgroundResource(R.drawable.bt_stock_enable2);
+                            btn_create_item_stock_dept.setBackgroundResource(R.drawable.ss_bt_adddepartment_enable);
                             bt_step.setImageResource(R.drawable.ss_ic_step2_enable);
                             bt_step2.setImageResource(R.drawable.ss_ic_step3_enable);
                             bt_step3.setImageResource(R.drawable.ss_ic_step4_enable_new);
@@ -812,6 +778,7 @@ public class Item_newlayout extends AppCompatActivity {
                             btn_open_wash_program_item.setBackgroundResource(R.drawable.ss_bt_program_wash2);
                             btn_open_sterile_program_item.setBackgroundResource(R.drawable.ss_bt_program_disable);
                             btn_create_item_stock.setBackgroundResource(R.drawable.bt_stock_disable2);
+                            btn_create_item_stock_dept.setBackgroundResource(R.drawable.ss_bt_adddepartment_disable);
                             bt_step.setImageResource(R.drawable.ss_ic_step2_disable);
                             bt_step2.setImageResource(R.drawable.ss_ic_step3_disable);
                             bt_step3.setImageResource(R.drawable.ss_ic_step4_disable_new);
@@ -873,6 +840,13 @@ public class Item_newlayout extends AppCompatActivity {
             tab_detail_1 = ( Button ) findViewById(R.id.tab_detail_1);
             tab_detail_2 = ( Button ) findViewById(R.id.tab_detail_2);
             tab_detail_3 = ( Button ) findViewById(R.id.tab_detail_3);
+            btn_create_item_stock_dept = ( Button ) findViewById(R.id.btn_create_item_stock_dept);
+            btn_create_item_stock_dept.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //displayStockdetail();
+                    onOpenItemStockDepartment();
+                }
+            });
             linear_layout_1 = ( LinearLayout ) findViewById(R.id.linear_layout_1);
             linear_layout_2 = ( LinearLayout ) findViewById(R.id.linear_layout_2);
             linear_layout_3 = ( LinearLayout ) findViewById(R.id.linear_layout_3);
@@ -883,26 +857,6 @@ public class Item_newlayout extends AppCompatActivity {
             radio_unused = ( RadioButton ) findViewById(R.id.radio_unused);
             radio_reused = ( RadioButton ) findViewById(R.id.radio_reused);
             radio_unreused = ( RadioButton ) findViewById(R.id.radio_unreused);
-            radio_used_department = ( CheckBox ) findViewById(R.id.radio_used_department);
-            radio_used_multiple_department = ( CheckBox ) findViewById(R.id.radio_used_multiple_department);
-            radio_used_department.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (radio_used_department.isChecked()) {
-                        DepCheck = "1";
-                        radio_used_department.setChecked(true);
-                        radio_used_multiple_department.setChecked(false);
-                    }
-                }
-            });
-            radio_used_multiple_department.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (radio_used_multiple_department.isChecked()) {
-                        DepCheck = "0";
-                        radio_used_department.setChecked(false);
-                        radio_used_multiple_department.setChecked(true);
-                    }
-                }
-            });
             chkIsSpecial = ( CheckBox ) findViewById(R.id.chkIsSpecial);
             chkNoWash = ( CheckBox ) findViewById(R.id.chkNoWash);
             chkNoWash.setOnClickListener(new View.OnClickListener() {
@@ -924,7 +878,6 @@ public class Item_newlayout extends AppCompatActivity {
             txt_unit = ( TextView ) findViewById(R.id.txt_unit);
             edt_life = ( TextView ) findViewById(R.id.edt_life);
             txt_department = ( TextView ) findViewById(R.id.txt_department);
-            etxt_dept = ( SearchableSpinner ) findViewById(R.id.etxt_dept);
             list_set_item = ( ListView ) findViewById(R.id.list_set_item);
             img_item = ( ImageView ) findViewById(R.id.img_item);
             img_item1 = ( ImageView ) findViewById(R.id.img_item1);
@@ -964,7 +917,7 @@ public class Item_newlayout extends AppCompatActivity {
             save_im.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!edt_item_name.getText().toString().equals("")&&!txt_unit.getText().toString().equals("") &&!txt_label.getText().toString().equals("")&&!etxt_dept.getSelectedItem().equals("")) {
+                    if (!edt_item_name.getText().toString().equals("")&&!txt_unit.getText().toString().equals("") &&!txt_label.getText().toString().equals("")) {
                         uploadImage();
                         Toast.makeText(Item_newlayout.this, "บันทึกรูปภาพสำเร็จ", Toast.LENGTH_SHORT).show();
                     }else {
@@ -974,7 +927,7 @@ public class Item_newlayout extends AppCompatActivity {
             });
             btn_save_item_1.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    if (!edt_item_name.getText().toString().equals("")&&!txt_unit.getText().toString().equals("") &&!txt_label.getText().toString().equals("")&&!etxt_dept.getSelectedItem().equals("")) {
+                    if (!edt_item_name.getText().toString().equals("")&&!txt_unit.getText().toString().equals("") &&!txt_label.getText().toString().equals("")) {
                         if (edt_item_code1.getText().toString().length() > 6) {
                             Toast.makeText(Item_newlayout.this, "รหัสใช้งานต้องมีจำนวนอักษร 6 ตัวอักษรเท่านั้น !!", Toast.LENGTH_SHORT).show();
                         } else {
@@ -1053,6 +1006,7 @@ public class Item_newlayout extends AppCompatActivity {
                     btn_open_sterile_program_item.setBackgroundResource(R.drawable.ss_bt_program_disable);
                     btn_open_wash_program_item.setBackgroundResource(R.drawable.ss_bt_program_wash2);
                     btn_create_item_stock.setBackgroundResource(R.drawable.bt_stock_disable2);
+                    btn_create_item_stock_dept.setBackgroundResource(R.drawable.ss_bt_adddepartment_disable);
                     save_im.setBackgroundResource(R.drawable.bt_save_newitem_disable_new);
                     bt_step2.setImageResource(R.drawable.ss_ic_step3_disable);
                     bt_step3.setImageResource(R.drawable.ss_ic_step4_disable_new);
@@ -1102,6 +1056,7 @@ public class Item_newlayout extends AppCompatActivity {
                     //activeTab(6);
                     onClearForm();
                     openDropDown("item");
+                    edt_item_code1.setText("");
                     IsNewSave = 0;
                     ItemCode = "";
                     ItemCode1 = "";
@@ -1115,6 +1070,7 @@ public class Item_newlayout extends AppCompatActivity {
                     btn_open_sterile_program_item.setBackgroundResource(R.drawable.ss_bt_program_disable);
                     btn_open_wash_program_item.setBackgroundResource(R.drawable.ss_bt_program_wash2);
                     btn_create_item_stock.setBackgroundResource(R.drawable.bt_stock_disable2);
+                    btn_create_item_stock_dept.setBackgroundResource(R.drawable.ss_bt_adddepartment_disable);
                     save_im.setBackgroundResource(R.drawable.bt_save_newitem_disable_new);
                     bt_step2.setImageResource(R.drawable.ss_ic_step3_disable);
                     bt_step3.setImageResource(R.drawable.ss_ic_step4_disable_new);
@@ -1256,7 +1212,7 @@ public class Item_newlayout extends AppCompatActivity {
 
             btn_create_item_stock.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    if (!edt_item_name.getText().toString().equals("")&&!txt_unit.getText().toString().equals("") &&!txt_label.getText().toString().equals("")&&!etxt_dept.getSelectedItem().equals("")) {
+                    if (!edt_item_name.getText().toString().equals("")&&!txt_unit.getText().toString().equals("") &&!txt_label.getText().toString().equals("")) {
                         displayStockdetail();
                     }else {
                         Toast.makeText(Item_newlayout.this, "กรุณากรอกข้อมูลที่สำคัญให้ครบ!!!", Toast.LENGTH_SHORT).show();
@@ -1266,7 +1222,7 @@ public class Item_newlayout extends AppCompatActivity {
 
             btn_open_sterile_program_item.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    if (!edt_item_name.getText().toString().equals("")&&!txt_unit.getText().toString().equals("") &&!txt_label.getText().toString().equals("")&&!etxt_dept.getSelectedItem().equals("")) {
+                    if (!edt_item_name.getText().toString().equals("")&&!txt_unit.getText().toString().equals("") &&!txt_label.getText().toString().equals("")) {
                         Intent i = new Intent(Item_newlayout.this, MachineAndSterile.class);
                         i.putExtra("Item_Code", getF_edt_item_code1()+"");
                         startActivity(i);
@@ -1278,7 +1234,7 @@ public class Item_newlayout extends AppCompatActivity {
 
             btn_open_wash_program_item.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    if (!edt_item_name.getText().toString().equals("")&&!txt_unit.getText().toString().equals("") &&!txt_label.getText().toString().equals("")&&!etxt_dept.getSelectedItem().equals("")) {
+                    if (!edt_item_name.getText().toString().equals("")&&!txt_unit.getText().toString().equals("") &&!txt_label.getText().toString().equals("")) {
                         Intent i = new Intent(Item_newlayout.this, MachineAndWash.class);
                         i.putExtra("Item_Code", getF_edt_item_code1()+"");
                         startActivity(i);
@@ -1476,7 +1432,7 @@ public class Item_newlayout extends AppCompatActivity {
             bt_displaystockdetail = ( Button ) findViewById(R.id.bt_displaystockdetail);
             bt_displaystockdetail.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    if (!edt_item_name.getText().toString().equals("")&&!txt_unit.getText().toString().equals("") &&!txt_label.getText().toString().equals("")&&!etxt_dept.getSelectedItem().equals("")) {
+                    if (!edt_item_name.getText().toString().equals("")&&!txt_unit.getText().toString().equals("") &&!txt_label.getText().toString().equals("")) {
                         displayStockdetail();
                     } else {
                         Toast.makeText(Item_newlayout.this, "กรุณากรอกข้อมูลที่สำคัญให้ครบ!!!", Toast.LENGTH_SHORT).show();
@@ -1485,74 +1441,74 @@ public class Item_newlayout extends AppCompatActivity {
             });
             getSupportActionBar().hide();
         }
-        getdept_spinner();
+        //getdept_spinner();
     }
 
-    public void getdept_spinner() {
-        getdeptsp("x");
-        etxt_dept.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (etxt_dept.toString().length() > 0) {
-                    EditText9 = true;
-                    if (checkAllTrue())
-                        btn_save_item.setBackgroundResource(R.drawable.bt_save1);
-                } else {
-                    EditText9 = false;
-                    btn_save_item.setBackgroundResource(R.drawable.bt_save1_grey);
-                }
-            }
+//    public void getdept_spinner() {
+//        getdeptsp("x");
+//        etxt_dept.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                if (etxt_dept.toString().length() > 0) {
+//                    EditText9 = true;
+//                    if (checkAllTrue())
+//                        btn_save_item.setBackgroundResource(R.drawable.bt_save1);
+//                } else {
+//                    EditText9 = false;
+//                    btn_save_item.setBackgroundResource(R.drawable.bt_save1_grey);
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+//    }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
-
-    public void getdeptsp(String x) {
-        class getdeptsp extends AsyncTask<String, Void, String> {
-            // variable
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                try {
-                    JSONObject jsonObj = new JSONObject(s);
-                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
-                    array_deptsp.clear();
-                    array_deptsp.add("");
-                    list_sp.add("");
-                    for (int i = 0; i < setRs.length(); i++) {
-
-                        JSONObject c = setRs.getJSONObject(i);
-                        list_sp.add(c.getString("xName"));
-                        array_deptsp.add(c.getString("xID"));
-
-                    }
-                    adapter_spinner = new ArrayAdapter<String>(Item_newlayout.this, android.R.layout.simple_spinner_dropdown_item, list_sp);
-                    adapter_spinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    etxt_dept.setAdapter(adapter_spinner);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-                HashMap<String, String> data = new HashMap<String, String>();
-                data.put("x", params[0]);
-                data.put("B_ID",B_ID);
-                String result = ruc.sendPostRequest(iFt.getdepartmentsp(), data);
-                return result;
-            }
-        }
-        getdeptsp ru = new getdeptsp();
-        ru.execute(x);
-    }
+//    public void getdeptsp(String x) {
+//        class getdeptsp extends AsyncTask<String, Void, String> {
+//            // variable
+//            @Override
+//            protected void onPreExecute() {
+//                super.onPreExecute();
+//            }
+//            @Override
+//            protected void onPostExecute(String s) {
+//                super.onPostExecute(s);
+//                try {
+//                    JSONObject jsonObj = new JSONObject(s);
+//                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
+//                    array_deptsp.clear();
+//                    array_deptsp.add("");
+//                    list_sp.add("");
+//                    for (int i = 0; i < setRs.length(); i++) {
+//
+//                        JSONObject c = setRs.getJSONObject(i);
+//                        list_sp.add(c.getString("xName"));
+//                        array_deptsp.add(c.getString("xID"));
+//
+//                    }
+//                    adapter_spinner = new ArrayAdapter<String>(Item_newlayout.this, android.R.layout.simple_spinner_dropdown_item, list_sp);
+//                    adapter_spinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                    etxt_dept.setAdapter(adapter_spinner);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            protected String doInBackground(String... params) {
+//                HashMap<String, String> data = new HashMap<String, String>();
+//                data.put("x", params[0]);
+//                data.put("B_ID",B_ID);
+//                String result = ruc.sendPostRequest(iFt.getdepartmentsp(), data);
+//                return result;
+//            }
+//        }
+//        getdeptsp ru = new getdeptsp();
+//        ru.execute(x);
+//    }
 
     public void startUserSession() {
         timer = new Timer();
@@ -1677,7 +1633,7 @@ public class Item_newlayout extends AppCompatActivity {
     }
 
     public boolean checkAllTrue() {
-        if (EditText1 && EditText3 && EditText7 && EditText8 && EditText9)
+        if (EditText1 && EditText3 && EditText7 && EditText8)
             //if (EditText1 && EditText2 && EditText3 && EditText4 &&EditText5 && EditText6 && EditText7 && EditText8 && EditText9)
             return true;
         return false;
@@ -1743,10 +1699,7 @@ public class Item_newlayout extends AppCompatActivity {
         radio_unused.setChecked(false);
         radio_reused.setChecked(true);
         radio_unreused.setChecked(false);
-        radio_used_department.setChecked(true);
-        radio_used_multiple_department.setChecked(false);
         txt_department = (TextView)findViewById(R.id.txt_department);
-        etxt_dept = (SearchableSpinner) findViewById(R.id.etxt_dept);
         txt_item_type.setText("");
         txt_special.setText("");
         txt_supplier.setText("");
@@ -1758,7 +1711,6 @@ public class Item_newlayout extends AppCompatActivity {
         txt_on_department.setText("");
         txt_unit.setText("");
         txt_department.setText("");
-        etxt_dept.setSelection(0);
         txt_item_type.setContentDescription("");
         txt_special.setContentDescription("");
         txt_supplier.setContentDescription("");
@@ -1770,7 +1722,6 @@ public class Item_newlayout extends AppCompatActivity {
         txt_on_department.setContentDescription("");
         txt_unit.setContentDescription("");
         txt_department.setContentDescription("");
-        etxt_dept.setContentDescription("");
         edt_life.setText("");
         edt_cost_price.setText("");
         edt_sale_price.setText("");
@@ -1848,7 +1799,7 @@ public class Item_newlayout extends AppCompatActivity {
     private void onOpenItemStockDepartment(){
         if(ITEM_ID != null) {
             Intent i = new Intent(Item_newlayout.this, CssdCreateItemStockDepartment.class);
-            i.putExtra("Item_Code", ITEM_ID);
+            i.putExtra("Item_Code", edt_item_code1.getText().toString());
             i.putExtra("Item_Name", edt_item_name.getText().toString());
             i.putExtra("Item_Stock", txt_all_item_stock.getText().toString());
             i.putExtra("userid", userid);
@@ -2152,7 +2103,7 @@ public class Item_newlayout extends AppCompatActivity {
     }
 
     private String getF_txt_on_department() {
-        return String.valueOf(etxt_dept.getSelectedItemPosition());
+        return "20";
     }
 
 
@@ -2386,6 +2337,7 @@ public class Item_newlayout extends AppCompatActivity {
                             btn_create_item_stock.setBackgroundResource(R.drawable.bt_stock_enable2);
                             save_im.setBackgroundResource(R.drawable.bt_save_newitem_new);
                             bt_displaystockdetail.setBackgroundResource(R.drawable.bt_stock_new);
+                            btn_create_item_stock_dept.setBackgroundResource(R.drawable.ss_bt_adddepartment_enable);
                         }else{
                             //bt_step2.setBackgroundResource(R.drawable.ss_ic_step2_disable);
                             bt_step.setImageResource(R.drawable.ss_ic_step2_enable);
@@ -2401,6 +2353,7 @@ public class Item_newlayout extends AppCompatActivity {
                             btn_open_wash_program_item.setBackgroundResource(R.drawable.ss_bt_program_wash);
                             btn_create_item_stock.setBackgroundResource(R.drawable.bt_stock_enable2);
                             bt_displaystockdetail.setBackgroundResource(R.drawable.bt_stock_new);
+                            btn_create_item_stock_dept.setBackgroundResource(R.drawable.ss_bt_adddepartment_enable);
                         }
 
                         chkIsSpecial.setEnabled(!list.get(ix).isSet().equals("0"));
@@ -2428,8 +2381,6 @@ public class Item_newlayout extends AppCompatActivity {
                         radio_unused.setChecked(!list.get(ix).getIsNormal());
                         radio_reused.setChecked(list.get(ix).getIsReuse());
                         radio_unreused.setChecked(!list.get(ix).getIsReuse());
-                        radio_used_department.setChecked(list.get(ix).getSpecialID().equals("1"));
-                        radio_used_multiple_department.setChecked(!list.get(ix).getSpecialID().equals("1"));
                         txt_item_type.setText(list.get(ix).getTyeName());
                         txt_special.setText(list.get(ix).getSpecialName());
                         txt_supplier.setText(list.get(ix).getSuppliername());
@@ -2440,7 +2391,7 @@ public class Item_newlayout extends AppCompatActivity {
                         txt_sterileprocess.setText(list.get(ix).getSterileName());
                         txt_unit.setText(list.get(ix).getUnitName());
                         //txt_department.setText(list.get(ix).getDepName());
-                        CheckUsageContScan(list.get(ix).getDepName());
+                        //CheckUsageContScan(list.get(ix).getDepName());
                         txt_item_type.setContentDescription(list.get(ix).getItemtypeID());
                         txt_special.setContentDescription(list.get(ix).getSpecialID());
                         txt_supplier.setContentDescription(list.get(ix).getSupllierID());
@@ -2451,7 +2402,6 @@ public class Item_newlayout extends AppCompatActivity {
                         txt_sterileprocess.setContentDescription(list.get(ix).getSterileProcessID());
                         txt_unit.setContentDescription(list.get(ix).getUnitID());
                         //txt_department.setContentDescription(list.get(ix).getDepartmentID());
-                        etxt_dept.setContentDescription(list.get(ix).getDepartmentID());
                         edt_life.setText(list.get(ix).getShelflife());
                         //Detail 2
                         edt_cost_price.setText(list.get(ix).getCostPrice());
@@ -2914,7 +2864,6 @@ public class Item_newlayout extends AppCompatActivity {
                             txt_summenuset.setBackgroundResource(R.drawable.textview_column);
                             txt_manuqty.setBackgroundResource(R.drawable.textview_column);
                             txt_manuunit.setBackgroundResource(R.drawable.textview_column);
-
                         }else{
                             //bt_step2.setBackgroundResource(R.drawable.ss_ic_step2_disable);
                             bt_step.setImageResource(R.drawable.ss_ic_step2_enable);
@@ -2948,9 +2897,6 @@ public class Item_newlayout extends AppCompatActivity {
                         radio_reused.setChecked(list.get(ix).getIsReuse());
                         radio_unreused.setChecked(!list.get(ix).getIsReuse());
 
-                        radio_used_department.setChecked(list.get(ix).getSpecialID().equals("1"));
-                        radio_used_multiple_department.setChecked(!list.get(ix).getSpecialID().equals("1"));
-
                         txt_item_type.setText(list.get(ix).getTyeName());
                         txt_special.setText(list.get(ix).getSpecialName());
                         txt_supplier.setText(list.get(ix).getSuppliername());
@@ -2972,15 +2918,11 @@ public class Item_newlayout extends AppCompatActivity {
                         txt_sterileprocess.setContentDescription(list.get(ix).getSterileProcessID());
                         txt_unit.setContentDescription(list.get(ix).getUnitID());
                         //txt_department.setContentDescription(list.get(ix).getDepartmentID());
-                        etxt_dept.setContentDescription(list.get(ix).getDepartmentID());
-
                         edt_life.setText(list.get(ix).getShelflife());
-
                         //Detail 2
                         edt_cost_price.setText(list.get(ix).getCostPrice());
                         edt_sale_price.setText(list.get(ix).getSalePrice());
                         edt_usage_price.setText(list.get(ix).getUsagePrice());
-
                         //Detail 3
                         edt_minimum.setText(list.get(ix).getMinimum());
                         edt_maximum.setText(list.get(ix).getMaximum());
@@ -3475,6 +3417,7 @@ public class Item_newlayout extends AppCompatActivity {
         IsNewSave = 1;
         btn_save_item.setBackgroundResource(R.drawable.bt_save_newitem_disable);
         bt_displaystockdetail.setBackgroundResource(R.drawable.bt_stock_disable_new);
+        btn_create_item_stock_dept.setBackgroundResource(R.drawable.ss_bt_adddepartment_disable);
     }
 
     public void CreateItem() {
@@ -3534,7 +3477,7 @@ public class Item_newlayout extends AppCompatActivity {
                             }
                             edt_item_code1.setEnabled(false);
                             bt_displaystockdetail.setBackgroundResource(R.drawable.bt_stock_new);
-                            if (!edt_item_name.getText().toString().equals("")&&!txt_unit.getText().toString().equals("") &&!txt_label.getText().toString().equals("")&&!etxt_dept.getSelectedItem().equals("")) {
+                            if (!edt_item_name.getText().toString().equals("")&&!txt_unit.getText().toString().equals("") &&!txt_label.getText().toString().equals("")) {
                                 bt_step.setImageResource(R.drawable.ss_ic_step2_enable);
                                 bt_step2.setImageResource(R.drawable.ss_ic_step3_enable);
                                 bt_step3.setImageResource(R.drawable.ss_ic_step4_enable_new);
@@ -3545,6 +3488,7 @@ public class Item_newlayout extends AppCompatActivity {
                                 save_im.setBackgroundResource(R.drawable.bt_save_newitem_new);
                                 btn_open_wash_program_item.setBackgroundResource(R.drawable.ss_bt_program_wash);
                                 btn_create_item_stock.setBackgroundResource(R.drawable.bt_stock_enable2);
+                                btn_create_item_stock_dept.setBackgroundResource(R.drawable.ss_bt_adddepartment_enable);
                             }else {
                                 bt_step.setImageResource(R.drawable.ss_ic_step2_disable);
                                 bt_step2.setImageResource(R.drawable.ss_ic_step3_disable);
@@ -3556,6 +3500,7 @@ public class Item_newlayout extends AppCompatActivity {
                                 save_im.setBackgroundResource(R.drawable.bt_save_newitem_disable_new);
                                 btn_open_wash_program_item.setBackgroundResource(R.drawable.ss_bt_program_wash2);
                                 btn_create_item_stock.setBackgroundResource(R.drawable.bt_stock_disable2);
+                                btn_create_item_stock_dept.setBackgroundResource(R.drawable.ss_bt_adddepartment_disable);
                             }
                             if (getF_radio_type_set().equals("1")){
                                 bt_step3.setImageResource(R.drawable.ss_ic_step4_enable);
@@ -3602,7 +3547,7 @@ public class Item_newlayout extends AppCompatActivity {
                 data.put("p_itemtypeID",getF_txt_item_type());
                 data.put("p_UnitID",getF_txt_unit());
                 data.put("p_SpecialID",getF_txt_special());
-                data.put("p_DepartmentID",getF_txt_on_department());
+                data.put("p_DepartmentID","20");
                 data.put("p_ShelfLifeID","1");
                 data.put("p_Picture",ImageName+"");
                 data.put("p_SetCount",getF_edt_set_count());
@@ -3656,49 +3601,49 @@ public class Item_newlayout extends AppCompatActivity {
         return index;
     }
 
-    public void CheckUsageContScan(final String Dept) {
-        class CheckUsageContScan extends AsyncTask<String, Void, String> {
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            @Override
-            protected void onPostExecute(String result) {
-                super.onPostExecute(result);
-
-                try {
-                    JSONObject jsonObj = new JSONObject(result);
-                    rs = jsonObj.getJSONArray(TAG_RESULTS);
-                    for(int i=0;i<rs.length();i++) {
-                        JSONObject c = rs.getJSONObject(i);
-                        etxt_dept.setSelection(Integer.parseInt(c.getString("ID")));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @SuppressLint("WrongThread")
-            @Override
-            protected String doInBackground(String... params) {
-                HashMap<String, String> data = new HashMap<String,String>();
-                data.put("Detp",Dept);
-                String result = null;
-                try {
-                    result = httpConnect.sendPostRequest(Url.URL + "cssd_dept_id.php", data);
-                    Log.d("DJKHDK",data+"");
-                    Log.d("DJKHDK",result+"");
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-                return result;
-            }
-            // =========================================================================================
-        }
-        CheckUsageContScan obj = new CheckUsageContScan();
-        obj.execute();
-    }
+//    public void CheckUsageContScan(final String Dept) {
+//        class CheckUsageContScan extends AsyncTask<String, Void, String> {
+//            @Override
+//            protected void onPreExecute() {
+//                super.onPreExecute();
+//            }
+//
+//            @Override
+//            protected void onPostExecute(String result) {
+//                super.onPostExecute(result);
+//
+//                try {
+//                    JSONObject jsonObj = new JSONObject(result);
+//                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+//                    for(int i=0;i<rs.length();i++) {
+//                        JSONObject c = rs.getJSONObject(i);
+//                        etxt_dept.setSelection(Integer.parseInt(c.getString("ID")));
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @SuppressLint("WrongThread")
+//            @Override
+//            protected String doInBackground(String... params) {
+//                HashMap<String, String> data = new HashMap<String,String>();
+//                data.put("Detp",Dept);
+//                String result = null;
+//                try {
+//                    result = httpConnect.sendPostRequest(Url.URL + "cssd_dept_id.php", data);
+//                    Log.d("DJKHDK",data+"");
+//                    Log.d("DJKHDK",result+"");
+//                }catch(Exception e){
+//                    e.printStackTrace();
+//                }
+//                return result;
+//            }
+//            // =========================================================================================
+//        }
+//        CheckUsageContScan obj = new CheckUsageContScan();
+//        obj.execute();
+//    }
 
 }
 

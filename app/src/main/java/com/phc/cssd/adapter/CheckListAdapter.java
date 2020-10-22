@@ -154,7 +154,7 @@ public class CheckListAdapter extends ArrayAdapter {
             if (!model.getNameType().equals("") && model.getAdminApprove().equals("0")){
                 int IsRemarkRound_RemarlAdmin = Integer.parseInt(listData.get(position).getIsRemarkRound_RemarlAdmin());
                 int IsRemarkRound = Integer.parseInt(listData.get(position).getIsRemarkRound());
-                if (IsRemarkRound_RemarlAdmin == IsRemarkRound){
+                if (IsRemarkRound_RemarlAdmin >= IsRemarkRound){
                     txtitemname.setTextColor(Color.RED);
                     txt_caption_qty.setTextColor(Color.RED);
                     txt_qty.setTextColor(Color.RED);
