@@ -815,7 +815,7 @@
                         <LinearLayout
                             android:id="@+id/left_ll_ucode"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="40dp"
                             android:orientation="horizontal">
 
                             <TextView
@@ -1237,7 +1237,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="gone">
 
                             <RadioGroup
                                 android:layout_width="match_parent"
@@ -1271,7 +1272,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_marginTop="5dp"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="gone">
 
                             <TextView
                                 android:id="@+id/textView167"
@@ -1303,13 +1305,13 @@
                                     android:textColor="@android:color/black"
                                     android:visibility="gone"/>
 
-                                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                <TextView
                                     android:id="@+id/etxt_dept"
                                     style="@style/spinner_style_register1"
                                     android:layout_width="250dp"
                                     android:layout_height="30dp">
 
-                                </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+                                </TextView>
 
                                 <TextView
                                     android:id="@+id/textView94"
@@ -1501,6 +1503,7 @@
                             android:background="@drawable/form_layout"
                             android:orientation="vertical"
                             android:paddingLeft="5dp"
+                            android:layout_marginTop="70dp"
                             android:paddingRight="5dp">
 
                             <ImageView
@@ -1560,7 +1563,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="60dp"
                     android:layout_weight="0.4"
                     android:orientation="vertical">
 
@@ -1597,7 +1600,6 @@
                             android:id="@+id/bt_step2"
                             android:layout_width="150dp"
                             android:layout_height="60dp"
-                            android:layout_marginTop="10dp"
                             app:srcCompat="@drawable/ss_ic_step3_disable" />
 
                         <ImageView
@@ -1605,19 +1607,18 @@
                             android:layout_width="150dp"
                             android:layout_height="60dp"
                             android:layout_marginLeft="70dp"
-                            android:layout_marginTop="10dp"
                             app:srcCompat="@drawable/ss_ic_step4_disable_new" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="168dp"
+                        android:layout_height="170dp"
                         android:layout_marginTop="5dp"
                         android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="170dp"
                             android:layout_weight="0.6"
                             android:orientation="vertical">
 
@@ -1625,17 +1626,17 @@
                                 android:id="@+id/btn_open_sterile_program_item"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
-                                android:layout_marginTop="15dp"
                                 android:background="@drawable/ss_bt_program_disable"
                                 android:textAlignment="center"
                                 android:textColor="@android:color/white"
-                                android:textSize="18sp" />
+                                android:textSize="18sp"
+                                android:visibility="gone"/>
 
                             <Button
                                 android:id="@+id/btn_open_wash_program_item"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
-                                android:layout_marginTop="8dp"
+                                android:layout_marginTop="15dp"
                                 android:background="@drawable/ss_bt_program_wash2"
                                 android:textAlignment="center"
                                 android:textColor="@android:color/white"
@@ -1647,6 +1648,15 @@
                                 android:layout_height="40dp"
                                 android:layout_marginTop="10dp"
                                 android:background="@drawable/bt_stock_disable2"
+                                android:textColor="@android:color/white"
+                                android:textSize="18sp" />
+
+                            <Button
+                                android:id="@+id/btn_create_item_stock_dept"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/ss_bt_adddepartment_disable"
                                 android:textColor="@android:color/white"
                                 android:textSize="18sp" />
                         </LinearLayout>
@@ -1666,7 +1676,9 @@
                                 android:background="@drawable/ss_bt_addset_disable" />
 
                         </LinearLayout>
+
                     </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout

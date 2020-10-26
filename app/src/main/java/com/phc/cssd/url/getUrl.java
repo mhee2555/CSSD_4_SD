@@ -11,7 +11,7 @@ public class getUrl {
     // Version
     // ----------------------------------------------------
     public static final int appversion = 12;
-    public static final String VERSION = "4U" + "20201012 B";
+    public static final String VERSION = "4U" + "20201022 B";
     // ----------------------------------------------------
     // Var URL
     // ----------------------------------------------------
@@ -48,7 +48,7 @@ public class getUrl {
 //        return "http://192.168.1.132/cssd_siriraj/";
 //        return "http://192.168.1.104/cssd_vcy_test/";
         // PRESENT
-        return "http://poseintelligence.dyndns.biz/cssd_siriraj_dev/";
+        return "http://poseintelligence.dyndns.biz/cssd_siriraj_new/";
     }
     // ----------------------------------------------------
     // Get Project Setting

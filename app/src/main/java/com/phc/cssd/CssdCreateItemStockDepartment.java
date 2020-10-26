@@ -1,11 +1,16 @@
 package com.phc.cssd;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -27,8 +32,6 @@ public class CssdCreateItemStockDepartment extends Activity {
     private ArrayList<String> data = null;
     private int size = 0;
     //------------------------------------------------
-
-    //------------------------------------------------
     // Session Variable
     private String userid;
     private String B_ID = null;
@@ -36,20 +39,17 @@ public class CssdCreateItemStockDepartment extends Activity {
     private String Item_Name;
     private String Item_Stock;
     //------------------------------------------------
-
     private ListView ListData;
     private ImageView image_save;
+    EditText etxt_searchsendsterile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cssd_create_item_stock_department);
-
         byIntent();
-        
         byWidget();
-
-        displayItemStockDepartment(Item_Code);
+        displayItemStockDepartment(Item_Code,"");
     }
 
     private void byIntent(){
@@ -65,38 +65,43 @@ public class CssdCreateItemStockDepartment extends Activity {
     private void byWidget(){
         ListData = (ListView) findViewById(R.id.list);
         image_save = (ImageView) findViewById(R.id.image_save);
+        etxt_searchsendsterile = (EditText) findViewById(R.id.etxt_searchsendsterile);
+        etxt_searchsendsterile.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                displayItemStockDepartment(Item_Code,etxt_searchsendsterile.getText().toString().replace(' ','%'));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
         image_save.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-
                 String LIST_ID = "";
                 String DATA = "";
-
                 List<ModelMasterData> DATA_MODEL = MODEL_ITEM_STOCK_DEPARTMENT;
-
                 Iterator li = DATA_MODEL.iterator();
-
                 while(li.hasNext()) {
                     try {
                         ModelMasterData m = (ModelMasterData) li.next();
-
                         LIST_ID = m.getCode();
-
                         if (m.isCheck()) {
                             DATA += LIST_ID + "@";
                         }
-
                     }catch(Exception e){
                         continue;
                     }
                 }
-
                 if(!DATA.equals("")) {
                     onSave(DATA);
                 }else{
                     Toast.makeText(CssdCreateItemStockDepartment.this, "ยังไม่ได้เลือกรายการ !!", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
     }
@@ -114,12 +119,8 @@ public class CssdCreateItemStockDepartment extends Activity {
     }
 
     public void onSave(final String p_data) {
-
-
-
         class AddItemStockDepartment extends AsyncTask<String, Void, String> {
 
-            // variable
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -128,13 +129,10 @@ public class CssdCreateItemStockDepartment extends Activity {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
                 AsonData ason = new AsonData(result);
-
                 Success = ason.isSuccess();
                 size = ason.getSize();
                 data = ason.getASONData();
-
                 if(Success && data != null) {
                     Toast.makeText(CssdCreateItemStockDepartment.this, "เพิ่มรายการสำเร็จ " + data.get(0) + " รายการ.", Toast.LENGTH_SHORT).show();
                     finish();
@@ -143,46 +141,40 @@ public class CssdCreateItemStockDepartment extends Activity {
                 }
             }
 
+            @SuppressLint("WrongThread")
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
-
                 data.put("p_item_code", Item_Code);
                 data.put("p_data", p_data);
-
+                data.put("key", etxt_searchsendsterile.getText().toString());
+                data.put("userid", userid);
                 if(B_ID != null){
                     data.put("p_bid", B_ID);
                 }
-
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_create_item_stock_department.php", data);
-
+                Log.d("DKJJDK",data+"");
+                Log.d("DKJJDK",result+"");
                 return result;
             }
-
-
         }
-
         AddItemStockDepartment obj = new AddItemStockDepartment();
         obj.execute();
     }
 
     private HTTPConnect httpConnect = new HTTPConnect();
     private List<ModelMasterData> MODEL_ITEM_STOCK_DEPARTMENT = null;
-    
-    public void displayItemStockDepartment(final String p_itemcode) {
+    public void displayItemStockDepartment(final String p_itemcode,final String key) {
         if(p_itemcode == null || p_itemcode.equals("")){
             return ;
         }
-
         class DisplayItemStockDepartment extends AsyncTask<String, Void, String> {
-
             //------------------------------------------------
             // Background Worker Process Variable
             private boolean Success = false;
             private ArrayList<String> data = null;
             private int size = 0;
             //------------------------------------------------
-
             // variable
             @Override
             protected void onPreExecute() {
@@ -192,18 +184,13 @@ public class CssdCreateItemStockDepartment extends Activity {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
                 AsonData ason = new AsonData(result);
-
                 Success = ason.isSuccess();
                 size = ason.getSize();
                 data = ason.getASONData();
-
                 if(Success && data != null) {
                     try {
-
                         MODEL_ITEM_STOCK_DEPARTMENT = getDepartmentItemStock();
-
                         try {
                             ArrayAdapter<ModelMasterData> adapter = new ItemStockDepartmentAdapter(CssdCreateItemStockDepartment.this, MODEL_ITEM_STOCK_DEPARTMENT);
                             ListData.setAdapter(adapter);
@@ -211,7 +198,6 @@ public class CssdCreateItemStockDepartment extends Activity {
                             ListData.setAdapter(null);
                             e.printStackTrace();
                         }
-
                     } catch (Exception e) {
                         e.printStackTrace();
                         return;
@@ -224,50 +210,35 @@ public class CssdCreateItemStockDepartment extends Activity {
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
-
                 data.put("p_itemcode", p_itemcode);
-
+                data.put("key", key);
                 if(B_ID != null){
                     data.put("p_bid", B_ID);
                 }
-
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_display_item_stock_department.php", data);
-
-
                 return result;
             }
-
             private List<ModelMasterData> getDepartmentItemStock() throws Exception{
-
                 List<ModelMasterData> list = new ArrayList<>();
-
                 try {
                     int index = 0;
-
                     for(int i=0;i<data.size();i+=size){
-
                         list.add(
                                 get(
-
                                         data.get(i),
                                         data.get(i + 1),
                                         data.get(i + 2).equals("1"),
                                         index
                                 )
                         );
-
                         index++;
                     }
-
                     // System.out.println("list = " + list.size());
-
                 }catch(Exception e){
                     e.printStackTrace();
                 }
-
                 return list;
             }
-
             private ModelMasterData get(
                     String code, 
                     String name, 
@@ -281,12 +252,9 @@ public class CssdCreateItemStockDepartment extends Activity {
                         index
                 );
             }
-
             // =========================================================================================
         }
-
         DisplayItemStockDepartment obj = new DisplayItemStockDepartment();
         obj.execute();
     }
-
 }
