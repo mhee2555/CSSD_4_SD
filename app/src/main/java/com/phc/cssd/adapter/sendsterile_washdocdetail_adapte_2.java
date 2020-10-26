@@ -111,7 +111,7 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
         RelativeLayout back = ( RelativeLayout ) v.findViewById(R.id.back);
         ImageView btdel =(ImageView ) v.findViewById(R.id.w_btdel);
 
-        final Button throw_item_to_washtag = ( Button ) v.findViewById(R.id.throw_item_to_washtag);
+        final ImageView throw_item_to_washtag = ( ImageView ) v.findViewById(R.id.throw_item_to_washtag);
 
         throw_item_to_washtag.setVisibility(View.VISIBLE);
         throw_item_to_washtag.setOnClickListener(new View.OnClickListener() {
