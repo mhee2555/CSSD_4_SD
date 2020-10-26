@@ -638,7 +638,20 @@
                 android:paddingBottom="64dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="24dp"
-                android:paddingTop="105dp">
+                android:paddingTop="68dp">
+
+                <EditText
+                    android:id="@+id/scan_basket"
+                    android:layout_width="145dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/text_dropdown"
+                    android:hint="สแกนตะกร้า"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/colorBlack" />
 
                 <LinearLayout
                     android:id="@+id/form_all_document"
@@ -1145,12 +1158,12 @@
         android:id="@+id/imv_basket"
         android:layout_width="137dp"
         android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="6dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginEnd="150dp"
+        android:layout_marginBottom="6dp"
         android:background="@drawable/bt_basket"
-        />
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/txt_caption"
@@ -1169,9 +1182,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/txt_caption"
-        android:layout_toEndOf="@+id/txt_caption"
         android:layout_marginStart="325dp"
+        android:layout_toEndOf="@+id/txt_caption"
         android:textColor="@color/colorWhite"
+        android:visibility="invisible"
         app:tbgCheckedButton="@+id/choice_2">
 
         <com.nex3z.togglebuttongroup.button.CircularToggle

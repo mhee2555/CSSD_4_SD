@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="2dp">
 
     <RelativeLayout
@@ -18,23 +18,23 @@
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_alignStart="@+id/textView56"
+            android:layout_marginLeft="2dp"
             android:layout_toEndOf="@+id/txt_IsRemarkems"
             android:gravity="center_vertical"
             android:maxLines="1"
             android:text="1."
             android:textColor="@color/list_text_color"
-            android:layout_marginLeft="2dp"
             android:textSize="16dp"></TextView>
 
         <TextView
             android:id="@+id/txt_item_name"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
+            android:layout_marginLeft="5dp"
             android:layout_toEndOf="@+id/txt_no"
             android:gravity="center_vertical"
             android:maxLines="1"
             android:text="xxx"
-            android:layout_marginLeft="5dp"
             android:textColor="@color/list_text_color"
             android:textSize="16dp"></TextView>
 
@@ -42,11 +42,11 @@
             android:id="@+id/txt_packingmat"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
+            android:layout_marginLeft="5dp"
             android:layout_toEndOf="@+id/txt_item_name"
             android:gravity="center_vertical"
             android:maxLines="1"
             android:text="pag"
-            android:layout_marginLeft="5dp"
             android:textColor="@color/list_text_color"
             android:textSize="12dp"></TextView>
 
@@ -54,10 +54,10 @@
             android:id="@+id/txt_IsRemarkems"
             android:layout_width="13dp"
             android:layout_height="13dp"
-            android:gravity="center_vertical"
-            android:background="@drawable/uncheck02_32"
             android:layout_marginLeft="3dp"
             android:layout_marginTop="5dp"
+            android:background="@drawable/uncheck02_32"
+            android:gravity="center_vertical"
             android:visibility="gone"></ImageView>
 
         <TextView
@@ -66,12 +66,12 @@
             android:layout_height="match_parent"
             android:layout_alignTop="@+id/imv_add"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="1dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginLeft="1dp"
-            android:layout_marginRight="1dp"
             android:layout_marginStart="1dp"
+            android:layout_marginLeft="1dp"
             android:layout_marginTop="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="1dp"
             android:layout_toStartOf="@+id/imv_add"
             android:background="@drawable/text_edit"
             android:gravity="center|center_vertical"
@@ -102,16 +102,20 @@
             android:scaleY="1.7"
             android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/txt_item_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="1dp"
+            android:layout_toEndOf="@+id/txt_no"
+            android:layout_weight="0"
+            android:gravity="center_vertical"
+            android:text="txt_item_code"></TextView>
+
 
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/txt_item_code"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:layout_weight="0"
-        android:gravity="center_vertical"
-        android:visibility="gone"></TextView>
 
     <TextView
         android:id="@+id/txt_item_program_id"
@@ -121,6 +125,13 @@
         android:gravity="center_vertical"
         android:visibility="gone"></TextView>
 
+    <ListView
+        android:id="@+id/basket_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="0dp"
+        android:visibility="gone" />
 
 
 </LinearLayout>

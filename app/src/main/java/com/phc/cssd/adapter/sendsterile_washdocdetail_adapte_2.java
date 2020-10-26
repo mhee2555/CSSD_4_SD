@@ -111,7 +111,17 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
         RelativeLayout back = ( RelativeLayout ) v.findViewById(R.id.back);
         ImageView btdel =(ImageView ) v.findViewById(R.id.w_btdel);
 
-        del_multi.setVisibility(View.GONE);
+        final Button throw_item_to_washtag = ( Button ) v.findViewById(R.id.throw_item_to_washtag);
+
+        throw_item_to_washtag.setVisibility(View.VISIBLE);
+        throw_item_to_washtag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((SendSterile_MainActivity) aActivity ).insert_item_to_basket(listData.get(position).getItemID(),listData.get(position).getSs_rowid());
+            }
+        });
+
+        del_multi.setVisibility(View.INVISIBLE);
 
         bt_risk.setEnabled(false);
 
@@ -160,7 +170,7 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
             resterile_IV.setEnabled(false);
             if(!(IsEdit&&Isadmin)){
                 btdel.setEnabled(false);
-                btdel.setVisibility(View.GONE);
+                btdel.setVisibility(View.INVISIBLE);
                 if(Isadmin && IsAlert){
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
                     builder.setCancelable(true);
@@ -183,8 +193,8 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
         if (!listData.get(position).getIsStatus().equals("0")) {
             if (!(IsEdit&&Isadmin)) {
                 btdel.setEnabled(false);
-                btdel.setVisibility(View.GONE);
-                del_multi_un.setVisibility(View.GONE);
+                btdel.setVisibility(View.INVISIBLE);
+                del_multi_un.setVisibility(View.INVISIBLE);
                 del_multi_un.setEnabled(false);
             }else {
                 if (Isdel == Isdel1) {
@@ -226,7 +236,7 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
 
         if (!listData.get(position).getIsStatus().equals("0")) {
             ((SendSterile_MainActivity)aActivity).showAndhideBlueHead(false);
-            btdel.setVisibility(View.GONE);
+            btdel.setVisibility(View.INVISIBLE);
         }else {
             ((SendSterile_MainActivity)aActivity).showAndhideBlueHead(true);
             btdel.setVisibility(View.VISIBLE);
@@ -261,13 +271,13 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
         del_multi_un.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (del_multi.getVisibility() == View.GONE){
+                if (del_multi.getVisibility() == View.INVISIBLE){
                     IsCheck = true;
                     del_multi.setVisibility(View.VISIBLE);
                     (( SendSterile_MainActivity ) aActivity).DelAll(listData.get(position).getDocno(), listData.get(position).getSs_rowid());
                 }else {
                     IsCheck = false;
-                    del_multi.setVisibility(View.GONE);
+                    del_multi.setVisibility(View.INVISIBLE);
                     (( SendSterile_MainActivity ) aActivity).DelAll(listData.get(position).getDocno(), listData.get(position).getSs_rowid());
                 }
             }

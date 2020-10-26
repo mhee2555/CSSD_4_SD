@@ -3,6 +3,7 @@ package com.phc.cssd;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -26,6 +28,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -35,6 +38,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.phc.core.data.AsonData;
 import com.phc.core.string.Cons;
+import com.phc.cssd.adapter.Adapter_Washtag_SS;
 import com.phc.cssd.adapter.SendSterile_DocListAdapter;
 import com.phc.cssd.adapter.SendSterile_DocListDetailAdapter;
 import com.phc.cssd.adapter.SendSterile_EditDetailAdapter;
@@ -45,6 +49,7 @@ import com.phc.cssd.adapter.sendsterile_washdocdetail_adapte_2;
 import com.phc.cssd.adapter.sendsterile_washdocdetail_adapter;
 import com.phc.cssd.config.ConfigProgram;
 import com.phc.cssd.data.Master;
+import com.phc.cssd.model.BasketTag;
 import com.phc.cssd.properties.Response_Aux;
 import com.phc.cssd.url.Url;
 import com.phc.cssd.url.getUrl;
@@ -207,8 +212,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     LinearLayout L1_Send,L2_Send;
     int MIN_DISTANCE = 150;
 
-    ArrayList<String> basket_ar_text = new ArrayList<>();
-    ArrayList<String> basket_ar_value = new ArrayList<String>();
+    ArrayList<BasketTag> basket_ar = new ArrayList<>();
+
+    ArrayList<pCustomer> item_in_basket = new ArrayList<pCustomer>();
 
     Animation from_slie_right;
     Animation from_slie_left;
@@ -218,6 +224,11 @@ public class SendSterile_MainActivity extends AppCompatActivity {
 
     private SearchableSpinner spin_basket;
     private EditText basket;
+
+    String Basket_washtag_code="";
+
+    GridView gv_washtag_item;
+    private boolean basket_is_resterile = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -311,29 +322,71 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     public void SelectBasket() {
         class Add extends AsyncTask<String, Void, String> {
 
+            int pos = 0;
+
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
+                basket_ar.clear();
+                BasketTag x = new BasketTag("0","","","",0,"");
+                basket_ar.add(x);
+
+                ArrayList<String> basket_ar_text = new ArrayList<>();
+                ArrayList<String> dummy_basket_ar_text = new ArrayList<>();
+
+
+                ArrayList<BasketTag> dummy_basket_ar = new ArrayList<>();
+
+                basket_ar_text.add("");
                 try {
                     JSONObject jsonObj = new JSONObject(s);
                     rs = jsonObj.getJSONArray(TAG_RESULTS);
-                    basket_ar_text.clear();
-                    basket_ar_value.clear();
-                    int count = 0;
-                    basket_ar_text.add("");
-                    basket_ar_value.add("0");
+
+                    int mid = rs.length()/2;
                     for (int i = 0; i < rs.length(); i++) {
                         JSONObject c = rs.getJSONObject(i);
                         if (c.getString("result").equals("A")) {
-                            basket_ar_text.add(c.getString("BuildingName"));
-                            basket_ar_value.add(c.getString("ID"));
+                            BasketTag washTag = new BasketTag(c.getString("ID"),
+                                    c.getString("BasketName"),
+                                    c.getString("InMachineID"),
+                                    c.getString("MachineName"),
+                                    c.getInt("cnt"),c.getString("BasketCode"));
+
+                            String text1 = washTag.getName();
+                            if(washTag.getMacId().equals("")){
+                                if(washTag.getQty()>0){
+                                    text1 += " : [ "+washTag.getQty()+" รายการ ]";
+                                    basket_ar_text.add(text1);
+                                    basket_ar.add(washTag);
+                                }else{
+                                    basket_ar_text.add(1,text1);
+                                    basket_ar.add(1,washTag);
+                                }
+
+                            }else{
+                                text1 += " *** อยู่ในเครื่องล้าง"+washTag.getMacName()+" ***";
+                                dummy_basket_ar_text.add(text1);
+                                dummy_basket_ar.add(washTag);
+                            }
+
                         }
-                        count++;
                     }
+
+                    for (int i = 0; i < dummy_basket_ar_text.size(); i++){
+                        basket_ar_text.add(dummy_basket_ar_text.get(i));
+                        basket_ar.add(dummy_basket_ar.get(i));
+                    }
+
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(SendSterile_MainActivity.this, android.R.layout.simple_spinner_dropdown_item, basket_ar_text);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spin_basket.setAdapter(adapter);
-                    spin_basket.setSelection(0);
+
+                    for (int i = 0; i < basket_ar.size(); i++){
+                        if(Basket_washtag_code.equals(basket_ar.get(i).getBasketCode())){
+                            pos = i;
+                        }
+                    }
+
+                    spin_basket.setSelection(pos);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -419,30 +472,12 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-//        spin_basket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> arg, View v1, int index1, long arg4) {
-//                String Basket = String.valueOf(spin_basket.getSelectedItem());
-//                if (basket.getText().toString().equals("")){
-//                    basket.setText(Basket);
-//                }else {
-//                    basket.setText("");
-//                    basket.setText(Basket);
-//                }
-//            }
-//        });
 
         spin_basket.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String Basket = String.valueOf(spin_basket.getSelectedItem());
-                if (basket.getText().toString().equals("")){
-                    basket.setText(Basket);
-                    textView46_1.setText(Basket);
-                }else {
-                    textView46_1.setText(Basket);
-                    basket.setText(Basket);
-                }
+                CheckBasket(basket_ar.get(position).getBasketCode());
+
             }
 
             @Override
@@ -566,15 +601,18 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         list_docno_detail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-                Object o = list_docno_detail.getItemAtPosition(position);
-                pCustomer newsData = ( pCustomer ) o;
-                String RemarkAdmin = newsData.getRemarkAdmin();
-                String Itemname = newsData.getItemname();
-                String Xqty = newsData.getXqty();
-                String QtyItemDetail = newsData.getQtyItemDetail();
-                if (!RemarkAdmin.equals("0")){
-                    OpenDialog(Itemname,"1",Xqty,QtyItemDetail);
+                if(Count_left==1){
+                    Object o = list_docno_detail.getItemAtPosition(position);
+                    pCustomer newsData = ( pCustomer ) o;
+                    String RemarkAdmin = newsData.getRemarkAdmin();
+                    String Itemname = newsData.getItemname();
+                    String Xqty = newsData.getXqty();
+                    String QtyItemDetail = newsData.getQtyItemDetail();
+                    if (!RemarkAdmin.equals("0")){
+                        OpenDialog(Itemname,"1",Xqty,QtyItemDetail);
+                    }
                 }
+
             }
         });
 
@@ -1101,11 +1139,16 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
                             if (txt_usr_receive.getText().toString().equals("")){
-                                Toast.makeText(SendSterile_MainActivity.this, "กรุณาสแกนตะกร้า", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SendSterile_MainActivity.this, "กรุณาสแกนชื่อผู้รับ(จ่ายกลาง)", Toast.LENGTH_SHORT).show();
                                 txt_get_ucode.setText("");
                                 txt_get_ucode.requestFocus();
                             }else {
-                                CheckUsageContScan();
+                                Log.d("ttest_ucode","txt_get_ucode = "+txt_get_ucode.getText().toString());
+                                if(txt_get_ucode.getText().toString().equals("1")){
+                                    basket_resterile();
+                                }else {
+                                    CheckUsageContScan();
+                                }
                             }
                             return true;
                         default:
@@ -1322,60 +1365,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         if (Math.abs(xx) > MIN_DISTANCE)
                         {
                             if(xx < 0){
-                                Count_right = 1;
-                                Count_left = 0;
-                                if (Count_right == 1){
-                                    from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
-
-                                    ListView lv = ( ListView ) findViewById(R.id.list_docno_detail);
-                                    lv.setAdapter(null);
-
-                                    textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView46_1.setVisibility(View.VISIBLE);
-                                    textView46_1.startAnimation(from_slie_right);
-
-                                    textView46.setVisibility(View.GONE);
-                                    checkBoxall.setVisibility(View.GONE);
-                                    textView48.setVisibility(View.GONE);
-                                    txt_setdetail_l4.setVisibility(View.GONE);
-                                    textView47.setVisibility(View.GONE);
-                                    txt_setdetail_l3.setVisibility(View.GONE);
-                                }
-                            }else{
-                                Count_right = 0;
-                                Count_left = 1;
-                                if (Count_left == 1){
-                                    getlistdetailqty(Usagecode);
-                                    getlistdetail(Usagecode,DocNo);
-                                    UsageCode(Usagecode,DepID,DocNo);
-
-                                    from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
-                                    textView46_1.setVisibility(View.GONE);
-
-                                    textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView46.setVisibility(View.VISIBLE);
-                                    textView46.startAnimation(from_slie_left);
-
-                                    checkBoxall.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    checkBoxall.setVisibility(View.VISIBLE);
-                                    checkBoxall.startAnimation(from_slie_left);
-
-                                    textView48.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView48.setVisibility(View.VISIBLE);
-                                    textView48.startAnimation(from_slie_left);
-
-                                    txt_setdetail_l4.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l4.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l4.startAnimation(from_slie_left);
-
-                                    textView47.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView47.setVisibility(View.VISIBLE);
-                                    textView47.startAnimation(from_slie_left);
-
-                                    txt_setdetail_l3.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l3.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l3.startAnimation(from_slie_left);
-                                }
+                                s_to_right();
+                            }else {
+                                s_to_left();
                             }
                         }
                 }
@@ -1397,60 +1389,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         if (Math.abs(xx) > MIN_DISTANCE)
                         {
                             if(xx < 0){
-                                Count_right = 1;
-                                Count_left = 0;
-                                if (Count_right == 1){
-                                    from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
-
-                                    ListView lv = ( ListView ) findViewById(R.id.list_docno_detail);
-                                    lv.setAdapter(null);
-
-                                    textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView46_1.setVisibility(View.VISIBLE);
-                                    textView46_1.startAnimation(from_slie_right);
-
-                                    textView46.setVisibility(View.GONE);
-                                    checkBoxall.setVisibility(View.GONE);
-                                    textView48.setVisibility(View.GONE);
-                                    txt_setdetail_l4.setVisibility(View.GONE);
-                                    textView47.setVisibility(View.GONE);
-                                    txt_setdetail_l3.setVisibility(View.GONE);
-                                }
-                            }else{
-                                Count_right = 0;
-                                Count_left = 1;
-                                if (Count_left == 1){
-                                    getlistdetailqty(Usagecode);
-                                    getlistdetail(Usagecode,DocNo);
-                                    UsageCode(Usagecode,DepID,DocNo);
-
-                                    from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
-                                    textView46_1.setVisibility(View.GONE);
-
-                                    textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView46.setVisibility(View.VISIBLE);
-                                    textView46.startAnimation(from_slie_left);
-
-                                    checkBoxall.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    checkBoxall.setVisibility(View.VISIBLE);
-                                    checkBoxall.startAnimation(from_slie_left);
-
-                                    textView48.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView48.setVisibility(View.VISIBLE);
-                                    textView48.startAnimation(from_slie_left);
-
-                                    txt_setdetail_l4.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l4.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l4.startAnimation(from_slie_left);
-
-                                    textView47.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView47.setVisibility(View.VISIBLE);
-                                    textView47.startAnimation(from_slie_left);
-
-                                    txt_setdetail_l3.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l3.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l3.startAnimation(from_slie_left);
-                                }
+                                s_to_right();
+                            }else {
+                                s_to_left();
                             }
                         }
                 }
@@ -1472,60 +1413,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         if (Math.abs(xx) > MIN_DISTANCE)
                         {
                             if(xx < 0){
-                                Count_right = 1;
-                                Count_left = 0;
-                                if (Count_right == 1){
-                                    from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
-
-                                    ListView lv = ( ListView ) findViewById(R.id.list_docno_detail);
-                                    lv.setAdapter(null);
-
-                                    textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView46_1.setVisibility(View.VISIBLE);
-                                    textView46_1.startAnimation(from_slie_right);
-
-                                    textView46.setVisibility(View.GONE);
-                                    checkBoxall.setVisibility(View.GONE);
-                                    textView48.setVisibility(View.GONE);
-                                    txt_setdetail_l4.setVisibility(View.GONE);
-                                    textView47.setVisibility(View.GONE);
-                                    txt_setdetail_l3.setVisibility(View.GONE);
-                                }
-                            }else{
-                                Count_right = 0;
-                                Count_left = 1;
-                                if (Count_left == 1){
-                                    getlistdetailqty(Usagecode);
-                                    getlistdetail(Usagecode,DocNo);
-                                    UsageCode(Usagecode,DepID,DocNo);
-
-                                    from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
-                                    textView46_1.setVisibility(View.GONE);
-
-                                    textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView46.setVisibility(View.VISIBLE);
-                                    textView46.startAnimation(from_slie_left);
-
-                                    checkBoxall.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    checkBoxall.setVisibility(View.VISIBLE);
-                                    checkBoxall.startAnimation(from_slie_left);
-
-                                    textView48.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView48.setVisibility(View.VISIBLE);
-                                    textView48.startAnimation(from_slie_left);
-
-                                    txt_setdetail_l4.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l4.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l4.startAnimation(from_slie_left);
-
-                                    textView47.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView47.setVisibility(View.VISIBLE);
-                                    textView47.startAnimation(from_slie_left);
-
-                                    txt_setdetail_l3.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l3.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l3.startAnimation(from_slie_left);
-                                }
+                                s_to_right();
+                            }else {
+                                s_to_left();
                             }
                         }
                 }
@@ -1547,60 +1437,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         if (Math.abs(xx) > MIN_DISTANCE)
                         {
                             if(xx < 0){
-                                Count_right = 1;
-                                Count_left = 0;
-                                if (Count_right == 1){
-                                    from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
-
-                                    ListView lv = ( ListView ) findViewById(R.id.list_docno_detail);
-                                    lv.setAdapter(null);
-
-                                    textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView46_1.setVisibility(View.VISIBLE);
-                                    textView46_1.startAnimation(from_slie_right);
-
-                                    textView46.setVisibility(View.GONE);
-                                    checkBoxall.setVisibility(View.GONE);
-                                    textView48.setVisibility(View.GONE);
-                                    txt_setdetail_l4.setVisibility(View.GONE);
-                                    textView47.setVisibility(View.GONE);
-                                    txt_setdetail_l3.setVisibility(View.GONE);
-                                }
-                            }else{
-                                Count_right = 0;
-                                Count_left = 1;
-                                if (Count_left == 1){
-                                    getlistdetailqty(Usagecode);
-                                    getlistdetail(Usagecode,DocNo);
-                                    UsageCode(Usagecode,DepID,DocNo);
-
-                                    from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
-                                    textView46_1.setVisibility(View.GONE);
-
-                                    textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView46.setVisibility(View.VISIBLE);
-                                    textView46.startAnimation(from_slie_left);
-
-                                    checkBoxall.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    checkBoxall.setVisibility(View.VISIBLE);
-                                    checkBoxall.startAnimation(from_slie_left);
-
-                                    textView48.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView48.setVisibility(View.VISIBLE);
-                                    textView48.startAnimation(from_slie_left);
-
-                                    txt_setdetail_l4.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l4.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l4.startAnimation(from_slie_left);
-
-                                    textView47.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView47.setVisibility(View.VISIBLE);
-                                    textView47.startAnimation(from_slie_left);
-
-                                    txt_setdetail_l3.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l3.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l3.startAnimation(from_slie_left);
-                                }
+                                s_to_right();
+                            }else {
+                                s_to_left();
                             }
                         }
                 }
@@ -1622,60 +1461,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         if (Math.abs(xx) > MIN_DISTANCE)
                         {
                             if(xx < 0){
-                                Count_right = 1;
-                                Count_left = 0;
-                                if (Count_right == 1){
-                                    from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
-
-                                    ListView lv = ( ListView ) findViewById(R.id.list_docno_detail);
-                                    lv.setAdapter(null);
-
-                                    textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView46_1.setVisibility(View.VISIBLE);
-                                    textView46_1.startAnimation(from_slie_right);
-
-                                    textView46.setVisibility(View.GONE);
-                                    checkBoxall.setVisibility(View.GONE);
-                                    textView48.setVisibility(View.GONE);
-                                    txt_setdetail_l4.setVisibility(View.GONE);
-                                    textView47.setVisibility(View.GONE);
-                                    txt_setdetail_l3.setVisibility(View.GONE);
-                                }
-                            }else{
-                                Count_right = 0;
-                                Count_left = 1;
-                                if (Count_left == 1){
-                                    getlistdetailqty(Usagecode);
-                                    getlistdetail(Usagecode,DocNo);
-                                    UsageCode(Usagecode,DepID,DocNo);
-
-                                    from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
-                                    textView46_1.setVisibility(View.GONE);
-
-                                    textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView46.setVisibility(View.VISIBLE);
-                                    textView46.startAnimation(from_slie_left);
-
-                                    checkBoxall.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    checkBoxall.setVisibility(View.VISIBLE);
-                                    checkBoxall.startAnimation(from_slie_left);
-
-                                    textView48.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView48.setVisibility(View.VISIBLE);
-                                    textView48.startAnimation(from_slie_left);
-
-                                    txt_setdetail_l4.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l4.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l4.startAnimation(from_slie_left);
-
-                                    textView47.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView47.setVisibility(View.VISIBLE);
-                                    textView47.startAnimation(from_slie_left);
-
-                                    txt_setdetail_l3.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l3.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l3.startAnimation(from_slie_left);
-                                }
+                                s_to_right();
+                            }else {
+                                s_to_left();
                             }
                         }
                 }
@@ -1697,60 +1485,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         if (Math.abs(xx) > MIN_DISTANCE)
                         {
                             if(xx < 0){
-                                Count_right = 1;
-                                Count_left = 0;
-                                if (Count_right == 1){
-                                    from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
-
-                                    ListView lv = ( ListView ) findViewById(R.id.list_docno_detail);
-                                    lv.setAdapter(null);
-
-                                    textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView46_1.setVisibility(View.VISIBLE);
-                                    textView46_1.startAnimation(from_slie_right);
-
-                                    textView46.setVisibility(View.GONE);
-                                    checkBoxall.setVisibility(View.GONE);
-                                    textView48.setVisibility(View.GONE);
-                                    txt_setdetail_l4.setVisibility(View.GONE);
-                                    textView47.setVisibility(View.GONE);
-                                    txt_setdetail_l3.setVisibility(View.GONE);
-                                }
-                            }else{
-                                Count_right = 0;
-                                Count_left = 1;
-                                if (Count_left == 1){
-                                    getlistdetailqty(Usagecode);
-                                    getlistdetail(Usagecode,DocNo);
-                                    UsageCode(Usagecode,DepID,DocNo);
-
-                                    from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
-                                    textView46_1.setVisibility(View.GONE);
-
-                                    textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView46.setVisibility(View.VISIBLE);
-                                    textView46.startAnimation(from_slie_left);
-
-                                    checkBoxall.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    checkBoxall.setVisibility(View.VISIBLE);
-                                    checkBoxall.startAnimation(from_slie_left);
-
-                                    textView48.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView48.setVisibility(View.VISIBLE);
-                                    textView48.startAnimation(from_slie_left);
-
-                                    txt_setdetail_l4.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l4.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l4.startAnimation(from_slie_left);
-
-                                    textView47.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView47.setVisibility(View.VISIBLE);
-                                    textView47.startAnimation(from_slie_left);
-
-                                    txt_setdetail_l3.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l3.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l3.startAnimation(from_slie_left);
-                                }
+                                s_to_right();
+                            }else {
+                                s_to_left();
                             }
                         }
                 }
@@ -1772,60 +1509,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         if (Math.abs(xx) > MIN_DISTANCE)
                         {
                             if(xx < 0){
-                                Count_right = 1;
-                                Count_left = 0;
-                                if (Count_right == 1){
-                                    from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
-
-                                    ListView lv = ( ListView ) findViewById(R.id.list_docno_detail);
-                                    lv.setAdapter(null);
-
-                                    textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView46_1.setVisibility(View.VISIBLE);
-                                    textView46_1.startAnimation(from_slie_right);
-
-                                    textView46.setVisibility(View.GONE);
-                                    checkBoxall.setVisibility(View.GONE);
-                                    textView48.setVisibility(View.GONE);
-                                    txt_setdetail_l4.setVisibility(View.GONE);
-                                    textView47.setVisibility(View.GONE);
-                                    txt_setdetail_l3.setVisibility(View.GONE);
-                                }
-                            }else{
-                                Count_right = 0;
-                                Count_left = 1;
-                                if (Count_left == 1){
-                                    getlistdetailqty(Usagecode);
-                                    getlistdetail(Usagecode,DocNo);
-                                    UsageCode(Usagecode,DepID,DocNo);
-
-                                    from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
-                                    textView46_1.setVisibility(View.GONE);
-
-                                    textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView46.setVisibility(View.VISIBLE);
-                                    textView46.startAnimation(from_slie_left);
-
-                                    checkBoxall.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    checkBoxall.setVisibility(View.VISIBLE);
-                                    checkBoxall.startAnimation(from_slie_left);
-
-                                    textView48.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView48.setVisibility(View.VISIBLE);
-                                    textView48.startAnimation(from_slie_left);
-
-                                    txt_setdetail_l4.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l4.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l4.startAnimation(from_slie_left);
-
-                                    textView47.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView47.setVisibility(View.VISIBLE);
-                                    textView47.startAnimation(from_slie_left);
-
-                                    txt_setdetail_l3.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l3.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l3.startAnimation(from_slie_left);
-                                }
+                                s_to_right();
+                            }else {
+                                s_to_left();
                             }
                         }
                 }
@@ -1847,60 +1533,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         if (Math.abs(xx) > MIN_DISTANCE)
                         {
                             if(xx < 0){
-                                Count_right = 1;
-                                Count_left = 0;
-                                if (Count_right == 1){
-                                    from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
-
-                                    ListView lv = ( ListView ) findViewById(R.id.list_docno_detail);
-                                    lv.setAdapter(null);
-
-                                    textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView46_1.setVisibility(View.VISIBLE);
-                                    textView46_1.startAnimation(from_slie_right);
-
-                                    textView46.setVisibility(View.GONE);
-                                    checkBoxall.setVisibility(View.GONE);
-                                    textView48.setVisibility(View.GONE);
-                                    txt_setdetail_l4.setVisibility(View.GONE);
-                                    textView47.setVisibility(View.GONE);
-                                    txt_setdetail_l3.setVisibility(View.GONE);
-                                }
-                            }else{
-                                Count_right = 0;
-                                Count_left = 1;
-                                if (Count_left == 1){
-                                    getlistdetailqty(Usagecode);
-                                    getlistdetail(Usagecode,DocNo);
-                                    UsageCode(Usagecode,DepID,DocNo);
-
-                                    from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
-                                    textView46_1.setVisibility(View.GONE);
-
-                                    textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView46.setVisibility(View.VISIBLE);
-                                    textView46.startAnimation(from_slie_left);
-
-                                    checkBoxall.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    checkBoxall.setVisibility(View.VISIBLE);
-                                    checkBoxall.startAnimation(from_slie_left);
-
-                                    textView48.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView48.setVisibility(View.VISIBLE);
-                                    textView48.startAnimation(from_slie_left);
-
-                                    txt_setdetail_l4.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l4.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l4.startAnimation(from_slie_left);
-
-                                    textView47.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView47.setVisibility(View.VISIBLE);
-                                    textView47.startAnimation(from_slie_left);
-
-                                    txt_setdetail_l3.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l3.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l3.startAnimation(from_slie_left);
-                                }
+                                s_to_right();
+                            }else {
+                                s_to_left();
                             }
                         }
                 }
@@ -1922,60 +1557,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         if (Math.abs(xx) > MIN_DISTANCE)
                         {
                             if(xx < 0){
-                                Count_right = 1;
-                                Count_left = 0;
-                                if (Count_right == 1){
-                                    from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
-
-                                    ListView lv = ( ListView ) findViewById(R.id.list_docno_detail);
-                                    lv.setAdapter(null);
-
-                                    textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView46_1.setVisibility(View.VISIBLE);
-                                    textView46_1.startAnimation(from_slie_right);
-
-                                    textView46.setVisibility(View.GONE);
-                                    checkBoxall.setVisibility(View.GONE);
-                                    textView48.setVisibility(View.GONE);
-                                    txt_setdetail_l4.setVisibility(View.GONE);
-                                    textView47.setVisibility(View.GONE);
-                                    txt_setdetail_l3.setVisibility(View.GONE);
-                                }
-                            }else{
-                                Count_right = 0;
-                                Count_left = 1;
-                                if (Count_left == 1){
-                                    getlistdetailqty(Usagecode);
-                                    getlistdetail(Usagecode,DocNo);
-                                    UsageCode(Usagecode,DepID,DocNo);
-
-                                    from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
-                                    textView46_1.setVisibility(View.GONE);
-
-                                    textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView46.setVisibility(View.VISIBLE);
-                                    textView46.startAnimation(from_slie_left);
-
-                                    checkBoxall.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    checkBoxall.setVisibility(View.VISIBLE);
-                                    checkBoxall.startAnimation(from_slie_left);
-
-                                    textView48.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView48.setVisibility(View.VISIBLE);
-                                    textView48.startAnimation(from_slie_left);
-
-                                    txt_setdetail_l4.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l4.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l4.startAnimation(from_slie_left);
-
-                                    textView47.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    textView47.setVisibility(View.VISIBLE);
-                                    textView47.startAnimation(from_slie_left);
-
-                                    txt_setdetail_l3.animate().translationX(0).setDuration(800).setStartDelay(800);
-                                    txt_setdetail_l3.setVisibility(View.VISIBLE);
-                                    txt_setdetail_l3.startAnimation(from_slie_left);
-                                }
+                                s_to_right();
+                            }else {
+                                s_to_left();
                             }
                         }
                 }
@@ -1983,6 +1567,76 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void s_to_left(){
+
+        Log.d("ttest_s_to","s_to_left");
+        Log.d("ttest_s_to","Count_right = "+Count_right);
+        Log.d("ttest_s_to","Count_left = "+Count_left);
+
+        if(Count_left==0){
+            getlistdetailqty(Usagecode);
+            getlistdetail(Usagecode,DocNo);
+            UsageCode(Usagecode,DepID,DocNo);
+
+            from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
+            textView46_1.setVisibility(View.GONE);
+
+            textView46.animate().translationX(0).setDuration(800).setStartDelay(800);
+            textView46.setVisibility(View.VISIBLE);
+            textView46.startAnimation(from_slie_left);
+
+            checkBoxall.animate().translationX(0).setDuration(800).setStartDelay(800);
+            checkBoxall.setVisibility(View.VISIBLE);
+            checkBoxall.startAnimation(from_slie_left);
+
+            textView48.animate().translationX(0).setDuration(800).setStartDelay(800);
+            textView48.setVisibility(View.VISIBLE);
+            textView48.startAnimation(from_slie_left);
+
+            txt_setdetail_l4.animate().translationX(0).setDuration(800).setStartDelay(800);
+            txt_setdetail_l4.setVisibility(View.VISIBLE);
+            txt_setdetail_l4.startAnimation(from_slie_left);
+
+            textView47.animate().translationX(0).setDuration(800).setStartDelay(800);
+            textView47.setVisibility(View.VISIBLE);
+            textView47.startAnimation(from_slie_left);
+
+            txt_setdetail_l3.animate().translationX(0).setDuration(800).setStartDelay(800);
+            txt_setdetail_l3.setVisibility(View.VISIBLE);
+            txt_setdetail_l3.startAnimation(from_slie_left);
+        }
+
+        Count_right = 0;
+        Count_left = 1;
+    }
+    public void s_to_right(){
+
+        Log.d("ttest_s_to","s_to_right");
+        Log.d("ttest_s_to","Count_right = "+Count_right);
+        Log.d("ttest_s_to","Count_left = "+Count_left);
+
+        if(Count_right==0){
+            from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
+
+            textView46_1.animate().translationX(0).setDuration(800).setStartDelay(800);
+            textView46_1.setVisibility(View.VISIBLE);
+            textView46_1.startAnimation(from_slie_right);
+
+            textView46.setVisibility(View.GONE);
+            checkBoxall.setVisibility(View.GONE);
+            textView48.setVisibility(View.GONE);
+            txt_setdetail_l4.setVisibility(View.GONE);
+            textView47.setVisibility(View.GONE);
+            txt_setdetail_l3.setVisibility(View.GONE);
+
+            list_docno_detail.setAdapter(new Adapter_Washtag_SS(SendSterile_MainActivity.this,item_in_basket));
+        }
+
+        Count_right = 1;
+        Count_left = 0;
+    }
+
 
 //    public void defineEmp(final String txt) {
 //        class getdeptsp extends AsyncTask<String, Void, String> {
@@ -2522,7 +2176,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObj = new JSONObject(s);
                     JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
-                    final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
                     String bo = "";
                     String txtDocno = "";
                     String txtdept = "";
@@ -2540,11 +2193,18 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         txtDocno = c.getString("DocNo");
                         txtdept = c.getString("DepID");
                         txttel = c.getString("Tel");
-                        pCus.add(xST);
+//                        pCus.add(xST);
                         if (bo.equals("true")){
                             etxt_dept.setSelection(Integer.parseInt(c.getString("DepID")));
                             if (ED_Dept == null || ED_Dept.equals("")){
                                 ED_Dept = c.getString("DepID");
+                            }
+
+                            if(spin_basket.getSelectedItemPosition()!=0){
+                                Log.d("ttest_bk_insert","basket = "+basket_ar.get(spin_basket.getSelectedItemPosition()));
+
+                                insert_item_to_basket(c.getString("ItemStockID"),c.getString("ssID"));
+
                             }
                         }
                     }
@@ -2552,15 +2212,17 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     Log.d("BYRHCY",etxt_docno.getText().toString());
                     if (etxt_docno.getText().toString().equals("")){
                         getlistdata("", date_l2.getText().toString(), "");
-                        etxt_docno.setText(txtDocno);
-                    }else {
-                        etxt_docno.setText(txtDocno);
                     }
+
+                    etxt_docno.setText(txtDocno);
+
                     if (bo.equals("true")){
                         ShowDetailScan(txtDocno);
                         ShowUserSend();
                     }
+
                     getlistcreate(txtDocno, "");
+
                     if (bo.equals("true")) {
                         Toast.makeText(SendSterile_MainActivity.this, "นำเข้าอุปกรณ์สำเร็จ", Toast.LENGTH_SHORT).show();
                         CheckUsageContScanToInsert(RowID);
@@ -2874,8 +2536,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         etxt_sumqty.setText("");
         final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
         xedit_detail.setAdapter(new SendSterile_EditDetailAdapter(SendSterile_MainActivity.this, pCus,IsAdmin));
-        ListView lv2 = ( ListView ) findViewById(R.id.list_docno_detail);
-        lv2.setAdapter(new SendSterile_DocListDetailAdapter(SendSterile_MainActivity.this, pCus, "0"));
+        list_docno_detail.setAdapter(new SendSterile_DocListDetailAdapter(SendSterile_MainActivity.this, pCus, "0"));
     }
 
 
@@ -2890,81 +2551,81 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         xedit_detail.setAdapter(new SendSterile_EditItemAdapter(SendSterile_MainActivity.this, pCus, selectedArray));
     }
 
-    public void checkdubplicate(final String ucode, String xdept) {
-        class checkdubplicate extends AsyncTask<String, Void, String> {
-            // variable
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
+//    public void checkdubplicate(final String ucode, String xdept) {
+//        class checkdubplicate extends AsyncTask<String, Void, String> {
+//            // variable
+//            @Override
+//            protected void onPreExecute() {
+//                super.onPreExecute();
+//            }
+//
+//            @Override
+//            protected void onPostExecute(String s) {
+//                super.onPostExecute(s);
+//                try{
+//                    JSONObject jsonObj = new JSONObject(s);
+//                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
+//                    String bool="";
+//                    String RowID="";
+//                    for(int i=0;i<setRs.length();i++) {
+//                        JSONObject c = setRs.getJSONObject(i);
+//                        bool=c.getString("flag");
+//                        RowID=c.getString("RowID");
+//                        Log.d("bool: ", c.getString("flag"));
+//                    }
+//                    if(bool.equals("true")){
+//                        Toast.makeText(SendSterile_MainActivity.this, "รายการซ้ำ", Toast.LENGTH_SHORT).show();
+//                        txt_get_ucode.setText("");
+//                        txt_get_ucode.requestFocus();
+//                    }else if(bool.equals("false")){
+//                        if(IsStatus.equals("1")){
+//                            Toast.makeText(SendSterile_MainActivity.this, "เอกสารสถานะเตรียมล้างเแก้ไขไม่ได้", Toast.LENGTH_SHORT).show();
+//                            txt_get_ucode.setText("");
+//                            txt_get_ucode.requestFocus();
+//                        }else{
+//                            InsertDetail2(etxt_docno.getText().toString(),ucode, etxt_date.getText().toString(), ED_UserCode, ED_Dept, "0");
+//                        }
+//                    }else if(bool.equals("notfound")){
+//                        Toast.makeText(SendSterile_MainActivity.this, "แผนก หรือ สถานะรหัสไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
+//                        txt_get_ucode.setText("");
+//                        txt_get_ucode.requestFocus();
+//                    }else {
+//                        Toast.makeText(SendSterile_MainActivity.this, "แผนก หรือ สถานะรหัสไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
+//                        txt_get_ucode.setText("");
+//                        txt_get_ucode.requestFocus();
+//                    }
+//
+//                }catch (Exception e){
+//
+//                }
+//            }
+//            //class connect php RegisterUserClass important !!!!!!!
+//            @SuppressLint("WrongThread")
+//            @Override
+//            protected String doInBackground(String... params) {
+//                HashMap<String, String> data = new HashMap<String,String>();
+//                data.put("ucode",params[0]);
+//                data.put("xdept",params[1]);
+//                data.put("DocNo",etxt_docno.getText().toString());
+//                data.put("B_ID",B_ID);
+//                String result = ruc.sendPostRequest(iFt.checkdubplicate_sendsterile(),data);
+//                Log.d("FKDKDJD", data+"");
+//                Log.d("FKDKDJD", result);
+//                return result;
+//            }
+//        }
+//        checkdubplicate ru = new checkdubplicate();
+//        ru.execute(ucode,xdept);
+//    }
 
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                try{
-                    JSONObject jsonObj = new JSONObject(s);
-                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
-                    String bool="";
-                    String RowID="";
-                    for(int i=0;i<setRs.length();i++) {
-                        JSONObject c = setRs.getJSONObject(i);
-                        bool=c.getString("flag");
-                        RowID=c.getString("RowID");
-                        Log.d("bool: ", c.getString("flag"));
-                    }
-                    if(bool.equals("true")){
-                        Toast.makeText(SendSterile_MainActivity.this, "รายการซ้ำ", Toast.LENGTH_SHORT).show();
-                        txt_get_ucode.setText("");
-                        txt_get_ucode.requestFocus();
-                    }else if(bool.equals("false")){
-                        if(IsStatus.equals("1")){
-                            Toast.makeText(SendSterile_MainActivity.this, "เอกสารสถานะเตรียมล้างเแก้ไขไม่ได้", Toast.LENGTH_SHORT).show();
-                            txt_get_ucode.setText("");
-                            txt_get_ucode.requestFocus();
-                        }else{
-                            InsertDetail2(etxt_docno.getText().toString(),ucode, etxt_date.getText().toString(), ED_UserCode, ED_Dept, "0");
-                        }
-                    }else if(bool.equals("notfound")){
-                        Toast.makeText(SendSterile_MainActivity.this, "แผนก หรือ สถานะรหัสไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
-                        txt_get_ucode.setText("");
-                        txt_get_ucode.requestFocus();
-                    }else {
-                        Toast.makeText(SendSterile_MainActivity.this, "แผนก หรือ สถานะรหัสไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
-                        txt_get_ucode.setText("");
-                        txt_get_ucode.requestFocus();
-                    }
-
-                }catch (Exception e){
-
-                }
-            }
-            //class connect php RegisterUserClass important !!!!!!!
-            @SuppressLint("WrongThread")
-            @Override
-            protected String doInBackground(String... params) {
-                HashMap<String, String> data = new HashMap<String,String>();
-                data.put("ucode",params[0]);
-                data.put("xdept",params[1]);
-                data.put("DocNo",etxt_docno.getText().toString());
-                data.put("B_ID",B_ID);
-                String result = ruc.sendPostRequest(iFt.checkdubplicate_sendsterile(),data);
-                Log.d("FKDKDJD", data+"");
-                Log.d("FKDKDJD", result);
-                return result;
-            }
-        }
-        checkdubplicate ru = new checkdubplicate();
-        ru.execute(ucode,xdept);
-    }
-
-    public void chkdel(String xDocNo, String xUsageCode) {
-        if (IsStatus.equals("1")) {
-            Toast.makeText(this, "เอกสารสถานะเตรียมล้างเแก้ไขไม่ได้", Toast.LENGTH_SHORT).show();
-        } else {
-            DeleteDetail(xDocNo, xUsageCode);
-        }
-
-    }
+//    public void chkdel(String xDocNo, String xUsageCode) {
+//        if (IsStatus.equals("1")) {
+//            Toast.makeText(this, "เอกสารสถานะเตรียมล้างเแก้ไขไม่ได้", Toast.LENGTH_SHORT).show();
+//        } else {
+//            DeleteDetail(xDocNo, xUsageCode);
+//        }
+//
+//    }
 
 
     public void getdept(String user) {
@@ -4000,53 +3661,25 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         condition4 = c.getString("condition4");
                         condition5 = c.getString("condition5");
                     }
-                    if (condition1 != "0" || condition2 != "0" || condition3 != "0" || condition4 != "0" || condition5 != "0"){
-                        if (!ED_Dept.equals("") && !ED_Dept.equals("0")) {
-                            if (txt_get_ucode.getText().toString().length() == 12 && !etxt_docno.getText().toString().equals("")) {
-                                CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
-                            } else {
-//                                checkdubplicate(txt_get_ucode.getText().toString().toLowerCase(), ED_Dept);
-//                                txt_get_ucode.setText("");
-//                                txt_get_ucode.requestFocus();
-                                CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
-                            }
-                        } else {
-                            if (txt_get_ucode.getText().toString().length() == 12 && !etxt_docno.getText().toString().equals("")) {
-                                CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
-                            } else {
-//                                checkdubplicate(txt_get_ucode.getText().toString().toLowerCase(), ED_Dept);
-//                                txt_get_ucode.setText("");
-//                                txt_get_ucode.requestFocus();
-                                CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
-                            }
-//                            Toast.makeText(SendSterile_MainActivity.this, "กรุณาเลือกแผนก", Toast.LENGTH_SHORT).show();
-//                            txt_get_ucode.setText("");
-//                            txt_get_ucode.requestFocus();
-                        }
-                    }else {
-                        if (!ED_Dept.equals("") && !ED_Dept.equals("0")) {
-                            if (txt_get_ucode.getText().toString().length() == 12 && !etxt_docno.getText().toString().equals("")) {
-                                CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
-                            } else {
-//                                checkdubplicate(txt_get_ucode.getText().toString().toLowerCase(), ED_Dept);
-//                                txt_get_ucode.setText("");
-//                                txt_get_ucode.requestFocus();
-                                CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
-                            }
-                        } else {
-                            if (txt_get_ucode.getText().toString().length() == 12 && !etxt_docno.getText().toString().equals("")) {
-                                CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
-                            } else {
-//                                checkdubplicate(txt_get_ucode.getText().toString().toLowerCase(), ED_Dept);
-//                                txt_get_ucode.setText("");
-//                                txt_get_ucode.requestFocus();
-                                CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
-                            }
-//                            Toast.makeText(SendSterile_MainActivity.this, "กรุณาเลือกแผนก", Toast.LENGTH_SHORT).show();
-//                            txt_get_ucode.setText("");
-//                            txt_get_ucode.requestFocus();
-                        }
-                    }
+
+
+                    CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
+
+//                    if (condition1 != "0" || condition2 != "0" || condition3 != "0" || condition4 != "0" || condition5 != "0")
+//                    if (!ED_Dept.equals("") && !ED_Dept.equals("0")) {
+//                        if (txt_get_ucode.getText().toString().length() == 12 && !etxt_docno.getText().toString().equals("")) {
+//                            CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
+//                        } else {
+//                            CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
+//                        }
+//                    } else {
+//                        if (txt_get_ucode.getText().toString().length() == 12 && !etxt_docno.getText().toString().equals("")) {
+//                            CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
+//                        } else {
+//                            CheckInsertDoc(txt_get_ucode.getText().toString().toLowerCase());
+//                        }
+//                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }finally {
@@ -4319,61 +3952,78 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         DocNoSend = Docnosend;
     }
 
-    public void CheckBasket(final String Basket) {
-        class CheckBasket extends AsyncTask<String, Void, String> {
-            private ProgressDialog dialog = new ProgressDialog(SendSterile_MainActivity.this);
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                this.dialog.setMessage(Cons.WAIT_FOR_PROCESS);
-                this.dialog.show();
-            }
+    public void CheckBasket(final String xBasket) {
 
-            @Override
-            protected void onPostExecute(String result) {
-                super.onPostExecute(result);
-                try {
-                    JSONObject jsonObj = new JSONObject(result);
-                    rs = jsonObj.getJSONArray(TAG_RESULTS);
-                    for(int i=0;i<rs.length();i++) {
-                        JSONObject c = rs.getJSONObject(i);
-                        if (c.getString("finish").equals("true")){
-                            basket.setText(c.getString("BasketName"));
-                            textView46_1.setText(c.getString("BasketName"));
-                            txt_get_ucode.requestFocus();
-                        }else {
-                            basket.requestFocus();
-                            Toast.makeText(SendSterile_MainActivity.this, "ไม่พบข้อมูล", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }finally {
-                    if (dialog.isShowing()) {
-                        dialog.dismiss();
-                    }
-                }
-            }
+        for(int i=0;i<basket_ar.size();i++){
+            Log.d("ttest_bb",xBasket+"--"+basket_ar.get(i).getID());
+            if(basket_ar.get(i).getBasketCode().equals(xBasket)){
+                if(basket_ar.get(i).getMacId().equals("")){
+                    basket.setText(basket_ar.get(i).getName());
+                    get_washtag_detail(basket_ar.get(i).getBasketCode(),basket_ar.get(i).getName(),basket_ar.get(i).getQty());
+                }else {
+                    basket.setText("");
+                    Toast.makeText(SendSterile_MainActivity.this, "ไม่สามารถเลือกได้ Wash Tag นี้อยู่ในเครื่องล้าง", Toast.LENGTH_SHORT).show();
 
-            @SuppressLint("WrongThread")
-            @Override
-            protected String doInBackground(String... params) {
-                HashMap<String, String> data = new HashMap<String,String>();
-                data.put("basket",Basket);
-                String result = null;
-                try {
-                    result = httpConnect.sendPostRequest(Url.URL + "cssd_check_basket_send.php", data);
-                    Log.d("FKJDHJKDH",data+"");
-                    Log.d("FKJDHJKDH",result+"");
-                }catch(Exception e){
-                    e.printStackTrace();
+                    call_washtag_dialog(basket_ar.get(i).getBasketCode(),basket_ar.get(i).getName());
                 }
-                return result;
+                return;
             }
-            // =========================================================================================
         }
-        CheckBasket obj = new CheckBasket();
-        obj.execute();
+        Toast.makeText(SendSterile_MainActivity.this, "ไม่พบข้อมูล", Toast.LENGTH_SHORT).show();
+//        class CheckBasket extends AsyncTask<String, Void, String> {
+//            private ProgressDialog dialog = new ProgressDialog(SendSterile_MainActivity.this);
+//            @Override
+//            protected void onPreExecute() {
+//                super.onPreExecute();
+//                this.dialog.setMessage(Cons.WAIT_FOR_PROCESS);
+//                this.dialog.show();
+//            }
+//
+//            @Override
+//            protected void onPostExecute(String result) {
+//                super.onPostExecute(result);
+//                try {
+//                    JSONObject jsonObj = new JSONObject(result);
+//                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+//                    for(int i=0;i<rs.length();i++) {
+//                        JSONObject c = rs.getJSONObject(i);
+//                        if (c.getString("finish").equals("true")){
+//                            basket.setText(c.getString("BasketName"));
+//                            textView46_1.setText(c.getString("BasketName"));
+//                            txt_get_ucode.requestFocus();
+//                        }else {
+//                            basket.requestFocus();
+//                            Toast.makeText(SendSterile_MainActivity.this, "ไม่พบข้อมูล", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }finally {
+//                    if (dialog.isShowing()) {
+//                        dialog.dismiss();
+//                    }
+//                }
+//            }
+//
+//            @SuppressLint("WrongThread")
+//            @Override
+//            protected String doInBackground(String... params) {
+//                HashMap<String, String> data = new HashMap<String,String>();
+//                data.put("basket",Basket);
+//                String result = null;
+//                try {
+//                    result = httpConnect.sendPostRequest(Url.URL + "cssd_check_basket_send.php", data);
+//                    Log.d("FKJDHJKDH",data+"");
+//                    Log.d("FKJDHJKDH",result+"");
+//                }catch(Exception e){
+//                    e.printStackTrace();
+//                }
+//                return result;
+//            }
+//            // =========================================================================================
+//        }
+//        CheckBasket obj = new CheckBasket();
+//        obj.execute();
     }
 
     public void UpSterile(String UsageCode,String Check,String ss) {
@@ -4562,5 +4212,244 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    public void call_washtag_dialog(String BasketCode,String basket_name){
+
+        final Dialog dialog_qr = new Dialog(SendSterile_MainActivity.this);
+        dialog_qr.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog_qr.setContentView(R.layout.activity_washtag_detail_ss);
+        dialog_qr.setCancelable(true);
+        dialog_qr.setTitle("");
+
+        TextView baskettag = (TextView) dialog_qr.findViewById(R.id.washtag_name);
+        gv_washtag_item = (GridView) dialog_qr.findViewById(R.id.washtag_grid);
+
+        baskettag.setText(basket_name);
+        dialog_qr.show();
+        washtag_detail(BasketCode);
+    }
+
+    public void get_washtag_detail(String BasketCode,String basket_name,int qty){
+        Basket_washtag_code = BasketCode;
+        if(BasketCode!=""){
+            textView46_1.setText(basket_name+" [ "+qty+" รายการ ]");
+            washtag_detail(BasketCode);
+
+            getlistcreate(etxt_docno.getText().toString(), "");
+        }
+    }
+
+    public void washtag_detail(String BasketCode){
+        class washtag_detail extends AsyncTask<String, Void, String> {
+            // variable
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                item_in_basket.clear();
+                basket_is_resterile = false;
+                try{
+                    JSONObject jsonObj = new JSONObject(s);
+                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
+                    String bo = "";
+                    for(int i=0;i<setRs.length();i++) {
+                        JSONObject c = setRs.getJSONObject(i);
+                        bo=c.getString("result");
+                        if (bo.equals("A")){
+                            pCustomer item = new pCustomer();
+                            item.setItemname(c.getString("itemname"));
+                            item.setUsageCode(c.getString("UsageCode"));
+                            item.setPackdate(c.getString("Shelflife"));
+                            item.setSs_rowid(c.getString("SSDetailID"));
+                            item.setResteriletype(c.getString("ResterileType"));
+                            item.setBasketID(c.getString("ID"));
+                            item_in_basket.add(item);
+                            Log.d("ttest_wt_detail","washtag_detail bo = "+item_in_basket.get(i).getBasketID());
+
+                            if(c.getString("ResterileType").equals("1")){
+                                basket_is_resterile = true;
+                            }
+                        }
+
+                    }
+                }catch (JSONException e){
+                    Log.d("ttest_wt_detail","washtag_detail e = "+e);
+                }
+
+                if(basket_is_resterile){
+                    String x = textView46_1.getText().toString();
+                    textView46_1.setText(x+" (Expire)");
+                }
+
+                if(gv_washtag_item!=null){
+                    gv_washtag_item.setAdapter(new Adapter_Washtag_SS(SendSterile_MainActivity.this,item_in_basket));
+                }
+                Count_right=0;
+                s_to_right();
+
+            }
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("BasketCode",params[0]);
+                String result = ruc.sendPostRequest(getUrl.xUrl+"washtag/cssd_get_basket_detail.php",data);
+                Log.d("ttest_wt_detail","washtag_detail xUrl = "+getUrl.xUrl+"washtag/cssd_get_basket_detail.php");
+                Log.d("ttest_wt_detail","washtag_detail result = "+result);
+                return result;
+            }
+        }
+        washtag_detail ru = new washtag_detail();
+        ru.execute(BasketCode);
+        Log.d("ttest_wt_detail","washtag_detail BasketCode = "+BasketCode);
+    }
+
+    public void insert_item_to_basket(String ItemStockID,String SSDetailID){
+        class insert_item_to_basket extends AsyncTask<String, Void, String> {
+            // variable
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                try{
+                    JSONObject jsonObj = new JSONObject(s);
+                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
+                    String bo = "";
+                    for(int i=0;i<setRs.length();i++) {
+                        JSONObject c = setRs.getJSONObject(i);
+                        bo=c.getString("result");
+                        Log.d("insert_to_basket","in_washtag_detail bo = "+bo);
+
+                        Toast.makeText(SendSterile_MainActivity.this, "เพิ่มรายการในตะกร้าแล้ว", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (JSONException e){
+                    Log.d("insert_to_basket","in_washtag_detail e = "+e);
+                }
+
+                if(basket_is_resterile){
+                    basket_resterile();
+                }else{
+                    SelectBasket();
+                }
+
+            }
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+
+                data.put("BasketID",params[0]);
+                data.put("ItemStockID",params[1]);
+                data.put("SSDetailID",params[2]);
+
+                String result = ruc.sendPostRequest(getUrl.xUrl+"washtag/insert_item_in_washtag.php",data);
+                Log.d("insert_to_basket","in_washtag_detail xUrl = "+getUrl.xUrl+"washtag/insert_item_in_washtag.php");
+                Log.d("insert_to_basket","in_washtag_detail result = "+result);
+                return result;
+            }
+        }
+        if(Basket_washtag_code!=""){
+            for(int i=0;i<basket_ar.size();i++){
+                if(Basket_washtag_code.equals(basket_ar.get(i).getBasketCode())){
+
+                    for(int j=0;j<item_in_basket.size();j++){
+
+                        Log.d("insert_to_basket","in_washtag_detail Ss_rowid = "+SSDetailID+" --- "+item_in_basket.get(j).getSs_rowid());
+
+                        if(item_in_basket.get(j).getSs_rowid().equals(SSDetailID)){
+
+                            Toast.makeText(SendSterile_MainActivity.this, "มีรายการอยู่ในตะกร้าแล้ว", Toast.LENGTH_SHORT).show();
+                           return;
+                        }
+                    }
+
+                    String BasketID = basket_ar.get(i).getID();
+
+                    insert_item_to_basket ru = new insert_item_to_basket();
+                    ru.execute(BasketID,ItemStockID,SSDetailID);
+
+                    break;
+                }
+            }
+        }else{
+
+            Toast.makeText(SendSterile_MainActivity.this, "ยังไม่ได้เลือกตะกร้า", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void basket_resterile(){
+        class basket_resterile extends AsyncTask<String, Void, String> {
+            // variable
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                item_in_basket.clear();
+                boolean Resterile = false;
+                try{
+                    JSONObject jsonObj = new JSONObject(s);
+                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
+                    String bo = "";
+                    for(int i=0;i<setRs.length();i++) {
+                        JSONObject c = setRs.getJSONObject(i);
+                        bo=c.getString("result");
+                        if (bo.equals("A")){
+
+                            SelectBasket();
+
+                        }
+
+                    }
+                }catch (JSONException e){
+                    Log.d("ttest_bk_resterile","ttest_bk_resterile e = "+e);
+                }
+
+
+            }
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("BasketID",params[0]);
+                String result = ruc.sendPostRequest(getUrl.xUrl+"washtag/resterile_from_washtag.php",data);
+                Log.d("ttest_bk_resterile","basket_resterile xUrl = "+getUrl.xUrl+"washtag/resterile_from_washtag.php");
+                Log.d("ttest_bk_resterile","basket_resterile result = "+result);
+                return result;
+            }
+        }
+
+        if(Basket_washtag_code!=""){
+            for(int i=0;i<basket_ar.size();i++){
+                if(Basket_washtag_code.equals(basket_ar.get(i).getBasketCode())){
+                    String BasketID = basket_ar.get(i).getID();
+
+                    if(item_in_basket.size()>0){
+                        basket_resterile ru = new basket_resterile();
+                        ru.execute(BasketID);
+                        Log.d("ttest_bk_resterile","basket_resterile BasketID = "+BasketID);
+                    }else{
+                        Toast.makeText(SendSterile_MainActivity.this, "ไม่มีรายการในตะกร้า", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                    break;
+                }
+            }
+        }
+
+
     }
 }

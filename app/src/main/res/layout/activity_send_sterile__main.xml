@@ -176,16 +176,16 @@
 
                 <EditText
                     android:id="@+id/txt_get_ucode"
-                    android:background="@drawable/shape_qr_line"
                     android:layout_width="220dp"
                     android:layout_height="35dp"
                     android:layout_marginLeft="5dp"
+                    android:background="@drawable/shape_qr_line"
+                    android:ems="10"
                     android:hint="สแกนรหัสใช้งาน"
+                    android:inputType="textPersonName"
                     android:paddingLeft="15dp"
                     android:textColor="@android:color/black"
-                    android:textSize="17sp"
-                    android:ems="10"
-                    android:inputType="textPersonName"/>
+                    android:textSize="17sp" />
 
                 <Button
                     android:id="@+id/newSS"

@@ -2,7 +2,7 @@ package com.phc.cssd.model;
 
 import com.phc.cssd.R;
 
-public class ModelWashDetail {
+public class ModelWashDetail implements Cloneable{
 
     private String ID,
             WashDocNo,
@@ -19,7 +19,10 @@ public class ModelWashDetail {
             PackingMat,
             Shelflife,
             BasketName,
+            BasketCode,
             IsRemarkExpress;
+
+    boolean isBasket;
 
     private int index = -1;
 
@@ -43,6 +46,14 @@ public class ModelWashDetail {
         this.BasketName = BasketName;
         this.IsRemarkExpress = IsRemarkExpress;
         this.index = index;
+    }
+
+    public boolean isBasket() {
+        return isBasket;
+    }
+
+    public void setBasket(boolean basket) {
+        isBasket = basket;
     }
 
     public String getIsRemarkExpress() { return IsRemarkExpress; }
@@ -185,5 +196,23 @@ public class ModelWashDetail {
 
     public void setCheck(boolean check) {
         IsCheck = check;
+    }
+
+    public String getBasketCode() {
+        return BasketCode;
+    }
+
+    public void setBasketCode(String basketCode) {
+        BasketCode = basketCode;
+    }
+
+    @Override
+    public Object clone() {
+        try {
+            return (ModelWashDetail) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

@@ -3,11 +3,11 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:paddingLeft="8dp"
+    android:paddingTop="2dp"
     android:paddingRight="8dp"
-    android:paddingBottom="2dp"
-    android:paddingTop="2dp">
+    android:paddingBottom="2dp">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -29,13 +29,13 @@
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="4dp"
             android:layout_toEndOf="@+id/isRemark"
+            android:gravity="center_vertical"
             android:maxLines="1"
             android:text="I0000-0000"
-            android:layout_marginLeft="5dp"
             android:textColor="@color/colorGray"
-            android:gravity="center_vertical"
-            android:layout_marginRight="4dp"
             android:textSize="17dp"></TextView>
 
         <TextView
@@ -43,44 +43,43 @@
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_alignParentTop="true"
+            android:layout_marginRight="8dp"
             android:layout_toEndOf="@+id/txt_usage_code"
+            android:gravity="center_vertical"
             android:maxLines="1"
             android:text="ItemName"
             android:textColor="@color/list_text_color"
-            android:gravity="center_vertical"
-            android:layout_marginRight="8dp"
             android:textSize="17dp"></TextView>
 
         <ImageView
             android:id="@+id/isRemark"
             android:layout_width="13dp"
             android:layout_height="13dp"
-            android:layout_toEndOf="@+id/imv_remove"
             android:layout_marginTop="5dp"
-            android:background="@drawable/uncheck02_32"
-            ></ImageView>
+            android:layout_toEndOf="@+id/imv_remove"
+            android:background="@drawable/uncheck02_32"></ImageView>
 
         <TextView
             android:id="@+id/txt_basket"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
             android:layout_toEndOf="@+id/imv_remove"
+            android:background="#EEEEEE"
             android:maxLines="1"
             android:text="xxxxxx"
-            android:layout_marginLeft="5dp"
             android:textColor="@color/colorGray"
-            android:background="#EEEEEE"
-            android:layout_marginTop="20dp"
             android:textSize="14dp"></TextView>
 
         <TextView
             android:id="@+id/txt_qty"
             android:layout_width="38dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="4dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:layout_marginStart="4dp"
             android:layout_marginEnd="5dp"
             android:background="@drawable/text_edit"
             android:gravity="center|center_vertical"
@@ -119,6 +118,11 @@
         android:textColor="@color/list_text_color"
         android:textSize="14dp"
         android:visibility="gone"></TextView>
+
+    <ListView
+        android:id="@+id/list_sub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>

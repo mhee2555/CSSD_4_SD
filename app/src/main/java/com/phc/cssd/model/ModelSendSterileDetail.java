@@ -1,6 +1,6 @@
 package com.phc.cssd.model;
 
-public class ModelSendSterileDetail {
+public class ModelSendSterileDetail implements Cloneable {
 
     String  i_id,
             i_code,
@@ -14,9 +14,14 @@ public class ModelSendSterileDetail {
             Shelflife,
             PackingMatID,
             IsWashDept,
-            IsRemarkExpress;
+            IsRemarkExpress,
+            BasketName,
+            BasketCode,
+            UsageCode;
 
     private int index = -1;
+
+    boolean isBasket;
 
 
     public ModelSendSterileDetail(String i_id, String i_code, String i_name, String i_alt_name, String i_barcode, String i_qty, String i_program, String i_program_id, String packingMat, String shelflife, String packingMatID, String IsWashDept,String IsRemarkExpress,int index) {
@@ -34,6 +39,38 @@ public class ModelSendSterileDetail {
         this.IsWashDept = IsWashDept;
         this.IsRemarkExpress = IsRemarkExpress;
         this.index = index;
+    }
+
+    public String getBasketName() {
+        return BasketName;
+    }
+
+    public void setBasketName(String basketName) {
+        BasketName = basketName;
+    }
+
+    public String getBasketCode() {
+        return BasketCode;
+    }
+
+    public void setBasketCode(String basketCode) {
+        BasketCode = basketCode;
+    }
+
+    public boolean isBasket() {
+        return isBasket;
+    }
+
+    public void setBasket(boolean basket) {
+        isBasket = basket;
+    }
+
+    public String getUsageCode() {
+        return UsageCode;
+    }
+
+    public void setUsageCode(String usageCode) {
+        UsageCode = usageCode;
     }
 
     public String getIsRemarkExpress() { return IsRemarkExpress; }
@@ -142,5 +179,15 @@ public class ModelSendSterileDetail {
 
     public void setIndex(int index) {
         this.index = index;
+    }
+
+    @Override
+    public Object clone() {
+        try {
+            return (ModelSendSterileDetail) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

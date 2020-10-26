@@ -46,7 +46,9 @@ import com.phc.cssd.config.Setting;
 import com.phc.cssd.data.Master;
 import com.phc.cssd.loaner.LoanerMainActivity;
 import com.phc.cssd.model.Model;
+import com.phc.cssd.model.ModelImportWashDetail;
 import com.phc.cssd.model.ModelSendSterileDetail;
+import com.phc.cssd.model.ModelSterileDetail;
 import com.phc.cssd.model.ModelWashProcess;
 import com.phc.cssd.model.ModelWash;
 import com.phc.cssd.model.ModelWashDetail;
@@ -166,6 +168,8 @@ public class CssdWash extends AppCompatActivity {
     private Button btn_complete;
     private Button btn_add;
     private ImageView bt_delsterile;
+
+    private EditText scan_basket;
     // =================================================
     // Local Variable
     // =================================================
@@ -201,6 +205,7 @@ public class CssdWash extends AppCompatActivity {
     // Mode Program Active
     private int WASH_PROCESS_NUMBER_ACTIVE = 0;
     private List<ModelSendSterileDetail> MODEL_SEND_STERILE_DETAIL = null;
+    HashMap<String,List<ModelSendSterileDetail>> MAP_MODEL_SEND_STERILE_DETAIL_GROUP_BASKET = new HashMap<String,List<ModelSendSterileDetail>>();
     private List<ModelWashDetail> MODEL_WASH_DETAIL = null;
     private List<ModelWash> MODEL_WASH = null;
     private List<Model> MODEL;
@@ -299,7 +304,6 @@ public class CssdWash extends AppCompatActivity {
         //defaultTabMachine();
 
         //generateMachine();
-
     }
 
     public boolean onTouchEvent(MotionEvent touchEvent){
@@ -378,7 +382,7 @@ public class CssdWash extends AppCompatActivity {
 
         IsShowBasket = s.isShowBasket();
 
-        imv_basket.setVisibility(IsShowBasket ? View.VISIBLE : View.GONE);
+//        imv_basket.setVisibility(IsShowBasket ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -456,8 +460,56 @@ public class CssdWash extends AppCompatActivity {
             }
         });
 
+        //basket
         // =========================================================================================
 
+        scan_basket = (EditText) findViewById(R.id.scan_basket);
+        scan_basket.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                Log.d("ttest_scan","keyCode = "+keyCode);
+                String txt = scan_basket.getText().toString();
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                {
+                    switch (keyCode)
+                    {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+
+                            Log.d("ttest_scan","txt = "+txt);
+                            if(MAP_MODEL_SEND_STERILE_DETAIL_GROUP_BASKET.containsKey(txt)&&(!txt.equals(""))){//&&chk_mac()
+
+                                final List<ModelSendSterileDetail> MODEL_SUB = MAP_MODEL_SEND_STERILE_DETAIL_GROUP_BASKET.get(txt);
+
+                                String UsageCode = MODEL_SUB.get(0).getUsageCode();
+
+                                if(MODEL_SUB.size()>1){
+                                    for(int i=1;i<MODEL_SUB.size();i++){
+                                        UsageCode += "@"+MODEL_SUB.get(i).getUsageCode();
+                                    }
+                                }
+
+                                importSendSterileDetail( UsageCode, MODEL_SUB.get(0).getI_program_id(), MODEL_SUB.get(0).getI_program());
+
+                            }else{
+                                Toast.makeText(CssdWash.this, "ไม่พบตะกร้า ("+txt+")!!", Toast.LENGTH_SHORT).show();
+                            }
+
+                            scan_basket.setText("");
+                            return true;
+                        default:
+                            break;
+                    }
+                }else if(keyCode==KeyEvent.KEYCODE_ENTER){
+                    return true;
+                }
+
+                return false;
+
+            }
+        });
+
+        // =========================================================================================
 
         btn_open_send_sterile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1811,6 +1863,7 @@ public class CssdWash extends AppCompatActivity {
             }
         } else {
             clearForm();
+//            edit_wash_type.callOnClick();
         }
     }
 
@@ -3988,6 +4041,20 @@ public class CssdWash extends AppCompatActivity {
         }
     }
 
+    public void removeWashtagInWashDetail(
+            String DATA
+    ){
+        if(checkMachineActive()) {
+            try {
+                removeWashDetail(DATA);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }else{
+            Toast.makeText(CssdWash.this, "ไม่สามารถลบรายการได้!!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void onRemoveAllWashDetail(){
         try {
             List<ModelWashDetail> DATA_MODEL = MODEL_WASH_DETAIL;
@@ -5009,13 +5076,38 @@ public class CssdWash extends AppCompatActivity {
                 if(Success && data != null) {
                     try {
                         MODEL_SEND_STERILE_DETAIL = getModelSendSterileDetail();
+
+                        List<ModelSendSterileDetail> MODEL_SEND_STERILE_DETAIL_GROUP_BASKET = new ArrayList<>();
+                        MAP_MODEL_SEND_STERILE_DETAIL_GROUP_BASKET.clear();
+
+                        for(int i =0;i<MODEL_SEND_STERILE_DETAIL.size();i++){
+                            ModelSendSterileDetail x = MODEL_SEND_STERILE_DETAIL.get(i);
+                            String key = x.getBasketCode();
+                            if(key.equals("-")){ // ไม่อยู่ในตะกร้า
+                                MODEL_SEND_STERILE_DETAIL_GROUP_BASKET.add(x);
+                            }else{// อยู่ในตะกร้า
+                                if(MAP_MODEL_SEND_STERILE_DETAIL_GROUP_BASKET.containsKey(key)){ //มีตะกร้าแล้ว
+                                    MAP_MODEL_SEND_STERILE_DETAIL_GROUP_BASKET.get(key).add(x);
+                                }else{ // ยังไม่มีตะกร้า
+                                    List<ModelSendSterileDetail> list = new ArrayList<>();
+                                    list.add(x);
+                                    MAP_MODEL_SEND_STERILE_DETAIL_GROUP_BASKET.put(key,list);
+                                    ModelSendSterileDetail clone = (ModelSendSterileDetail) x.clone();
+                                    clone.setI_name(x.getBasketName());
+                                    clone.setUsageCode(x.getBasketCode());
+                                    clone.setBasket(true);
+                                    MODEL_SEND_STERILE_DETAIL_GROUP_BASKET.add(0,clone);
+                                }
+                            }
+                        }
+
                         try {
                             ArrayAdapter<ModelSendSterileDetail> adapter;
                             if(DISPLAY_MODE == 3) {
                                 adapter = new ImportSendSterileDetailGridViewAdapter(CssdWash.this, MODEL_SEND_STERILE_DETAIL, !checkMachineActive());
                                 grid_import_send_sterile.setAdapter(adapter);
                             }else if(DISPLAY_MODE == 2) {
-                                adapter = new ImportSendSterileDetailAdapter(CssdWash.this, MODEL_SEND_STERILE_DETAIL, !checkMachineActive());
+                                adapter = new ImportSendSterileDetailAdapter(CssdWash.this, MODEL_SEND_STERILE_DETAIL_GROUP_BASKET, !checkMachineActive(),MAP_MODEL_SEND_STERILE_DETAIL_GROUP_BASKET);
                                 list_import_send_sterile.setAdapter(adapter);
                             }else if(DISPLAY_MODE == 1) {
                                 adapter = new ImportSendSterileDetailBigSizeAdapter(CssdWash.this, MODEL_SEND_STERILE_DETAIL, !checkMachineActive());
@@ -5087,27 +5179,35 @@ public class CssdWash extends AppCompatActivity {
                 try {
                     int index = 0;
 
+
                     for(int i=0;i<data.size();i+=size){
 
-                        list.add(
-                                get(
+                        Log.d("tog_get_Model_SS_D","itemcode = "+data.get(i+2));
 
-                                        data.get(i),
-                                        data.get(i + 1),
-                                        data.get(i + 2),
-                                        data.get(i + 3),
-                                        data.get(i + 4),
-                                        data.get(i + 5),
-                                        data.get(i + 6),
-                                        data.get(i + 7),
-                                        data.get(i + 8),
-                                        data.get(i + 9),
-                                        data.get(i + 10),
-                                        data.get(i + 11),
-                                        data.get(i + 12),
-                                        index
-                                )
+                        ModelSendSterileDetail x = get(
+
+                                data.get(i),
+                                data.get(i + 1),
+                                data.get(i + 2),
+                                data.get(i + 3),
+                                data.get(i + 4),
+                                data.get(i + 5),
+                                data.get(i + 6),
+                                data.get(i + 7),
+                                data.get(i + 8),
+                                data.get(i + 9),
+                                data.get(i + 10),
+                                data.get(i + 11),
+                                data.get(i + 12),
+                                index
                         );
+
+                        x.setUsageCode(data.get(i + 13));
+                        x.setBasketCode(data.get(i + 14));
+                        x.setBasketName(data.get(i + 15));
+                        x.setBasket(false);
+
+                        list.add(x);
 
                         index++;
                     }
@@ -5585,6 +5685,30 @@ public class CssdWash extends AppCompatActivity {
                     try {
 
                         MODEL_WASH_DETAIL = getModelWashDetail();
+//
+                        List<ModelWashDetail> MODEL_WASH_DETAIL_GROUP_BASKET = new ArrayList<>();
+                        HashMap<String,List<ModelWashDetail>> MAP_MODEL_WASH_DETAIL_GROUP_BASKET = new HashMap<String,List<ModelWashDetail>>();
+
+                        for(int i =0;i<MODEL_WASH_DETAIL.size();i++){
+                            ModelWashDetail x = MODEL_WASH_DETAIL.get(i);
+                            String key = x.getBasketCode();
+                            if(key.equals("-")){ // ไม่อยู่ในตะกร้า
+                                MODEL_WASH_DETAIL_GROUP_BASKET.add(x);
+                            }else{// อยู่ในตะกร้า
+                                if(MAP_MODEL_WASH_DETAIL_GROUP_BASKET.containsKey(key)){ //มีตะกร้าแล้ว
+                                    MAP_MODEL_WASH_DETAIL_GROUP_BASKET.get(key).add(x);
+                                }else{ // ยังไม่มีตะกร้า
+                                    List<ModelWashDetail> list = new ArrayList<>();
+                                    list.add(x);
+                                    MAP_MODEL_WASH_DETAIL_GROUP_BASKET.put(key,list);
+                                    ModelWashDetail clone = (ModelWashDetail) x.clone();
+                                    clone.setItemname(x.getBasketName());
+                                    clone.setUsageCode(x.getBasketCode());
+                                    clone.setBasket(true);
+                                    MODEL_WASH_DETAIL_GROUP_BASKET.add(0,clone);
+                                }
+                            }
+                        }
 
                         try {
                             ArrayAdapter<ModelWashDetail> adapter;
@@ -5592,7 +5716,7 @@ public class CssdWash extends AppCompatActivity {
                                 adapter = new WashDetailGridViewAdapter(CssdWash.this, MODEL_WASH_DETAIL, !checkMachineActive());
                                 grid_wash_detail.setAdapter(adapter);
                             }else if(DISPLAY_MODE == 2) {
-                                adapter = new WashDetailAdapter(CssdWash.this, MODEL_WASH_DETAIL, !checkMachineActive());
+                                adapter = new WashDetailAdapter(CssdWash.this, MODEL_WASH_DETAIL_GROUP_BASKET, !checkMachineActive(),MAP_MODEL_WASH_DETAIL_GROUP_BASKET);
                                 list_wash_detail.setAdapter(adapter);
                             }else if(DISPLAY_MODE == 1) {
                                 adapter = new WashDetailBigSizeAdapter(CssdWash.this, MODEL_WASH_DETAIL, !checkMachineActive());
@@ -5644,28 +5768,31 @@ public class CssdWash extends AppCompatActivity {
 
                     for(int i=0;i<data.size();i+=size){
 
-                        list.add(
-                                new ModelWashDetail(
+                        ModelWashDetail x = new ModelWashDetail(
 
-                                        data.get(i),
-                                        data.get(i + 1),
-                                        data.get(i + 2),
-                                        data.get(i + 3),
-                                        data.get(i + 4),
-                                        data.get(i + 5),
-                                        data.get(i + 6),
-                                        data.get(i + 7),
-                                        data.get(i + 8),
-                                        data.get(i + 9),
-                                        data.get(i + 10),
-                                        data.get(i + 11),
-                                        data.get(i + 12),
-                                        data.get(i + 13),
-                                        data.get(i + 14),
-                                        data.get(i + 15),
-                                        index
-                                )
+                                data.get(i),
+                                data.get(i + 1),
+                                data.get(i + 2),
+                                data.get(i + 3),
+                                data.get(i + 4),
+                                data.get(i + 5),
+                                data.get(i + 6),
+                                data.get(i + 7),
+                                data.get(i + 8),
+                                data.get(i + 9),
+                                data.get(i + 10),
+                                data.get(i + 11),
+                                data.get(i + 12),
+                                data.get(i + 13),
+                                data.get(i + 14),
+                                data.get(i + 15),
+                                index
                         );
+
+                        x.setBasketCode(data.get(i + 16));
+                        x.setBasket(false);
+
+                        list.add(x);
 
                         index++;
                     }
@@ -5855,6 +5982,7 @@ public class CssdWash extends AppCompatActivity {
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_remove_wash_detail.php", data);
 
                 //System.out.println("URL = " + result);
+                Log.d("tog_remove_wash_detail","output = "+result);
 
                 return result;
             }

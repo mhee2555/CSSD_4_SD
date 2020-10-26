@@ -98,7 +98,7 @@ public class Login extends AppCompatActivity {
 
         DeviceMode = setDeviceMode();
 
-        if("TL01184200273".equals(getSerialNumber())||"L203P85U01743".equals(getSerialNumber())){
+        if("TL01193N40267".equals(getSerialNumber())||"L203P85U01743".equals(getSerialNumber())){
             get_login("admin", "123");
         }
 

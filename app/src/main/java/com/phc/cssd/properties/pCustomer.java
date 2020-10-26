@@ -65,6 +65,9 @@ public class pCustomer {
     private String QtyItemDetail;
 
 
+    private String basketID;
+
+
     public String getQtyItemDetail() { return QtyItemDetail; }
 
     public void setQtyItemDetail(String qtyItemDetail) { QtyItemDetail = qtyItemDetail; }
@@ -481,5 +484,13 @@ public class pCustomer {
 
     public void setChk_box_wash(Boolean chk_box_wash) {
         this.chk_box_wash = chk_box_wash;
+    }
+
+    public String getBasketID() {
+        return basketID;
+    }
+
+    public void setBasketID(String basketID) {
+        this.basketID = basketID;
     }
 }
