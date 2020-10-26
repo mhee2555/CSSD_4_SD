@@ -452,13 +452,13 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                             return false;
                         case KeyEvent.KEYCODE_ENTER:
-//                            if (txt_usr_receive.getText().toString().equals("")){
-//                                Toast.makeText(SendSterile_MainActivity.this, "กรุณาสแกนชื่อผู้รับ(จ่ายกลาง)", Toast.LENGTH_SHORT).show();
-//                                basket.setText("");
-//                                txt_usr_receive.requestFocus();
-//                            }else {
-//                                CheckBasket(basket.getText().toString());
-//                            }
+                            if (txt_usr_receive.getText().toString().equals("")){
+                                Toast.makeText(SendSterile_MainActivity.this, "กรุณาสแกนชื่อผู้รับ(จ่ายกลาง)", Toast.LENGTH_SHORT).show();
+                                basket.setText("");
+                                txt_usr_receive.requestFocus();
+                            }else {
+                                CheckBasket(basket.getText().toString());
+                            }
                             CheckBasket(basket.getText().toString());
                             return true;
                         default:
@@ -1143,11 +1143,16 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 txt_get_ucode.setText("");
                                 txt_get_ucode.requestFocus();
                             }else {
-                                Log.d("ttest_ucode","txt_get_ucode = "+txt_get_ucode.getText().toString());
-                                if(txt_get_ucode.getText().toString().equals("1")){
-                                    basket_resterile();
+                                if (basket.getText().toString().equals("")) {
+                                    Toast.makeText(SendSterile_MainActivity.this, "กรุณาสแกนตะกร้า", Toast.LENGTH_SHORT).show();
+                                    basket.setText("");
+                                    basket.requestFocus();
                                 }else {
-                                    CheckUsageContScan();
+                                    if(txt_get_ucode.getText().toString().equals("1")){
+                                        basket_resterile();
+                                    }else {
+                                        CheckUsageContScan();
+                                    }
                                 }
                             }
                             return true;
@@ -3865,7 +3870,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         JSONObject c = rs.getJSONObject(i);
                         if (c.getString("finish").equals("true")){
                             txt_usr_receive.setText(c.getString("FirstName")+" "+c.getString("LastName"));
-                            txt_get_ucode.requestFocus();
+                            basket.requestFocus();
                         }else {
                             Toast.makeText(SendSterile_MainActivity.this, "ไม่พบข้อมูล", Toast.LENGTH_SHORT).show();
                             txt_usr_receive.setText("");
