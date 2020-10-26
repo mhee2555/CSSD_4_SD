@@ -71,11 +71,15 @@ public class MachineAndWash extends Activity {
             public void onClick(View v) {
                 if(getCountselected().equals("0")){
                     LinkProcess("",getCountselected(),Item_Code);
-                    LinkProcess_Sterile("",getCountselected_Sterile(),Item_Code);
                 }else{
                     LinkProcess(getSelectedcheckbox(),getCountselected(),Item_Code);
+                }
+                if (getCountselected_Sterile().equals("0")){
+                    LinkProcess_Sterile("",getCountselected_Sterile(),Item_Code);
+                }else {
                     LinkProcess_Sterile(getSelectedcheckbox_Sterile(),getCountselected_Sterile(),Item_Code);
                 }
+
                 ListData_Process(Item_Code);
                 ListData_Process_sterile(Item_Code);
                 cball.setChecked(false);
