@@ -127,6 +127,7 @@ public class sendsterile_washdocdetail_adapter extends ArrayAdapter {
                 ( ( SendSterile_MainActivity )aActivity ).getlistdetailqty(listData.get(position).getUsageCode());
             }
         });
+
         Log.d("ttest","getIsStatus : "+listData.get(position).getIsStatus());
         if(listData.get(position).getIsStatus().equals("2")){
             Log.d("ttest","IsAdmin : "+IsAdmin);

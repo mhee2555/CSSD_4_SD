@@ -16,7 +16,7 @@
         android:background="@drawable/rectangle">
 
         <RelativeLayout
-            android:id="@+id/maindoc"
+            android:id="@+id/back"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -185,7 +185,7 @@
                 android:layout_toStartOf="@+id/w_bt_risk"
                 android:background="@drawable/ic_stopwatchx64_gray2" />
 
-            <Button
+            <ImageView
                 android:id="@+id/throw_item_to_washtag"
                 android:layout_width="25dp"
                 android:layout_height="wrap_content"
