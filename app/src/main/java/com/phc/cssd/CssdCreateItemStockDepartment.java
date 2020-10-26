@@ -1,5 +1,6 @@
 package com.phc.cssd;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -140,11 +141,13 @@ public class CssdCreateItemStockDepartment extends Activity {
                 }
             }
 
+            @SuppressLint("WrongThread")
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
                 data.put("p_item_code", Item_Code);
                 data.put("p_data", p_data);
+                data.put("key", etxt_searchsendsterile.getText().toString());
                 data.put("userid", userid);
                 if(B_ID != null){
                     data.put("p_bid", B_ID);
@@ -161,7 +164,6 @@ public class CssdCreateItemStockDepartment extends Activity {
 
     private HTTPConnect httpConnect = new HTTPConnect();
     private List<ModelMasterData> MODEL_ITEM_STOCK_DEPARTMENT = null;
-    
     public void displayItemStockDepartment(final String p_itemcode,final String key) {
         if(p_itemcode == null || p_itemcode.equals("")){
             return ;

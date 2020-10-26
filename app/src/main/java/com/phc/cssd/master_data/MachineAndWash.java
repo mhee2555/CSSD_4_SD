@@ -383,7 +383,7 @@ public class MachineAndWash extends Activity {
                 HashMap<String, String> data = new HashMap<String,String>();
                 data.put("Itemcode",params[0]);
                 String result = ruc.sendPostRequest(iFt.getListProgram_Item(),data);
-                Log.d("DKHVKCHD", result + "");
+                Log.d("DKHVKCHD", data + "");
                 Log.d("DKHVKCHD", result + "");
                 return  result;
             }
