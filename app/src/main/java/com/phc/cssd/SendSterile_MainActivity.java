@@ -3906,6 +3906,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         obj.execute();
     }
 
+
     public void LoadImg(final String itemcode,final String sel,final String usagecode,final String itemname,final String type) {
         if (type.equals("remark")){
             Intent intent = new Intent(SendSterile_MainActivity.this, dialog_Load_Img_Remark.class);
