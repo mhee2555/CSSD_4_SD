@@ -847,7 +847,6 @@ public class CssdCheckList extends Activity {
 
                                 // Update Print Status
                                 updatePrintStatus(p_data);
-                                Log.d("V:K:DD",p_data+"");
 
                                 if(c.getString("IsCheckList").equals("1")){
                                     callCheckListPaper(ID);
@@ -919,11 +918,12 @@ public class CssdCheckList extends Activity {
                 super.onPostExecute(s);
             }
 
+            @SuppressLint("WrongThread")
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
 
-                data.put("p_data", p_data.substring(0, p_data.length()-1));
+                data.put("p_data", txt_usagecode_scan.getText().toString());
 
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_update_wash_detail_print_status.php", data);
                 Log.d("LDJCLJVD",data+"");
