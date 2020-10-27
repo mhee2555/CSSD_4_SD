@@ -465,7 +465,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                             basket.requestFocus();
                             break;
                     }
-                }else {
+                }else if(keyCode==KeyEvent.KEYCODE_ENTER){
+                    return true;
+                } else {
                     basket.requestFocus();
                     return true;
                 }
