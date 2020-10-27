@@ -380,11 +380,6 @@ public class CssdCheckList extends Activity {
                                             ch2.setVisibility(View.VISIBLE);
                                             edt_usage_code.setText("");
                                             edt_usage_code.requestFocus();
-                                            for (int i = 0 ; i < MODEL_CHECK_LIST.size() ; i ++){
-                                                MODEL_CHECK_LIST.get(i).setInternal("1");
-                                                ArrayAdapter adapter = new CheckListAdapter(CssdCheckList.this, MODEL_CHECK_LIST);
-                                                list_check.setAdapter(adapter);
-                                            }
                                             return true;
                                         }
                                         edt_usage_code.setText("");
@@ -395,11 +390,6 @@ public class CssdCheckList extends Activity {
                                             ch3.setVisibility(View.VISIBLE);
                                             edt_usage_code.setText("");
                                             edt_usage_code.requestFocus();
-                                            for (int i = 0 ; i < MODEL_CHECK_LIST.size() ; i ++){
-                                                MODEL_CHECK_LIST.get(i).setInternal("1");
-                                                ArrayAdapter adapter = new CheckListAdapter(CssdCheckList.this, MODEL_CHECK_LIST);
-                                                list_check.setAdapter(adapter);
-                                            }
                                             return true;
                                         }
                                         edt_usage_code.setText("");
