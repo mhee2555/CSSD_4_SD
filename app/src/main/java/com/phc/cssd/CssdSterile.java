@@ -44,6 +44,7 @@ import com.phc.core.string.Text2Digit;
 import com.phc.cssd.adapter.ImportWashDetailAdapter;
 import com.phc.cssd.adapter.ImportWashDetailBigSizeAdapter;
 import com.phc.cssd.adapter.ImportWashDetailGridViewAdapter;
+import com.phc.cssd.adapter.ImportWashNotPrintDetailAdapter;
 import com.phc.cssd.adapter.SterileDetailAdapter;
 import com.phc.cssd.adapter.SterileDetailBigSizeAdapter;
 import com.phc.cssd.adapter.SterileDetailGridViewAdapter;
@@ -268,6 +269,8 @@ public class CssdSterile extends AppCompatActivity {
     private String packer_id="";
 
     private boolean createSterile_loop = true;
+    private ListView basket_dialog_list_washtag;
+    private List<ModelImportWashDetail> MODEL_IMPORT_WASH_DETAIL_NOT_PRINT;
 
     public void onDestroy() {
         super.onDestroy();
@@ -1633,6 +1636,7 @@ public class CssdSterile extends AppCompatActivity {
 
         basket_dialog_list_basket = (ListView) dialog.findViewById(R.id.list_basket);
         basket_dialog_w_list = (ListView) dialog.findViewById(R.id.list);
+        basket_dialog_list_washtag = (ListView) dialog.findViewById(R.id.list_washtag);
 
         btn_print_bk = (Button) dialog.findViewById(R.id.btn_save);
 
@@ -1753,17 +1757,13 @@ public class CssdSterile extends AppCompatActivity {
 //                }
                 int xn =0;
 
-                if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code.toLowerCase())){
+                print_w_id = "";
+                for(int i=0;i<MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.size();i++){
 
-                    print_w_id = "";
-
-                    for(int i=0;i<MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size();i++){
-
-                        Log.d("ttest_for_print","w_id"+MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(i).getI_id());
-                        if(MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(i).getPrint_count()<=0){
-                            print_w_id=print_w_id+","+MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(i).getI_id();
-                            xn = xn+1;
-                        }
+                    Log.d("ttest_for_print","w_id"+MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.get(i).getI_id());
+                    if(MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.get(i).isCheck()){
+                        print_w_id=print_w_id+","+MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.get(i).getI_id();
+                        xn = xn+1;
                     }
                 }
 
@@ -1776,7 +1776,8 @@ public class CssdSterile extends AppCompatActivity {
 
                     Log.d("ttest_W_id","w_id"+print_w_id);
 
-                    onPrintWash(print_w_id);
+                    checkPacker(print_w_id);
+
 //                    dialog_qr.show();
                 }
             }
@@ -6610,23 +6611,23 @@ public class CssdSterile extends AppCompatActivity {
                                 adapter = new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET,MAP_MODEL_IMPORT_WASH_DETAIL_SUB,3);
                                 basket_dialog_w_list.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR,MAP_MODEL_IMPORT_WASH_DETAIL_SUB,4));
 
-                                if(!basket_Code.equals("")){
-                                    if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code.toLowerCase())){
-                                        MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR = MAP_MODEL_IMPORT_WASH_DETAIL_SUB.get(basket_Code.toLowerCase());
-                                        basket_dialog_list_basket.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR,5));
-                                        int xn=0;
-                                        for(int i=0;i<MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size();i++){
-                                            if(MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(i).getPrint_count()<=0){
-                                                xn = xn+1;
-                                            }
-                                        }
-                                        btn_print_bk.setText(xn+"");
-                                    }else{
-                                        btn_print_bk.setText("0");
-                                        basket_dialog_list_basket.setAdapter(null);
-                                    }
-
-                                }
+//                                if(!basket_Code.equals("")){
+//                                    if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code.toLowerCase())){
+//                                        MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR = MAP_MODEL_IMPORT_WASH_DETAIL_SUB.get(basket_Code.toLowerCase());
+//                                        basket_dialog_list_basket.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR,5));
+//                                        int xn=0;
+//                                        for(int i=0;i<MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size();i++){
+//                                            if(MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(i).getPrint_count()<=0){
+//                                                xn = xn+1;
+//                                            }
+//                                        }
+//                                        btn_print_bk.setText(xn+"");
+//                                    }else{
+//                                        btn_print_bk.setText("0");
+//                                        basket_dialog_list_basket.setAdapter(null);
+//                                    }
+//
+//                                }
                                 if(p_SterileProcessID!=null){
                                     list_wash_detail.setAdapter(adapter);
                                 }
@@ -6643,6 +6644,7 @@ public class CssdSterile extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
+                        displayWashDetailNotPrint(p_SterileProcessID);
                     } catch (Exception e) {
                         e.printStackTrace();
                         return;
@@ -6653,6 +6655,179 @@ public class CssdSterile extends AppCompatActivity {
                     grid_wash_detail.setAdapter(null);
 
                     MODEL_IMPORT_WASH_DETAIL = null;
+                }
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+
+                if(p_SterileProcessID==null){
+                    data.put("p_SterileProcessID", "null");
+                }else{
+                    data.put("p_SterileProcessID", p_SterileProcessID);
+                }
+
+                data.put("p_Mode", mode ? "-1" : "1");
+
+                if(B_ID != null){
+                    data.put("p_bid", B_ID);
+                }
+
+                if(IsShowBasket){
+                    data.put("p_show_basket", "1");
+                }
+
+                String result = null;
+
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_import_wash_isprint_detail.php", data);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+                Log.d("ttest_import_w_detail",data+"");
+                Log.d("ttest_import_w_detail",result+"");
+
+                return result;
+            }
+
+            public List<ModelImportWashDetail> getImportWashDetail() throws Exception{
+
+                List<ModelImportWashDetail> list = new ArrayList<>();
+
+                try {
+                    int index = 0;
+
+                    for(int i=0;i<data.size();i+=size){
+                        Log.d("ttestdataget","data.get("+i+") = "+data.get(i+2)+"---"+data.get(i+19));
+                        list.add(
+                                new ModelImportWashDetail(
+                                        index,
+                                        false,
+                                        data.get(i),
+                                        data.get(i + 1),
+                                        data.get(i + 2),
+                                        data.get(i + 3),
+                                        data.get(i + 4),
+                                        data.get(i + 5),
+                                        data.get(i + 6),
+                                        data.get(i + 7),
+                                        data.get(i + 8),
+                                        data.get(i + 9),
+                                        data.get(i + 10),
+                                        data.get(i + 11),
+                                        data.get(i + 12),
+                                        data.get(i + 13),
+                                        data.get(i + 14),
+                                        data.get(i + 15),
+                                        data.get(i + 16),
+                                        data.get(i + 17),
+                                        data.get(i + 18),
+                                        data.get(i + 19)
+                                )
+                        );
+
+                        index++;
+                    }
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+                return list;
+            }
+
+
+            // =========================================================================================
+        }
+
+        DisplayWashDetail obj = new DisplayWashDetail();
+        obj.execute();
+    }
+
+    // =============================================================================================
+    // -- Display Import Wash Detail not print...
+    // =============================================================================================
+
+    public void displayWashDetailNotPrint(final String p_SterileProcessID) {
+
+        final boolean mode = switch_mode.isChecked();
+
+        class displayWashDetailNotPrint extends AsyncTask<String, Void, String> {
+
+            //------------------------------------------------
+            // Background Worker Process Variable
+            private boolean Success = false;
+            private ArrayList<String> data = null;
+            private int size = 0;
+            //------------------------------------------------
+
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                AsonData ason = new AsonData(result);
+
+                Success = ason.isSuccess();
+                size = ason.getSize();
+                data = ason.getASONData();
+
+                if(Success && data != null) {
+
+                    try {
+
+                        MODEL_IMPORT_WASH_DETAIL_NOT_PRINT = getImportWashDetail();
+
+                        List<ModelImportWashDetail> MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_NOT_PRINT = new ArrayList<>();
+
+                        List<ModelImportWashDetail> MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR_NOT_PRINT = new ArrayList<>();
+
+                        HashMap<String,List<ModelImportWashDetail>> MAP_MODEL_IMPORT_WASH_DETAIL_SUB_NOT_PRINT = new HashMap<String,List<ModelImportWashDetail>>();
+
+                        for(int i =0;i<MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.size();i++){
+                            ModelImportWashDetail x = MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.get(i);
+                            String key = x.getBasketCode().toLowerCase();
+                            if(key.equals("-")){
+                                MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_NOT_PRINT.add(x);
+                                MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR_NOT_PRINT.add(x);
+                            }else{
+                                if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB_NOT_PRINT.containsKey(key)){
+                                    MAP_MODEL_IMPORT_WASH_DETAIL_SUB_NOT_PRINT.get(key).add(x);
+                                }else{
+                                    List<ModelImportWashDetail> list = new ArrayList<>();
+                                    list.add(x);
+                                    MAP_MODEL_IMPORT_WASH_DETAIL_SUB_NOT_PRINT.put(key,list);
+                                    ModelImportWashDetail clone = (ModelImportWashDetail) x.clone();
+                                    clone.setI_name(x.getBasketName());
+                                    clone.setBasket(true);
+                                    MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_NOT_PRINT.add(0,clone);
+                                    if(x.getBasketType().equals("0")){
+                                        MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR_NOT_PRINT.add(0,clone);
+                                    }
+
+                                }
+                            }
+                        }
+
+                        try {
+                            ImportWashNotPrintDetailAdapter adapter = new ImportWashNotPrintDetailAdapter(CssdSterile.this,MODEL_IMPORT_WASH_DETAIL_NOT_PRINT, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR_NOT_PRINT,MAP_MODEL_IMPORT_WASH_DETAIL_SUB_NOT_PRINT);
+                            basket_dialog_list_washtag.setAdapter(adapter);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return;
+                    }
+
                 }
             }
 
@@ -6740,7 +6915,7 @@ public class CssdSterile extends AppCompatActivity {
             // =========================================================================================
         }
 
-        DisplayWashDetail obj = new DisplayWashDetail();
+        displayWashDetailNotPrint obj = new displayWashDetailNotPrint();
         obj.execute();
     }
 
@@ -7359,20 +7534,20 @@ public class CssdSterile extends AppCompatActivity {
                             Log.d("ttest_pair","containsKey_map = "+MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code.toLowerCase()));
                             Log.d("ttest_pair","basket_Code = "+basket_Code);
 
-                            if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code.toLowerCase())){
-                                MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR = MAP_MODEL_IMPORT_WASH_DETAIL_SUB.get(basket_Code.toLowerCase());
-                                basket_dialog_list_basket.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR,5));
-                                int xn=0;
-                                for(int ii=0;ii<MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size();ii++){
-                                    if(MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(ii).getPrint_count()<=0){
-                                        xn = xn+1;
-                                    }
-                                }
-                                btn_print_bk.setText(xn+"");
-                            }else{
-                                btn_print_bk.setText("0");
-                                basket_dialog_list_basket.setAdapter(null);
-                            }
+//                            if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code.toLowerCase())){
+//                                MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR = MAP_MODEL_IMPORT_WASH_DETAIL_SUB.get(basket_Code.toLowerCase());
+//                                basket_dialog_list_basket.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR,5));
+//                                int xn=0;
+//                                for(int ii=0;ii<MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size();ii++){
+//                                    if(MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(ii).getPrint_count()<=0){
+//                                        xn = xn+1;
+//                                    }
+//                                }
+//                                btn_print_bk.setText(xn+"");
+//                            }else{
+//                                btn_print_bk.setText("0");
+//                                basket_dialog_list_basket.setAdapter(null);
+//                            }
 
                         }else{
                             Toast.makeText(CssdSterile.this, "ไม่พบตะกร้า !!", Toast.LENGTH_SHORT).show();
@@ -7803,6 +7978,7 @@ public class CssdSterile extends AppCompatActivity {
                         JSONObject c = rs.getJSONObject(i);
 
                         if (c.getString("result").equals("A")) {
+                            onPrintWash(print_w_id);
                         }else{
                             Toast.makeText(CssdSterile.this, "ไม่พบรหัสพนักงาน !!", Toast.LENGTH_SHORT).show();
                         }
@@ -8104,6 +8280,10 @@ public class CssdSterile extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    public void set_num_btn_print_bk(int n){
+        btn_print_bk.setText(n+"");
     }
 
 }

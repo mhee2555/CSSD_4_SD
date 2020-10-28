@@ -686,6 +686,17 @@
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
+                        <TextView
+                            android:id="@+id/BasketExpire"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/textView46_1"
+                            android:layout_alignTop="@id/textView46_1"
+                            android:text=""
+                            android:textColor="@color/colorRedNew"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
                     </RelativeLayout>
 
                     <ListView

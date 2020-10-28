@@ -111,7 +111,7 @@ public class CssdWash extends AppCompatActivity {
     private TextView txt_test_program;
     private TextView txt_wash_type;
     private TextView txt_label_wash_type;
-    private TextView edit_wash_type;
+    private EditText edit_wash_type;
     private TextView txt_wash_process;
     private TextView txt_caption;
     private SingleSelectToggleGroup group_choices;
@@ -304,6 +304,9 @@ public class CssdWash extends AppCompatActivity {
         //defaultTabMachine();
 
         //generateMachine();
+
+
+        edit_wash_type.requestFocus();
     }
 
     public boolean onTouchEvent(MotionEvent touchEvent){
@@ -611,7 +614,7 @@ public class CssdWash extends AppCompatActivity {
 
         txt_label_wash_type = (TextView) findViewById(R.id.txt_label_wash_type);
         txt_wash_type = (TextView) findViewById(R.id.txt_wash_type);
-        edit_wash_type = (TextView) findViewById(R.id.edit_wash_type);
+        edit_wash_type = (EditText) findViewById(R.id.edit_wash_type);
 
         // Check Used QR_Wash_Type
         if (IsQR_Wash_Type){
@@ -619,19 +622,48 @@ public class CssdWash extends AppCompatActivity {
             txt_wash_type.setVisibility(View.GONE);
             txt_label_wash_type.setVisibility(View.GONE);
 
-            edit_wash_type.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
+//            edit_wash_type.setOnClickListener(new View.OnClickListener() {
+//                public void onClick(View v) {
+//
+//                    //String docNo = getDocNo();
+//
+//                    //if(docNo == null || docNo.equals("-") || docNo.equals("")) {
+//
+//                    if (checkMachineActive()) {
+//                        openQR("wash_type");
+//                    } else {
+//                        Toast.makeText(CssdWash.this, "ไม่สามารถเลือกข้อมูลได้ !!", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                }
+//            });
 
-                    //String docNo = getDocNo();
-
-                    //if(docNo == null || docNo.equals("-") || docNo.equals("")) {
-
-                    if (checkMachineActive()) {
-                        openQR("wash_type");
+            edit_wash_type.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    Log.d("tog_edit_wash","keyCode = "+keyCode);
+                    if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                        switch (keyCode) {
+                            case KeyEvent.KEYCODE_DPAD_CENTER:
+                                return false;
+                            case KeyEvent.KEYCODE_ENTER:
+                                if (checkMachineActive()) {
+                                    onCheck_wasg_type(edit_wash_type.getText().toString());
+                                } else {
+                                    Toast.makeText(CssdWash.this, "ไม่สามารถเลือกข้อมูลได้ !!", Toast.LENGTH_SHORT).show();
+                                }
+                                return true;
+                            default:
+                                edit_wash_type.requestFocus();
+                                break;
+                        }
+                    }else if(keyCode==KeyEvent.KEYCODE_ENTER){
+                        return true;
                     } else {
-                        Toast.makeText(CssdWash.this, "ไม่สามารถเลือกข้อมูลได้ !!", Toast.LENGTH_SHORT).show();
+                        edit_wash_type.requestFocus();
+                        return true;
                     }
-
+                    return false;
                 }
             });
 
@@ -3556,7 +3588,7 @@ public class CssdWash extends AppCompatActivity {
                 while(li.hasNext()) {
                     try {
                         ModelSendSterileDetail m = (ModelSendSterileDetail) li.next();
-                        LIST_ID = m.getI_id();
+                        LIST_ID = m.getUsageCode();
                         DATA += LIST_ID + "@";
                     }catch(Exception e){
                         continue;
@@ -6414,6 +6446,84 @@ public class CssdWash extends AppCompatActivity {
             // =========================================================================================
         }
         getOccupancyRate obj = new getOccupancyRate();
+        obj.execute();
+    }
+
+    private void onCheck_wasg_type(final String qr){
+
+        final String ProcessId = getProcessId();
+
+        if(ProcessId == null)
+            return;
+
+        class onCheck_wasg_type extends AsyncTask<String, Void, String> {
+
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+
+                    for(int i=0;i<rs.length();i++){
+                        JSONObject c = rs.getJSONObject(i);
+
+                        if(c.getString("result").equals("A")) {
+                            txt_wash_type.setText(c.getString("data"));
+                            txt_wash_type.setContentDescription(c.getString("value"));
+                            edit_wash_type.setText(c.getString("data"));
+                            edit_wash_type.setContentDescription(c.getString("value"));
+                            updateWash(Master.wash_type, c.getString("value"), getDocNo());
+                            scan_basket.requestFocus();
+                        }else{
+                            Toast.makeText(CssdWash.this, "ไม่พบข้อมูล !!", Toast.LENGTH_SHORT).show();
+                            edit_wash_type.setText("");
+                            edit_wash_type.requestFocus();
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> d = new HashMap<String,String>();
+
+                String result = null;
+
+                String file = "";
+
+                file = "cssd_check_data_by_qr.php";
+
+                d.put("p_data", "wash_type");
+                d.put("p_filter", ProcessId);
+                d.put("p_qr", qr);
+
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + file, d);
+                    Log.d("KDJDLJD",d+"");
+                    Log.d("KDJDLJD",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+                return result;
+            }
+
+
+            // =========================================================================================
+        }
+
+        onCheck_wasg_type obj = new onCheck_wasg_type();
         obj.execute();
     }
 }

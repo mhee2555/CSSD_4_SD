@@ -845,7 +845,7 @@
                             android:paddingTop="0dp"
                             android:paddingBottom="1dp">
 
-                            <TextView
+                            <EditText
                                 android:id="@+id/edit_wash_type"
                                 android:layout_width="225dp"
                                 android:layout_height="30dp"
@@ -855,6 +855,7 @@
                                 android:gravity="center|left"
                                 android:hint="โปรแกรมการล้าง"
                                 android:paddingLeft="8dp"
+                                android:singleLine="true"
                                 android:textColor="@android:color/black"
                                 android:textSize="14sp" />
 
