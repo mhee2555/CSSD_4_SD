@@ -290,12 +290,20 @@ public class dialog_remark_sendsterile extends Activity {
                         builder.setNegativeButton("ไม่ยืนยัน", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent();
+                                intent.putExtra("usagecode",Usagecode);
+                                intent.putExtra("DocNoSend",DocNoSend);
+                                setResult(1005, intent);
                                 finish();
                             }
                         });
                         AlertDialog dialog = builder.create();
                         dialog.show();
                     }else {
+                        Intent intent = new Intent();
+                        intent.putExtra("usagecode",Usagecode);
+                        intent.putExtra("DocNoSend",DocNoSend);
+                        setResult(1005, intent);
                         finish();
                     }
                 }else {
