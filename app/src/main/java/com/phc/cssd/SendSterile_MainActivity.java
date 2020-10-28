@@ -219,8 +219,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     Animation from_slie_right;
     Animation from_slie_left;
 
-    int Count_left;
-    int Count_right;
+    int Count_left = 1;
+    int Count_right = 0;
 
     private SearchableSpinner spin_basket;
     private EditText basket;
@@ -2140,6 +2140,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     }
                     if (bo.equals("true")) {
                         Toast.makeText(SendSterile_MainActivity.this, "นำเข้าอุปกรณ์สำเร็จ", Toast.LENGTH_SHORT).show();
+                        getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
                     } else {
                         Toast.makeText(SendSterile_MainActivity.this, "นำเข้าอุปกรณ์ไม่สำเร็จ", Toast.LENGTH_SHORT).show();
                     }
@@ -2216,7 +2217,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         }
                     }
                     //updateDate();
-                    Log.d("BYRHCY",etxt_docno.getText().toString());
                     if (etxt_docno.getText().toString().equals("")){
                         getlistdata("", date_l2.getText().toString(), "");
                     }
@@ -2232,6 +2232,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
 
                     if (bo.equals("true")) {
                         Toast.makeText(SendSterile_MainActivity.this, "นำเข้าอุปกรณ์สำเร็จ", Toast.LENGTH_SHORT).show();
+                        getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
                         CheckUsageContScanToInsert(RowID);
                         DIALOG_ACTIVE = true;
                         txt_get_ucode.setText("");
@@ -2257,6 +2258,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
+                    Log.d("FKDHKDSS",e+"");
                 }
             }
 
