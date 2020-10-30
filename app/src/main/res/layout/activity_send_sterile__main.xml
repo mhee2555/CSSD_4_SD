@@ -49,6 +49,20 @@
                     android:layout_weight="0.1"
                     android:orientation="horizontal">
 
+                    <TextView
+                        android:id="@+id/textView196"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="1"
+                        android:text="เอกสารส่งล้าง"
+                        android:textColor="@android:color/white"
+                        android:textColorLink="@color/colorSwitchBlue"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:theme="@style/SwitchTheme"
+                        android:visibility="gone" />
+
                     <Switch
                         android:id="@+id/bt_sw"
                         android:layout_width="wrap_content"
@@ -58,8 +72,8 @@
                         android:textColor="@android:color/white"
                         android:textColorLink="@color/colorSwitchBlue"
                         android:textSize="16sp"
-                        android:theme="@style/SwitchTheme"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:theme="@style/SwitchTheme" />
 
                 </LinearLayout>
 

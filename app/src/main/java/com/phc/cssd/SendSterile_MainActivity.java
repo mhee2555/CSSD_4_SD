@@ -1165,17 +1165,17 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                 txt_get_ucode.setText("");
                                 txt_get_ucode.requestFocus();
                             }else {
-                                if (basket.getText().toString().equals("")) {
-                                    Toast.makeText(SendSterile_MainActivity.this, "กรุณาสแกนตะกร้า", Toast.LENGTH_SHORT).show();
-                                    basket.setText("");
-                                    basket.requestFocus();
-                                }else {
-                                    if(txt_get_ucode.getText().toString().equals("1")){
-                                        basket_resterile();
+                                if(txt_get_ucode.getText().toString().equals("1")){
+                                    if (basket.getText().toString().equals("")) {
+                                        Toast.makeText(SendSterile_MainActivity.this, "กรุณาสแกนตะกร้า", Toast.LENGTH_SHORT).show();
+                                        basket.setText("");
+                                        basket.requestFocus();
                                     }else {
-                                        CheckUsageContScan();
+                                        basket_resterile();
                                     }
 
+                                }else {
+                                    CheckUsageContScan();
                                 }
                             }
                             return true;
@@ -2063,7 +2063,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
 //                        xST.setXqty(c.getString("Qty"));
 //                        xST.setIsSterile(c.getString("IsSterile"));
 //                        xST.setXremark(c.getString("Remark"));
-//                        txtDocno = c.getString("DocNo");
+                        txtDocno = c.getString("DocNo");
 //                        pCus.add(xST);
 
                         if(Basket_washtag_code!="" && bo.equals("true")){
@@ -2258,28 +2258,22 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         Toast.makeText(SendSterile_MainActivity.this, "นำเข้าอุปกรณ์สำเร็จ", Toast.LENGTH_SHORT).show();
                         CheckUsageContScanToInsert(RowID);
                         DIALOG_ACTIVE = true;
-                        txt_get_ucode.setText("");
-                        txt_get_ucode.requestFocus();
                     }
 
                     if (bo.equals("true1")) {
                         Toast.makeText(SendSterile_MainActivity.this, "รายการซ้ำ", Toast.LENGTH_SHORT).show();
-                        txt_get_ucode.setText("");
-                        txt_get_ucode.requestFocus();
                     }
 
                     if (bo.equals("true2")) {
                         Toast.makeText(SendSterile_MainActivity.this, "นำเข้าอุปกรณ์ไม่สำเร็จ", Toast.LENGTH_SHORT).show();
-                        txt_get_ucode.setText("");
-                        txt_get_ucode.requestFocus();
                     }
 
                     if (bo.equals("true3")) {
                         Toast.makeText(SendSterile_MainActivity.this, "แผนกหรือสถานะรหัสไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
-                        txt_get_ucode.setText("");
-                        txt_get_ucode.requestFocus();
                     }
 
+                    txt_get_ucode.setText("");
+                    txt_get_ucode.requestFocus();
                 } catch (JSONException e) {
                 }
             }

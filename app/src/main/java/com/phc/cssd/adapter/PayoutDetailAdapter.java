@@ -87,12 +87,42 @@ public class PayoutDetailAdapter extends ArrayAdapter {
             txt_checkusage.setVisibility(View.VISIBLE);
         }else{
             txt_checkusage.setVisibility(View.INVISIBLE);
+
         }
 
         if (listData.get(position).getFields4().equals("1")) {
             imageView1.setImageResource(R.drawable.ic_radiobox_fill);
             cBox.setVisibility(View.VISIBLE);
-        } /*else if (listData.get(position).getFields4().equals("1")) {
+            v.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(final View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage("คุณต้องการลบข้อมูลนี้ "+listData.get(position).getFields1()+" ใช่หรือไม่?");
+                    builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            if(listData.get(position).getFields4().equals("1")){
+                                Delete_PayoutDetail(listData.get(position).getFields7(),"1");
+                                ((PayoutActivity)context).payoutnotfully(xDocNo);
+                                Toast.makeText(v.getContext(), "ลบรายการแล้ว", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(v.getContext(), "ไม่สามารถลบรายการได้", Toast.LENGTH_SHORT).show();
+                            }
+
+                            //Gv.setAdapter( new PayoutDetailAdapter( context, listData,Gv,xDocNo) );
+                        }
+                    });
+                    builder.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //dialog.dismiss();
+                        }
+                    });
+                    builder.show();
+                    return false;
+                }
+            });
+        }
+        /*else if (listData.get(position).getFields4().equals("1")) {
             imageView1.setImageResource(R.drawable.uncheck02_1_32);
         }*/else{
             cBox.setVisibility(View.INVISIBLE);
@@ -103,35 +133,6 @@ public class PayoutDetailAdapter extends ArrayAdapter {
         }else{
             imageView16.setVisibility(View.INVISIBLE);
         }
-        v.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(final View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("คุณต้องการลบข้อมูลนี้ "+listData.get(position).getFields1()+" ใช่หรือไม่?");
-                builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        if(listData.get(position).getFields4().equals("1")){
-                            Delete_PayoutDetail(listData.get(position).getFields7(),"1");
-                            ((PayoutActivity)context).payoutnotfully(xDocNo);
-                            Toast.makeText(v.getContext(), "ลบรายการแล้ว", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(v.getContext(), "ไม่สามารถลบรายการได้", Toast.LENGTH_SHORT).show();
-                        }
-
-                        //Gv.setAdapter( new PayoutDetailAdapter( context, listData,Gv,xDocNo) );
-                    }
-                });
-                builder.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //dialog.dismiss();
-                    }
-                });
-                builder.show();
-                return false;
-            }
-        });
-
 
         //cBox.setChecked(array_chkbox.get(position));
         v.setOnClickListener(new View.OnClickListener() {

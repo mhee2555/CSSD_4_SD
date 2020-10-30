@@ -845,26 +845,38 @@ public class PayoutActivity extends AppCompatActivity {
     }
 
     public void ArkCancelPayout() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(PayoutActivity.this);
-        builder.setCancelable(true);
-        builder.setTitle("ยืนยัน");
-        builder.setMessage("ต้องการปิดเอกสารยืมนี้หรือไม่");
-        builder.setPositiveButton("ใช่",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        isnewDoc = false;
-                        CancelPayout(DocNo);
-                    }
-                });
-        builder.setNegativeButton("ไม่ใช่", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                bt_createdoc.setEnabled(true);
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        final boolean isChecked = bt_isWithdraw.isChecked();
+        Log.d("Tog_ArkCancelPayout_","isChecked = "+isChecked);
+        if (isChecked) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(PayoutActivity.this);
+            builder.setCancelable(true);
+            builder.setTitle("ยืนยัน");
+            builder.setMessage("ต้องการปิดเอกสารยืมนี้หรือไม่");
+            builder.setPositiveButton("ใช่",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            isnewDoc = false;
+                            CancelPayout(DocNo);
+
+                            bt_additem.setEnabled(true);
+                            bt_createdoc.setEnabled(true);
+                        }
+                    });
+            builder.setNegativeButton("ไม่ใช่", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+//                    bt_createdoc.setEnabled(true);
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }else {
+            isnewDoc = false;
+            bt_additem.setEnabled(true);
+            bt_createdoc.setEnabled(true);
+        }
+
     }
 
     public void CancelPayout(final String xDocNo) {
