@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -59,6 +60,7 @@ import com.phc.cssd.model.ModelSterile;
 import com.phc.cssd.model.ModelSterileDetail;
 import com.phc.cssd.model.ModelSterileMachine;
 import com.phc.cssd.model.ModelSterileProcess;
+import com.phc.cssd.model.ModelWashDetail;
 import com.phc.cssd.model.ModelWashDetailForPrint;
 import com.phc.cssd.print_sticker.PrintSticker;
 import com.phc.cssd.print_sticker.PrintWash;
@@ -1807,9 +1809,10 @@ public class CssdSterile extends AppCompatActivity {
 //                displayWashDetail("null");
                 displayWashDetail(getSterileProcessId());
                 dialog_qr.show();
-//                dialog.show();
 
                 dialogProgress.dismiss();
+
+//                openDialogWashManagement("i00042","tname");
             }
         });
 
@@ -3167,7 +3170,7 @@ public class CssdSterile extends AppCompatActivity {
     }
 
     public void openDialogWashManagement(final String itemcode,final String itemname) {
-        final String[] option_wash_detail = switch_mode.isChecked() ? new String[]{"จัดการรูปแบบการห่อ", "ลบรายการ", "Import Sterile", "ออก"} : new String[]{"จัดการรูปแบบการห่อ", "ลบรายการ", "Export Sub-Stock", "ออก"};
+        final String[] option_wash_detail = new String[]{"จัดการรูปแบบการห่อ", "พิมพ์ย้อนหลัง","ออก"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(CssdSterile.this, android.R.layout.select_dialog_item, option_wash_detail );
         AlertDialog.Builder builder = new AlertDialog.Builder(CssdSterile.this);
         builder.setIcon(R.drawable.pose_favicon_2x);
@@ -3175,19 +3178,26 @@ public class CssdSterile extends AppCompatActivity {
         builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 // ListView Clicked item value
+//                if (which == 0) {
+//                    Intent i = new Intent(CssdSterile.this, CssdWashDetailManagement.class);
+//                    i.putExtra("itemcode", itemcode);
+//                    i.putExtra("itemname", itemname);
+//                    i.putExtra("B_ID", B_ID);
+//                    startActivityForResult(i, Master.CssdWashDetailManagement);
+//                }else if (which == 1) {
+//                    removeWashDetail(itemcode);
+//                }else {
+//                    return;
+//                }
+
                 if (which == 0) {
-                    Intent i = new Intent(CssdSterile.this, CssdWashDetailManagement.class);
-                    i.putExtra("itemcode", itemcode);
-                    i.putExtra("itemname", itemname);
-                    i.putExtra("B_ID", B_ID);
-                    startActivityForResult(i, Master.CssdWashDetailManagement);
+                    wash_detail_management_pack(itemcode,itemname);
                 }else if (which == 1) {
-                    removeWashDetail(itemcode);
-                }else if (which == 2) {
-                    updateWashDetailStatus(itemcode);
+                    checkPacker(itemcode);
                 }else {
                     return;
                 }
+
             }
         });
         final AlertDialog dialog = builder.create();
@@ -3478,6 +3488,7 @@ public class CssdSterile extends AppCompatActivity {
 
         try {
 
+            Log.d("tog_MD","resultCode --"+resultCode);
             //////System.out.println( "resultCode = " + requestCode + "resultCode = " + resultCode) ;
 
             String RETURN_DATA = data.getStringExtra("RETURN_DATA");
@@ -3498,7 +3509,8 @@ public class CssdSterile extends AppCompatActivity {
                     Log.d("BANK",txt_doc_no.getText().toString());
                 }
 
-            }else if (resultCode == Master.user_aprrove) {
+            }
+            else if (resultCode == Master.user_aprrove) {
                 txt_usr_approve.setText(RETURN_DATA);
                 txt_usr_approve.setContentDescription(RETURN_VALUE);
 
@@ -3513,7 +3525,8 @@ public class CssdSterile extends AppCompatActivity {
                     Log.d("BANK",txt_doc_no.getText().toString());
                 }
 
-            }else if (resultCode == Master.user_sterile) {
+            }
+            else if (resultCode == Master.user_sterile) {
                 txt_usr_sterile.setText(RETURN_DATA);
                 txt_usr_sterile.setContentDescription(RETURN_VALUE);
 
@@ -3523,7 +3536,8 @@ public class CssdSterile extends AppCompatActivity {
                     //displaySterileDetail(DocNo);
                 }
 
-            }else if (resultCode == Master.sterile_test_program) {
+            }
+            else if (resultCode == Master.sterile_test_program) {
                 txt_test_program.setText(RETURN_DATA);
                 txt_test_program.setContentDescription(RETURN_VALUE);
 
@@ -3534,11 +3548,13 @@ public class CssdSterile extends AppCompatActivity {
                     updateSterile(Master.sterile_test_program, RETURN_VALUE, getDocNo());
                 }
 
-            }else if (resultCode == Master.CssdWashDetailManagement) {
+            }
+            else if (resultCode == Master.CssdWashDetailManagement) {
 
                 displayWashDetail(getSterileProcessId());
 
-            }else if (resultCode == Master.CssdSterileDraft) {
+            }
+            else if (resultCode == Master.CssdSterileDraft) {
 
                 if(STERILE_MACHINE_NUMBER_ACTIVE > 0 && checkMachineActive()) {
                     updateSterileMachineImportDocNo(STERILE_MACHINE_NUMBER_ACTIVE, getMachineId(STERILE_MACHINE_NUMBER_ACTIVE), RETURN_VALUE);
@@ -3546,13 +3562,16 @@ public class CssdSterile extends AppCompatActivity {
                     Toast.makeText(CssdSterile.this, "ไม่สามารถนำเอกสารเข้าเครื่องได้ !!" , Toast.LENGTH_SHORT).show();
                 }
 
-            }else if (resultCode == Master.CssdNewItemStock) {
+            }
+            else if (resultCode == Master.CssdNewItemStock) {
                 onImportNewItemStock(RETURN_DATA, RETURN_VALUE, true);
 
-            }else if(resultCode == Master.CssdWashDetailNoWash){
+            }
+            else if(resultCode == Master.CssdWashDetailNoWash){
                 onImportNewItemStock(RETURN_DATA, RETURN_VALUE, false);
 
-            } else if (resultCode == 9999 ){
+            }
+            else if (resultCode == 9999 ){
                 String RETURN_Dep = data.getStringExtra("RETURN_Dep");
                 String RETURN_Id = data.getStringExtra("RETURN_Id");
                 String RETURN_Qty = data.getStringExtra("RETURN_Qty");
@@ -3562,10 +3581,13 @@ public class CssdSterile extends AppCompatActivity {
 
                 createWash( RETURN_Dep,RETURN_Id,RETURN_Qty,RETURN_ReSterile,RETURN_ReSterileType,RETURN_IsWithdraw );
 
-            }else if (resultCode == 501 ){
+            }
+            else if (resultCode == 501 ){
                 String xData = data.getStringExtra("RETURN_DATA");
                 updatePrintStatus(xData);
-            }else if (resultCode == 1035 ){
+
+            }
+            else if (resultCode == 1035 ){
 
                 String xData = data.getStringExtra("RETURN_DATA");
                 String xsel= data.getStringExtra("RETURN_xsel");
@@ -3609,9 +3631,17 @@ public class CssdSterile extends AppCompatActivity {
                         }
                     }else{
                     }
-                }else{
+                }
+                else{
                     Toast.makeText(this, "บันทึกไม่สำเร็จ", Toast.LENGTH_SHORT).show();
                 }
+            }
+            else if (resultCode == Master.packingmat) {
+
+                txt_packingmat.setText(RETURN_DATA);
+                txt_packingmat.setContentDescription(RETURN_VALUE);
+//                    DAY = Integer.valueOf( RETURN_DATA.substring(RETURN_DATA.lastIndexOf("[") + 1, RETURN_DATA.length() - 1)).intValue();
+                Log.d("tog_MD",RETURN_DATA+"---"+RETURN_VALUE);
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -7612,7 +7642,7 @@ public class CssdSterile extends AppCompatActivity {
         final String basket = basket_ID;
 
         if(basket.equals("")){
-            Toast.makeText(CssdSterile.this, "ไม่มีรายการตะกร้า !!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CssdSterile.this, "Scan QR Code Basket Tag !!", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -8286,5 +8316,137 @@ public class CssdSterile extends AppCompatActivity {
         btn_print_bk.setText(n+"");
     }
 
+    Dialog dialog_pack;
+
+    private TextView txt_packingmat;
+    private TextView txt_item_code;
+    private TextView txt_item_name;
+
+    public void wash_detail_management_pack(String usagecode,String itemname) {
+
+        dialog_pack = new Dialog(CssdSterile.this, R.style.DialogCustomTheme);
+
+        dialog_pack.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        dialog_pack.setContentView(R.layout.activity_cssd_wash_detail_management_pack);
+
+        dialog_pack.setCancelable(false);
+
+        dialog_pack.setTitle("");
+
+        txt_item_code = (TextView) dialog_pack.findViewById(R.id.txt_item_code);
+        txt_item_name = (TextView) dialog_pack.findViewById(R.id.txt_item_name);
+        txt_packingmat = (TextView) dialog_pack.findViewById(R.id.txt_packingmat);
+        ImageView image_save = (ImageView) dialog_pack.findViewById(R.id.image_save);
+        ImageView imageBack_pack = (ImageView) dialog_pack.findViewById(R.id.imageBack);
+
+        txt_item_code.setText("รหัส : " + usagecode);
+        txt_item_name.setText("รายการ : " + itemname);
+
+        imageBack_pack.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                dialog_pack.dismiss();
+            }
+        });
+
+        image_save.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                if(txt_packingmat.getContentDescription() == null){
+                    Toast.makeText(CssdSterile.this, "ยังไม่ได้เลือกรูปแบบการห่อ" , Toast.LENGTH_SHORT).show();
+                    return;
+                }
+//                Toast.makeText(CssdSterile.this, txt_item_code.getText().toString()+"-----"+txt_packingmat.getContentDescription().toString() , Toast.LENGTH_SHORT).show();
+                onUpdatePacking(txt_item_code.getText().toString(), txt_packingmat.getContentDescription().toString());
+
+            }
+        });
+
+        txt_packingmat.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                openDropDown("packingmat");
+            }
+        });
+
+        dialog_pack.show();
+
+    }
+
+    public void onUpdatePacking(final String p_data, final String p_PackingMatID) {
+
+        class RemoveSterileDetail extends AsyncTask<String, Void, String> {
+
+            private ProgressDialog dialog = new ProgressDialog(CssdSterile.this);
+
+            //------------------------------------------------
+            // Background Worker Process Variable
+            private boolean Success = false;
+            private ArrayList<String> data = null;
+            private int size = 0;
+            //------------------------------------------------
+
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+                this.dialog.setMessage(Cons.WAIT_FOR_PROCESS);
+                this.dialog.show();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                AsonData ason = new AsonData(result);
+
+                Success = ason.isSuccess();
+                size = ason.getSize();
+                data = ason.getASONData();
+
+                if(Success && data != null) {
+
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+
+                }else{
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+                dialog_pack.dismiss();
+                displayWashDetail(getSterileProcessId());
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+
+                data.put("p_data", p_data);
+                data.put("p_PackingMatID", p_PackingMatID);
+
+
+                String result = httpConnect.sendPostRequest(Url.URL + "cssd_update_wash_detail_packing.php", data);
+
+                System.out.println("URL = " + result);
+
+                return result;
+            }
+
+            // =========================================================================================
+        }
+
+        RemoveSterileDetail obj = new RemoveSterileDetail();
+        obj.execute();
+    }
+
+    // Dropdown list
+    private void openDropDown(String data){
+        Intent i = new Intent(CssdSterile.this, MasterDropdown.class);
+        i.putExtra("data", data);
+
+        Log.d("tog_MD",data+"---"+Master.getResult(data));
+        startActivityForResult(i, Master.getResult(data));
+    }
 }
 

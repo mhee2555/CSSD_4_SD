@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="1000dp"
+    android:layout_width="1100dp"
     android:layout_height="655dp"
     android:background="@drawable/popup_approve">
 
@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="17dp"
         android:text="จับคู่ตะกร้า"
         android:textAlignment="viewStart"
         android:textColor="@color/colorWhite"
@@ -130,6 +130,21 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
+                <EditText
+                    android:id="@+id/edt_basket_code"
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="@drawable/styles_spinner_01"
+                    android:color="@color/form_label"
+                    android:gravity="center_vertical"
+                    android:hint="Scan Basket tag or Usagecode"
+                    android:paddingLeft="14dp"
+                    android:singleLine="true"
+                    android:textSize="14dp" />
+
                 <TextView
                     android:id="@+id/bastek_name"
                     android:layout_width="match_parent"
@@ -154,9 +169,9 @@
         android:id="@+id/btn_cancel"
         android:layout_width="114dp"
         android:layout_height="50dp"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="25dp"
+        android:layout_marginEnd="35dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/btn_cancel" />
 
@@ -164,14 +179,24 @@
         android:id="@+id/btn_save"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="35dp"
-        android:layout_marginBottom="17dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginBottom="13dp"
+        android:layout_toEndOf="@+id/btn_import_new_item_stock"
         android:background="@drawable/ic_print_blue"
         android:paddingTop="15dp"
         android:text="0"
         android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/btn_import_new_item_stock"
+        android:layout_width="121dp"
+        android:layout_height="42dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/bt_importnewint" />
 
     <Button
         android:id="@+id/add_basket_Button"
@@ -181,44 +206,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="11dp"
         android:layout_marginEnd="25dp"
-        android:background="@drawable/ic_add" />
-
-    <RelativeLayout
-        android:id="@+id/linear_layout_search"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="67dp"
-        android:gravity="center_vertical">
-
-        <EditText
-            android:id="@+id/edt_basket_code"
-            android:layout_width="fill_parent"
-            android:layout_height="35dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/text_dropdown"
-            android:color="@color/form_label"
-            android:gravity="center_vertical"
-            android:hint="ยิงรหัสผูกตะกร้า"
-            android:paddingLeft="14dp"
-            android:singleLine="true"
-            android:textSize="14dp" />
-
-        <Button
-            android:id="@+id/btn_search_item"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="5dp"
-            android:background="@drawable/ic_qrcode2" />
-
-    </RelativeLayout>
+        android:background="@drawable/ic_add"
+        android:visibility="gone" />
 
 </RelativeLayout>

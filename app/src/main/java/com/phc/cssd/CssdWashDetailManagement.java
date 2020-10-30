@@ -59,7 +59,11 @@ public class CssdWashDetailManagement extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        by Itemcode
         setContentView(R.layout.activity_cssd_wash_detail_management);
+
+//        by w_id
+//        setContentView(R.layout.activity_cssd_wash_detail_management_pack);
 
         // Permission StrictMode
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -69,13 +73,13 @@ public class CssdWashDetailManagement extends AppCompatActivity {
 
         // =========================================================================================
 
+        byIntent();
+
         getSupportActionBar().hide();
 
         byWidget();
 
-        byIntent();
-
-        // Display
+//         Display
         displayWashDetail(itemcode);
     }
 
@@ -85,21 +89,22 @@ public class CssdWashDetailManagement extends AppCompatActivity {
         itemcode = intent.getStringExtra("itemcode");
         itemname = intent.getStringExtra("itemname");
         B_ID = intent.getStringExtra("B_ID");
-
-        txt_item_code.setText("รหัส : " + itemcode);
-        txt_item_name.setText("รายการ : " + itemname);
     }
 
     private void byWidget() {
-        grid_wash_detail = (GridView) findViewById(R.id.grid_wash_detail);
-        txt_packingmat = (TextView) findViewById(R.id.txt_packingmat);
         txt_item_code = (TextView) findViewById(R.id.txt_item_code);
         txt_item_name = (TextView) findViewById(R.id.txt_item_name);
+        txt_packingmat = (TextView) findViewById(R.id.txt_packingmat);
+        image_save = (ImageView) findViewById(R.id.image_save);
+        imageBack = (ImageView) findViewById(R.id.imageBack);
+
+        grid_wash_detail = (GridView) findViewById(R.id.grid_wash_detail);
         edt_qty = (EditText) findViewById(R.id.edt_qty);
         btn_plus = (Button) findViewById(R.id.btn_plus);
         btn_minus = (Button) findViewById(R.id.btn_minus);
-        image_save = (ImageView) findViewById(R.id.image_save);
-        imageBack = (ImageView) findViewById(R.id.imageBack);
+
+        txt_item_code.setText("รหัส : " + itemcode);
+        txt_item_name.setText("รายการ : " + itemname);
 
         imageBack.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -121,6 +126,8 @@ public class CssdWashDetailManagement extends AppCompatActivity {
 
                 updatePacking();
 
+//                onUpdatePacking(txt_item_code.getText().toString(), txt_packingmat.getContentDescription().toString());
+
             }
         });
 
@@ -129,7 +136,6 @@ public class CssdWashDetailManagement extends AppCompatActivity {
                 openDropDown("packingmat");
             }
         });
-
 
         edt_qty.addTextChangedListener(new TextWatcher() {
 
@@ -197,6 +203,115 @@ public class CssdWashDetailManagement extends AppCompatActivity {
                 }
             }
         });
+    }
+
+
+    // =============================================================================================
+    // -- on Update Packing
+    // =============================================================================================
+
+    public void onUpdatePacking(final String p_data, final String p_PackingMatID) {
+
+        class RemoveSterileDetail extends AsyncTask<String, Void, String> {
+
+            private ProgressDialog dialog = new ProgressDialog(CssdWashDetailManagement.this);
+
+            //------------------------------------------------
+            // Background Worker Process Variable
+            private boolean Success = false;
+            private ArrayList<String> data = null;
+            private int size = 0;
+            //------------------------------------------------
+
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+                this.dialog.setMessage(Cons.WAIT_FOR_PROCESS);
+                this.dialog.show();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                AsonData ason = new AsonData(result);
+
+                Success = ason.isSuccess();
+                size = ason.getSize();
+                data = ason.getASONData();
+
+                if(Success && data != null) {
+
+                    terminate();
+
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+
+                }else{
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+
+                data.put("p_data", p_data);
+                data.put("p_PackingMatID", p_PackingMatID);
+
+
+                String result = httpConnect.sendPostRequest(Url.URL + "cssd_update_wash_detail_packing.php", data);
+
+                System.out.println("URL = " + result);
+
+                return result;
+            }
+
+            // =========================================================================================
+        }
+
+        RemoveSterileDetail obj = new RemoveSterileDetail();
+        obj.execute();
+    }
+
+    // Dropdown list
+    private void openDropDown(String data){
+        Intent i = new Intent(CssdWashDetailManagement.this, MasterDropdown.class);
+        i.putExtra("data", data);
+        startActivityForResult(i, Master.getResult(data));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        try {
+            if(data != null) {
+                String RETURN_DATA = data.getStringExtra("RETURN_DATA");
+                String RETURN_VALUE = data.getStringExtra("RETURN_VALUE");
+
+                if (resultCode == Master.packingmat) {
+                    txt_packingmat.setText(RETURN_DATA);
+                    txt_packingmat.setContentDescription(RETURN_VALUE);
+                    DAY = Integer.valueOf( RETURN_DATA.substring(RETURN_DATA.lastIndexOf("[") + 1, RETURN_DATA.length() - 1)).intValue();
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void terminate(){
+        Intent intent = new Intent();
+        intent.putExtra("RETURN_DATA", "OK");
+        intent.putExtra("RETURN_VALUE", "OK");
+        setResult(Master.CssdWashDetailManagement, intent);
+        finish();
     }
 
     private void updatePacking(){
@@ -327,45 +442,9 @@ public class CssdWashDetailManagement extends AppCompatActivity {
     }
 
 
-
-    // Dropdown list
-    private void openDropDown(String data){
-        Intent i = new Intent(CssdWashDetailManagement.this, MasterDropdown.class);
-        i.putExtra("data", data);
-        startActivityForResult(i, Master.getResult(data));
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        try {
-            if(data != null) {
-                String RETURN_DATA = data.getStringExtra("RETURN_DATA");
-                String RETURN_VALUE = data.getStringExtra("RETURN_VALUE");
-
-                if (resultCode == Master.packingmat) {
-                    txt_packingmat.setText(RETURN_DATA);
-                    txt_packingmat.setContentDescription(RETURN_VALUE);
-                    DAY = Integer.valueOf( RETURN_DATA.substring(RETURN_DATA.lastIndexOf("[") + 1, RETURN_DATA.length() - 1)).intValue();
-                }
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    private void terminate(){
-        Intent intent = new Intent();
-        intent.putExtra("RETURN_DATA", "OK");
-        intent.putExtra("RETURN_VALUE", "OK");
-        setResult(Master.CssdWashDetailManagement, intent);
-        finish();
-    }
-
-    // =============================================================================================
-    // -- Display Wash Detail ...
-    // =============================================================================================
+//     =============================================================================================
+//     -- Display Wash Detail ...
+//     =============================================================================================
 
     public void displayWashDetail(final String p_itemcode) {
 
@@ -530,77 +609,5 @@ public class CssdWashDetailManagement extends AppCompatActivity {
         obj.execute();
     }
 
-    // =============================================================================================
-    // -- on Update Packing
-    // =============================================================================================
-
-    public void onUpdatePacking(final String p_data, final String p_PackingMatID) {
-
-        class RemoveSterileDetail extends AsyncTask<String, Void, String> {
-
-            private ProgressDialog dialog = new ProgressDialog(CssdWashDetailManagement.this);
-
-            //------------------------------------------------
-            // Background Worker Process Variable
-            private boolean Success = false;
-            private ArrayList<String> data = null;
-            private int size = 0;
-            //------------------------------------------------
-
-            // variable
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-
-                this.dialog.setMessage(Cons.WAIT_FOR_PROCESS);
-                this.dialog.show();
-            }
-
-            @Override
-            protected void onPostExecute(String result) {
-                super.onPostExecute(result);
-
-                AsonData ason = new AsonData(result);
-
-                Success = ason.isSuccess();
-                size = ason.getSize();
-                data = ason.getASONData();
-
-                if(Success && data != null) {
-
-                    terminate();
-
-                    if (dialog.isShowing()) {
-                        dialog.dismiss();
-                    }
-
-                }else{
-                    if (dialog.isShowing()) {
-                        dialog.dismiss();
-                    }
-                }
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-                HashMap<String, String> data = new HashMap<String,String>();
-
-                data.put("p_data", p_data);
-                data.put("p_PackingMatID", p_PackingMatID);
-
-
-                String result = httpConnect.sendPostRequest(Url.URL + "cssd_update_wash_detail_packing.php", data);
-
-                System.out.println("URL = " + result);
-
-                return result;
-            }
-
-            // =========================================================================================
-        }
-
-        RemoveSterileDetail obj = new RemoveSterileDetail();
-        obj.execute();
-    }
 
 }

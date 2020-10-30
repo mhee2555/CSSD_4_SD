@@ -85,6 +85,7 @@ public class ImportWashNotPrintDetailAdapter extends ArrayAdapter {
         final ListView sub_item;
         final String usageCode;
         final RelativeLayout relativeLayout;
+        final String w_id = DATA_MODEL.get(position).getI_id();
 
         relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
         txt_item_name = (TextView) view.findViewById(R.id.txt_item_name);
@@ -175,6 +176,15 @@ public class ImportWashNotPrintDetailAdapter extends ArrayAdapter {
         }
         else {
             check_no.setChecked(DATA_MODEL.get(position).isCheck());
+
+            relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
+                public boolean onLongClick(View v) {
+                    ((CssdSterile)context).wash_detail_management_pack(
+                            w_id,
+                            txt_item_name.getText().toString() );
+                    return false;
+                }
+            });
 
             check_no.setOnClickListener(new View.OnClickListener() {
                 @Override

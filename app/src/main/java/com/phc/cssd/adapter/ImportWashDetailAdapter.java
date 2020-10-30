@@ -80,6 +80,7 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
         final String PackingMatID;
         final ListView sub_item;
         final String usageCode;
+        final String w_id = DATA_MODEL.get(position).getI_id();
 
         relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
         txt_item_code = (TextView) view.findViewById(R.id.txt_item_code);
@@ -342,6 +343,15 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
             }
             else {
                 txt_qty.setVisibility(View.GONE);
+
+                relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
+                    public boolean onLongClick(View v) {
+                        ((CssdSterile)context).openDialogWashManagement(
+                                w_id,
+                                txt_item_name.getText().toString() );
+                        return false;
+                    }
+                });
 
                 imv_add.setOnClickListener(new View.OnClickListener() {
                     @Override
