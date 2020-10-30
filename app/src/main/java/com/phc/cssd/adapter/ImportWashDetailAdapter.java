@@ -80,6 +80,7 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
         final String PackingMatID;
         final ListView sub_item;
         final String usageCode;
+        final String w_id = DATA_MODEL.get(position).getI_id();
 
         relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
         txt_item_code = (TextView) view.findViewById(R.id.txt_item_code);
@@ -310,7 +311,7 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                 imv_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String print_w_id = "";
+//                        String print_w_id = "";
                         Boolean cnt = true;
                         for (int i = 0; i < DETAIL_SUB.size(); i++) {
                             ModelImportWashDetail x = DETAIL_SUB.get(i);
@@ -329,18 +330,28 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                                         x.getPackingMatID(),
                                         x.getI_UsageCode()
                                 );
-                                print_w_id=print_w_id+","+x.getI_id();
+//                                print_w_id=print_w_id+","+x.getI_id();
                             }
-                            print_w_id = print_w_id.substring(1);
-                            ((CssdSterile)context).checkPacker(print_w_id);
+//                            print_w_id = print_w_id.substring(1);
+//                            ((CssdSterile)context).checkPacker(print_w_id);
                         }else{
                             Toast.makeText(((CssdSterile) context), "โปรแกรมฆ่าเชื้อไม่ตรงกันกับรายการในตะกร้า !!", Toast.LENGTH_SHORT).show();
                         }
 
                     }
                 });
-            }else {
+            }
+            else {
                 txt_qty.setVisibility(View.GONE);
+
+                relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
+                    public boolean onLongClick(View v) {
+                        ((CssdSterile)context).openDialogWashManagement(
+                                w_id,
+                                txt_item_name.getText().toString() );
+                        return false;
+                    }
+                });
 
                 imv_add.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -352,7 +363,7 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                                     usageCode
 
                             );
-                            ((CssdSterile)context).checkPacker(DATA_MODEL.get(position).getI_id());
+//                            ((CssdSterile)context).checkPacker(DATA_MODEL.get(position).getI_id());
                         }else{
                             Toast.makeText(((CssdSterile) context), "โปรแกรมฆ่าเชื้อไม่ตรงกันกับรายการในตะกร้า !!", Toast.LENGTH_SHORT).show();
                         }

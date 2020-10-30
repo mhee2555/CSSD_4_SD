@@ -14,8 +14,10 @@ public class ExpandableListDataPump {
         List<String> data1 = new ArrayList<String>();
         List<String> data2 = new ArrayList<String>();
         List<String> data3 = new ArrayList<String>();
+
         List<String> data4 = new ArrayList<String>();
         List<String> data5 = new ArrayList<String>();
+        List<String> data6 = new ArrayList<String>();
         for(int i=0;i<getData.size();i++) {
             //จ่ายต้องจัด
             if( getData.get(i).getFields7().equals("0") || getData.get(i).getFields7().equals("1") ) {
@@ -25,7 +27,12 @@ public class ExpandableListDataPump {
                     data4.add(getData.get(i).getFields1() + "," + getData.get(i).getFields7() + "," + getData.get(i).getFields8() + "," + getData.get(i).getFields10() + "," + getData.get(i).getFields11() + "," + getData.get(i).getFields12() + "," + getData.get(i).getFields2() + "," + getData.get(i).getFields13());
                 }
             }else if( getData.get(i).getFields7().equals("6") || getData.get(i).getFields7().equals("9") ) {
-                data2.add(getData.get(i).getFields1() + "," + getData.get(i).getFields7()+ "," +getData.get(i).getFields8() + "," +getData.get(i).getFields10()+ "," +getData.get(i).getFields11()+ "," +getData.get(i).getFields12()+ "," +getData.get(i).getFields2()+"," +getData.get(i).getFields13());
+                if(getData.get(i).getFields14().equals("0")) {
+                    data2.add(getData.get(i).getFields1() + "," + getData.get(i).getFields7() + "," + getData.get(i).getFields8() + "," + getData.get(i).getFields10() + "," + getData.get(i).getFields11() + "," + getData.get(i).getFields12() + "," + getData.get(i).getFields2() + "," + getData.get(i).getFields13());
+                }else{
+                    data6.add(getData.get(i).getFields1() + "," + getData.get(i).getFields7() + "," + getData.get(i).getFields8() + "," + getData.get(i).getFields10() + "," + getData.get(i).getFields11() + "," + getData.get(i).getFields12() + "," + getData.get(i).getFields2() + "," + getData.get(i).getFields13());
+                }
+//                data2.add(getData.get(i).getFields1() + "," + getData.get(i).getFields7()+ "," +getData.get(i).getFields8() + "," +getData.get(i).getFields10()+ "," +getData.get(i).getFields11()+ "," +getData.get(i).getFields12()+ "," +getData.get(i).getFields2()+"," +getData.get(i).getFields13());
             }else if( getData.get(i).getFields7().equals("2") || getData.get(i).getFields7().equals("3") ) {
                 if(getData.get(i).getFields2().substring(0,10).equals( xDate ) ) {  //formatter.format(date)
                     if(getData.get(i).getFields14().equals("0")) {
@@ -60,6 +67,7 @@ public class ExpandableListDataPump {
 
         if(mode==1){
             expandableListDetail.put("1 เอกสารยืม [ " + data4.size() + " ]", data4);
+            expandableListDetail.put("2 เอกสารยืมค้างจัด [ " + data6.size() + " ]", data6);
             expandableListDetail.put("3 เอกสารยืมจัดแล้ว [ " + data5.size() + " ]", data5);
         }else{
             expandableListDetail.put("1 เอกสารที่ต้องจัด [ " + data1.size() + " ]       ", data1);

@@ -85,6 +85,7 @@ public class WashDetailAdapter extends ArrayAdapter<ModelWashDetail> {
             txt_basket.setVisibility(View.GONE);
             ModelWashDetail x =  DATA_MODEL.get(position);
             final List<ModelWashDetail> MODEL_SUB = MAP_MODEL_WASH_DETAIL_GROUP_BASKET.get(x.getBasketCode());
+            txt_usage_code.setVisibility(View.GONE);
 
             list_sub.setAdapter(new WashDetailAdapter( (CssdWash)context, MODEL_SUB, IsActive,null));
             list_sub.setVisibility(View.VISIBLE);

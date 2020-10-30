@@ -7,6 +7,8 @@ public class BasketTag {
             MacName;
     int     qty;
 
+    Boolean MacActive = false;
+
     public BasketTag(String ID, String name, String macId, String macName, int qty,String BasketCode) {
         this.ID = ID;
         Name = name;
@@ -14,6 +16,14 @@ public class BasketTag {
         MacName = macName;
         this.qty = qty;
         this.BasketCode =BasketCode ;
+    }
+
+    public Boolean getMacActive() {
+        return MacActive;
+    }
+
+    public void setMacActive(Boolean macActive) {
+        MacActive = macActive;
     }
 
     public String getMacName() {

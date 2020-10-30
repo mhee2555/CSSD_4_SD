@@ -108,6 +108,7 @@ public class ImportSendSterileDetailAdapter extends ArrayAdapter<ModelSendSteril
             list_sub.setVisibility(View.VISIBLE);
             txt_qty.setVisibility(View.VISIBLE);
             txt_qty.setText(MODEL_SUB.size()+"");
+            txt_item_code.setVisibility(View.GONE);
 
             final float scale = getContext().getResources().getDisplayMetrics().density;
             int pixels = (int) (45 * scale + 0.5f);

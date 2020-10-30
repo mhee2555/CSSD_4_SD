@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import com.phc.core.data.AsonData;
 import com.phc.core.string.Cons;
 import com.phc.cssd.adapter.DropDownAdapter;
+import com.phc.cssd.data.Master;
 import com.phc.cssd.function.KeyboardUtils;
 import com.phc.cssd.model.ModelMasterData;
 import com.phc.cssd.url.Url;
@@ -56,6 +57,7 @@ public class MasterDropdown extends Activity {
         Intent intent = getIntent();
         data_ = intent.getStringExtra("data");
         filter_ = intent.getStringExtra("filter");
+        Log.d("tog_MD",data_+"---"+filter_);
 
         byWidget();
 

@@ -36,10 +36,19 @@ public class Adapter_Washtag_SS extends ArrayAdapter {
 
     HTTPConnect ruc = new HTTPConnect();
 
+    boolean inMc =false;
+
     public Adapter_Washtag_SS(SendSterile_MainActivity aActivity, ArrayList<pCustomer> listData) {
         super(aActivity, 0, listData);
         this.aActivity= aActivity;
         this.listData = listData;
+    }
+
+    public Adapter_Washtag_SS(SendSterile_MainActivity aActivity, ArrayList<pCustomer> listData,boolean inMc) {
+        super(aActivity, 0, listData);
+        this.aActivity= aActivity;
+        this.listData = listData;
+        this.inMc = inMc;
     }
 
     @Override
@@ -102,6 +111,10 @@ public class Adapter_Washtag_SS extends ArrayAdapter {
                 basket_detail_delete(pCus.getBasketID());
             }
         });
+
+        if(inMc){
+            btdel.setVisibility(View.GONE);
+        }
 
         return v;
     }
