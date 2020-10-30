@@ -2193,32 +2193,32 @@ public class PrintSticker {
                 String Itemname[] = TextTwoLine.make2line(m.getItemname());
                 String Itemname1[] = TextTwoLine.make2line2(m.getItemname());
                 //แผนก
-                Tsc.sendpicture(15, 7, TextAsBitmap.getTextBitmap(m.getDepName2(), 32));
+                Tsc.sendpicture(10, 7, TextAsBitmap.getTextBitmap(m.getDepName2(), 32));
                 //ชื่อไอเท็ม
                 if (PDept) {
-                    Tsc.sendpicture(15, 50 , TextAsBitmap.getTextBitmap1(Itemname[0], 27));
-                    Tsc.sendpicture(15, 85 , TextAsBitmap.getTextBitmap1(Itemname[1], 27));
+                    Tsc.sendpicture(10, 50 , TextAsBitmap.getTextBitmap1(Itemname[0], 27));
+                    Tsc.sendpicture(10, 85 , TextAsBitmap.getTextBitmap1(Itemname[1], 27));
                 }
                 //เตรียม-ตรวจ
-                Tsc.sendpicture(15, 115, TextAsBitmap.getTextBitmap1("เตรียม : "+m.getUsr_prepare(), 24));
+                Tsc.sendpicture(10, 115, TextAsBitmap.getTextBitmap1("เตรียม : "+m.getUsr_prepare(), 24));
                 Tsc.sendpicture(220, 115, TextAsBitmap.getTextBitmap1("ตรวจ - "+m.getUsr_approve(), 24));
                 //QR_Code
-                Tsc.qrcode(15, 150, "H", "5", "A", "0", "M2", "S1", m.getUsageCode());
+                Tsc.qrcode(10, 160, "H", "4", "A", "0", "M2", "S1", m.getUsageCode());
                 //UsageCode
-                Tsc.sendpicture(160, 155, TextAsBitmap.getTextBitmap1("No."+m.getUsageCode(), 28));
+                Tsc.sendpicture(130, 150, TextAsBitmap.getTextBitmap1("No."+m.getUsageCode(), 28));
                 //เครื่อง-รอบ
                 if (PMachine || PRound) {
-                    Tsc.sendpicture(160, 195, TextAsBitmap.getTextBitmap1("เครื่อง - " + m.getMachineName(), 28));
-                    Tsc.sendpicture(160, 235, TextAsBitmap.getTextBitmap1("รอบ - " + m.getSterileRoundNumber(), 28));
+                    Tsc.sendpicture(130, 190, TextAsBitmap.getTextBitmap1("เครื่อง - " + m.getMachineName(), 28));
+                    Tsc.sendpicture(130, 230, TextAsBitmap.getTextBitmap1("รอบ - " + m.getSterileRoundNumber(), 28));
                 }
                 //วันหมดอายุ
                 String eYear = (Integer.parseInt(m.getExpireDate().substring(6, 10)) + 543) + "";
                 String expDate = "EXP : "+m.getExpireDate().substring(0, 2) + " / " + m.getExpireDate().substring(3, 5) + " / " + eYear.substring(2, 4);
-                Tsc.sendpicture(15,270, TextAsBitmap.getTextBitmap(expDate, 32));
+                Tsc.sendpicture(10,270, TextAsBitmap.getTextBitmap(expDate, 32));
                 //วันแพค
                 String eYear1 = (Integer.parseInt(m.getSterileDate().substring(6, 10)) + 543) + "";
                 String expDate1 = "ผลิต "+m.getSterileDate().substring(0, 2) + "/" + m.getSterileDate().substring(3, 5) + "/" + eYear1.substring(2, 4);
-                Tsc.sendpicture(15,310, TextAsBitmap.getTextBitmap1(expDate1+" ("+ m.getAgeDay() +"วัน"+")", 24));
+                Tsc.sendpicture(10,315, TextAsBitmap.getTextBitmap1(expDate1+" ("+ m.getAgeDay() +"วัน"+")", 24));
                 if(pQty > Integer.parseInt( m.getQty() ))
                     Tsc.sendcommand("PRINT 1," + pQty + "\r\n");
                 else
