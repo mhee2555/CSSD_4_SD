@@ -1785,6 +1785,17 @@ public class CssdSterile extends AppCompatActivity {
             }
         });
 
+        btn_print.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                try {
+                    Log.d("SSSS","PRINTER_IP : "+PRINTER_IP);
+                    onPrint();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+
         button_basket = (Button) findViewById(R.id.button_basket);
         button_basket.setOnClickListener(new View.OnClickListener() {
             @Override

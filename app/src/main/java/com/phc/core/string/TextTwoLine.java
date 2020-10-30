@@ -5,19 +5,32 @@ import android.util.Log;
 public class TextTwoLine {
 
     public static String[] make2line(String str){
+
         String[] line = new String[2];
-        line[0]="";
-        line[1]="";
-        str = str.substring(0, str.length()-4);
-        if( (str.length()>0) && (str.length()<51) ) {
-            line[0] = str.substring(0, str.length());
-        }else{
-            line[0] = str.substring(0, 50);
-            line[1] = str.substring(50,str.length());
+
+        try {
+
+            line[0] = "";
+            line[1] = "";
+            str = str.substring(0, str.length() - 4);
+            if ((str.length() >= 0) && (str.length() < 31)) {
+                line[0] = str.substring(0, str.length());
+            } else {
+                line[0] = str.substring(0, 29);
+                line[1] = str.substring(29, str.length());
+            }
+
+            line[0] = (line[0] == null) ? "" : line[0];
+            line[1] = (line[1] == null) ? "" : line[1];
+
+
+            return line;
+        }catch (Exception e){
+            line[0] = str;
+            line[1] = "";
+
+            return line;
         }
-        line[0] = (line[0] == null) ? "" : line[0];
-        line[1] = (line[1] == null) ? "" : line[1];
-        return line;
     }
 
     public static String[] make2line1(String str){
@@ -55,9 +68,9 @@ public class TextTwoLine {
             line[0]="";
             line[1]="";
 
-            str = str.substring(26, str.length()-4);
+            str = str.substring(25, str.length()-4);
 
-            if( (str.length() >= 0) && (str.length() < 26) ) {
+            if( (str.length() >= 0) && (str.length() < 27) ) {
                 line[0] = str.substring(0, str.length());
             }else{
                 line[0] = str.substring(26,str.length());
@@ -71,6 +84,7 @@ public class TextTwoLine {
         }catch (Exception e){
             line[0] = str;
             line[1] = "";
+
             return line;
         }
     }
