@@ -907,7 +907,7 @@
                                 android:layout_marginTop="4dp"
                                 android:layout_marginRight="4dp"
                                 android:background="@drawable/ic_print_blue"
-                                android:visibility="gone" />
+                                android:visibility="visible" />
 
 
                         </LinearLayout>
