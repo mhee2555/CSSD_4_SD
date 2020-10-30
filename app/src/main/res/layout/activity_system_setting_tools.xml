@@ -7,17 +7,73 @@
     android:background="@drawable/bg_bluetab"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView39"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="1141dp"
+        android:layout_height="80dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="72dp"
-        android:text="ตั้งค่าระบบ"
-        android:textColor="@color/colorWhite"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="53dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/button_system_flase"
+                android:layout_width="570dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tab_master_cyanblue_noselect"
+                android:enabled="false"
+                android:paddingBottom="5dp"
+                android:text="กำหนดขอบเขตการใช้งาน "
+                android:textColor="@android:color/darker_gray"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/button_system_true"
+                android:layout_width="570dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tab_master_cyanblue"
+                android:enabled="false"
+                android:paddingBottom="5dp"
+                android:text="กำหนดขอบเขตการใช้งาน "
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/button_user_true"
+                android:layout_width="571dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tab_master_cyanblue"
+                android:paddingBottom="5dp"
+                android:text="กำหนดสิทธิ์ผู้ใช้งาน"
+                android:layout_marginLeft="570dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/button_user_flase"
+                android:layout_width="571dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tab_master_cyanblue_noselect"
+                android:paddingBottom="5dp"
+                android:text="กำหนดสิทธิ์ผู้ใช้งาน"
+                android:layout_marginLeft="570dp"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/imageBack"
@@ -33,7 +89,7 @@
         android:id="@+id/Li1"
         android:layout_width="1075dp"
         android:layout_height="520dp"
-        android:layout_marginTop="115dp"
+        android:layout_marginTop="120dp"
         android:layout_marginLeft="100dp"
         android:orientation="vertical"
         android:visibility="visible">

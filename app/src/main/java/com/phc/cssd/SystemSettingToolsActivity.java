@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -34,7 +35,7 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
     TextView no1,no2,no3,no4,no5,no6,no7,no8;
     TextView text1,text2,text3,text4,text5,text6,text7,text8;
     TextView text1_1,text2_2,text3_3,text4_4,text5_5,text6_6,text7_7,text8_8;
-
+    Button button_system_flase,button_system_true,button_user_true,button_user_flase;
     Switch sw1,sw2,sw3,sw4,sw5,sw6,sw7,sw8;
 
     private JSONArray rs = null;
@@ -59,6 +60,63 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
 
     public void initialize() {
         imageBack = (ImageView) findViewById(R.id.imageBack);
+
+        button_system_flase = (Button) findViewById(R.id.button_system_flase);
+        button_system_true = (Button) findViewById(R.id.button_system_true);
+        button_user_true = (Button) findViewById(R.id.button_user_true);
+        button_user_flase = (Button) findViewById(R.id.button_user_flase);
+
+        button_system_true.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (button_system_true.getVisibility() == View.VISIBLE){
+                    button_system_true.setVisibility(View.GONE);
+                    button_system_flase.setVisibility(View.VISIBLE);
+                }else {
+                    button_system_true.setVisibility(View.VISIBLE);
+                    button_system_flase.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        button_system_flase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (button_system_flase.getVisibility() == View.VISIBLE){
+                    button_system_flase.setVisibility(View.GONE);
+                    button_system_true.setVisibility(View.VISIBLE);
+                    button_user_true.setVisibility(View.GONE);
+                }else {
+                    button_system_true.setVisibility(View.VISIBLE);
+                    button_system_flase.setVisibility(View.GONE);
+                }
+            }
+        });
+
+
+        button_user_true.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (button_user_true.getVisibility() == View.GONE){
+                    button_user_true.setVisibility(View.GONE);
+                    button_user_flase.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        button_user_flase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (button_user_flase.getVisibility() == View.VISIBLE){
+                    button_user_flase.setVisibility(View.GONE);
+                    button_user_true.setVisibility(View.VISIBLE);
+                    button_system_true.setVisibility(View.GONE);
+                }else {
+                    button_user_true.setVisibility(View.VISIBLE);
+                    button_user_flase.setVisibility(View.GONE);
+                }
+            }
+        });
 
         L1 = (LinearLayout) findViewById(R.id.L1);
         L2 = (LinearLayout) findViewById(R.id.L2);
