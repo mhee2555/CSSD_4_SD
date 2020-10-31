@@ -63,6 +63,8 @@ public class ExpandableListDataPump {
 //                    data3.add(getData.get(i).getFields1() + "," + getData.get(i).getFields7() + "," + getData.get(i).getFields8() + "," + getData.get(i).getFields10() + "," + getData.get(i).getFields11() + "," + getData.get(i).getFields12() + "," + getData.get(i).getFields2() + "," + getData.get(i).getFields13());
 //                }
 //            }
+
+        
 //        }
 
         if(mode==1){
