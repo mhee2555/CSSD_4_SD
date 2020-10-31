@@ -6434,7 +6434,8 @@ public class CssdSterile extends AppCompatActivity {
                                         data.get(i + 28),
                                         data.get(i + 31),
                                         index,
-                                        data.get(i + 29)
+                                        data.get(i + 29),
+                                        data.get(i + 32)
                                 )
                         );
                         index++;
