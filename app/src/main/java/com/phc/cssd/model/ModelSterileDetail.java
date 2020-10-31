@@ -43,6 +43,7 @@ public class ModelSterileDetail implements Cloneable {
     String BasketCode;
     boolean IsBasket = false;
     String IsRemarkExpress;
+    String IsSpecial;
 
     private int index = -1;
 
@@ -235,7 +236,7 @@ public class ModelSterileDetail implements Cloneable {
         this.IsRemarkExpress = IsRemarkExpress;
     }
 
-    public ModelSterileDetail(String ID, String docNo, String itemStockID, String qty, String itemname, String itemcode, String usageCode, String age, String importID, String sterileDate, String expireDate, String isStatus, String occuranceQty, String depName, String depName2, String labelID, String usr_sterile, String usr_prepare, String usr_approve, String sterileRoundNumber, String machineName, String price, String time, String sterileProcessID, String qty_Print, String printer, String usageCount, String itemSetData, String BasketName, String  IsRemarkExpress,int index,String BasketCode) {
+    public ModelSterileDetail(String ID, String docNo, String itemStockID, String qty, String itemname, String itemcode, String usageCode, String age, String importID, String sterileDate, String expireDate, String isStatus, String occuranceQty, String depName, String depName2, String labelID, String usr_sterile, String usr_prepare, String usr_approve, String sterileRoundNumber, String machineName, String price, String time, String sterileProcessID, String qty_Print, String printer, String usageCount, String itemSetData, String BasketName, String  IsRemarkExpress,int index,String BasketCode, String IsSpecial) {
         this.ID = ID;
         DocNo = docNo;
         ItemStockID = itemStockID;
@@ -268,7 +269,12 @@ public class ModelSterileDetail implements Cloneable {
         this.BasketName = BasketName;
         this.BasketCode = BasketCode;
         this.IsRemarkExpress = IsRemarkExpress;
+        this.IsSpecial = IsSpecial;
     }
+
+    public String getIsSpecial() { return IsSpecial; }
+
+    public void setIsSpecial(String isSpecial) { IsSpecial = isSpecial; }
 
     public boolean getIsBasket() {
         return IsBasket;
