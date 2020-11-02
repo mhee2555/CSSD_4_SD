@@ -736,6 +736,7 @@
                                 android:paddingBottom="1dp">
 
                                 <TextView
+                                    android:id="@+id/txt_usr_prepare_h"
                                     android:layout_width="130dp"
                                     android:layout_height="20dp"
                                     android:layout_marginRight="10dp"
@@ -746,6 +747,7 @@
                                     android:visibility="gone"></TextView>
 
                                 <TextView
+                                    android:id="@+id/txt_usr_approve_h"
                                     android:layout_width="100dp"
                                     android:layout_height="20dp"
                                     android:layout_marginLeft="10dp"
@@ -757,6 +759,7 @@
                                     android:textSize="14dp"></TextView>
 
                                 <TextView
+                                    android:id="@+id/textview_test_program"
                                     android:layout_width="100dp"
                                     android:layout_height="20dp"
                                     android:layout_marginLeft="30dp"
@@ -765,7 +768,8 @@
                                     android:maxLines="1"
                                     android:text="การทดสอบ"
                                     android:textColor="@color/colorWhite"
-                                    android:textSize="14dp"></TextView>
+                                    android:textSize="14dp"
+                                    android:visibility="gone"></TextView>
 
                                 <TextView
                                     android:layout_width="110dp"
@@ -811,6 +815,7 @@
                                     android:layout_height="30dp"
                                     android:layout_alignParentStart="true"
                                     android:layout_centerVertical="true"
+                                    android:layout_marginLeft="150dp"
                                     android:background="@drawable/shape_qr_line_tr"
                                     android:gravity="center_vertical"
                                     android:paddingLeft="8dp"
@@ -863,7 +868,8 @@
                                     android:singleLine="true"
                                     android:textColor="#FFFFFF"
                                     android:textSize="14dp"
-                                    android:textStyle="bold" />
+                                    android:textStyle="bold"
+                                    android:visibility="gone" />
 
                                 <TextView
                                     android:id="@+id/OccupancyRate_Sterile"
@@ -907,7 +913,7 @@
                                 android:layout_marginTop="4dp"
                                 android:layout_marginRight="4dp"
                                 android:background="@drawable/ic_print_blue"
-                                android:visibility="visible" />
+                                android:visibility="gone" />
 
 
                         </LinearLayout>
@@ -1141,7 +1147,7 @@
         android:text="0"
         android:textColor="@color/colorBlue"
         android:textStyle="bold"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/btn_import"

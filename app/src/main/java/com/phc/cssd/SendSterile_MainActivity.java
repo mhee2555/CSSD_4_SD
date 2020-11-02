@@ -253,6 +253,28 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         spin_basket.setTitle("เลือกตะกร้า");
         spin_basket.setPositiveButton("");
         spin_basket.requestFocus();
+
+        by_config();
+
+    }
+
+    public void by_config(){
+        if(!ConfigProgram.wash_tag){
+            TextView textViewHead = (TextView) findViewById(R.id.textViewHead);
+            textViewHead.setVisibility(View.VISIBLE);
+
+            Switch bt_sw = (Switch) findViewById(R.id.bt_sw);
+            bt_sw.setVisibility(View.INVISIBLE);
+
+            LinearLayout Lin_Scan_Basket = (LinearLayout) findViewById(R.id.Lin_Scan_Basket);
+            Lin_Scan_Basket.setVisibility(View.GONE);
+
+            TextView txt_set_list = (TextView) findViewById(R.id.txt_set_list);
+
+            txt_set_list.setLayoutParams(new LinearLayout.LayoutParams(120,LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        }
+
     }
 
     public boolean onTouchEvent(MotionEvent touchEvent){
@@ -1599,6 +1621,10 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     public void from_slie(Animation from_slie){
         Log.d("ttest_s_to","s_to_left");
         Log.d("ttest_s_to","Count_left = "+Count_left);
+
+        if(!ConfigProgram.wash_tag){
+            return;
+        }
 
         if(Count_left==0){
             getlistdetailqty(Usagecode);

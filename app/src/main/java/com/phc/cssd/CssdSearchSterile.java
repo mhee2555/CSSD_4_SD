@@ -1127,6 +1127,7 @@ public class CssdSearchSterile extends AppCompatActivity {
                     List<ModelWashDetailForPrint> list = new ArrayList<>();
                     try {
                         JSONObject jsonObj = new JSONObject(s);
+                        final List<ModelSterileDetail> Label_4 = getItemLabel("4");
                         rs = jsonObj.getJSONArray(TAG_RESULTS);
                         for (int i = 0; i < rs.length(); i++) {
                             JSONObject c = rs.getJSONObject(i);
@@ -1147,9 +1148,48 @@ public class CssdSearchSterile extends AppCompatActivity {
                                                 c.getString("IsCheckList")
                                         )
                                 );
-                                PrintWash p = new PrintWash();
-                                String p_data = p.print(CssdSearchSterile.this, c.getInt("CaseLabel"), c.getString("PrinterIP"), list);
-                                updatePrintStatus(p_data);
+                                if (c.getString("CaseLabel").equals("4")){
+                                    if(Label_4 != null && Label_4.size() > 0) {
+                                        final Handler handler2 = new Handler();
+                                        handler2.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                try {
+                                                    List<ModelSterileDetail> DATA_MODEL = Label_4;
+                                                    Iterator li = DATA_MODEL.iterator();
+                                                    String xData = "";
+                                                    while (li.hasNext()) {
+                                                        ModelSterileDetail m = (ModelSterileDetail) li.next();
+                                                        xData+= m.getItemname()+","+
+                                                                m.getPrice()+","+
+                                                                m.getDepName2()+","+
+                                                                m.getItemcode()+","+
+                                                                m.getUsageCode()+","+
+                                                                m.getMachineName()+","+
+                                                                m.getSterileRoundNumber()+","+
+                                                                m.getSterileDate()+","+
+                                                                m.getExpireDate()+","+
+                                                                m.getAgeDay()+","+
+                                                                m.getUsr_prepare()+","+
+                                                                m.getUsr_approve()+","+
+                                                                m.getUsr_sterile()+","+
+                                                                m.getQty()+","+
+                                                                m.getID()+";";
+                                                    }
+                                                    PSK.PrintSticker(CssdSearchSterile.this,4,Label_4,PRINTER_IP,B_ID,Print);
+                                                    updatePrintStatus( PSK.getData() );
+                                                    PSK.setData("");
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        }, DELAY_TIME);
+                                    }
+                                }else {
+                                    PrintWash p = new PrintWash();
+                                    String p_data = p.print(CssdSearchSterile.this, c.getInt("CaseLabel"), c.getString("PrinterIP"), list);
+                                    updatePrintStatus(p_data);
+                                }
                                 for (int a = 0 ; a < MODEL_STERILE_DETAIL.size() ; a ++){
                                     MODEL_STERILE_DETAIL.get(a).setCheck(false);
                                     ArrayAdapter<ModelSterileDetail> adapter = new SearchSterileDetailAdapter(CssdSearchSterile.this, MODEL_STERILE_DETAIL);

@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.phc.cssd.CssdEditSterile;
 import com.phc.cssd.CssdSterile;
 import com.phc.cssd.R;
+import com.phc.cssd.config.ConfigProgram;
 import com.phc.cssd.model.ModelImportWashDetail;
 
 import java.util.HashMap;
@@ -45,7 +46,9 @@ public class ImportWashNotPrintDetailAdapter extends ArrayAdapter {
         this.DATA_MODEL = DATA_MODEL;
         this.DATA_MODEL_MASTER = DATA_MODEL_MASTER;
         this.MODEL_IMPORT_WASH_DETAIL_SUB = MODEL_IMPORT_WASH_DETAIL_SUB;
-        set_num_btn_print_bk();
+        if(!ConfigProgram.pair_basket_2){
+            set_num_btn_print_bk();
+        }
     }
 
     public ImportWashNotPrintDetailAdapter(Activity context,List<ModelImportWashDetail> DATA_MODEL_MASTER, List<ModelImportWashDetail> DATA_MODEL,CheckBox chk_basket) {

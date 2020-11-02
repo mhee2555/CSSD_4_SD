@@ -4,6 +4,7 @@ package com.phc.cssd.print_sticker;
 import android.content.Context;
 import android.util.Log;
 
+import com.phc.cssd.model.ModelSterileDetail;
 import com.phc.cssd.model.ModelWashDetailForPrint;
 
 import java.util.List;
@@ -26,9 +27,6 @@ public class PrintWash {
                 break;
             case 3: Sticker_Non_Indicator_DoubleLayer_Cerulean_50x70 s3 = new Sticker_Non_Indicator_DoubleLayer_Cerulean_50x70(context, IP, Data);
                 RETURN_DATA = s3.print();
-                break;
-            case 4: Sticker_Vejthani_50x45 s4 = new Sticker_Vejthani_50x45(context, IP, Data);
-                RETURN_DATA = s4.print();
                 break;
         }
         return RETURN_DATA;

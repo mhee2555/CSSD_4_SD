@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.phc.cssd.CssdEditSterile;
 import com.phc.cssd.CssdSterile;
 import com.phc.cssd.R;
+import com.phc.cssd.config.ConfigProgram;
 import com.phc.cssd.model.ModelImportWashDetail;
 
 import java.util.HashMap;
@@ -257,12 +258,15 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
             }else {
                 txt_qty.setVisibility(View.GONE);
 
-                relativeLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ((CssdSterile) context).callCheckList(DATA_MODEL.get(position).getI_id());
-                    }
-                });
+                if(ConfigProgram.basket_tag){
+                    relativeLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ((CssdSterile) context).callCheckList(DATA_MODEL.get(position).getI_id());
+                        }
+                    });
+                }
+
 
                 imv_add.setOnClickListener(new View.OnClickListener() {
                     @Override

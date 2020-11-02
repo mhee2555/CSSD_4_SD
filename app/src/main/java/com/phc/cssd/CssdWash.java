@@ -41,6 +41,7 @@ import com.phc.cssd.adapter.WashDetailAdapter;
 import com.phc.cssd.adapter.WashDetailBasketAdapter;
 import com.phc.cssd.adapter.WashDetailBigSizeAdapter;
 import com.phc.cssd.adapter.WashDetailGridViewAdapter;
+import com.phc.cssd.config.ConfigProgram;
 import com.phc.cssd.config.CssdSetting;
 import com.phc.cssd.config.Setting;
 import com.phc.cssd.data.Master;
@@ -385,6 +386,9 @@ public class CssdWash extends AppCompatActivity {
 
         IsShowBasket = s.isShowBasket();
 
+        if(!ConfigProgram.wash_tag){
+            scan_basket.setVisibility(View.INVISIBLE);
+        }
 //        imv_basket.setVisibility(IsShowBasket ? View.VISIBLE : View.GONE);
     }
 

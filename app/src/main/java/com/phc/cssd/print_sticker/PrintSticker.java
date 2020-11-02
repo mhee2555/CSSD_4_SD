@@ -2193,7 +2193,8 @@ public class PrintSticker {
                 String Itemname[] = TextTwoLine.make2line(m.getItemname());
                 String Itemname1[] = TextTwoLine.make2line2(m.getItemname());
                 //แผนก
-                if (m.getIsSpecial().equals("0")){
+                Log.d("JFHFKD",m.getDepName()+"");
+                if (m.getDepName().equals("0")){
                     Tsc.sendpicture(10, 10, TextAsBitmap.getTextBitmap("CSSD", 32));
                 }else {
                     Tsc.sendpicture(10, 10, TextAsBitmap.getTextBitmap(m.getDepName2(), 32));

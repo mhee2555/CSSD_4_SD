@@ -50,7 +50,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView196"
+                        android:id="@+id/textViewHead"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
@@ -113,44 +113,6 @@
                     android:inputType="textPersonName"  />
 
                 <TextView
-                    android:id="@+id/textView17"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/txt_usr_send"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginRight="5dp"
-                    android:text="ตะกร้า"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/basket"
-                    android:layout_width="175dp"
-                    android:layout_height="35dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginLeft="7dp"
-                    android:background="@drawable/dropdowns2"
-                    android:ems="10"
-                    android:hint="สแกนตะกร้า"
-                    android:paddingLeft="15dp"
-                    android:inputType="textPersonName" />
-
-                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/spin_basket"
-                    android:layout_width="45dp"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="-1dp"
-                    android:layout_marginRight="20dp"
-                    android:foreground="@drawable/dropdowns1"
-                    android:gravity="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="17sp" />
-
-                <TextView
                     android:id="@+id/etxt_date"
                     android:layout_width="0dp"
                     android:layout_height="35dp"
@@ -163,18 +125,51 @@
                     android:textSize="14sp"
                     android:visibility="gone"/>
 
-                <TextView
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/textView20"
-                    android:layout_alignTop="@+id/newSS"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginRight="5dp"
-                    android:text="รายการเซ็ท"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                <LinearLayout
+                    android:id="@+id/Lin_Scan_Basket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="7dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView17"
+                        android:layout_width="85dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/txt_usr_send"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginRight="5dp"
+                        android:text="ตะกร้า"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/basket"
+                        android:layout_width="175dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/dropdowns2"
+                        android:ems="10"
+                        android:hint="สแกนตะกร้า"
+                        android:inputType="textPersonName"
+                        android:paddingLeft="15dp" />
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:id="@+id/spin_basket"
+                        android:layout_width="45dp"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="-1dp"
+                        android:foreground="@drawable/dropdowns1"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
 
                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/txt_usr_send"
@@ -188,18 +183,43 @@
                     android:textSize="17sp"
                     android:visibility="gone"/>
 
-                <EditText
-                    android:id="@+id/txt_get_ucode"
-                    android:layout_width="220dp"
-                    android:layout_height="35dp"
-                    android:layout_marginLeft="5dp"
-                    android:background="@drawable/shape_qr_line"
-                    android:ems="10"
-                    android:hint="สแกนรหัสใช้งาน"
-                    android:inputType="textPersonName"
-                    android:paddingLeft="15dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="17sp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_set_list"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/textView20"
+                        android:layout_alignTop="@+id/newSS"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="0dp"
+                        android:text="รายการเซ็ท"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/txt_get_ucode"
+                        android:layout_width="220dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="18dp"
+                        android:background="@drawable/shape_qr_line"
+                        android:ems="10"
+                        android:hint="สแกนรหัสใช้งาน"
+                        android:inputType="textPersonName"
+                        android:paddingLeft="15dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/newSS"
@@ -208,9 +228,9 @@
                     android:layout_alignStart="@+id/next"
                     android:layout_alignTop="@+id/hn_code"
                     android:layout_marginLeft="13dp"
-                    android:layout_marginRight="20dp"
-                    android:text="ทำใหม่"
+                    android:layout_marginRight="30dp"
                     android:background="@drawable/bt_create04"
+                    android:text="ทำใหม่"
                     android:textColor="@color/colorWhite"
                     android:textSize="16dp"
                     android:textStyle="bold" />
@@ -277,13 +297,13 @@
 
                 <TextView
                     android:id="@+id/textView19"
-                    android:layout_width="70dp"
+                    android:layout_width="85dp"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/next"
                     android:layout_alignEnd="@+id/textView17"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginLeft="20dp"
                     android:text="แผนก"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
@@ -326,6 +346,11 @@
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
 
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
                 <Button
                     android:id="@+id/next"
                     android:layout_width="225dp"
@@ -334,12 +359,13 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
-                    android:text="เสร็จสิ้น"
+                    android:layout_marginRight="30dp"
                     android:background="@drawable/bt_finished2"
+                    android:text="เสร็จสิ้น"
                     android:textColor="@color/colorWhite"
                     android:textSize="16dp"
                     android:textStyle="bold" />
+
             </LinearLayout>
         </LinearLayout>
 

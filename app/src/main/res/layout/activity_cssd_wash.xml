@@ -911,7 +911,8 @@
                                     android:maxLines="1"
                                     android:text="การทดสอบ"
                                     android:textColor="@color/colorWhite"
-                                    android:textSize="14dp"></TextView>
+                                    android:textSize="14dp"
+                                    android:visibility="invisible"></TextView>
 
                                 <TextView
                                     android:id="@+id/txt_test_program"
@@ -922,7 +923,8 @@
                                     android:singleLine="true"
                                     android:textColor="#FFFFFF"
                                     android:textSize="14dp"
-                                    android:textStyle="bold" />
+                                    android:textStyle="bold"
+                                    android:visibility="invisible" />
 
                             </LinearLayout>
 

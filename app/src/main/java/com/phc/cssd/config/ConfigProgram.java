@@ -15,4 +15,15 @@ public class ConfigProgram {
   //------------------------------------------------
   public static boolean OccupancyRate = true ;
 
+  //------------------------------------------------
+  //wash tag
+  //------------------------------------------------
+  public static boolean wash_tag = false ;
+
+  //------------------------------------------------
+  //basket tag
+  //------------------------------------------------
+  public static boolean basket_tag = true ;
+  public static boolean pair_basket_2 = false ;
+
 }
