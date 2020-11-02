@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.phc.cssd.CssdPrintSterile;
 import com.phc.cssd.CssdSterile;
 import com.phc.cssd.R;
+import com.phc.cssd.config.ConfigProgram;
 import com.phc.cssd.model.ModelSterileDetail;
 
 import java.util.HashMap;
@@ -191,6 +192,10 @@ public class SterileDetailAdapter extends ArrayAdapter<ModelSterileDetail> {
             txt_IsRemarkems.setVisibility(View.GONE);
         }
         // =========================================================================================
+
+        if(ConfigProgram.basket_tag){
+            imv_print.setImageResource(0);
+        }
 
         if(mode==1){// show sub
             chk.setOnClickListener(new View.OnClickListener() {
