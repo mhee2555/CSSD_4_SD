@@ -361,6 +361,8 @@ public class CssdSterile extends AppCompatActivity {
                     dp_to_px(70), dp_to_px(70));
             layoutParams.setMargins(dp_to_px(990), dp_to_px(572), dp_to_px(40), dp_to_px(13));
             btn_print_bk.setLayoutParams(layoutParams);
+        }else{
+            pair_fin.setBackgroundResource(R.drawable.btn_completed);
         }
     }
 
