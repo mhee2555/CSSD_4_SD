@@ -100,6 +100,9 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
                 if (button_user_true.getVisibility() == View.GONE){
                     button_user_true.setVisibility(View.GONE);
                     button_user_flase.setVisibility(View.VISIBLE);
+                }else {
+                    button_system_true.setVisibility(View.VISIBLE);
+                    button_system_flase.setVisibility(View.GONE);
                 }
             }
         });

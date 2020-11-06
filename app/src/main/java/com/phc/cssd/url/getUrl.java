@@ -11,7 +11,7 @@ public class getUrl {
     // Version
     // ----------------------------------------------------
     public static final int appversion = 12;
-    public static final String VERSION = "4U" + "20201031 B";
+    public static final String VERSION = "4U" + "20201106 B";
     // ----------------------------------------------------
     // Var URL
     // ----------------------------------------------------
