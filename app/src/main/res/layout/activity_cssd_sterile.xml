@@ -1178,13 +1178,13 @@
         android:id="@+id/btn_import_new_item_stock"
         android:layout_width="121dp"
         android:layout_height="42dp"
-        android:layout_marginTop="2dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="860dp"
+        android:layout_marginTop="2dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/bt_importnewint"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <!--
     <ImageView

@@ -528,6 +528,7 @@ public class CssdWash extends AppCompatActivity {
         imv_import_all_send_sterile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (countput == 0){
                     countput ++;
                     onImport();
@@ -3468,12 +3469,15 @@ public class CssdWash extends AppCompatActivity {
                     if (DocNo.equals(null) || DocNo.equals("-")) {
                         if (WASH == true){
                             WASH = false;
+
                             createWash();
                         }
                     } else {
                         addWashDetail();
                     }
                 }else {
+
+                    countput = 0;
                     Toast.makeText(CssdWash.this, "ยังไม่ได้เลือกประเภทการล้าง !!", Toast.LENGTH_SHORT).show();
                 }
             }else{
@@ -3496,8 +3500,11 @@ public class CssdWash extends AppCompatActivity {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
+                        countput = 0;
                         txt_wash_process.setText("");
                         txt_wash_process.setContentDescription("");
+
                     }
                 });
                 quitDialog.show();

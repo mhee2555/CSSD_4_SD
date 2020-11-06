@@ -37,6 +37,7 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
     final float scale = getContext().getResources().getDisplayMetrics().density;
     int pixels = (int) (44 * scale + 0.5f);
     int x= 1;
+    boolean isHeadList = true;
 
     public ImportWashDetailAdapter(Activity context, List<ModelImportWashDetail> DATA_MODEL) {
         super(context, R.layout.activity_list_import_wash_detail, DATA_MODEL);
@@ -49,6 +50,7 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
         this.context = context;
         this.DATA_MODEL = DATA_MODEL;
         this.mode=mode;
+        isHeadList = false;
     }
 
     public ImportWashDetailAdapter(Activity context, List<ModelImportWashDetail> DATA_MODEL,HashMap<String ,List<ModelImportWashDetail>> MODEL_IMPORT_WASH_DETAIL_SUB,int mode) {
@@ -224,7 +226,7 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
 
                 final List<ModelImportWashDetail> DETAIL_SUB = MODEL_IMPORT_WASH_DETAIL_SUB.get(basket);
 
-                sub_item.setAdapter(new ImportWashDetailAdapter((CssdSterile) context, DETAIL_SUB));
+                sub_item.setAdapter(new ImportWashDetailAdapter((CssdSterile) context, DETAIL_SUB,3));
 
                 sub_item.getLayoutParams().height = pixels * DETAIL_SUB.size();
 
@@ -267,20 +269,24 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                     });
                 }
 
+                if(isHeadList){
+                    imv_add.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ((CssdSterile)context).importWashDetail(
+                                    txt_item_code.getText().toString(),
+                                    txt_item_program_id.getText().toString() ,
+                                    PackingMatID,
+                                    txt_qty.getText().toString(),
+                                    usageCode
 
-                imv_add.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ((CssdSterile)context).importWashDetail(
-                                txt_item_code.getText().toString(),
-                                txt_item_program_id.getText().toString() ,
-                                PackingMatID,
-                                txt_qty.getText().toString(),
-                                usageCode
+                            );
+                        }
+                    });
+                }else{
+                    imv_add.setVisibility(View.GONE);
+                }
 
-                        );
-                    }
-                });
             }
         }
         else if(mode == 4){// pair basket
@@ -321,6 +327,7 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                             ModelImportWashDetail x = DETAIL_SUB.get(i);
                             if(!(((CssdSterile) context).CheckProgramTypePairBasket(x.getI_program_type()))){
                                 cnt = false;
+                                break;
                             }
                         }
 
@@ -330,8 +337,6 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                                 ModelImportWashDetail x = DETAIL_SUB.get(i);
 
                                 ((CssdSterile) context).importWashDetailToBasket(
-                                        x.getI_code(),
-                                        x.getPackingMatID(),
                                         x.getI_UsageCode()
                                 );
 //                                print_w_id=print_w_id+","+x.getI_id();
@@ -362,8 +367,6 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                     public void onClick(View v) {
                         if(((CssdSterile) context).CheckProgramTypePairBasket(DATA_MODEL.get(position).getI_program_type())){
                             ((CssdSterile)context).importWashDetailToBasket(
-                                    txt_item_code.getText().toString(),
-                                    PackingMatID,
                                     usageCode
 
                             );
@@ -382,7 +385,9 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
             ImageView imv_remove = (ImageView) view.findViewById(R.id.imv_remove);
             RadioButton isPrint = (RadioButton) view.findViewById(R.id.isPrint);
             imv_remove.setVisibility(View.VISIBLE);
-            isPrint.setVisibility(View.VISIBLE);
+            if(ConfigProgram.pair_basket_2){
+                isPrint.setVisibility(View.VISIBLE);
+            }
             imv_remove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

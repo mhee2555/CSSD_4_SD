@@ -210,76 +210,25 @@ public class SterileDetailAdapter extends ArrayAdapter<ModelSterileDetail> {
                 }
             });
 
-            imv_remove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("ttest_data","ImportID - "+ImportID);
-                    Log.d("ttest_data","ItemStockID - "+ItemStockID);
-                    Log.d("ttest_data","ID - "+ID);
+            imv_remove.setVisibility(View.GONE);
+//            imv_remove.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Log.d("ttest_data","ImportID - "+ImportID);
+//                    Log.d("ttest_data","ItemStockID - "+ItemStockID);
+//                    Log.d("ttest_data","ID - "+ID);
+//
+//                    ((CssdSterile)context).removeSterileDetail(
+//                            DATA_MODEL.get(position).getImportID(),
+//                            ID,
+//                            ItemStockID
+//                    );
+//
+//                    ((CssdSterile)context).Update_S_id_IN_Baskettag("("+DATA_MODEL.get(position).getImportID()+")",2);
+//
+//                }
+//            });
 
-                    ((CssdSterile)context).removeSterileDetail(
-                            DATA_MODEL.get(position).getImportID(),
-                            ID,
-                            ItemStockID
-                    );
-                }
-            });
-
-            relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
-                public boolean onLongClick(View v) {
-                    Intent intent = new Intent(context, CssdPrintSterile.class);
-                    intent.putExtra("ID", ID);
-                    intent.putExtra("DocNo",  DocNo);
-                    intent.putExtra("ItemStockID",  ItemStockID);
-                    intent.putExtra("Qty",  Qty);
-                    intent.putExtra("itemname",  itemname);
-
-                    intent.putExtra("itemcode",  itemcode);
-                    intent.putExtra("UsageCode",  UsageCode);
-                    intent.putExtra("age",  age);
-                    intent.putExtra("ImportID",  ImportID);
-                    intent.putExtra("SterileDate",  SterileDate);
-
-                    intent.putExtra("ExpireDate",  ExpireDate);
-                    intent.putExtra("IsStatus",  IsStatus);
-                    intent.putExtra("OccuranceQty",  OccuranceQty);
-                    intent.putExtra("DepName",  DepName);
-                    intent.putExtra("DepName2",  DepName2);
-
-                    intent.putExtra("LabelID",  LabelID);
-                    intent.putExtra("usr_sterile",  usr_sterile);
-                    intent.putExtra("usr_prepare",  usr_prepare);
-                    intent.putExtra("usr_approve",  usr_approve);
-                    intent.putExtra("SterileRoundNumber",  SterileRoundNumber);
-
-                    intent.putExtra("MachineName",  MachineName);
-                    intent.putExtra("Price",  Price);
-                    intent.putExtra("Time",  Time);
-
-                    intent.putExtra("Qty_Print",  Qty_Print);
-                    intent.putExtra("ItemSetData",  ItemSetData);
-
-                    intent.putExtra("B_ID",B_ID);
-                    intent.putExtra("Width",Width);
-                    intent.putExtra("Heigth",Heigth);
-
-                    context.startActivity(intent);
-
-                    return false;
-                }
-            });
-
-            relativeLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        DATA_MODEL.get(index).setCheck( ! DATA_MODEL.get(index).IsCheck );
-                        //chk.setImageResource( DATA_MODEL.get(position).getCheck() );
-                    }catch(Exception e){
-                        e.printStackTrace();
-                    }
-                }
-            });
         }
         else if(mode==2){// show main
             ModelSterileDetail x = DATA_MODEL.get(position);
@@ -312,14 +261,22 @@ public class SterileDetailAdapter extends ArrayAdapter<ModelSterileDetail> {
                     @Override
                     public void onClick(View v) {
 
-                        for(int i=0;i<MODEL_SUB.size();i++){
+                        String W_id = "("+MODEL_SUB.get(0).getImportID();
 
+                        for(int i=0;i<MODEL_SUB.size();i++){
+                            W_id += ","+MODEL_SUB.get(i).getImportID();
                             ((CssdSterile)context).removeSterileDetail(
                                     MODEL_SUB.get(i).getImportID(),
                                     MODEL_SUB.get(i).getID(),
                                     MODEL_SUB.get(i).getItemStockID()
                             );
                         }
+                        W_id += ")";
+                        Log.d("tog_W_id_imv_remove",W_id);
+
+                        ((CssdSterile)context).Update_S_id_IN_Baskettag(W_id,2);
+
+
                     }
                 });
 
@@ -348,64 +305,68 @@ public class SterileDetailAdapter extends ArrayAdapter<ModelSterileDetail> {
                                 ID,
                                 ItemStockID
                         );
+
+                        ((CssdSterile)context).Update_S_id_IN_Baskettag("("+ImportID+")",2);
                     }
                 });
 
-                relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
-                    public boolean onLongClick(View v) {
-                        Intent intent = new Intent(context, CssdPrintSterile.class);
-                        intent.putExtra("ID", ID);
-                        intent.putExtra("DocNo",  DocNo);
-                        intent.putExtra("ItemStockID",  ItemStockID);
-                        intent.putExtra("Qty",  Qty);
-                        intent.putExtra("itemname",  itemname);
+                if(ConfigProgram.basket_tag){
+                    relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
+                        public boolean onLongClick(View v) {
+                            Intent intent = new Intent(context, CssdPrintSterile.class);
+                            intent.putExtra("ID", ID);
+                            intent.putExtra("DocNo",  DocNo);
+                            intent.putExtra("ItemStockID",  ItemStockID);
+                            intent.putExtra("Qty",  Qty);
+                            intent.putExtra("itemname",  itemname);
 
-                        intent.putExtra("itemcode",  itemcode);
-                        intent.putExtra("UsageCode",  UsageCode);
-                        intent.putExtra("age",  age);
-                        intent.putExtra("ImportID",  ImportID);
-                        intent.putExtra("SterileDate",  SterileDate);
+                            intent.putExtra("itemcode",  itemcode);
+                            intent.putExtra("UsageCode",  UsageCode);
+                            intent.putExtra("age",  age);
+                            intent.putExtra("ImportID",  ImportID);
+                            intent.putExtra("SterileDate",  SterileDate);
 
-                        intent.putExtra("ExpireDate",  ExpireDate);
-                        intent.putExtra("IsStatus",  IsStatus);
-                        intent.putExtra("OccuranceQty",  OccuranceQty);
-                        intent.putExtra("DepName",  DepName);
-                        intent.putExtra("DepName2",  DepName2);
+                            intent.putExtra("ExpireDate",  ExpireDate);
+                            intent.putExtra("IsStatus",  IsStatus);
+                            intent.putExtra("OccuranceQty",  OccuranceQty);
+                            intent.putExtra("DepName",  DepName);
+                            intent.putExtra("DepName2",  DepName2);
 
-                        intent.putExtra("LabelID",  LabelID);
-                        intent.putExtra("usr_sterile",  usr_sterile);
-                        intent.putExtra("usr_prepare",  usr_prepare);
-                        intent.putExtra("usr_approve",  usr_approve);
-                        intent.putExtra("SterileRoundNumber",  SterileRoundNumber);
+                            intent.putExtra("LabelID",  LabelID);
+                            intent.putExtra("usr_sterile",  usr_sterile);
+                            intent.putExtra("usr_prepare",  usr_prepare);
+                            intent.putExtra("usr_approve",  usr_approve);
+                            intent.putExtra("SterileRoundNumber",  SterileRoundNumber);
 
-                        intent.putExtra("MachineName",  MachineName);
-                        intent.putExtra("Price",  Price);
-                        intent.putExtra("Time",  Time);
+                            intent.putExtra("MachineName",  MachineName);
+                            intent.putExtra("Price",  Price);
+                            intent.putExtra("Time",  Time);
 
-                        intent.putExtra("Qty_Print",  Qty_Print);
-                        intent.putExtra("ItemSetData",  ItemSetData);
+                            intent.putExtra("Qty_Print",  Qty_Print);
+                            intent.putExtra("ItemSetData",  ItemSetData);
 
-                        intent.putExtra("B_ID",B_ID);
-                        intent.putExtra("Width",Width);
-                        intent.putExtra("Heigth",Heigth);
+                            intent.putExtra("B_ID",B_ID);
+                            intent.putExtra("Width",Width);
+                            intent.putExtra("Heigth",Heigth);
 
-                        context.startActivity(intent);
+                            context.startActivity(intent);
 
-                        return false;
-                    }
-                });
-
-                relativeLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            DATA_MODEL.get(index).setCheck( ! DATA_MODEL.get(index).IsCheck );
-                            //chk.setImageResource( DATA_MODEL.get(position).getCheck() );
-                        }catch(Exception e){
-                            e.printStackTrace();
+                            return false;
                         }
-                    }
-                });
+                    });
+
+                    relativeLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                DATA_MODEL.get(index).setCheck( ! DATA_MODEL.get(index).IsCheck );
+                                //chk.setImageResource( DATA_MODEL.get(position).getCheck() );
+                            }catch(Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
             }
         }
 

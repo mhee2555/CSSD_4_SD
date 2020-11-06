@@ -479,16 +479,12 @@ public class SendSterile_MainActivity extends AppCompatActivity {
 
         basket.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
+                Log.d("tog_basket_setOnKey","keyCode--"+keyCode);
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
                     switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                             return false;
                         case KeyEvent.KEYCODE_ENTER:
-                            if (txt_usr_receive.getText().toString().equals("")){
-                                Toast.makeText(SendSterile_MainActivity.this, "กรุณาสแกนชื่อผู้รับ(จ่ายกลาง)", Toast.LENGTH_SHORT).show();
-                                basket.setText("");
-                                txt_usr_receive.requestFocus();
-                            }
                             CheckBasket(basket.getText().toString());
                             return true;
                         default:
@@ -496,11 +492,10 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                             break;
                     }
                 }else if(keyCode==KeyEvent.KEYCODE_ENTER){
-                    return true;
-                } else {
-                    basket.requestFocus();
+                    Log.d("tog_basket_setOnKey","keyCode--"+true);
                     return true;
                 }
+                Log.d("tog_basket_setOnKey","keyCode--"+false);
                 return false;
             }
         });
@@ -540,6 +535,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         default:
                             break;
                     }
+                }else if(keyCode==KeyEvent.KEYCODE_ENTER){
+                    Log.d("tog_txt_usr_setOnKey","keyCode--"+true);
+                    return true;
                 }
                 return false;
             }
@@ -613,20 +611,22 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 String Usage = newsData.getUsageCode();
                 String Dep = newsData.getDept();
                 String DocNo = newsData.getDocno();
-                getlistdetailqty(Usage);
-                getlistdetail(Usage,DocNo);
+                if(Count_left==1){
+                    getlistdetailqty(Usage);
+                    getlistdetail(Usage,DocNo);
+                }
                 UsageCode(Usage,Dep,DocNo);
 
-                if (textView46_1.getVisibility() == View.VISIBLE){
-                    textView46_1.setVisibility(View.GONE);
-                    BasketExpire.setVisibility(View.GONE);
-                    textView46.setVisibility(View.VISIBLE);
-                    checkBoxall.setVisibility(View.VISIBLE);
-                    textView48.setVisibility(View.VISIBLE);
-                    txt_setdetail_l4.setVisibility(View.VISIBLE);
-                    textView47.setVisibility(View.VISIBLE);
-                    txt_setdetail_l3.setVisibility(View.VISIBLE);
-                }
+//                if (textView46_1.getVisibility() == View.VISIBLE){
+//                    textView46_1.setVisibility(View.GONE);
+//                    BasketExpire.setVisibility(View.GONE);
+//                    textView46.setVisibility(View.VISIBLE);
+//                    checkBoxall.setVisibility(View.VISIBLE);
+//                    textView48.setVisibility(View.VISIBLE);
+//                    txt_setdetail_l4.setVisibility(View.VISIBLE);
+//                    textView47.setVisibility(View.VISIBLE);
+//                    txt_setdetail_l3.setVisibility(View.VISIBLE);
+//                }
 
             }
         });
@@ -754,17 +754,18 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             }
         });
 
-        checkBoxall.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    CheckAll = "1";
-                    getlistdetail(Usagecode,"");
-                }else {
-                    CheckAll = "0";
-                    getlistdetail(Usagecode,"");
-                }
-            }
-        });
+//        checkBoxall.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                Log.d("tog_checkBoxall","checkBoxall--"+isChecked);
+//                if (isChecked){
+//                    CheckAll = "1";
+//                    getlistdetail(Usagecode,"");
+//                }else {
+//                    CheckAll = "0";
+//                    getlistdetail(Usagecode,"");
+//                }
+//            }
+//        });
 
         del_multi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -1204,6 +1205,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         default:
                             break;
                     }
+                }else if(keyCode==KeyEvent.KEYCODE_ENTER){
+                    return true;
                 }
                 return false;
             }
@@ -1905,7 +1908,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
                     for (int i = 0; i < setRs.length(); i++) {
                         JSONObject c = setRs.getJSONObject(i);
-                        pCustomer xST = new pCustomer();
+//                        pCustomer xST = new pCustomer();
                         Qty1 = c.getString("Qty");
 
                         if (Qty1.equals("null")) {
@@ -1916,7 +1919,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                             textView48.setText("" + Qty1 + " ชิ้น" + " ]");
                             txt_setdetail_l4.setText("" + Qty1 + " ชิ้น" + " ]");
                         }
-                        pCus.add(xST);
+//                        pCus.add(xST);
                     }
 
                 } catch (JSONException e) {
@@ -2262,7 +2265,11 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                             if(Basket_washtag_code!=""){
                                 Log.d("ttest_bk_insert","basket = "+basket_ar.get(spin_basket.getSelectedItemPosition()));
                                 insert_item_to_basket(c.getString("ItemStockID"),c.getString("ssID"));
+                            }else{
+                                Toast.makeText(SendSterile_MainActivity.this, "นำเข้าอุปกรณ์สำเร็จ", Toast.LENGTH_SHORT).show();
                             }
+                            CheckUsageContScanToInsert(RowID);
+                            DIALOG_ACTIVE = true;
                         }
                     }
                     //updateDate();
@@ -2280,11 +2287,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
 
                     getlistcreate(txtDocno, "");
 
-                    if (bo.equals("true")) {
-                        Toast.makeText(SendSterile_MainActivity.this, "นำเข้าอุปกรณ์สำเร็จ", Toast.LENGTH_SHORT).show();
-                        CheckUsageContScanToInsert(RowID);
-                        DIALOG_ACTIVE = true;
-                    }
+
 
                     if (bo.equals("true1")) {
                         Toast.makeText(SendSterile_MainActivity.this, "รายการซ้ำ", Toast.LENGTH_SHORT).show();
@@ -2328,7 +2331,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         ru.execute(DocNo, RowID, date, UserCode, dept, QTY);
     }
 
-    public void DeleteDetail(String DocNo, String RowID) {
+    public void DeleteDetail(String DocNo, final String RowID) {
         class DeleteDetail extends AsyncTask<String, Void, String> {
             // variable
             @Override
@@ -2342,28 +2345,29 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObj = new JSONObject(s);
                     JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
-                    final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
+//                    final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
                     String bo = "";
                     String txtDocno = "";
                     for (int i = 0; i < setRs.length(); i++) {
                         JSONObject c = setRs.getJSONObject(i);
-                        pCustomer xST = new pCustomer();
-                        bo = c.getString("flag");
-                        xST.setUsageCode(c.getString("UsageCode"));
-                        xST.setItemcode(c.getString("ItemCode"));
-                        xST.setItemname(c.getString("itemname"));
-                        xST.setXqty(c.getString("Qty"));
-                        xST.setIsSterile(c.getString("IsSterile"));
-                        xST.setXremark(c.getString("Remark"));
-                        xST.setDocno(c.getString("DocNo"));
+//                        pCustomer xST = new pCustomer();
+//                        bo = c.getString("flag");
+//                        xST.setUsageCode(c.getString("UsageCode"));
+//                        xST.setItemcode(c.getString("ItemCode"));
+//                        xST.setItemname(c.getString("itemname"));
+//                        xST.setXqty(c.getString("Qty"));
+//                        xST.setIsSterile(c.getString("IsSterile"));
+//                        xST.setXremark(c.getString("Remark"));
+//                        xST.setDocno(c.getString("DocNo"));
                         txtDocno = c.getString("DocNo");
-                        pCus.add(xST);
+//                        pCus.add(xST);
                     }
-
+                    basket_detail_delete(RowID);
                     getlistcreate(txtDocno, ED_Dept);
                     getlistcreate_l2(txtDocno);
                     ShowDetailScan(txtDocno);
                     ShowUserSend();
+
 //                    getlistdata(deptsp_id, edittext.getText().toString(), "");
 //                    getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
                     cleardoc();
@@ -2380,8 +2384,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 data.put("RowID", params[1]);
                 data.put("B_ID",B_ID);
                 String result = ruc.sendPostRequest(iFt.DeleteDetail(), data);
-                Log.d("BANK",data+"");
-                Log.d("BANK",result);
+                Log.d("tog_delete_item",data+"");
+                Log.d("tog_delete_item",result);
 
                 return result;
             }
@@ -3574,10 +3578,12 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         JSONObject c = rs.getJSONObject(i);
                         bo = c.getString("flag");
                         if (bo.equals("false")) {
-                            Toast.makeText(SendSterile_MainActivity.this, "รายการซ้ำ", Toast.LENGTH_SHORT).show();
+
                             if(Basket_washtag_code!=""){
                                 Log.d("ttest_bk_insert","basket = "+basket_ar.get(spin_basket.getSelectedItemPosition()));
                                 insert_item_to_basket(c.getString("ItemStockID"),c.getString("ssID"));
+                            }else{
+                                Toast.makeText(SendSterile_MainActivity.this, "รายการซ้ำ", Toast.LENGTH_SHORT).show();
                             }
                             txt_get_ucode.setText("");
                             txt_get_ucode.requestFocus();
@@ -3927,7 +3933,12 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         JSONObject c = rs.getJSONObject(i);
                         if (c.getString("finish").equals("true")){
                             txt_usr_receive.setText(c.getString("FirstName")+" "+c.getString("LastName"));
-                            basket.requestFocus();
+                            if(ConfigProgram.wash_tag){
+                                basket.requestFocus();
+                            }else{
+                                txt_get_ucode.requestFocus();
+                            }
+
                         }else {
                             Toast.makeText(SendSterile_MainActivity.this, "ไม่พบข้อมูล", Toast.LENGTH_SHORT).show();
                             txt_usr_receive.setText("");
@@ -4021,12 +4032,24 @@ public class SendSterile_MainActivity extends AppCompatActivity {
 
     public void CheckBasket(final String xBasket,Boolean isDropdown) {
 
+        if(xBasket.equals("")){
+            Basket_washtag_code="";
+            basket.setText("");
+            return;
+        }
         for(int i=0;i<basket_ar.size();i++){
             Log.d("ttest_bb",xBasket+"--"+basket_ar.get(i).getID());
             if(basket_ar.get(i).getBasketCode().equals(xBasket)){
                 if(basket_ar.get(i).getMacId().equals("")){
-                    basket.setText(basket_ar.get(i).getName());
-                    get_washtag_detail(basket_ar.get(i).getBasketCode(),basket_ar.get(i).getName(),basket_ar.get(i).getQty());
+                    if (txt_usr_receive.getText().toString().equals("")){
+                        Toast.makeText(SendSterile_MainActivity.this, "กรุณาสแกนชื่อผู้รับ(จ่ายกลาง)", Toast.LENGTH_SHORT).show();
+                        txt_usr_receive.requestFocus();
+                        basket.setText("");
+                    }else{
+
+                        get_washtag_detail(basket_ar.get(i).getBasketCode(),basket_ar.get(i).getName(),basket_ar.get(i).getQty());
+                        txt_get_ucode.requestFocus();
+                    }
                 }else {
                     basket.setText("");
                     if(isDropdown){
@@ -4038,6 +4061,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 return;
             }
         }
+
+        basket.setText("");
         Toast.makeText(SendSterile_MainActivity.this, "ไม่พบข้อมูล", Toast.LENGTH_SHORT).show();
 //        class CheckBasket extends AsyncTask<String, Void, String> {
 //            private ProgressDialog dialog = new ProgressDialog(SendSterile_MainActivity.this);
@@ -4300,6 +4325,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     }
 
     public void get_washtag_detail(String BasketCode,String basket_name,int qty){
+        basket.setText(basket_name);
         Basket_washtag_code = BasketCode;
         if(BasketCode!=""){
             textView46_1.setText(basket_name+" [ "+qty+" รายการ ]");
@@ -4529,7 +4555,37 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
 
+    public void basket_detail_delete(String ssID){
+        class washtag_detail extends AsyncTask<String, Void, String> {
+            // variable
 
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                SelectBasket();
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("ssID",params[0]);
+                String result = ruc.sendPostRequest(getUrl.xUrl+"washtag/remove_item_in_washtag_by_ssID.php",data);
+                Log.d("ttest_dt_detail","delete๘washtag_detail result = "+result);
+                return result;
+            }
+        }
+        washtag_detail ru = new washtag_detail();
+        ru.execute(ssID);
+        Log.d("ttest_dt_detail","delete_washtag_detail ssID = "+ssID);
+    }
+
+    public void ItemSetCheckBoxall(boolean x){
+        checkBoxall.setChecked(x);
     }
 }
