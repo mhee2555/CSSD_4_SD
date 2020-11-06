@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -29,14 +30,37 @@ import java.util.List;
 public class SystemSettingToolsActivity extends AppCompatActivity {
 
     ImageView imageBack;
+    LinearLayout Li1,Li2;
 
+    //-------------------------------------
+    // Type1
+    //-------------------------------------
     LinearLayout L1,L2,L3,L4,L5,L6,L7,L8;
-
     TextView no1,no2,no3,no4,no5,no6,no7,no8;
     TextView text1,text2,text3,text4,text5,text6,text7,text8;
     TextView text1_1,text2_2,text3_3,text4_4,text5_5,text6_6,text7_7,text8_8;
     Button button_system_flase,button_system_true,button_user_true,button_user_flase;
     Switch sw1,sw2,sw3,sw4,sw5,sw6,sw7,sw8;
+    //-------------------------------------
+    // Type2
+    //-------------------------------------
+    TextView text1__1,text2_1,text3_1,text4_1,text5_1,text6_1,text7_1,text8_1,text9_1,text10_1,text11_1,text12_1,text13_1,text14_1,text15_1;
+    CheckBox ch1_1,ch1_2,ch1_3;
+    CheckBox ch2_1,ch2_2,ch2_3;
+    CheckBox ch3_1,ch3_2,ch3_3;
+    CheckBox ch4_1,ch4_2,ch4_3;
+    CheckBox ch5_1,ch5_2,ch5_3;
+    CheckBox ch6_1,ch6_2,ch6_3;
+    CheckBox ch7_1,ch7_2,ch7_3;
+    CheckBox ch8_1,ch8_2,ch8_3;
+    CheckBox ch9_1,ch9_2,ch9_3;
+    CheckBox ch10_1,ch10_2,ch10_3;
+    CheckBox ch11_1,ch11_2,ch11_3;
+    CheckBox ch12_1,ch12_2,ch12_3;
+    CheckBox ch13_1,ch13_2,ch13_3;
+    CheckBox ch14_1,ch14_2,ch14_3;
+    CheckBox ch15_1,ch15_2,ch15_3;
+
 
     private JSONArray rs = null;
     private HTTPConnect httpConnect = new HTTPConnect();
@@ -59,50 +83,105 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
     }
 
     public void initialize() {
-        imageBack = (ImageView) findViewById(R.id.imageBack);
+        text1__1 = (TextView) findViewById(R.id.text1__1);
+        text2_1 = (TextView) findViewById(R.id.text2_1);
+        text3_1 = (TextView) findViewById(R.id.text3_1);
+        text4_1 = (TextView) findViewById(R.id.text4_1);
+        text5_1 = (TextView) findViewById(R.id.text5_1);
+        text6_1 = (TextView) findViewById(R.id.text6_1);
+        text7_1 = (TextView) findViewById(R.id.text7_1);
+        text8_1 = (TextView) findViewById(R.id.text8_1);
+        text9_1 = (TextView) findViewById(R.id.text9_1);
+        text10_1 = (TextView) findViewById(R.id.text10_1);
+        text11_1 = (TextView) findViewById(R.id.text11_1);
+        text12_1 = (TextView) findViewById(R.id.text12_1);
+        text13_1 = (TextView) findViewById(R.id.text13_1);
+        text14_1 = (TextView) findViewById(R.id.text14_1);
+        text15_1 = (TextView) findViewById(R.id.text15_1);
 
+        ch1_1 = (CheckBox) findViewById(R.id.ch1_1);
+        ch1_2 = (CheckBox) findViewById(R.id.ch1_2);
+        ch1_3 = (CheckBox) findViewById(R.id.ch1_3);
+
+        ch2_1 = (CheckBox) findViewById(R.id.ch2_1);
+        ch2_2 = (CheckBox) findViewById(R.id.ch2_2);
+        ch2_3 = (CheckBox) findViewById(R.id.ch2_3);
+
+        ch3_1 = (CheckBox) findViewById(R.id.ch3_1);
+        ch3_2 = (CheckBox) findViewById(R.id.ch3_2);
+        ch3_3 = (CheckBox) findViewById(R.id.ch3_3);
+
+        ch4_1 = (CheckBox) findViewById(R.id.ch4_1);
+        ch4_2 = (CheckBox) findViewById(R.id.ch4_2);
+        ch4_3 = (CheckBox) findViewById(R.id.ch4_3);
+
+        ch5_1 = (CheckBox) findViewById(R.id.ch5_1);
+        ch5_2 = (CheckBox) findViewById(R.id.ch5_2);
+        ch5_3 = (CheckBox) findViewById(R.id.ch5_3);
+
+        ch6_1 = (CheckBox) findViewById(R.id.ch6_1);
+        ch6_2 = (CheckBox) findViewById(R.id.ch6_2);
+        ch6_3 = (CheckBox) findViewById(R.id.ch6_3);
+
+        ch7_1 = (CheckBox) findViewById(R.id.ch7_1);
+        ch7_2 = (CheckBox) findViewById(R.id.ch7_2);
+        ch7_3 = (CheckBox) findViewById(R.id.ch7_3);
+
+        ch8_1 = (CheckBox) findViewById(R.id.ch8_1);
+        ch8_2 = (CheckBox) findViewById(R.id.ch8_2);
+        ch8_3 = (CheckBox) findViewById(R.id.ch8_3);
+
+        ch8_1 = (CheckBox) findViewById(R.id.ch8_1);
+        ch8_2 = (CheckBox) findViewById(R.id.ch8_2);
+        ch8_3 = (CheckBox) findViewById(R.id.ch8_3);
+
+        ch9_1 = (CheckBox) findViewById(R.id.ch9_1);
+        ch9_2 = (CheckBox) findViewById(R.id.ch9_2);
+        ch9_3 = (CheckBox) findViewById(R.id.ch9_3);
+
+        ch10_1 = (CheckBox) findViewById(R.id.ch10_1);
+        ch10_2 = (CheckBox) findViewById(R.id.ch10_2);
+        ch10_3 = (CheckBox) findViewById(R.id.ch10_3);
+
+        ch11_1 = (CheckBox) findViewById(R.id.ch11_1);
+        ch11_2 = (CheckBox) findViewById(R.id.ch11_2);
+        ch11_3 = (CheckBox) findViewById(R.id.ch11_3);
+
+        ch12_1 = (CheckBox) findViewById(R.id.ch12_1);
+        ch12_2 = (CheckBox) findViewById(R.id.ch12_2);
+        ch12_3 = (CheckBox) findViewById(R.id.ch12_3);
+
+        ch13_1 = (CheckBox) findViewById(R.id.ch13_1);
+        ch13_2 = (CheckBox) findViewById(R.id.ch13_2);
+        ch13_3 = (CheckBox) findViewById(R.id.ch13_3);
+
+        ch14_1 = (CheckBox) findViewById(R.id.ch14_1);
+        ch14_2 = (CheckBox) findViewById(R.id.ch14_2);
+        ch14_3 = (CheckBox) findViewById(R.id.ch14_3);
+
+        ch15_1 = (CheckBox) findViewById(R.id.ch15_1);
+        ch15_2 = (CheckBox) findViewById(R.id.ch15_2);
+        ch15_3 = (CheckBox) findViewById(R.id.ch15_3);
+
+        imageBack = (ImageView) findViewById(R.id.imageBack);
+        Li1 = (LinearLayout) findViewById(R.id.Li1);
+        Li2 = (LinearLayout) findViewById(R.id.Li2);
+        Li2.setVisibility(View.GONE);
         button_system_flase = (Button) findViewById(R.id.button_system_flase);
         button_system_true = (Button) findViewById(R.id.button_system_true);
         button_user_true = (Button) findViewById(R.id.button_user_true);
         button_user_flase = (Button) findViewById(R.id.button_user_flase);
 
-        button_system_true.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (button_system_true.getVisibility() == View.VISIBLE){
-                    button_system_true.setVisibility(View.GONE);
-                    button_system_flase.setVisibility(View.VISIBLE);
-                }else {
-                    button_system_true.setVisibility(View.VISIBLE);
-                    button_system_flase.setVisibility(View.GONE);
-                }
-            }
-        });
-
         button_system_flase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (button_system_flase.getVisibility() == View.VISIBLE){
+                if (button_system_true.getVisibility() == View.GONE){
                     button_system_flase.setVisibility(View.GONE);
                     button_system_true.setVisibility(View.VISIBLE);
-                    button_user_true.setVisibility(View.GONE);
-                }else {
-                    button_system_true.setVisibility(View.VISIBLE);
-                    button_system_flase.setVisibility(View.GONE);
-                }
-            }
-        });
-
-
-        button_user_true.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (button_user_true.getVisibility() == View.GONE){
                     button_user_true.setVisibility(View.GONE);
                     button_user_flase.setVisibility(View.VISIBLE);
-                }else {
-                    button_system_true.setVisibility(View.VISIBLE);
-                    button_system_flase.setVisibility(View.GONE);
+                    Li1.setVisibility(View.VISIBLE);
+                    Li2.setVisibility(View.GONE);
                 }
             }
         });
@@ -114,9 +193,24 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
                     button_user_flase.setVisibility(View.GONE);
                     button_user_true.setVisibility(View.VISIBLE);
                     button_system_true.setVisibility(View.GONE);
-                }else {
-                    button_user_true.setVisibility(View.VISIBLE);
-                    button_user_flase.setVisibility(View.GONE);
+                    button_system_flase.setVisibility(View.VISIBLE);
+                    Li1.setVisibility(View.GONE);
+                    Li2.setVisibility(View.VISIBLE);
+                    PutDataCheck1_1();
+                    PutDataCheck2_1();
+                    PutDataCheck3_1();
+                    PutDataCheck4_1();
+                    PutDataCheck5_1();
+                    PutDataCheck6_1();
+                    PutDataCheck7_1();
+                    PutDataCheck8_1();
+                    PutDataCheck9_1();
+                    PutDataCheck10_1();
+                    PutDataCheck11_1();
+                    PutDataCheck12_1();
+                    PutDataCheck13_1();
+                    PutDataCheck14_1();
+                    PutDataCheck15_1();
                 }
             }
         });
@@ -998,6 +1092,921 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
             // =========================================================================================
         }
         PutDataCheck8 obj = new PutDataCheck8();
+        obj.execute();
+    }
+
+    public void PutDataCheck1_1() {
+        class PutDataCheck1_1 extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        text1__1.setText(c.getString("Name"));
+                        if (c.getString("IsUser").equals("0")){
+                            ch1_1.setChecked(false);
+                        }else {
+                            ch1_1.setChecked(true);
+                        }
+
+                        if (c.getString("IsInCharg").equals("0")){
+                            ch1_2.setChecked(false);
+                        }else {
+                            ch1_2.setChecked(true);
+                        }
+
+                        if (c.getString("IsAdmin").equals("0")){
+                            ch1_3.setChecked(false);
+                        }else {
+                            ch1_3.setChecked(true);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("data","4");
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_config_type2.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        PutDataCheck1_1 obj = new PutDataCheck1_1();
+        obj.execute();
+    }
+
+    public void PutDataCheck2_1() {
+        class PutDataCheck2_1 extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        text2_1.setText(c.getString("Name"));
+                        if (c.getString("IsUser").equals("0")){
+                            ch2_1.setChecked(false);
+                        }else {
+                            ch2_1.setChecked(true);
+                        }
+
+                        if (c.getString("IsInCharg").equals("0")){
+                            ch2_2.setChecked(false);
+                        }else {
+                            ch2_2.setChecked(true);
+                        }
+
+                        if (c.getString("IsAdmin").equals("0")){
+                            ch2_3.setChecked(false);
+                        }else {
+                            ch2_3.setChecked(true);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("data","5");
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_config_type2.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        PutDataCheck2_1 obj = new PutDataCheck2_1();
+        obj.execute();
+    }
+
+    public void PutDataCheck3_1() {
+        class PutDataCheck3_1 extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        text3_1.setText(c.getString("Name"));
+                        if (c.getString("IsUser").equals("0")){
+                            ch3_1.setChecked(false);
+                        }else {
+                            ch3_1.setChecked(true);
+                        }
+
+                        if (c.getString("IsInCharg").equals("0")){
+                            ch3_2.setChecked(false);
+                        }else {
+                            ch3_2.setChecked(true);
+                        }
+
+                        if (c.getString("IsAdmin").equals("0")){
+                            ch3_3.setChecked(false);
+                        }else {
+                            ch3_3.setChecked(true);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("data","6");
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_config_type2.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        PutDataCheck3_1 obj = new PutDataCheck3_1();
+        obj.execute();
+    }
+
+    public void PutDataCheck4_1() {
+        class PutDataCheck4_1 extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        text4_1.setText(c.getString("Name"));
+                        if (c.getString("IsUser").equals("0")){
+                            ch4_1.setChecked(false);
+                        }else {
+                            ch4_1.setChecked(true);
+                        }
+
+                        if (c.getString("IsInCharg").equals("0")){
+                            ch4_2.setChecked(false);
+                        }else {
+                            ch4_2.setChecked(true);
+                        }
+
+                        if (c.getString("IsAdmin").equals("0")){
+                            ch4_3.setChecked(false);
+                        }else {
+                            ch4_3.setChecked(true);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("data","7");
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_config_type2.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        PutDataCheck4_1 obj = new PutDataCheck4_1();
+        obj.execute();
+    }
+
+    public void PutDataCheck5_1() {
+        class PutDataCheck5_1 extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        text5_1.setText(c.getString("Name"));
+                        if (c.getString("IsUser").equals("0")){
+                            ch5_1.setChecked(false);
+                        }else {
+                            ch5_1.setChecked(true);
+                        }
+
+                        if (c.getString("IsInCharg").equals("0")){
+                            ch5_2.setChecked(false);
+                        }else {
+                            ch5_2.setChecked(true);
+                        }
+
+                        if (c.getString("IsAdmin").equals("0")){
+                            ch5_3.setChecked(false);
+                        }else {
+                            ch5_3.setChecked(true);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("data","8");
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_config_type2.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        PutDataCheck5_1 obj = new PutDataCheck5_1();
+        obj.execute();
+    }
+
+    public void PutDataCheck6_1() {
+        class PutDataCheck6_1 extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        text6_1.setText(c.getString("Name"));
+                        if (c.getString("IsUser").equals("0")){
+                            ch6_1.setChecked(false);
+                        }else {
+                            ch6_1.setChecked(true);
+                        }
+
+                        if (c.getString("IsInCharg").equals("0")){
+                            ch6_2.setChecked(false);
+                        }else {
+                            ch6_2.setChecked(true);
+                        }
+
+                        if (c.getString("IsAdmin").equals("0")){
+                            ch6_3.setChecked(false);
+                        }else {
+                            ch6_3.setChecked(true);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("data","9");
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_config_type2.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        PutDataCheck6_1 obj = new PutDataCheck6_1();
+        obj.execute();
+    }
+
+    public void PutDataCheck7_1() {
+        class PutDataCheck7_1 extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        text7_1.setText(c.getString("Name"));
+                        if (c.getString("IsUser").equals("0")){
+                            ch7_1.setChecked(false);
+                        }else {
+                            ch7_1.setChecked(true);
+                        }
+
+                        if (c.getString("IsInCharg").equals("0")){
+                            ch7_2.setChecked(false);
+                        }else {
+                            ch7_2.setChecked(true);
+                        }
+
+                        if (c.getString("IsAdmin").equals("0")){
+                            ch7_3.setChecked(false);
+                        }else {
+                            ch7_3.setChecked(true);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("data","10");
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_config_type2.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        PutDataCheck7_1 obj = new PutDataCheck7_1();
+        obj.execute();
+    }
+
+    public void PutDataCheck8_1() {
+        class PutDataCheck8_1 extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        text8_1.setText(c.getString("Name"));
+                        if (c.getString("IsUser").equals("0")){
+                            ch8_1.setChecked(false);
+                        }else {
+                            ch8_1.setChecked(true);
+                        }
+
+                        if (c.getString("IsInCharg").equals("0")){
+                            ch8_2.setChecked(false);
+                        }else {
+                            ch8_2.setChecked(true);
+                        }
+
+                        if (c.getString("IsAdmin").equals("0")){
+                            ch8_3.setChecked(false);
+                        }else {
+                            ch8_3.setChecked(true);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("data","11");
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_config_type2.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        PutDataCheck8_1 obj = new PutDataCheck8_1();
+        obj.execute();
+    }
+
+    public void PutDataCheck9_1() {
+        class PutDataCheck9_1 extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        text9_1.setText(c.getString("Name"));
+                        if (c.getString("IsUser").equals("0")){
+                            ch9_1.setChecked(false);
+                        }else {
+                            ch9_1.setChecked(true);
+                        }
+
+                        if (c.getString("IsInCharg").equals("0")){
+                            ch9_2.setChecked(false);
+                        }else {
+                            ch9_2.setChecked(true);
+                        }
+
+                        if (c.getString("IsAdmin").equals("0")){
+                            ch9_3.setChecked(false);
+                        }else {
+                            ch9_3.setChecked(true);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("data","12");
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_config_type2.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        PutDataCheck9_1 obj = new PutDataCheck9_1();
+        obj.execute();
+    }
+
+    public void PutDataCheck10_1() {
+        class PutDataCheck10_1 extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        text10_1.setText(c.getString("Name"));
+                        if (c.getString("IsUser").equals("0")){
+                            ch10_1.setChecked(false);
+                        }else {
+                            ch10_1.setChecked(true);
+                        }
+
+                        if (c.getString("IsInCharg").equals("0")){
+                            ch10_2.setChecked(false);
+                        }else {
+                            ch10_2.setChecked(true);
+                        }
+
+                        if (c.getString("IsAdmin").equals("0")){
+                            ch10_3.setChecked(false);
+                        }else {
+                            ch10_3.setChecked(true);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("data","13");
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_config_type2.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        PutDataCheck10_1 obj = new PutDataCheck10_1();
+        obj.execute();
+    }
+
+    public void PutDataCheck11_1() {
+        class PutDataCheck11_1 extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        text11_1.setText(c.getString("Name"));
+                        if (c.getString("IsUser").equals("0")){
+                            ch11_1.setChecked(false);
+                        }else {
+                            ch11_1.setChecked(true);
+                        }
+
+                        if (c.getString("IsInCharg").equals("0")){
+                            ch11_2.setChecked(false);
+                        }else {
+                            ch11_2.setChecked(true);
+                        }
+
+                        if (c.getString("IsAdmin").equals("0")){
+                            ch11_3.setChecked(false);
+                        }else {
+                            ch11_3.setChecked(true);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("data","14");
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_config_type2.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        PutDataCheck11_1 obj = new PutDataCheck11_1();
+        obj.execute();
+    }
+
+    public void PutDataCheck12_1() {
+        class PutDataCheck12_1 extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        text12_1.setText(c.getString("Name"));
+                        if (c.getString("IsUser").equals("0")){
+                            ch12_1.setChecked(false);
+                        }else {
+                            ch12_1.setChecked(true);
+                        }
+
+                        if (c.getString("IsInCharg").equals("0")){
+                            ch12_2.setChecked(false);
+                        }else {
+                            ch12_2.setChecked(true);
+                        }
+
+                        if (c.getString("IsAdmin").equals("0")){
+                            ch12_3.setChecked(false);
+                        }else {
+                            ch12_3.setChecked(true);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("data","15");
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_config_type2.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        PutDataCheck12_1 obj = new PutDataCheck12_1();
+        obj.execute();
+    }
+
+    public void PutDataCheck13_1() {
+        class PutDataCheck13_1 extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        text13_1.setText(c.getString("Name"));
+                        if (c.getString("IsUser").equals("0")){
+                            ch13_1.setChecked(false);
+                        }else {
+                            ch13_1.setChecked(true);
+                        }
+
+                        if (c.getString("IsInCharg").equals("0")){
+                            ch13_2.setChecked(false);
+                        }else {
+                            ch13_2.setChecked(true);
+                        }
+
+                        if (c.getString("IsAdmin").equals("0")){
+                            ch13_3.setChecked(false);
+                        }else {
+                            ch13_3.setChecked(true);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("data","16");
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_config_type2.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        PutDataCheck13_1 obj = new PutDataCheck13_1();
+        obj.execute();
+    }
+
+    public void PutDataCheck14_1() {
+        class PutDataCheck14_1 extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        text14_1.setText(c.getString("Name"));
+                        if (c.getString("IsUser").equals("0")){
+                            ch14_1.setChecked(false);
+                        }else {
+                            ch14_1.setChecked(true);
+                        }
+
+                        if (c.getString("IsInCharg").equals("0")){
+                            ch14_2.setChecked(false);
+                        }else {
+                            ch14_2.setChecked(true);
+                        }
+
+                        if (c.getString("IsAdmin").equals("0")){
+                            ch14_3.setChecked(false);
+                        }else {
+                            ch14_3.setChecked(true);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("data","17");
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_config_type2.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        PutDataCheck14_1 obj = new PutDataCheck14_1();
+        obj.execute();
+    }
+
+    public void PutDataCheck15_1() {
+        class PutDataCheck15_1 extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        text15_1.setText(c.getString("Name"));
+                        if (c.getString("IsUser").equals("0")){
+                            ch15_1.setChecked(false);
+                        }else {
+                            ch15_1.setChecked(true);
+                        }
+
+                        if (c.getString("IsInCharg").equals("0")){
+                            ch15_2.setChecked(false);
+                        }else {
+                            ch15_2.setChecked(true);
+                        }
+
+                        if (c.getString("IsAdmin").equals("0")){
+                            ch15_3.setChecked(false);
+                        }else {
+                            ch15_3.setChecked(true);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("data","18");
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_display_config_type2.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+        PutDataCheck15_1 obj = new PutDataCheck15_1();
         obj.execute();
     }
 }

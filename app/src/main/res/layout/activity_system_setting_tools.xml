@@ -25,7 +25,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/tab_master_cyanblue_noselect"
-                android:enabled="false"
                 android:paddingBottom="5dp"
                 android:text="กำหนดขอบเขตการใช้งาน "
                 android:textColor="@android:color/darker_gray"
@@ -38,7 +37,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/tab_master_cyanblue"
-                android:enabled="false"
                 android:paddingBottom="5dp"
                 android:text="กำหนดขอบเขตการใช้งาน "
                 android:textColor="@color/colorWhite"
@@ -77,12 +75,12 @@
 
     <ImageView
         android:id="@+id/imageBack"
-        android:layout_width="201dp"
-        android:layout_height="84dp"
+        android:layout_width="151dp"
+        android:layout_height="64dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="12dp"
-        android:layout_marginStart="13dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="5dp"
         android:src="@drawable/bt_back" />
 
     <LinearLayout
@@ -92,7 +90,7 @@
         android:layout_marginTop="120dp"
         android:layout_marginLeft="100dp"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -533,6 +531,804 @@
                         android:layout_height="40dp">
 
                     </TextView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/Li2"
+        android:layout_width="1120dp"
+        android:layout_height="520dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginLeft="100dp"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="40dp"
+                            android:text="ขอบเขต"
+                            android:textSize="16dp"
+                            android:gravity="center"
+                            android:textColor="@color/colorBlack"
+                            android:layout_marginLeft="120dp">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:textSize="16dp"
+                            android:gravity="center"
+                            android:text="User"
+                            android:textColor="@color/colorBlack"
+                            android:layout_marginLeft="310dp">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="40dp"
+                            android:textSize="16dp"
+                            android:gravity="center"
+                            android:text="In Charge"
+                            android:textColor="@color/colorBlack"
+                            android:layout_marginLeft="380dp">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:textSize="16dp"
+                            android:gravity="center"
+                            android:text="Admin"
+                            android:textColor="@color/colorBlack"
+                            android:layout_marginLeft="460dp">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="40dp"
+                            android:text="ขอบเขต"
+                            android:textSize="16dp"
+                            android:gravity="center"
+                            android:textColor="@color/colorBlack"
+                            android:layout_marginLeft="670dp">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:textSize="16dp"
+                            android:gravity="center"
+                            android:text="User"
+                            android:textColor="@color/colorBlack"
+                            android:layout_marginLeft="910dp">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="40dp"
+                            android:textSize="16dp"
+                            android:gravity="center"
+                            android:text="In Charge"
+                            android:textColor="@color/colorBlack"
+                            android:layout_marginLeft="990dp">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:textSize="16dp"
+                            android:gravity="center"
+                            android:text="Admin"
+                            android:textColor="@color/colorBlack"
+                            android:layout_marginLeft="1065dp">
+
+                        </TextView>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <LinearLayout
+                        android:id="@+id/L1_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/text1__1"
+                            android:layout_width="320dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="5dp"
+                            android:paddingStart="10dp"
+                            android:text="หน้ากำหนดขอบเขตการใช้งาน/สิทธิ์ผู้ใช้"
+                            android:textColor="@color/colorBlack"
+                            android:gravity="center|left"
+                            android:textSize="15sp" />
+
+                        <CheckBox
+                            android:id="@+id/ch1_1"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp">
+
+                        </CheckBox>
+
+                        <CheckBox
+                            android:id="@+id/ch1_2"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="45dp">
+
+                        </CheckBox>
+
+                        <CheckBox
+                            android:id="@+id/ch1_3"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="45dp">
+
+                        </CheckBox>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/L1_1_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/text12_1"
+                            android:layout_width="320dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="5dp"
+                            android:paddingStart="10dp"
+                            android:text="หน้ากำหนดขอบเขตการใช้งาน/สิทธิ์ผู้ใช้"
+                            android:textColor="@color/colorBlack"
+                            android:gravity="center|left"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/ch12_1"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="50dp">
+
+                        </CheckBox>
+
+                        <CheckBox
+                            android:id="@+id/ch12_2"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="40dp">
+
+                        </CheckBox>
+
+                        <CheckBox
+                            android:id="@+id/ch12_3"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="5dp">
+
+                        </CheckBox>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <LinearLayout
+                        android:id="@+id/L2_1"
+                        android:layout_below="@+id/L1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/text2_1"
+                            android:layout_width="320dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="5dp"
+                            android:paddingStart="10dp"
+                            android:text="หน้าตั้งค่า(master) : จัดการข้อมูลต่าง ๆ"
+                            android:textColor="@color/colorBlack"
+                            android:gravity="center|left"
+                            android:textSize="15sp" />
+
+                        <CheckBox
+                            android:id="@+id/ch2_1"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp">
+
+                        </CheckBox>
+
+                        <CheckBox
+                            android:id="@+id/ch2_2"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="45dp">
+
+                        </CheckBox>
+
+                        <CheckBox
+                            android:id="@+id/ch2_3"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="45dp">
+
+                        </CheckBox>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/L2_1_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/text13_1"
+                            android:layout_width="320dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="5dp"
+                            android:paddingStart="10dp"
+                            android:text="หน้ากำหนดขอบเขตการใช้งาน/สิทธิ์ผู้ใช้"
+                            android:textColor="@color/colorBlack"
+                            android:gravity="center|left"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/ch13_1"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="50dp">
+
+                        </CheckBox>
+
+                        <CheckBox
+                            android:id="@+id/ch13_2"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="40dp">
+
+                        </CheckBox>
+
+                        <CheckBox
+                            android:id="@+id/ch13_3"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="5dp">
+
+                        </CheckBox>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <LinearLayout
+                        android:id="@+id/L3_1"
+                        android:layout_below="@+id/L2"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/text3_1"
+                            android:layout_width="320dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="5dp"
+                            android:paddingStart="10dp"
+                            android:text="หน้าส่งล้าง : บันทึก Remark"
+                            android:textColor="@color/colorBlack"
+                            android:gravity="center|left"
+                            android:textSize="15sp" />
+
+                        <CheckBox
+                            android:id="@+id/ch3_1"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp">
+
+                        </CheckBox>
+
+                        <CheckBox
+                            android:id="@+id/ch3_2"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="45dp">
+
+                        </CheckBox>
+
+                        <CheckBox
+                            android:id="@+id/ch3_3"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="45dp">
+
+                        </CheckBox>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/L3_1_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/text14_1"
+                            android:layout_width="320dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="5dp"
+                            android:paddingStart="10dp"
+                            android:text="หน้ากำหนดขอบเขตการใช้งาน/สิทธิ์ผู้ใช้"
+                            android:textColor="@color/colorBlack"
+                            android:gravity="center|left"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/ch14_1"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="50dp">
+
+                        </CheckBox>
+
+                        <CheckBox
+                            android:id="@+id/ch14_2"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="40dp">
+
+                        </CheckBox>
+
+                        <CheckBox
+                            android:id="@+id/ch14_3"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="5dp">
+
+                        </CheckBox>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <LinearLayout
+                        android:id="@+id/L4_1"
+                        android:layout_below="@+id/L3"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/text4_1"
+                            android:layout_width="320dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="5dp"
+                            android:paddingStart="10dp"
+                            android:text="หน้าส่งล้าง : ยกเลิก Remark"
+                            android:textColor="@color/colorBlack"
+                            android:gravity="center|left"
+                            android:textSize="15sp" />
+
+                        <CheckBox
+                            android:id="@+id/ch4_1"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp">
+
+                        </CheckBox>
+
+                        <CheckBox
+                            android:id="@+id/ch4_2"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="45dp">
+
+                        </CheckBox>
+
+                        <CheckBox
+                            android:id="@+id/ch4_3"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="45dp">
+
+                        </CheckBox>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/L4_1_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/text15_1"
+                            android:layout_width="320dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="5dp"
+                            android:paddingStart="10dp"
+                            android:text="หน้ากำหนดขอบเขตการใช้งาน/สิทธิ์ผู้ใช้"
+                            android:textColor="@color/colorBlack"
+                            android:gravity="center|left"
+                            android:textSize="16sp" />
+
+                        <CheckBox
+                            android:id="@+id/ch15_1"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="50dp">
+
+                        </CheckBox>
+
+                        <CheckBox
+                            android:id="@+id/ch15_2"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="40dp">
+
+                        </CheckBox>
+
+                        <CheckBox
+                            android:id="@+id/ch15_3"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="5dp">
+
+                        </CheckBox>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/L5_1"
+                    android:layout_below="@+id/L4"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/text5_1"
+                        android:layout_width="320dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="5dp"
+                        android:paddingStart="10dp"
+                        android:text="หน้าส่งล้าง : จัดการการส่งล้าง"
+                        android:textColor="@color/colorBlack"
+                        android:gravity="center|left"
+                        android:textSize="15sp" />
+
+                    <CheckBox
+                        android:id="@+id/ch5_1"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp">
+
+                    </CheckBox>
+
+                    <CheckBox
+                        android:id="@+id/ch5_2"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="45dp">
+
+                    </CheckBox>
+
+                    <CheckBox
+                        android:id="@+id/ch5_3"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="45dp">
+
+                    </CheckBox>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/L6_1"
+                    android:layout_below="@+id/L5"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/text6_1"
+                        android:layout_width="320dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="5dp"
+                        android:paddingStart="10dp"
+                        android:text="หน้าสั่งล้าง : นำwash tag /รายการ เข้าเครื่องล้าง"
+                        android:textColor="@color/colorBlack"
+                        android:gravity="center|left"
+                        android:textSize="15sp" />
+
+                    <CheckBox
+                        android:id="@+id/ch6_1"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp">
+
+                    </CheckBox>
+
+                    <CheckBox
+                        android:id="@+id/ch6_2"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="45dp">
+
+                    </CheckBox>
+
+                    <CheckBox
+                        android:id="@+id/ch6_3"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="45dp">
+
+                    </CheckBox>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/L7_1"
+                    android:layout_below="@+id/L6"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/text7_1"
+                        android:layout_width="320dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="5dp"
+                        android:paddingStart="10dp"
+                        android:text="หน้าสั่งฆ่าเชื้อ : จัดการสั่งฆ่าเชื้อ"
+                        android:textColor="@color/colorBlack"
+                        android:gravity="center|left"
+                        android:textSize="15sp" />
+
+                    <CheckBox
+                        android:id="@+id/ch7_1"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp">
+
+                    </CheckBox>
+
+                    <CheckBox
+                        android:id="@+id/ch7_2"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="45dp">
+
+                    </CheckBox>
+
+                    <CheckBox
+                        android:id="@+id/ch7_3"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="45dp">
+
+                    </CheckBox>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/L8_1"
+                    android:layout_below="@+id/L6"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/text8_1"
+                        android:layout_width="320dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="5dp"
+                        android:paddingStart="10dp"
+                        android:text="หน้าสั่งฆ่าเชื้อ : จัดการสั่งฆ่าเชื้อ"
+                        android:textColor="@color/colorBlack"
+                        android:gravity="center|left"
+                        android:textSize="15sp" />
+
+                    <CheckBox
+                        android:id="@+id/ch8_1"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp">
+
+                    </CheckBox>
+
+                    <CheckBox
+                        android:id="@+id/ch8_2"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="45dp">
+
+                    </CheckBox>
+
+                    <CheckBox
+                        android:id="@+id/ch8_3"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="45dp">
+
+                    </CheckBox>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/L9_1"
+                    android:layout_below="@+id/L6"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/text9_1"
+                        android:layout_width="320dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="5dp"
+                        android:paddingStart="10dp"
+                        android:text="หน้าสั่งฆ่าเชื้อ : จัดการสั่งฆ่าเชื้อ"
+                        android:textColor="@color/colorBlack"
+                        android:gravity="center|left"
+                        android:textSize="15sp" />
+
+                    <CheckBox
+                        android:id="@+id/ch9_1"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp">
+
+                    </CheckBox>
+
+                    <CheckBox
+                        android:id="@+id/ch9_2"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="45dp">
+
+                    </CheckBox>
+
+                    <CheckBox
+                        android:id="@+id/ch9_3"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="45dp">
+
+                    </CheckBox>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/L10_1"
+                    android:layout_below="@+id/L6"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/text10_1"
+                        android:layout_width="320dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="5dp"
+                        android:paddingStart="10dp"
+                        android:text="หน้าสั่งฆ่าเชื้อ : จัดการสั่งฆ่าเชื้อ"
+                        android:textColor="@color/colorBlack"
+                        android:gravity="center|left"
+                        android:textSize="15sp" />
+
+                    <CheckBox
+                        android:id="@+id/ch10_1"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp">
+
+                    </CheckBox>
+
+                    <CheckBox
+                        android:id="@+id/ch10_2"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="45dp">
+
+                    </CheckBox>
+
+                    <CheckBox
+                        android:id="@+id/ch10_3"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="45dp">
+
+                    </CheckBox>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/L11_1"
+                    android:layout_below="@+id/L6"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/text11_1"
+                        android:layout_width="320dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="5dp"
+                        android:paddingStart="10dp"
+                        android:text="หน้าสั่งฆ่าเชื้อ : จัดการสั่งฆ่าเชื้อ"
+                        android:textColor="@color/colorBlack"
+                        android:gravity="center|left"
+                        android:textSize="15sp" />
+
+                    <CheckBox
+                        android:id="@+id/ch11_1"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp">
+
+                    </CheckBox>
+
+                    <CheckBox
+                        android:id="@+id/ch11_2"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="45dp">
+
+                    </CheckBox>
+
+                    <CheckBox
+                        android:id="@+id/ch11_3"
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="45dp">
+
+                    </CheckBox>
 
                 </LinearLayout>
 
