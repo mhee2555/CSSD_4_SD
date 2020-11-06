@@ -42,6 +42,8 @@ public class SendSterile_DocListDetailAdapter extends ArrayAdapter {
         this.aActivity= aActivity;
         this.listData = listData;
         this.CheckAll = CheckAll;
+
+        ((SendSterile_MainActivity)aActivity).ItemSetCheckBoxall(true);
     }
 
     @Override
@@ -93,6 +95,7 @@ public class SendSterile_DocListDetailAdapter extends ArrayAdapter {
                 txtitemname.setTextColor(Color.RED);
                 txtxqty.setTextColor(Color.RED);
                 textView49.setTextColor(Color.RED);
+                ((SendSterile_MainActivity)aActivity).ItemSetCheckBoxall(false);
             }else {
                 checkBoxsub.setVisibility(View.VISIBLE);
                 un_checkBoxsub.setVisibility(View.GONE);

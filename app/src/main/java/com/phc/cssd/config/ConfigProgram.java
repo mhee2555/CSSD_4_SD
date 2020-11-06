@@ -18,7 +18,7 @@ public class ConfigProgram {
   //------------------------------------------------
   //wash tag
   //------------------------------------------------
-  public static boolean wash_tag = false ;
+  public static boolean wash_tag = true ;
 
   //------------------------------------------------
   //basket tag

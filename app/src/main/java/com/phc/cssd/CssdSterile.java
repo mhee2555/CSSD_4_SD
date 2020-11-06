@@ -79,6 +79,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -276,6 +277,8 @@ public class CssdSterile extends AppCompatActivity {
     private List<ModelImportWashDetail> MODEL_IMPORT_WASH_DETAIL_NOT_PRINT;
 
     Dialog dialog_item_stock_detail_basket;
+    private TextView cnt_basket_list;
+    private Button btn_import_new_item_stock_to_basket;
 
     public void onDestroy() {
         super.onDestroy();
@@ -338,13 +341,16 @@ public class CssdSterile extends AppCompatActivity {
 
             btn_print.setVisibility(View.VISIBLE);
             txt_print_balance.setVisibility(View.VISIBLE);
+
+            btn_import_new_item_stock.setVisibility(View.VISIBLE);
         }
 
         //rollback pair basket
-        if(!ConfigProgram.pair_basket_2){
+        if(ConfigProgram.pair_basket_2){
             LinearLayout lin_list_washtag = (LinearLayout) dialog_item_stock_detail_basket.findViewById(R.id.lin_list_washtag);
             lin_list_washtag.setVisibility(View.GONE);
-            btn_import_new_item_stock.setVisibility(View.GONE);
+            btn_import_new_item_stock_to_basket.setVisibility(View.GONE);
+            btn_import_new_item_stock.setVisibility(View.VISIBLE);
 
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
                     dp_to_px(114), dp_to_px(50));
@@ -1468,30 +1474,7 @@ public class CssdSterile extends AppCompatActivity {
         btn_import_new_item_stock.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
 
-                // Check Sterile Process
-                if (STERILE_PROCESS_NUMBER_ACTIVE == 0){
-                    Toast.makeText(CssdSterile.this, "ยังไม่ได้เลือกวิธีฆ่าเชื้อ!!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                // Check Machine Active
-                if (STERILE_MACHINE_NUMBER_ACTIVE == 0){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(CssdSterile.this);
-                    builder.setTitle(Cons.TITLE);
-                    builder.setIcon(R.drawable.pose_favicon_2x);
-                    builder.setMessage("ยังไม่ได้เลือกเครื่องฆ่าเชื้อ!!");
-                    builder.setPositiveButton("ปิด", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                        }
-                    });
-                    builder.show();
-                    return;
-                }
-
-                // Check Machine Active (Run)
-                if(!checkMachineActive()) {
-                    Toast.makeText(CssdSterile.this, "ไม่สามารถเพิ่มได้ เนื่องจากเครื่องกำลังทำงาน!!", Toast.LENGTH_SHORT).show();
+                if(!chk_mac()){
                     return;
                 }
 
@@ -1636,7 +1619,7 @@ public class CssdSterile extends AppCompatActivity {
             public boolean onKey(View v, int keyCode, KeyEvent event)
             {
                 Log.d("ttest_scan","keyCode = "+keyCode);
-                String txt = scan_basket.getText().toString();
+                String txt = scan_basket.getText().toString().toLowerCase();
                 if (event.getAction() == KeyEvent.ACTION_DOWN)
                 {
                     switch (keyCode)
@@ -1644,8 +1627,25 @@ public class CssdSterile extends AppCompatActivity {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
 
+                            if(txt.length()>6){
+                                for(int i=0;i<MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET.size();i++){
+                                    if(MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET.get(i).getI_UsageCode().toLowerCase().equals(txt)){
+                                        ModelImportWashDetail x = MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET.get(i);
+                                        onImport(x.getI_code(),
+                                                x.getI_program_id(),
+                                                x.getPackingMatID(),
+                                                x.getI_qty(),
+                                                x.getI_UsageCode()
+                                        );
+                                    }
+                                }
+
+                                scan_basket.setText("");
+                                return true;
+                            }
+
                             Log.d("ttest_scan","txt = "+txt);
-                            if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(txt)&&(!txt.equals(""))){//&&chk_mac()
+                            if((MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(txt))&&(!txt.equals(""))){//&&chk_mac()
 
                                 List<ModelImportWashDetail> MODEL_IMPORT_WASH_DETAIL_TO_ADD = MAP_MODEL_IMPORT_WASH_DETAIL_SUB.get(txt);
                                 importWashDetail(
@@ -1683,12 +1683,14 @@ public class CssdSterile extends AppCompatActivity {
         basket_dialog_list_basket = (ListView) dialog_item_stock_detail_basket.findViewById(R.id.list_basket);
         basket_dialog_w_list = (ListView) dialog_item_stock_detail_basket.findViewById(R.id.list);
         basket_dialog_list_washtag = (ListView) dialog_item_stock_detail_basket.findViewById(R.id.list_washtag);
-
         btn_print_bk = (Button) dialog_item_stock_detail_basket.findViewById(R.id.btn_save);
-
         pair_fin = (Button) dialog_item_stock_detail_basket.findViewById(R.id.btn_cancel);
         final EditText edt_basket_code = (EditText) dialog_item_stock_detail_basket.findViewById(R.id.edt_basket_code);
         PairBasketBox_basket_Code = (TextView) dialog_item_stock_detail_basket.findViewById(R.id.bastek_name);
+        cnt_basket_list = (TextView) dialog_item_stock_detail_basket.findViewById(R.id.cnt_basket_list);
+        btn_import_new_item_stock_to_basket = (Button) dialog_item_stock_detail_basket.findViewById(R.id.btn_import_new_item_stock_to_basket);
+
+        cnt_basket_list.setText("");
 
         packer = (TextView) dialog_item_stock_detail_basket.findViewById(R.id.packer);
         packer.setText("");
@@ -1699,6 +1701,7 @@ public class CssdSterile extends AppCompatActivity {
                 btn_print_bk.setText("0");
                 basket_dialog_list_basket.setAdapter(null);
                 PairBasketBox_basket_Code.setText("");
+                cnt_basket_list.setText("");
                 basket_Code = "";
                 basket_ID = "";
                 packer_id = "";
@@ -1719,8 +1722,60 @@ public class CssdSterile extends AppCompatActivity {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
 
-                            selectBasket(edt_basket_code.getText().toString(),edt_basket_code);
+                            String edt = edt_basket_code.getText().toString().toUpperCase();
+                            boolean b=true;
+
+                            if(!ConfigProgram.pair_basket_2){
+                                if(edt.length()>6){
+                                    final String basket = basket_ID;
+
+                                    if(!basket.equals("")){
+                                        for(int i=0;i<MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR.size();i++){
+                                            Log.d("tog_scan_usage",edt+" --- "+MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR.get(i).getI_UsageCode());
+                                            if(edt.equals(MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR.get(i).getI_UsageCode())){
+                                                b=false;
+                                                if(CheckProgramTypePairBasket(MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR.get(i).getI_program_type())){
+                                                    importWashDetailToBasket(
+                                                            MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR.get(i).getI_UsageCode()
+                                                    );
+                                                }else{
+                                                    Toast.makeText(CssdSterile.this, "โปรแกรมฆ่าเชื้อไม่ตรงกันกับรายการในตะกร้า !!", Toast.LENGTH_SHORT).show();
+                                                }
+                                                break;
+                                            }
+                                        }
+
+                                        if(b){
+                                            b=true;
+                                            for(int i=0;i<MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size();i++){
+                                                Log.d("tog_scan_usage",edt+" --- "+MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(i).getI_UsageCode());
+                                                if(edt.equals(MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(i).getI_UsageCode())){
+                                                    b=false;
+                                                    break;
+                                                }
+                                            }
+
+                                            if(b){
+                                                Toast.makeText(CssdSterile.this, "ไม่พบรหัสรายการ", Toast.LENGTH_SHORT).show();
+                                            }else{
+                                                Toast.makeText(CssdSterile.this, "สแกนรหัสใช้งานซ้ำ", Toast.LENGTH_SHORT).show();
+                                            }
+
+                                        }
+                                    }else{
+                                        Toast.makeText(CssdSterile.this, "Scan QR Code Basket Tag !!", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }else{
+                                    selectBasket(edt,edt_basket_code);
+                                }
+
+                            }else{
+                                selectBasket(edt,edt_basket_code);
+                            }
+                            
                             edt_basket_code.setText("");
+
                             return true;
                         default:
                             break;
@@ -1794,23 +1849,30 @@ public class CssdSterile extends AppCompatActivity {
 
         btn_print_bk.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-//                try {
-//                    Log.d("SSSS","PRINTER_IP : "+PRINTER_IP);
-//                    onPrint();
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                }
                 int xn =0;
 
                 print_w_id = "";
-                for(int i=0;i<MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.size();i++){
+                if(ConfigProgram.pair_basket_2){
 
-                    Log.d("ttest_for_print","w_id"+MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.get(i).getI_id());
-                    if(MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.get(i).isCheck()){
-                        print_w_id=print_w_id+","+MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.get(i).getI_id();
-                        xn = xn+1;
+                    for(int i=0;i<MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size();i++){
+
+                        Log.d("ttest_for_print","w_id"+MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(i).getI_id());
+                        if(MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(i).getPrint_count()<=0){
+                            print_w_id=print_w_id+","+MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(i).getI_id();
+                            xn = xn+1;
+                        }
+                    }
+                }else{
+                    for(int i=0;i<MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.size();i++){
+
+                        Log.d("ttest_for_print","w_id"+MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.get(i).getI_id());
+                        if(MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.get(i).isCheck()){
+                            print_w_id=print_w_id+","+MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.get(i).getI_id();
+                            xn = xn+1;
+                        }
                     }
                 }
+
 
                 set_num_btn_print_bk(xn);
 
@@ -1865,7 +1927,9 @@ public class CssdSterile extends AppCompatActivity {
                 dialog_qr.show();
 
                 dialogProgress.dismiss();
-
+                if("TL01193N40267".equals(getSerialNumber())||"L203P85U01743".equals(getSerialNumber())){
+                    Checkuser_packer("em00009",dialog_qr,dialog_item_stock_detail_basket);
+                }
             }
         });
 
@@ -3009,24 +3073,22 @@ public class CssdSterile extends AppCompatActivity {
 //                                } else {
 //                                    Toast.makeText(CssdSterile.this, "กรุณากรอกอัตราการเต็มตู้ต่อรอบ", Toast.LENGTH_SHORT).show();
 //                                }
-                                if (!isBowiedick()) {
-                                    if ((MODEL_STERILE_DETAIL == null || MODEL_STERILE_DETAIL.size() < 1)) {
-                                        Toast.makeText(CssdSterile.this, "ไม่สามารถเริ่มการฆ่าเชื้อได้ เนื่องจากไม่มีรายการที่จะฆ่าเชื้อ !!", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        getQR(getDocNo(), "s1", "");
-                                        //startMachine(getDocNo());
-                                    }
+
+                                if ((MODEL_STERILE_DETAIL == null || MODEL_STERILE_DETAIL.size() < 1)) {
+                                    Toast.makeText(CssdSterile.this, "ไม่สามารถเริ่มการฆ่าเชื้อได้ เนื่องจากไม่มีรายการที่จะฆ่าเชื้อ !!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    getQR(getDocNo(), "s1", "");
+                                    //startMachine(getDocNo());
                                 }
                             }else {
-                                if (!isBowiedick()) {
-                                    if ((MODEL_STERILE_DETAIL == null || MODEL_STERILE_DETAIL.size() < 1)) {
-                                        Toast.makeText(CssdSterile.this, "ไม่สามารถเริ่มการฆ่าเชื้อได้ เนื่องจากไม่มีรายการที่จะฆ่าเชื้อ !!", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        getQR(getDocNo(), "s1", "");
-                                        //startMachine(getDocNo());
-                                    }
+                                if ((MODEL_STERILE_DETAIL == null || MODEL_STERILE_DETAIL.size() < 1)) {
+                                    Toast.makeText(CssdSterile.this, "ไม่สามารถเริ่มการฆ่าเชื้อได้ เนื่องจากไม่มีรายการที่จะฆ่าเชื้อ !!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    getQR(getDocNo(), "s1", "");
+                                    //startMachine(getDocNo());
                                 }
                             }
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -3152,6 +3214,14 @@ public class CssdSterile extends AppCompatActivity {
     public void importWashDetail(final List<ModelImportWashDetail> DETAIL_SUB){
 
         String DocNo = getDocNo();
+        if(!chk_mac()){
+            return;
+        }
+
+        if(!checkSterileDetailProgram()) {
+            Toast.makeText(CssdSterile.this, "ท่านเลือกโปรแกรมฆ่าเชื้อไม่ตรงกัน โปรดเลือกรายการฆ่าเชื้อใหม่อีกครั้ง !!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         Log.d("ttest_create_loop","DocNo = "+DocNo);
         if ((DocNo == null) || DocNo.equals("-")) {
@@ -3258,31 +3328,11 @@ public class CssdSterile extends AppCompatActivity {
     }
 
     private void onImportNewItemStock(String STERILE_PROGRAM_ID, String DATA, boolean IsNew){
-        // Check Sterile Process
-        if (STERILE_PROCESS_NUMBER_ACTIVE == 0){
-            Toast.makeText(CssdSterile.this, "ยังไม่ได้เลือกวิธีฆ่าเชื้อ!!", Toast.LENGTH_SHORT).show();
+
+        if(!chk_mac()){
             return;
         }
-        // Check Machine Active
-        if (STERILE_MACHINE_NUMBER_ACTIVE == 0){
-            //Toast.makeText(CssdSterile.this, "ยังไม่ได้เลือกเครื่องฆ่าเชื้อ!", Toast.LENGTH_SHORT).show();
-            AlertDialog.Builder builder = new AlertDialog.Builder(CssdSterile.this);
-            builder.setTitle(Cons.TITLE);
-            builder.setIcon(R.drawable.pose_favicon_2x);
-            builder.setMessage("ยังไม่ได้เลือกเครื่องฆ่าเชื้อ!!");
-            builder.setPositiveButton("ปิด", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
-                }
-            });
-            builder.show();
-            return;
-        }
-        // Check Machine Active (Run)
-        if(!checkMachineActive()) {
-            Toast.makeText(CssdSterile.this, "ไม่สามารถเพิ่มได้ เนื่องจากเครื่องกำลังทำงาน!!", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
         String DocNo = getDocNo();
         if (DocNo != null && !DocNo.equals("-")) {
             if(MODEL_STERILE_DETAIL == null || MODEL_STERILE_DETAIL.size() == 0){
@@ -3300,31 +3350,8 @@ public class CssdSterile extends AppCompatActivity {
     }
     // 1 : N
     private void onImport(){
-        // Check Sterile Process
-        if (STERILE_PROCESS_NUMBER_ACTIVE == 0){
-            Toast.makeText(CssdSterile.this, "ยังไม่ได้เลือกวิธีฆ่าเชื้อ!!", Toast.LENGTH_SHORT).show();
-            return;
-        }
 
-        // Check Machine Active
-        if (STERILE_MACHINE_NUMBER_ACTIVE == 0){
-            AlertDialog.Builder builder = new AlertDialog.Builder(CssdSterile.this);
-            builder.setTitle(Cons.TITLE);
-            builder.setIcon(R.drawable.pose_favicon_2x);
-            builder.setMessage("ยังไม่ได้เลือกเครื่องฆ่าเชื้อ !!");
-            builder.setPositiveButton("ปิด", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
-                }
-            });
-            builder.show();
-            //Toast.makeText(CssdSterile.this, "ยังไม่ได้เลือกเครื่องฆ่าเชื้อ!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Check Machine Active (Run)
-        if(!checkMachineActive()) {
-            Toast.makeText(CssdSterile.this, "ไม่สามารถเพิ่มได้ เนื่องจากเครื่องกำลังทำงาน!!", Toast.LENGTH_SHORT).show();
+        if(!chk_mac()){
             return;
         }
 
@@ -3361,37 +3388,9 @@ public class CssdSterile extends AppCompatActivity {
     // 1 : 1
     private boolean onImport(String Id, String SterileProgramID, String PackingMatID, String gQty,String usageCode){
 
-        // Check Sterile Process
-        if (userid == null){
-            Toast.makeText(CssdSterile.this, "ไม่มีผู้ทำรายการ!!", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+        Log.d("tog_SterileProgramID","SterileProgramID = "+ SterileProgramID );
 
-        // Check Sterile Process
-        if (STERILE_PROCESS_NUMBER_ACTIVE == 0){
-            Toast.makeText(CssdSterile.this, "ยังไม่ได้เลือกวิธีฆ่าเชื้อ!!", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        // Check Machine Active
-        if (STERILE_MACHINE_NUMBER_ACTIVE == 0){
-            AlertDialog.Builder builder = new AlertDialog.Builder(CssdSterile.this);
-            builder.setTitle(Cons.TITLE);
-            builder.setIcon(R.drawable.pose_favicon_2x);
-            builder.setMessage("ยังไม่ได้เลือกเครื่องฆ่าเชื้อ!!");
-            builder.setPositiveButton("ปิด", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
-                }
-            });
-            builder.show();
-            //Toast.makeText(CssdSterile.this, "ยังไม่ได้เลือกเครื่องฆ่าเชื้อ!", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        // Check Machine Active (Run)
-        if(!checkMachineActive()) {
-            Toast.makeText(CssdSterile.this, "ไม่สามารถเพิ่มได้ เนื่องจากเครื่องกำลังทำงาน!!", Toast.LENGTH_SHORT).show();
+        if(!chk_mac()){
             return false;
         }
 
@@ -4410,6 +4409,8 @@ public class CssdSterile extends AppCompatActivity {
 
                     startMachineActive();
 
+                    Update_S_id_IN_Baskettag(p_doc_no,3);
+
                 }else{
                     hideAllMachine();
                 }
@@ -5126,8 +5127,8 @@ public class CssdSterile extends AppCompatActivity {
                 }
 
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_create_sterile.php", data);
-                Log.d("BANK",data+"");
-                Log.d("BANK",result);
+                Log.d("tog_create_sterile",data+"");
+                Log.d("tog_create_sterile",result);
                 return result;
             }
 
@@ -5987,6 +5988,9 @@ public class CssdSterile extends AppCompatActivity {
                             displayWashDetail( getSterileProcessId() );
                             CheckUsageEms(getDocNo());
                             DIALOG_ACTIVE = true;
+
+                            Update_S_id_IN_Baskettag(c.getString("sql_update_wash_detail"),1);
+
                         }else{
                             Toast.makeText(CssdSterile.this, "ไม่พบรายการ !!", Toast.LENGTH_SHORT).show();
                         }
@@ -6023,9 +6027,9 @@ public class CssdSterile extends AppCompatActivity {
                     data.put("p_UsageCode", usagecode);
                 }
 
-                Log.d("OOOO","data :: "+data);
+                Log.d("tog_create_sterile","data :: "+data);
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_add_sterile_detail_json.php", data);
-                Log.d("OOOO","result :: "+result);
+                Log.d("tog_create_sterile","result :: "+result);
                 return result;
             }
 
@@ -6691,16 +6695,16 @@ public class CssdSterile extends AppCompatActivity {
                                     grid_wash_detail.setAdapter(adapter);
                                 }
                             }else if(DISPLAY_MODE == 2) {
-                                adapter = new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET,MAP_MODEL_IMPORT_WASH_DETAIL_SUB,3);
-                                basket_dialog_w_list.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR,MAP_MODEL_IMPORT_WASH_DETAIL_SUB,4));
-
-//                                if(ConfigProgram.pair_basket_2){
-//
-//                                }
+                                adapter = new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR,MAP_MODEL_IMPORT_WASH_DETAIL_SUB,4);
+                                basket_dialog_w_list.setAdapter(adapter);
 
                                 if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code.toLowerCase())){
                                     MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR = MAP_MODEL_IMPORT_WASH_DETAIL_SUB.get(basket_Code.toLowerCase());
+                                    Log.d("tog_cnt_basket_list","cnt_basket_list"+MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size());
+                                    cnt_basket_list.setText(" [ "+MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size()+" รายการ ]");
+                                    
                                     basket_dialog_list_basket.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR,5));
+                                    
                                     int xn=0;
                                     for(int ii=0;ii<MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size();ii++){
                                         if(MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(ii).getPrint_count()<=0){
@@ -6714,6 +6718,7 @@ public class CssdSterile extends AppCompatActivity {
                                 }
 
                                 if(p_SterileProcessID!=null){
+                                    adapter = new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET,MAP_MODEL_IMPORT_WASH_DETAIL_SUB,3);
                                     list_wash_detail.setAdapter(adapter);
                                 }
                             }else if(DISPLAY_MODE == 1) {
@@ -7614,36 +7619,43 @@ public class CssdSterile extends AppCompatActivity {
                     for(int i=0;i<rs.length();i++){
                         JSONObject c = rs.getJSONObject(i);
 
-                        if(c.getString("result").equals("A")&&c.getString("BasketType").equals("1")) {
+                        if(c.getString("result").equals("A")) {
 
-                            basket_Code = c.getString("BasketCode");
-                            basket_ID = c.getString("ID");
-                            PairBasketBox_basket_Code.setText(c.getString("BasketName"));
-
-                            basket_dialog_w_list.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR,MAP_MODEL_IMPORT_WASH_DETAIL_SUB,4));
-                            Log.d("ttest_pair","Key_map = "+MAP_MODEL_IMPORT_WASH_DETAIL_SUB);
-                            Log.d("ttest_pair","containsKey_map = "+MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code.toLowerCase()));
-                            Log.d("ttest_pair","basket_Code = "+basket_Code);
-
-//                            if(ConfigProgram.pair_basket_2){
-//
-//                            }
-
-                            if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code.toLowerCase())){
-                                MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR = MAP_MODEL_IMPORT_WASH_DETAIL_SUB.get(basket_Code.toLowerCase());
-                                basket_dialog_list_basket.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR,5));
-                                int xn=0;
-                                for(int ii=0;ii<MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size();ii++){
-                                    if(MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(ii).getPrint_count()<=0){
-                                        xn = xn+1;
-                                    }
-                                }
-                                set_num_btn_print_bk(xn);
+                            if(!c.getString("Mc_id").equals("-")){
+                                Toast.makeText(CssdSterile.this, "ไม่สามารถเลือกตะกร้าได้ Basket Tag นี้อยู่ในเครื่องฆ่าเชื้อ "+c.getString("MachineName"), Toast.LENGTH_LONG).show();
                             }else{
-                                set_num_btn_print_bk(0);
-                                basket_dialog_list_basket.setAdapter(null);
-                            }
+                                basket_Code = c.getString("BasketCode");
+                                basket_ID = c.getString("ID");
+                                PairBasketBox_basket_Code.setText(c.getString("BasketName"));
 
+                                Log.d("tog_cnt_basket_list","cnt_basket_list"+MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size());
+                                basket_dialog_w_list.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR,MAP_MODEL_IMPORT_WASH_DETAIL_SUB,4));
+                                Log.d("ttest_pair","Key_map = "+MAP_MODEL_IMPORT_WASH_DETAIL_SUB);
+                                Log.d("ttest_pair","containsKey_map = "+MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code.toLowerCase()));
+                                Log.d("ttest_pair","basket_Code = "+basket_Code);
+
+    //                            if(ConfigProgram.pair_basket_2){
+    //
+    //                            }
+
+                                if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code.toLowerCase())){
+                                    MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR = MAP_MODEL_IMPORT_WASH_DETAIL_SUB.get(basket_Code.toLowerCase());
+
+                                    cnt_basket_list.setText(" [ "+MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size()+" รายการ ]");
+                                    Log.d("tog_cnt_basket_list","cnt_basket_list"+MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size());
+                                    basket_dialog_list_basket.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR,5));
+                                    int xn=0;
+                                    for(int ii=0;ii<MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size();ii++){
+                                        if(MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(ii).getPrint_count()<=0){
+                                            xn = xn+1;
+                                        }
+                                    }
+                                    set_num_btn_print_bk(xn);
+                                }else{
+                                    set_num_btn_print_bk(0);
+                                    basket_dialog_list_basket.setAdapter(null);
+                                }
+                            }
 
                         }else{
                             Toast.makeText(CssdSterile.this, "ไม่พบตะกร้า !!", Toast.LENGTH_SHORT).show();
@@ -7663,7 +7675,7 @@ public class CssdSterile extends AppCompatActivity {
 
                 data.put("BasketCode", BasketCode);
 
-                String result = httpConnect.sendPostRequest(Url.URL + "cssd_select_basket.php", data);
+                String result = httpConnect.sendPostRequest(Url.URL + "sterile_basket/cssd_select_basket.php", data);
 
                 return result;
             }
@@ -7681,14 +7693,9 @@ public class CssdSterile extends AppCompatActivity {
     // -- Display Sterile Detail By Basket
     // =============================================================================================
 
-    public void importWashDetailToBasket(String Id, String PackingMatID,String usageCode){
+    public void importWashDetailToBasket(String usageCode){
 
-        if (userid == null){
-            Toast.makeText(CssdSterile.this, "ไม่มีผู้ทำรายการ!!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        onPairBasket(Id,PackingMatID,usageCode);
+        onPairBasket(usageCode);
 
     }
 
@@ -7703,7 +7710,17 @@ public class CssdSterile extends AppCompatActivity {
         return true;
     }
 
-    public void onPairBasket(final String p_data, final String PackingMatID, final String usageCode){
+    public void onPairBasket(final String usageCode){
+        onPairBasket(usageCode,1);
+    }
+
+    public void onPairBasket(final String item_data, final int isMode){
+        //mode
+        final int isUsageCode = 1;
+        final int isWashDetail_id = 2;
+        final int isItemCode = 3;
+
+
         final boolean mode = switch_mode.isChecked();
         final String basket = basket_ID;
 
@@ -7712,7 +7729,7 @@ public class CssdSterile extends AppCompatActivity {
             return;
         }
 
-        if(usageCode.equals("")){
+        if(item_data.equals("")){
             Toast.makeText(CssdSterile.this, "ไม่ได้เลือกรายการ !!", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -7755,16 +7772,24 @@ public class CssdSterile extends AppCompatActivity {
 
                 data.put("p_basket", p_basket);
 
-                data.put("p_data", p_data);
-
-                if(PackingMatID != null) {
-                    data.put("p_PackingMatID", PackingMatID);
-                }
-
                 data.put("p_is_status", mode ? "-1" : "1");
 
-                if(usageCode != null) {
-                    data.put("p_UsageCode", usageCode);
+                switch(isMode){
+                    case isUsageCode :
+                         if(data != null) {
+                            data.put("p_UsageCode", item_data);
+                         }
+                         break;
+                    case isWashDetail_id :
+                        if(data != null) {
+                            data.put("w_id", item_data);
+                        }
+                        break;
+                    case isItemCode :
+                        if(data != null) {
+                            data.put("p_data", item_data);
+                        }
+                        break;
                 }
 
                 Log.d("ttest_pair_basket","data = "+data);
@@ -7943,12 +7968,16 @@ public class CssdSterile extends AppCompatActivity {
                     }
 
                     // Update Print Status
-                    if(p_data != null && !p_data.equals(""))
+                    if(p_data != null && !p_data.equals("")){
                         updatePrintWashStatus(p_data);
+
+                    }else{
+                        displayWashDetail(getSterileProcessId());
+                    }
+
 
                     // -----------------------------------
 
-                    displayWashDetail(getSterileProcessId());
                 }
 
                 @Override
@@ -8026,6 +8055,28 @@ public class CssdSterile extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
+
+
+                final String basket = basket_ID;
+
+                if(!basket.equals("")){
+
+                    for(int i=0;i<MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.size();i++){
+
+                        Log.d("ttest_for_print","w_id"+MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.get(i).getI_id());
+                        if(MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.get(i).isCheck()){
+
+                            if(CheckProgramTypePairBasket(MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.get(i).getI_program_type())){
+                                importWashDetailToBasket(
+                                        MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.get(i).getI_UsageCode()
+                                );
+                            }
+                        }
+                    }
+
+                }
+
+                displayWashDetail(getSterileProcessId());
             }
 
             @Override
@@ -8074,7 +8125,7 @@ public class CssdSterile extends AppCompatActivity {
                         JSONObject c = rs.getJSONObject(i);
 
                         if (c.getString("result").equals("A")) {
-                            onPrintWash(print_w_id);
+                            onPrintWash(W_ID);
                         }else{
                             Toast.makeText(CssdSterile.this, "ไม่พบรหัสพนักงาน !!", Toast.LENGTH_SHORT).show();
                         }
@@ -8341,6 +8392,9 @@ public class CssdSterile extends AppCompatActivity {
     }
 
     public boolean chk_mac(){
+
+        Log.d("tog_SterileProgramID","STERILE_MACHINE_NUMBER_ACTIVE = "+ STERILE_MACHINE_NUMBER_ACTIVE );
+
         // Check Sterile Process
         if (userid == null){
             Toast.makeText(CssdSterile.this, "ไม่มีผู้ทำรายการ!!", Toast.LENGTH_SHORT).show();
@@ -8518,6 +8572,77 @@ public class CssdSterile extends AppCompatActivity {
     public int dp_to_px(int dp){
         final float scale = getResources().getDisplayMetrics().density;
         return (int) (dp * scale + 0.5f);
+    }
+
+    public String getSerialNumber() {
+        String serialNumber = "";
+        try {
+            Class<?> c = Class.forName("android.os.SystemProperties");
+            Method get = c.getMethod("get", String.class);
+            serialNumber = (String) get.invoke(c, "gsm.sn1");
+            if (serialNumber.equals(""))
+                serialNumber = (String) get.invoke(c, "ril.serialnumber");
+            if (serialNumber.equals(""))
+                serialNumber = (String) get.invoke(c, "ro.serialno");
+            if (serialNumber.equals(""))
+                serialNumber = (String) get.invoke(c, "sys.serialnumber");
+            if (serialNumber.equals(""))
+                serialNumber = Build.SERIAL;
+            if (serialNumber.equals(""))
+                serialNumber = null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            serialNumber = null;
+        }
+        Log.d("ttest_serialNumber","serialNumber--"+serialNumber);
+        return serialNumber;
+    }
+
+    public void  Update_S_id_IN_Baskettag(final String W_id, final int mode){
+        //mode 1=add s_id to basket , 2=remove s_id from basket , 3=set basket is empty
+
+        Log.d("tog_S_id_IN_BKT","W_id = "+W_id+" ---- mode ="+mode);
+
+        class UpdateBaskettag extends AsyncTask<String, Void, String> {
+
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+
+                data.put("W_id", W_id);
+                data.put("mode", mode+"");
+
+                String result = null;
+
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "sterile_basket/Update_Sterile_id_in_Baskettag.php", data);
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+                Log.d("tog_S_id_IN_BKT","data = "+data);
+                Log.d("tog_S_id_IN_BKT","result = "+result);
+                return result;
+            }
+
+            // =========================================================================================
+        }
+
+        UpdateBaskettag obj = new UpdateBaskettag();
+        obj.execute();
     }
 
 }

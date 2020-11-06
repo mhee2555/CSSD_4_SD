@@ -87,7 +87,9 @@
             android:layout_marginTop="23dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="50dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp">
 
             <LinearLayout
                 android:id="@+id/lin_list_washtag"
@@ -146,15 +148,32 @@
                     android:singleLine="true"
                     android:textSize="14dp" />
 
-                <TextView
-                    android:id="@+id/bastek_name"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/bastek_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/cnt_basket_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
 
                 <ListView
                     android:id="@+id/list_basket"
@@ -183,22 +202,21 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="120dp"
         android:layout_marginBottom="13dp"
-        android:layout_toEndOf="@+id/btn_import_new_item_stock"
+        android:layout_toEndOf="@id/btn_import_new_item_stock_to_basket"
         android:background="@drawable/ic_print_blue"
         android:paddingTop="15dp"
         android:text="0"
         android:textSize="12sp" />
 
     <Button
-        android:id="@+id/btn_import_new_item_stock"
+        android:id="@+id/btn_import_new_item_stock_to_basket"
         android:layout_width="121dp"
         android:layout_height="42dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="35dp"
         android:layout_marginBottom="28dp"
-        android:background="@drawable/bt_importnewint"
-        android:visibility="gone" />
+        android:background="@drawable/bt_importnewint" />
 
     <Button
         android:id="@+id/add_basket_Button"

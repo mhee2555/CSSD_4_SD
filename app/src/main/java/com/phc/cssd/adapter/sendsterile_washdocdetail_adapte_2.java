@@ -113,6 +113,10 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
 
         final ImageView throw_item_to_washtag = ( ImageView ) v.findViewById(R.id.throw_item_to_washtag);
 
+        if(!ConfigProgram.wash_tag){
+            throw_item_to_washtag.getLayoutParams().width = 0;
+        }
+
         throw_item_to_washtag.setVisibility(View.VISIBLE);
         throw_item_to_washtag.setOnClickListener(new View.OnClickListener() {
             @Override
