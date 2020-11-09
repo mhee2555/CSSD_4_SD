@@ -342,7 +342,7 @@ public class dialog_remark_sendsterile extends Activity {
                     if (RETURN_INCHARG.equals("2")){
                         CancelRemark(datacheck,text_remark.getText().toString(),DocNoSend,Usagecode,Itemname,DepID);
                     }else {
-                        Toast.makeText(dialog_remark_sendsterile.this, "ผู้ใช้ทั่วไปไม่สามารถยกเลิก Remark ได้ !!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(dialog_remark_sendsterile.this, "สิทธิ์ผู้ใช้งานไม่สามารถเข้าถึงส่วนนี้ได้ !!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }else if (resultCode == 1007){
@@ -361,7 +361,7 @@ public class dialog_remark_sendsterile extends Activity {
                             CheckStatusDocNo(DocNoSend);
                         }
                     }else {
-                        Toast.makeText(dialog_remark_sendsterile.this, "ผู้ใช้ทั่วไปไม่สามารถสร้าง Remark ได้ !!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(dialog_remark_sendsterile.this, "สิทธิ์ผู้ใช้งานไม่สามารถเข้าถึงส่วนนี้ได้ !!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

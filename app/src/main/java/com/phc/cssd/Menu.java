@@ -120,6 +120,13 @@ public class Menu extends AppCompatActivity {
         startActivityForResult(i,1111);
     }
 
+    private void openQR1(){
+        Intent i = new Intent(Menu.this, CssdQr.class);
+        i.putExtra("B_ID", B_ID);
+        i.putExtra("data", "Admin1");
+        startActivityForResult(i,1112);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -137,6 +144,9 @@ public class Menu extends AppCompatActivity {
                 intent.putExtra("RETURN_DATA", RETURN_DATA);
                 intent.putExtra("RETURN_VALUE", RETURN_VALUE);
                 startActivity(intent);
+            }
+            if (resultCode == 1112) {
+               gotoActivity(SettingActivity.class);
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -270,7 +280,8 @@ public class Menu extends AppCompatActivity {
         });
         imv_setting.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { gotoActivity(SettingActivity.class);
+            public void onClick(View v) {
+                openQR1();
             }
         });
     }
