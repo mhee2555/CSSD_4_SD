@@ -60,6 +60,14 @@ public class Payout_additemActivity extends Activity {
     Button bt_ischeck;
     TextView txt_docdetail;
 
+    private String IsAdmin_T = "";
+    private String IsInCharg = "";
+    private String IsUser = "";
+
+    private String IsAdmin_Log = "";
+    private String IsInCharg_Log = "";
+    private String IsUser_Log = "";
+
     boolean IsAdmin;
     boolean editByAdmin =false;
     String B_ID ;
@@ -80,6 +88,14 @@ public class Payout_additemActivity extends Activity {
             Po_DeptID = bd.getString("deptid");
             Po_date = bd.getString("date");
             IsAdmin = bd.getBoolean("IsAdmin");
+
+            IsAdmin_Log = bd.getString("IsAdmin_Log");
+            IsInCharg_Log = bd.getString("IsInCharg_Log");
+            IsUser_Log = bd.getString("IsUser_Log");
+            IsAdmin_T = bd.getString("IsAdmin");
+            IsInCharg = bd.getString("IsInCharg");
+            IsUser = bd.getString("IsUser");
+
             WithdrawMode = bd.getString("WithdrawMode");
             B_ID = bd.getString("B_ID");
             Log.d("ttestgetpayoutdocument", "WithdrawMode:"+WithdrawMode);
@@ -148,7 +164,7 @@ public class Payout_additemActivity extends Activity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         CancelPayout(DocNo);
-                                        lvpayoutdocdetail.setAdapter(new payout_additemdetailAdapter(Payout_additemActivity.this, emptyarray,IsAdmin,"0",devicemode));
+                                        lvpayoutdocdetail.setAdapter(new payout_additemdetailAdapter(Payout_additemActivity.this, emptyarray,IsAdmin_T,IsInCharg,IsUser,IsAdmin_Log,IsInCharg_Log,IsUser_Log,"0",devicemode));
 
                                     }
                                 });
@@ -314,7 +330,7 @@ public class Payout_additemActivity extends Activity {
                         resultspayoutdetail.add( newsData );
                     }
 
-                    lvpayoutdocdetail.setAdapter(new payout_additemdetailAdapter(Payout_additemActivity.this, resultspayoutdetail,IsAdmin,IsStatus,devicemode));
+                    lvpayoutdocdetail.setAdapter(new payout_additemdetailAdapter(Payout_additemActivity.this, resultspayoutdetail,IsAdmin_T,IsInCharg,IsUser,IsAdmin_Log,IsInCharg_Log,IsUser_Log,IsStatus,devicemode));
                     if(devicemode==PayoutActivity.IsL2){
                         fR.setVisibility(View.VISIBLE);
                         fL.setVisibility(View.GONE);
@@ -510,7 +526,7 @@ public class Payout_additemActivity extends Activity {
                         JSONObject c = setRs.getJSONObject(i);
                         ListPayoutDocument(xSel,Po_date+","+Po_DeptID);
                         resultspayoutdetail.clear();
-                        lvpayoutdocdetail.setAdapter(new payout_additemdetailAdapter(Payout_additemActivity.this, resultspayoutdetail,IsAdmin,"0",devicemode));
+                        lvpayoutdocdetail.setAdapter(new payout_additemdetailAdapter(Payout_additemActivity.this, resultspayoutdetail,IsAdmin_T,IsInCharg,IsUser,IsAdmin_Log,IsInCharg_Log,IsUser_Log,"0",devicemode));
                     }
 
                 } catch (JSONException e) {

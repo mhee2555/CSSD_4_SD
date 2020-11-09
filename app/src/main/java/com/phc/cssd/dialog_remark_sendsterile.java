@@ -346,7 +346,6 @@ public class dialog_remark_sendsterile extends Activity {
                     }
                 }
             }else if (resultCode == 1007){
-                Log.d("DKCSD",Usagecode);
                 if (RETURN_ADMIN.equals("1")){
                     if (DocNoSend.equals("")){
                         SaveRemarkDocNo(DocNoSend,Usagecode,Itemname);

@@ -124,32 +124,26 @@ public class CheckQR_Approve extends Activity {
 
     public void Checkuser(String qr_code,String docno,String xsel) {
         class Checkuser extends AsyncTask<String, Void, String> {
-            // ProgressDialog loading;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-
-                // loading = ProgressDialog.show(ApproveStockActivity.this, "Please Wait",null, true, true);
             }
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                // loading.dismiss();
                 try {
-
                     JSONObject jsonObj = new JSONObject(s);
                     rs = jsonObj.getJSONArray(TAG_RESULTS);
                     for(int i=0;i<rs.length();i++){
                         JSONObject c = rs.getJSONObject(i);
                         if(c.getString("check").equals("true")){
-                            //Toast.makeText(CheckQR_Approve.this, "บันทึกแล้ว", Toast.LENGTH_SHORT).show();
-                            check=c.getString("check");
+                            check = c.getString("check");
                             finish();
                         }else{
                             AlertDialog.Builder builder = new AlertDialog.Builder(CheckQR_Approve.this);
                             builder.setCancelable(true);
                             builder.setTitle("แจ้งเตือน !!");
-                            builder.setMessage("ไม่พบรหัสผู้ใช้");
+                            builder.setMessage("สิทธิ์ผู้ใช้งานไม่สามารถเข้าถึงส่วนนี้ได้ !!");
                             AlertDialog dialog = builder.create();
                             dialog.show();
                             startUserSession();
@@ -157,7 +151,6 @@ public class CheckQR_Approve extends Activity {
                         }
 
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -171,7 +164,8 @@ public class CheckQR_Approve extends Activity {
                 data.put("xsel",params[2]);
                 Log.d("xDocNo: ", data+"");
                 String result = httpConnect.sendPostRequest(getUrl.xUrl+"chk_qr/check_qr.php",data);
-                Log.d("result fully: ", result);
+                Log.d("KFHKCHKD", result);
+                Log.d("KFHKCHKD", data+"");
                 return  result;
             }
         }

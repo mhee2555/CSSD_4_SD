@@ -3940,7 +3940,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                             }
 
                         }else {
-                            Toast.makeText(SendSterile_MainActivity.this, "ไม่พบข้อมูล", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SendSterile_MainActivity.this, "สิทธิ์ผู้ใช้งานไม่สามารถเข้าถึงส่วนนี้ได้ !!", Toast.LENGTH_SHORT).show();
                             txt_usr_receive.setText("");
                             txt_usr_receive.requestFocus();
                         }
