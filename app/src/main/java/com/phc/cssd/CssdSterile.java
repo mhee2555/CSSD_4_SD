@@ -8444,7 +8444,7 @@ public class CssdSterile extends AppCompatActivity {
     private TextView txt_item_code;
     private TextView txt_item_name;
 
-    public void wash_detail_management_pack(String usagecode,String itemname) {
+    public void wash_detail_management_pack(final String usagecode, String itemname) {
 
         dialog_pack = new Dialog(CssdSterile.this, R.style.DialogCustomTheme);
 
@@ -8478,7 +8478,7 @@ public class CssdSterile extends AppCompatActivity {
                     return;
                 }
 //                Toast.makeText(CssdSterile.this, txt_item_code.getText().toString()+"-----"+txt_packingmat.getContentDescription().toString() , Toast.LENGTH_SHORT).show();
-                onUpdatePacking(txt_item_code.getText().toString(), txt_packingmat.getContentDescription().toString());
+                onUpdatePacking(usagecode, txt_packingmat.getContentDescription().toString());
 
             }
         });
@@ -8551,6 +8551,8 @@ public class CssdSterile extends AppCompatActivity {
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_update_wash_detail_packing.php", data);
 
                 System.out.println("URL = " + result);
+                Log.d("tog_packing","data = "+data);
+                Log.d("tog_packing","result = "+result);
 
                 return result;
             }
