@@ -42,7 +42,15 @@ public class Menu extends AppCompatActivity {
     private String B_ID = "1";
     private String B_Name = null;
     private String EmpCode = null;
-    private boolean IsAdmin = false;
+
+    private String IsAdmin = "";
+    private String IsInCharg = "";
+    private String IsUser = "";
+
+    private String IsAdmin_Log = "";
+    private String IsInCharg_Log = "";
+    private String IsUser_Log = "";
+
     private TextView txt_username;
     private TextView txt_wash_remain;
     private TextView txt_version;
@@ -82,9 +90,21 @@ public class Menu extends AppCompatActivity {
         B_ID = intent.getStringExtra("B_ID");
         B_Name = intent.getStringExtra("B_Name");
         EmpCode = intent.getStringExtra("EmpCode");
-        String admin = intent.getStringExtra("IsAdmin");
-        IsAdmin = admin != null && admin.equals("1") ;
-        img_edit_sterile.setVisibility(IsAdmin ? View.VISIBLE : View.GONE);
+        IsAdmin_Log = intent.getStringExtra("IsAdmin_Log");
+        IsInCharg_Log = intent.getStringExtra("IsInCharg_Log");
+        IsUser_Log = intent.getStringExtra("IsUser_Log");
+        IsAdmin = intent.getStringExtra("IsAdmin");
+        IsInCharg = intent.getStringExtra("IsInCharg");
+        IsUser = intent.getStringExtra("IsUser");
+        if (IsUser.equals("1") && IsUser_Log.equals("1")) {
+            img_edit_sterile.setVisibility(View.VISIBLE);
+        } else if (IsInCharg.equals("1") && IsInCharg_Log.equals("1")) {
+            img_edit_sterile.setVisibility(View.VISIBLE);
+        } else if (IsAdmin_Log.equals("1") && IsAdmin.equals("1")) {
+            img_edit_sterile.setVisibility(View.VISIBLE);
+        } else {
+            img_edit_sterile.setVisibility(View.GONE);
+        }
         txt_username.setText("ผู้ใช้งาน : " + user_name );
         txt_b.setText("ตึก : "+B_Name);
         if (!EmpCode.equals("EM00000")){
@@ -120,6 +140,13 @@ public class Menu extends AppCompatActivity {
         startActivityForResult(i,1111);
     }
 
+    private void openQR1(){
+        Intent i = new Intent(Menu.this, CssdQr.class);
+        i.putExtra("B_ID", B_ID);
+        i.putExtra("data", "Admin1");
+        startActivityForResult(i,1112);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -137,6 +164,9 @@ public class Menu extends AppCompatActivity {
                 intent.putExtra("RETURN_DATA", RETURN_DATA);
                 intent.putExtra("RETURN_VALUE", RETURN_VALUE);
                 startActivity(intent);
+            }
+            if (resultCode == 1112) {
+               gotoActivity(SettingActivity.class);
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -270,7 +300,8 @@ public class Menu extends AppCompatActivity {
         });
         imv_setting.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { gotoActivity(SettingActivity.class);
+            public void onClick(View v) {
+                openQR1();
             }
         });
     }
@@ -284,6 +315,11 @@ public class Menu extends AppCompatActivity {
         intent.putExtra("userid", userid);
         intent.putExtra("user_name", user_name);
         intent.putExtra("IsAdmin", IsAdmin);
+        intent.putExtra("IsInCharg", IsInCharg);
+        intent.putExtra("IsUser", IsUser);
+        intent.putExtra("IsAdmin_Log", IsAdmin_Log);
+        intent.putExtra("IsInCharg_Log", IsInCharg_Log);
+        intent.putExtra("IsUser_Log", IsUser_Log);
         intent.putExtra("B_ID", B_ID);
         intent.putExtra("EmpCode", EmpCode);
         startActivity(intent);

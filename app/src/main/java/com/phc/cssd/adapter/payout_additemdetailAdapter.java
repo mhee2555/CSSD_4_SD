@@ -47,17 +47,35 @@ public class payout_additemdetailAdapter extends ArrayAdapter {
     ListView Lv2;
     String Usage_code;
     int no;
-    boolean IsAdmin;
+    String IsAdmin;
+    String IsInCharg;
+    String IsUser;
+    String IsAdmin_Log;
+    String IsInCharg_Log;
+    String IsUser_Log;
     String DocNoStatus;
     int devicemode;
 
-    public payout_additemdetailAdapter(Activity aActivity, ArrayList<Response_Aux> listData,boolean IsAdmin,String DocNoStatus,int devicemode) {
+    public payout_additemdetailAdapter(Activity aActivity,
+                                       ArrayList<Response_Aux> listData,
+                                       String IsAdmin,
+                                       String IsInCharg,
+                                       String IsUser,
+                                       String IsAdmin_Log,
+                                       String IsInCharg_Log,
+                                       String IsUser_Log,
+                                       String DocNoStatus,
+                                       int devicemode) {
         super(aActivity, 0, listData);
         this.context = aActivity;
         this.listData = listData;
         this.Lv2 = Lv2;
-
         this.IsAdmin = IsAdmin;
+        this.IsInCharg = IsInCharg;
+        this.IsUser = IsUser;
+        this.IsAdmin_Log = IsAdmin_Log;
+        this.IsInCharg_Log = IsInCharg_Log;
+        this.IsUser_Log = IsUser_Log;
         this.DocNoStatus = DocNoStatus;
         this.Usage_code = Usage_code;
         this.devicemode =devicemode;
@@ -92,12 +110,20 @@ public class payout_additemdetailAdapter extends ArrayAdapter {
         etxt_num_po.setText( listData.get(position).getFields3() );
         String ss = listData.get(position).getFields1();
         txt_itemcode_po.setText(ss);
-
+        Log.d("VMFVDLE", IsAdmin);
+        Log.d("VMFVDLE", IsInCharg);
+        Log.d("VMFVDLE", IsUser);
+        Log.d("VMFVDLE", IsAdmin_Log);
+        Log.d("VMFVDLE", IsInCharg_Log);
+        Log.d("VMFVDLE", IsUser_Log);
         if(listData.get(position).getFields8().equals("1")){
-            Log.d("PAadditem",IsAdmin+"---"+listData.get(position).getFields7());
-            if(IsAdmin && DocNoStatus.equals("1")){
+            if (IsUser.equals("1") && IsUser_Log.equals("1")) {
                 bt_del_po.setVisibility(View.VISIBLE);
-            }else{
+            } else if (IsInCharg.equals("1") && IsInCharg_Log.equals("1")) {
+                bt_del_po.setVisibility(View.VISIBLE);
+            } else if (IsAdmin.equals("1") && IsAdmin_Log.equals("1")) {
+                bt_del_po.setVisibility(View.VISIBLE);
+            } else {
                 bt_del_po.setVisibility(View.INVISIBLE);
                 bt_special.setVisibility(View.GONE);
                 etxt_num_po.setEnabled(false);
@@ -158,7 +184,7 @@ public class payout_additemdetailAdapter extends ArrayAdapter {
                             public void onClick(DialogInterface dialog, int which) {
                                 Delete_PayoutDetail(listData.get(position).getFields5(),listData.get(position).getFields6());
                                 ( (Payout_additemActivity)context ).ListPayoutDetail(listData.get(position).getFields6());
-                                if(listData.get(position).getFields8().equals("1") && IsAdmin){
+                                if(listData.get(position).getFields8().equals("1") && IsAdmin.equals("1")){
                                     ( (Payout_additemActivity)context ).addEvenlog("PA",listData.get(position).getFields5()+"","Delete [ "+listData.get(position).getFields3()+" ] "+listData.get(position).getFields7()+" to "+listData.get(position).getFields6());
                                 }
 

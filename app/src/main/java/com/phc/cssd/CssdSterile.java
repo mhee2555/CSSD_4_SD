@@ -1910,24 +1910,19 @@ public class CssdSterile extends AppCompatActivity {
                 ProgressDialog dialogProgress = new ProgressDialog(CssdSterile.this);
                 dialogProgress.setMessage(Cons.WAIT_FOR_PROCESS);
                 dialogProgress.show();
-
-
                 basket_Code = "";
                 basket_ID = "";
-
                 //ปิดเลือกโปรแกรมก่อน
 //                if (STERILE_PROCESS_NUMBER_ACTIVE == 0){
 //                    Toast.makeText(CssdSterile.this, "ยังไม่ได้เลือกวิธีฆ่าเชื้อ!!", Toast.LENGTH_SHORT).show();
 //                    dialogProgress.dismiss();
 //                    return;
 //                }
-
 //                basket_dialog_w_list.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR,MAP_MODEL_IMPORT_WASH_DETAIL_SUB,4));
                 //ปิดเลือกโปรแกรมก่อน จบ
 //                displayWashDetail("null");
                 displayWashDetail(getSterileProcessId());
                 dialog_qr.show();
-
                 dialogProgress.dismiss();
                 if("TL01193N40267".equals(getSerialNumber())||"L203P85U01743".equals(getSerialNumber())){
                     Checkuser_packer("em00009",dialog_qr,dialog_item_stock_detail_basket);
@@ -8198,7 +8193,7 @@ public class CssdSterile extends AppCompatActivity {
                             dialog.show();
                         }else{
                             packer_id = "";
-                            Toast.makeText(CssdSterile.this, "ไม่พบรหัสพนักงาน !!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CssdSterile.this, "สิทธิ์ผู้ใช้งานไม่สามารถเข้าถึงส่วนนี้ได้ !!", Toast.LENGTH_SHORT).show();
                         }
 
 

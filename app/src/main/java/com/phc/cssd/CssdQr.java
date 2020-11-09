@@ -119,11 +119,23 @@ public class CssdQr extends Activity {
                                     setResult(1111, intent);
                                     finish();
                                 }else {
-                                    Toast.makeText(CssdQr.this, "บุคคลทั่วไปไม่มีสิทธิ์เข้าถึงได้ !!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(CssdQr.this, "สิทธิ์ผู้ใช้งานไม่สามารถเข้าถึงส่วนนี้ได้ !!", Toast.LENGTH_SHORT).show();
                                     txt_input.setText("");
                                     txt_input.requestFocus();
                                 }
-                            }else {
+                            }else if (data.equals("Admin1")){
+                                if (c.getString("data").equals("1")){
+                                    Intent intent = new Intent();
+                                    intent.putExtra("RETURN_DATA", c.getString("data"));
+                                    intent.putExtra("RETURN_VALUE", c.getString("value"));
+                                    setResult(1112, intent);
+                                    finish();
+                                }else {
+                                    Toast.makeText(CssdQr.this, "สิทธิ์ผู้ใช้งานไม่สามารถเข้าถึงส่วนนี้ได้ !!", Toast.LENGTH_SHORT).show();
+                                    txt_input.setText("");
+                                    txt_input.requestFocus();
+                                }
+                            } else {
                                 Intent intent = new Intent();
                                 intent.putExtra("RETURN_DATA", c.getString("data"));
                                 intent.putExtra("RETURN_VALUE", c.getString("value"));

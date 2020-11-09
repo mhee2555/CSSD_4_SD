@@ -163,6 +163,501 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
         ch15_2 = (CheckBox) findViewById(R.id.ch15_2);
         ch15_3 = (CheckBox) findViewById(R.id.ch15_3);
 
+        ch1_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch1_1.isChecked()){
+                    setbooleanUser("4","1");
+                }else{
+                    setbooleanUser("4","0");
+                }
+            }
+        });
+
+        ch2_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch2_1.isChecked()){
+                    setbooleanUser("5","1");
+                }else{
+                    setbooleanUser("5","0");
+                }
+            }
+        });
+
+        ch3_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch3_1.isChecked()){
+                    setbooleanUser("6","1");
+                }else{
+                    setbooleanUser("6","0");
+                }
+            }
+        });
+
+        ch4_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch4_1.isChecked()){
+                    setbooleanUser("7","1");
+                }else{
+                    setbooleanUser("7","0");
+                }
+            }
+        });
+
+        ch5_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch5_1.isChecked()){
+                    setbooleanUser("8","1");
+                }else{
+                    setbooleanUser("8","0");
+                }
+            }
+        });
+
+        ch6_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch6_1.isChecked()){
+                    setbooleanUser("9","1");
+                }else{
+                    setbooleanUser("9","0");
+                }
+            }
+        });
+
+        ch7_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch7_1.isChecked()){
+                    setbooleanUser("10","1");
+                }else{
+                    setbooleanUser("10","0");
+                }
+            }
+        });
+
+        ch8_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch8_1.isChecked()){
+                    setbooleanUser("11","1");
+                }else{
+                    setbooleanUser("11","0");
+                }
+            }
+        });
+
+        ch9_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch9_1.isChecked()){
+                    setbooleanUser("12","1");
+                }else{
+                    setbooleanUser("12","0");
+                }
+            }
+        });
+
+        ch10_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch10_1.isChecked()){
+                    setbooleanUser("13","1");
+                }else{
+                    setbooleanUser("13","0");
+                }
+            }
+        });
+
+        ch11_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch11_1.isChecked()){
+                    setbooleanUser("14","1");
+                }else{
+                    setbooleanUser("14","0");
+                }
+            }
+        });
+
+        ch12_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch12_1.isChecked()){
+                    setbooleanUser("15","1");
+                }else{
+                    setbooleanUser("15","0");
+                }
+            }
+        });
+
+        ch13_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch13_1.isChecked()){
+                    setbooleanUser("16","1");
+                }else{
+                    setbooleanUser("16","0");
+                }
+            }
+        });
+
+        ch14_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch14_1.isChecked()){
+                    setbooleanUser("17","1");
+                }else{
+                    setbooleanUser("17","0");
+                }
+            }
+        });
+
+        ch15_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch15_1.isChecked()){
+                    setbooleanUser("18","1");
+                }else{
+                    setbooleanUser("18","0");
+                }
+            }
+        });
+
+        ch1_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch1_2.isChecked()){
+                    setbooleanInCharg("4","1");
+                }else{
+                    setbooleanInCharg("4","0");
+                }
+            }
+        });
+
+        ch2_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch2_2.isChecked()){
+                    setbooleanInCharg("5","1");
+                }else{
+                    setbooleanInCharg("5","0");
+                }
+            }
+        });
+
+        ch3_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch3_2.isChecked()){
+                    setbooleanInCharg("6","1");
+                }else{
+                    setbooleanInCharg("6","0");
+                }
+            }
+        });
+
+        ch4_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch4_2.isChecked()){
+                    setbooleanInCharg("7","1");
+                }else{
+                    setbooleanInCharg("7","0");
+                }
+            }
+        });
+
+        ch5_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch5_2.isChecked()){
+                    setbooleanInCharg("8","1");
+                }else{
+                    setbooleanInCharg("8","0");
+                }
+            }
+        });
+
+        ch6_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch6_2.isChecked()){
+                    setbooleanInCharg("9","1");
+                }else{
+                    setbooleanInCharg("9","0");
+                }
+            }
+        });
+
+        ch7_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch7_2.isChecked()){
+                    setbooleanInCharg("10","1");
+                }else{
+                    setbooleanInCharg("10","0");
+                }
+            }
+        });
+
+        ch8_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch8_2.isChecked()){
+                    setbooleanInCharg("11","1");
+                }else{
+                    setbooleanInCharg("11","0");
+                }
+            }
+        });
+
+        ch9_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch9_2.isChecked()){
+                    setbooleanInCharg("12","1");
+                }else{
+                    setbooleanInCharg("12","0");
+                }
+            }
+        });
+
+        ch10_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch10_2.isChecked()){
+                    setbooleanInCharg("13","1");
+                }else{
+                    setbooleanInCharg("13","0");
+                }
+            }
+        });
+
+        ch11_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch11_2.isChecked()){
+                    setbooleanInCharg("14","1");
+                }else{
+                    setbooleanInCharg("14","0");
+                }
+            }
+        });
+
+        ch12_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch12_2.isChecked()){
+                    setbooleanInCharg("15","1");
+                }else{
+                    setbooleanInCharg("15","0");
+                }
+            }
+        });
+
+        ch13_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch13_2.isChecked()){
+                    setbooleanInCharg("16","1");
+                }else{
+                    setbooleanInCharg("16","0");
+                }
+            }
+        });
+
+        ch14_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch14_2.isChecked()){
+                    setbooleanInCharg("17","1");
+                }else{
+                    setbooleanInCharg("17","0");
+                }
+            }
+        });
+
+        ch15_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch15_2.isChecked()){
+                    setbooleanInCharg("18","1");
+                }else{
+                    setbooleanInCharg("18","0");
+                }
+            }
+        });
+
+        ch1_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch1_3.isChecked()){
+                    setbooleanAdmin("4","1");
+                }else{
+                    setbooleanAdmin("4","0");
+                }
+            }
+        });
+
+        ch2_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch2_3.isChecked()){
+                    setbooleanAdmin("5","1");
+                }else{
+                    setbooleanAdmin("5","0");
+                }
+            }
+        });
+
+        ch3_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch3_3.isChecked()){
+                    setbooleanAdmin("6","1");
+                }else{
+                    setbooleanAdmin("6","0");
+                }
+            }
+        });
+
+        ch4_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch4_3.isChecked()){
+                    setbooleanAdmin("7","1");
+                }else{
+                    setbooleanAdmin("7","0");
+                }
+            }
+        });
+
+        ch5_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch5_3.isChecked()){
+                    setbooleanAdmin("8","1");
+                }else{
+                    setbooleanAdmin("8","0");
+                }
+            }
+        });
+
+        ch6_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch6_3.isChecked()){
+                    setbooleanAdmin("9","1");
+                }else{
+                    setbooleanAdmin("9","0");
+                }
+            }
+        });
+
+        ch7_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch7_3.isChecked()){
+                    setbooleanAdmin("10","1");
+                }else{
+                    setbooleanAdmin("10","0");
+                }
+            }
+        });
+
+        ch8_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch8_3.isChecked()){
+                    setbooleanAdmin("11","1");
+                }else{
+                    setbooleanAdmin("11","0");
+                }
+            }
+        });
+
+        ch9_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch9_3.isChecked()){
+                    setbooleanAdmin("12","1");
+                }else{
+                    setbooleanAdmin("12","0");
+                }
+            }
+        });
+
+        ch10_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch10_3.isChecked()){
+                    setbooleanAdmin("13","1");
+                }else{
+                    setbooleanAdmin("13","0");
+                }
+            }
+        });
+
+        ch11_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch11_3.isChecked()){
+                    setbooleanAdmin("14","1");
+                }else{
+                    setbooleanAdmin("14","0");
+                }
+            }
+        });
+
+        ch12_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch12_3.isChecked()){
+                    setbooleanAdmin("15","1");
+                }else{
+                    setbooleanAdmin("15","0");
+                }
+            }
+        });
+
+        ch13_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch13_3.isChecked()){
+                    setbooleanAdmin("16","1");
+                }else{
+                    setbooleanAdmin("16","0");
+                }
+            }
+        });
+
+        ch14_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch14_3.isChecked()){
+                    setbooleanAdmin("17","1");
+                }else{
+                    setbooleanAdmin("17","0");
+                }
+            }
+        });
+
+        ch15_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch15_3.isChecked()){
+                    setbooleanAdmin("18","1");
+                }else{
+                    setbooleanAdmin("18","0");
+                }
+            }
+        });
+
         imageBack = (ImageView) findViewById(R.id.imageBack);
         Li1 = (LinearLayout) findViewById(R.id.Li1);
         Li2 = (LinearLayout) findViewById(R.id.Li2);
@@ -420,6 +915,177 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
             }
         }
         setboolean obj = new setboolean();
+        obj.execute();
+    }
+
+    public void setbooleanUser(final String ID,final String Set){
+        class setbooleanUser extends AsyncTask<String, Void, String> {
+            private ProgressDialog dialog = new ProgressDialog(SystemSettingToolsActivity.this);
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                this.dialog.setMessage(Cons.WAIT_FOR_PROCESS);
+                this.dialog.show();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++){
+                        JSONObject c = rs.getJSONObject(i);
+                        if(c.getString("finish").equals("true")){
+                            Toast.makeText(SystemSettingToolsActivity.this, "บันทึกสำเร็จ", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(SystemSettingToolsActivity.this, "โหลดข้อมูลไม่สำเร็จ", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }finally {
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            }
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("ID", ID);
+                data.put("Set", Set);
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "setting_setsetting2.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+        }
+        setbooleanUser obj = new setbooleanUser();
+        obj.execute();
+    }
+
+    public void setbooleanInCharg(final String ID,final String Set){
+        class setbooleanUser extends AsyncTask<String, Void, String> {
+            private ProgressDialog dialog = new ProgressDialog(SystemSettingToolsActivity.this);
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                this.dialog.setMessage(Cons.WAIT_FOR_PROCESS);
+                this.dialog.show();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++){
+                        JSONObject c = rs.getJSONObject(i);
+                        if(c.getString("finish").equals("true")){
+                            Toast.makeText(SystemSettingToolsActivity.this, "บันทึกสำเร็จ", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(SystemSettingToolsActivity.this, "โหลดข้อมูลไม่สำเร็จ", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }finally {
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            }
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("ID", ID);
+                data.put("Set", Set);
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "setting_setsetting3.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+        }
+        setbooleanUser obj = new setbooleanUser();
+        obj.execute();
+    }
+
+    public void setbooleanAdmin(final String ID,final String Set){
+        class setbooleanUser extends AsyncTask<String, Void, String> {
+            private ProgressDialog dialog = new ProgressDialog(SystemSettingToolsActivity.this);
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                this.dialog.setMessage(Cons.WAIT_FOR_PROCESS);
+                this.dialog.show();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++){
+                        JSONObject c = rs.getJSONObject(i);
+                        if(c.getString("finish").equals("true")){
+                            Toast.makeText(SystemSettingToolsActivity.this, "บันทึกสำเร็จ", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(SystemSettingToolsActivity.this, "โหลดข้อมูลไม่สำเร็จ", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }finally {
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            }
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("ID", ID);
+                data.put("Set", Set);
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "setting_setsetting4.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+        }
+        setbooleanUser obj = new setbooleanUser();
         obj.execute();
     }
 

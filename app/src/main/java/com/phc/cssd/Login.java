@@ -231,6 +231,11 @@ public class Login extends AppCompatActivity {
                             intent.putExtra("user_name", c.getString("username"));
                             intent.putExtra("Lang", c.getString("Lang"));
                             intent.putExtra("IsAdmin", c.getString("IsAdmin"));
+                            intent.putExtra("IsInCharg", c.getString("IsInCharg"));
+                            intent.putExtra("IsUser", c.getString("IsUser"));
+                            intent.putExtra("IsAdmin_Log", c.getString("IsAdmin_Log"));
+                            intent.putExtra("IsInCharg_Log", c.getString("IsInCharg_Log"));
+                            intent.putExtra("IsUser_Log", c.getString("IsUser_Log"));
                             intent.putExtra("EmpCode",c.getString("EmpCode"));
                             intent.putExtra("B_ID", "1");
                             intent.putExtra("B_Name", building_ar_text.get(spinner_building.getSelectedItemPosition()));

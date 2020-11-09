@@ -34,7 +34,6 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.phc.core.connect.HTTPConnect;
 import com.phc.cssd.adapter.PayoutDetailAdapter;
 import com.phc.cssd.adapter.PayoutNotfullyAdapter;
@@ -44,11 +43,9 @@ import com.phc.cssd.url.getUrl;
 import com.phc.cssd.viewbinder.CustomExpandableListAdapter;
 import com.phc.cssd.viewbinder.ExpandableListDataPump;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -120,6 +117,15 @@ public class PayoutActivity extends AppCompatActivity {
     TextView textViewDate1;
 
     public boolean IsAdmin = false;
+
+    private String IsAdmin_T = "";
+    private String IsInCharg = "";
+    private String IsUser = "";
+
+    private String IsAdmin_Log = "";
+    private String IsInCharg_Log = "";
+    private String IsUser_Log = "";
+
     boolean isnewDoc = false;
     String B_ID;
     String B_IDTT;
@@ -153,9 +159,11 @@ public class PayoutActivity extends AppCompatActivity {
         int width = displayMetrics.widthPixels;
         if(width>720){//T2lite
             setContentView(R.layout.activity_payout);
+            byIntent();
             devicemode = IsT2;
         }else{//L2
             setContentView(R.layout.activity_payout_l2);
+            byIntent();
             devicemode = IsL2;
             Button logout = (Button)  findViewById(R.id.logout);
             Button menu = (Button)  findViewById(R.id.menu);
@@ -626,11 +634,14 @@ public class PayoutActivity extends AppCompatActivity {
         bt_additem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Log.d("ttestgetpayoutdocument", "WithdrawModeM:"+WithdrawMode);
                 Intent intent = new Intent(PayoutActivity.this,Payout_additemActivity.class);
                 intent.putExtra("userid",userid);
-                intent.putExtra("IsAdmin",IsAdmin);
+                intent.putExtra("IsAdmin", IsAdmin_T);
+                intent.putExtra("IsInCharg", IsInCharg);
+                intent.putExtra("IsUser", IsUser);
+                intent.putExtra("IsAdmin_Log", IsAdmin_Log);
+                intent.putExtra("IsInCharg_Log", IsInCharg_Log);
+                intent.putExtra("IsUser_Log", IsUser_Log);
                 intent.putExtra("WithdrawMode",WithdrawMode+"");
                 intent.putExtra("deptid",resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields1());
                 intent.putExtra("date",gDate.getText());
@@ -778,6 +789,20 @@ public class PayoutActivity extends AppCompatActivity {
         EmpCode = intent.getStringExtra("EmpCode");
         userid = intent.getStringExtra("userid");
         user_name = intent.getStringExtra("user_name");
+
+        IsAdmin_Log = intent.getStringExtra("IsAdmin_Log");
+        IsInCharg_Log = intent.getStringExtra("IsInCharg_Log");
+        IsUser_Log = intent.getStringExtra("IsUser_Log");
+        IsAdmin_T = intent.getStringExtra("IsAdmin");
+        IsInCharg = intent.getStringExtra("IsInCharg");
+        IsUser = intent.getStringExtra("IsUser");
+
+        Log.d("VMFVDLE", IsAdmin_T);
+        Log.d("VMFVDLE", IsInCharg);
+        Log.d("VMFVDLE", IsUser);
+        Log.d("VMFVDLE", IsAdmin_Log);
+        Log.d("VMFVDLE", IsInCharg_Log);
+        Log.d("VMFVDLE", IsUser_Log);
     }
 
     public boolean onTouchEvent(MotionEvent touchEvent){

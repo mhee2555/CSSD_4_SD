@@ -27,7 +27,7 @@ public class CssdQrUser extends Activity {
     private JSONArray rs = null;
     private HTTPConnect httpConnect = new HTTPConnect();
 
-    private String data = "";
+    private String data_text = "";
     private String itemcode = "";
     private String itemdetail = "";
     private String RowID = "";
@@ -54,7 +54,7 @@ public class CssdQrUser extends Activity {
     private void byIntent(){
         // Argument
         Intent intent = getIntent();
-        data = intent.getStringExtra("data");
+        data_text = intent.getStringExtra("data");
         itemcode = intent.getStringExtra("itemcode");
         itemdetail = intent.getStringExtra("itemdetail");
         RowID = intent.getStringExtra("RowID");
@@ -107,25 +107,27 @@ public class CssdQrUser extends Activity {
                     for(int i=0;i<rs.length();i++){
                         JSONObject c = rs.getJSONObject(i);
                         if(c.getString("result").equals("A")) {
-                            if (data.equals("admin")) {
+                            if (data_text.equals("admin")) {
                                 Intent intent = new Intent();
                                 intent.putExtra("RETURN_DATA", c.getString("data"));
                                 intent.putExtra("RETURN_VALUE", c.getString("value"));
                                 intent.putExtra("RETURN_ADMIN", c.getString("admin"));
                                 intent.putExtra("RETURN_INCHARG", c.getString("IsInCharg"));
+                                intent.putExtra("RETURN_USER", c.getString("IsUser"));
                                 intent.putExtra("RETURN_ITEMCODE", itemcode);
                                 intent.putExtra("RETURN_ITEMDETAIL", itemdetail);
                                 intent.putExtra("RETURN_ROWID", RowID);
                                 intent.putExtra("RETURN_TYPE", type);
                                 setResult(1006, intent);
                                 finish();
-                            } else if (data.equals("admin_save")){
+                            } else if (data_text.equals("admin_save")){
                                 Intent intent = new Intent();
                                 intent.putExtra("RETURN_DATA", c.getString("data"));
                                 intent.putExtra("RETURN_VALUE", c.getString("value"));
                                 intent.putExtra("RETURN_ADMIN", c.getString("admin"));
                                 intent.putExtra("RETURN_EMCODE", c.getString("EmpCode"));
                                 intent.putExtra("RETURN_INCHARG", c.getString("IsInCharg"));
+                                intent.putExtra("RETURN_USER", c.getString("IsUser"));
                                 intent.putExtra("RETURN_ITEMCODE", itemcode);
                                 intent.putExtra("RETURN_ITEMDETAIL", itemdetail);
                                 intent.putExtra("RETURN_ROWID", RowID);
@@ -136,11 +138,13 @@ public class CssdQrUser extends Activity {
                                 Intent intent = new Intent();
                                 intent.putExtra("RETURN_DATA", c.getString("data"));
                                 intent.putExtra("RETURN_VALUE", c.getString("value"));
-                                setResult(Master.getResult(data), intent);
+                                setResult(Master.getResult(data_text), intent);
                                 finish();
                             }
                         }else{
-                            Toast.makeText(CssdQrUser.this, "ไม่พบผู้ใช้งานนี้ !!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CssdQrUser.this, "สิทธิ์ผู้ใช้งานไม่สามารถเข้าถึงส่วนนี้ได้ !!", Toast.LENGTH_SHORT).show();
+                            txt_user_code.setText("");
+                            txt_user_code.requestFocus();
                         }
                     }
                 } catch (JSONException e) {
@@ -152,8 +156,10 @@ public class CssdQrUser extends Activity {
                 HashMap<String, String> data = new HashMap<String,String>();
                 data.put("p_user_code", user_code);
                 if (data != null){
-                    data.put("data", String.valueOf(data));
+                    data.put("data", String.valueOf(data)+data_text);
                 }
+                data.put("data_text",data_text);
+                data.put("type",type);
                 String result = null;
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_check_user.php", data);
