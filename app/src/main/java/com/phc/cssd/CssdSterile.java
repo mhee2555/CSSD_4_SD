@@ -1924,9 +1924,9 @@ public class CssdSterile extends AppCompatActivity {
                 displayWashDetail(getSterileProcessId());
                 dialog_qr.show();
                 dialogProgress.dismiss();
-                if("TL01193N40267".equals(getSerialNumber())||"L203P85U01743".equals(getSerialNumber())){
-                    Checkuser_packer("em00009",dialog_qr,dialog_item_stock_detail_basket);
-                }
+//                if("TL01193N40267".equals(getSerialNumber())||"L203P85U01743".equals(getSerialNumber())){
+//                    Checkuser_packer("em00009",dialog_qr,dialog_item_stock_detail_basket);
+//                }
             }
         });
 
@@ -8210,7 +8210,7 @@ public class CssdSterile extends AppCompatActivity {
                 HashMap<String, String> data = new HashMap<String,String>();
                 data.put("p_user_code",params[0]);
                 String result = httpConnect.sendPostRequest(getUrl.xUrl+"cssd_check_user.php",data);
-                Log.d("result fully: ", result);
+                Log.d("tog_Checkuser", result);
                 return  result;
             }
         }
@@ -8439,7 +8439,7 @@ public class CssdSterile extends AppCompatActivity {
     private TextView txt_item_code;
     private TextView txt_item_name;
 
-    public void wash_detail_management_pack(String usagecode,String itemname) {
+    public void wash_detail_management_pack(final String usagecode, String itemname) {
 
         dialog_pack = new Dialog(CssdSterile.this, R.style.DialogCustomTheme);
 
@@ -8473,7 +8473,7 @@ public class CssdSterile extends AppCompatActivity {
                     return;
                 }
 //                Toast.makeText(CssdSterile.this, txt_item_code.getText().toString()+"-----"+txt_packingmat.getContentDescription().toString() , Toast.LENGTH_SHORT).show();
-                onUpdatePacking(txt_item_code.getText().toString(), txt_packingmat.getContentDescription().toString());
+                onUpdatePacking(usagecode, txt_packingmat.getContentDescription().toString());
 
             }
         });
@@ -8546,6 +8546,8 @@ public class CssdSterile extends AppCompatActivity {
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_update_wash_detail_packing.php", data);
 
                 System.out.println("URL = " + result);
+                Log.d("tog_packing","data = "+data);
+                Log.d("tog_packing","result = "+result);
 
                 return result;
             }
