@@ -49,6 +49,7 @@ import com.phc.cssd.adapter.sendsterile_washdocdetail_adapte_2;
 import com.phc.cssd.adapter.sendsterile_washdocdetail_adapter;
 import com.phc.cssd.config.ConfigProgram;
 import com.phc.cssd.data.Master;
+import com.phc.cssd.function.ScanCode;
 import com.phc.cssd.model.BasketTag;
 import com.phc.cssd.properties.Response_Aux;
 import com.phc.cssd.url.Url;
@@ -70,30 +71,30 @@ import java.util.Locale;
 
 public class SendSterile_MainActivity extends AppCompatActivity {
 
-    private int Delete_multiple_items = ConfigProgram.Delete_multiple_items;
+    private final int Delete_multiple_items = ConfigProgram.Delete_multiple_items;
     HashMap<String, String> DelAlldata = new HashMap<String,String>();
     getUrl iFt = new getUrl();
     String user_name = "";
     String userid = "";
     HTTPConnect ruc = new HTTPConnect();
     xControl xCtl = new xControl();
-    private String TAG_RESULTS = "result";
+    private final String TAG_RESULTS = "result";
     private JSONArray rs = null;
-    private int summenuset = 0;
+    private final int summenuset = 0;
     String Qty;
     String Isstatus;
     String bo = "";
     String DepIDScan = "";
     String TelScan = "";
-    private HTTPConnect httpConnect = new HTTPConnect();
+    private final HTTPConnect httpConnect = new HTTPConnect();
     private RecyclerView rv;
     private TreeViewAdapter adapter;
     private int index_data;
     private String dept_ID;
     ArrayList<pCustomer> resultsPcus = new ArrayList<pCustomer>();
     private Spinner dept_spinner;
-    private ArrayList<String> array_dept = new ArrayList<String>();
-    private ArrayList<String> cnt = new ArrayList<String>();
+    private final ArrayList<String> array_dept = new ArrayList<String>();
+    private final ArrayList<String> cnt = new ArrayList<String>();
     Calendar myCalendar = Calendar.getInstance();
     TextView edittext;
     ListView list_docno_detail;
@@ -106,7 +107,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     boolean ssStatus1 ;
     private String DocNo = "";
     private String DocDate = "";
-    private String Dept = "";
+    private final String Dept = "";
     private String IsStatus = "";
     private String UserReceive = "";
     private String UserSend = "";
@@ -172,23 +173,23 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     //new sendstrile
     EditText txt_get_ucode;
     String Qty1;
-    private ArrayList<String> selectedArray = new ArrayList<String>();
-    private ArrayList<pCustomer> selectedItemDetail = new ArrayList<pCustomer>();
-    private ArrayList<String> selectedArray2 = new ArrayList<String>();
+    private final ArrayList<String> selectedArray = new ArrayList<String>();
+    private final ArrayList<pCustomer> selectedItemDetail = new ArrayList<pCustomer>();
+    private final ArrayList<String> selectedArray2 = new ArrayList<String>();
     private SendSterile_EditDetailAdapter UsageObject2;
-    private ArrayList<String> array_deptsp = new ArrayList<String>();
-    private ArrayList<String> list_sp = new ArrayList<String>();
+    private final ArrayList<String> array_deptsp = new ArrayList<String>();
+    private final ArrayList<String> list_sp = new ArrayList<String>();
     final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
     final ArrayList<pCustomer> pCus1 = new ArrayList<pCustomer>();
     String deptsp_id = "";
-    private ArrayList<String> array_emp = new ArrayList<String>();
-    private ArrayList<String> list_emp = new ArrayList<String>();
+    private final ArrayList<String> array_emp = new ArrayList<String>();
+    private final ArrayList<String> list_emp = new ArrayList<String>();
     ListView lv;
     boolean IsItemClick = false;
     String txt_usr_send_old = "";
     boolean txt_usr_send_on_Click = false;
-    private HashMap<String, String> xDepSend = new HashMap<String,String>();
-    private ArrayList<String> listUSendID = new ArrayList<String>();
+    private final HashMap<String, String> xDepSend = new HashMap<String,String>();
+    private final ArrayList<String> listUSendID = new ArrayList<String>();
     public String IsDel ;
     SearchableSpinner spinner_dept;
     String condition1 = "";
@@ -230,6 +231,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     private boolean basket_is_resterile = false;
     private TextView BasketExpire;
 
+    ScanCode keyScanCode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -240,6 +243,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         }
         getSupportActionBar().hide();
         //slidr = Slidr.attach(this);
+        SetScanCode();
         byIntent();
         initialize();
         SelectBasket();
@@ -255,21 +259,25 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         spin_basket.requestFocus();
 
         by_config();
+    }
 
+    private void SetScanCode(){
+        keyScanCode = new ScanCode();
+        keyScanCode.get_key();
     }
 
     public void by_config(){
         if(!ConfigProgram.wash_tag){
-            TextView textViewHead = (TextView) findViewById(R.id.textViewHead);
+            TextView textViewHead = findViewById(R.id.textViewHead);
             textViewHead.setVisibility(View.VISIBLE);
 
-            Switch bt_sw = (Switch) findViewById(R.id.bt_sw);
+            Switch bt_sw = findViewById(R.id.bt_sw);
             bt_sw.setVisibility(View.INVISIBLE);
 
-            LinearLayout Lin_Scan_Basket = (LinearLayout) findViewById(R.id.Lin_Scan_Basket);
+            LinearLayout Lin_Scan_Basket = findViewById(R.id.Lin_Scan_Basket);
             Lin_Scan_Basket.setVisibility(View.GONE);
 
-            TextView txt_set_list = (TextView) findViewById(R.id.txt_set_list);
+            TextView txt_set_list = findViewById(R.id.txt_set_list);
 
             txt_set_list.setLayoutParams(new LinearLayout.LayoutParams(120,LinearLayout.LayoutParams.WRAP_CONTENT));
 
@@ -431,26 +439,26 @@ public class SendSterile_MainActivity extends AppCompatActivity {
 
     public void initialize() {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        checkBoxall = (CheckBox) findViewById(R.id.checkBoxall);
+        checkBoxall = findViewById(R.id.checkBoxall);
         checkBoxall.setChecked(true);
         CheckAll = "1";
-        del_multi = (Switch) findViewById(R.id.del_multi);
-        del_multi_1 = (Switch) findViewById(R.id.del_multi_1);
-        bin_all = (Button) findViewById(R.id.bin_all);
-        bin_all_black = (Button) findViewById(R.id.bin_all_black);
-        bin_all_1 = (Button) findViewById(R.id.bin_all_1);
-        bin_all_black_1 = (Button) findViewById(R.id.bin_all_black_1);
+        del_multi = findViewById(R.id.del_multi);
+        del_multi_1 = findViewById(R.id.del_multi_1);
+        bin_all = findViewById(R.id.bin_all);
+        bin_all_black = findViewById(R.id.bin_all_black);
+        bin_all_1 = findViewById(R.id.bin_all_1);
+        bin_all_black_1 = findViewById(R.id.bin_all_black_1);
         IsStatus = "0";
-        rv = ( RecyclerView ) findViewById(R.id.rv);
-        txt_get_ucode = ( EditText ) findViewById(R.id.txt_get_ucode);
-        searchbox = ( EditText ) findViewById(R.id.searchbox);
-        edittext = ( TextView ) findViewById(R.id.Birthday);
-        calendar = ( Button ) findViewById(R.id.calendar);
-        doctxt_dept = ( TextView ) findViewById(R.id.doctxt_dept);
-        dept_spinner = ( Spinner ) findViewById(R.id.dept_spinner);
-        txt_usr_receive = ( EditText ) findViewById(R.id.txt_usr_receive);
+        rv = findViewById(R.id.rv);
+        txt_get_ucode = findViewById(R.id.txt_get_ucode);
+        searchbox = findViewById(R.id.searchbox);
+        edittext = findViewById(R.id.Birthday);
+        calendar = findViewById(R.id.calendar);
+        doctxt_dept = findViewById(R.id.doctxt_dept);
+        dept_spinner = findViewById(R.id.dept_spinner);
+        txt_usr_receive = findViewById(R.id.txt_usr_receive);
         txt_usr_receive.requestFocus();
-        txt_usr_send = ( SearchableSpinner ) findViewById(R.id.txt_usr_send);
+        txt_usr_send = findViewById(R.id.txt_usr_send);
         txt_usr_send.setTitle("ผู้ส่ง(แผนก)");//lang
         txt_usr_send.setPositiveButton("เพิ่มผู้ส่ง",new DialogInterface.OnClickListener() {
             @Override
@@ -460,19 +468,20 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             }
         });
 
-        txt_setdetail_l2 = (TextView) findViewById(R.id.txt_setdetail_l2);
-        txt_setdetail_l3 = (TextView) findViewById(R.id.txt_setdetail_l3);
-        txt_setdetail_l4 = (TextView) findViewById(R.id.txt_setdetail_l4);
-        textView46 = (TextView) findViewById(R.id.textView46);
-        textView46_1 = (TextView) findViewById(R.id.textView46_1);
+        txt_setdetail_l2 = findViewById(R.id.txt_setdetail_l2);
+        txt_setdetail_l3 = findViewById(R.id.txt_setdetail_l3);
+        txt_setdetail_l4 = findViewById(R.id.txt_setdetail_l4);
+        textView46 = findViewById(R.id.textView46);
+        textView46_1 = findViewById(R.id.textView46_1);
         textView46_1.setVisibility(View.GONE);
-        BasketExpire = (TextView) findViewById(R.id.BasketExpire);
+        textView46_1.setText("Wash Tag");
+        BasketExpire = findViewById(R.id.BasketExpire);
         BasketExpire.setVisibility(View.GONE);
-        etxt_date = ( TextView ) findViewById(R.id.etxt_date);
-        L1_Send = ( LinearLayout ) findViewById(R.id.L1_Send);
-        L2_Send = ( LinearLayout ) findViewById(R.id.L2_Send);
-        spin_basket = (SearchableSpinner) findViewById(R.id.spin_basket);
-        basket = (EditText ) findViewById(R.id.basket);
+        etxt_date = findViewById(R.id.etxt_date);
+        L1_Send = findViewById(R.id.L1_Send);
+        L2_Send = findViewById(R.id.L2_Send);
+        spin_basket = findViewById(R.id.spin_basket);
+        basket = findViewById(R.id.basket);
 
         from_slie_left = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_left);
         from_slie_right = AnimationUtils.loadAnimation(SendSterile_MainActivity.this, R.anim.from_slie_right);
@@ -485,6 +494,11 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                             return false;
                         case KeyEvent.KEYCODE_ENTER:
+
+                            if(CheckScanCodekey(basket)){
+                                return true;
+                            }
+
                             CheckBasket(basket.getText().toString());
                             return true;
                         default:
@@ -530,6 +544,10 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
+                            if(CheckScanCodekey(txt_usr_receive)){
+                                return true;
+                            }
+
                             ScanUserReceive();
                             return true;
                         default:
@@ -577,31 +595,31 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             }
         });
         getuserCode();
-        txt_tel_dep = ( TextView ) findViewById(R.id.txt_tel_dep);
-        textView47 = (TextView) findViewById(R.id.textView47);
-        textView48 = (TextView) findViewById(R.id.textView48);
-        etxt_sumqty = ( TextView ) findViewById(R.id.etxt_sumqty);
-        etxt_dept = ( SearchableSpinner ) findViewById(R.id.etxt_dept);
-        bt_search_sendsteril = ( Button ) findViewById(R.id.bt_search_sendsterile);
-        bt_search_sendsteril1 = ( Button ) findViewById(R.id.bt_search_sendsteril1);
-        lv = ( ListView ) findViewById(R.id.list_docno);
-        xedit_detail = ( ListView ) findViewById(R.id.xedit_detail);
-        L1 = ( LinearLayout ) findViewById(R.id.layout_1);
-        L2 = ( LinearLayout ) findViewById(R.id.layout_2);
-        txt_menu_set = ( TextView ) findViewById(R.id.txt_menu_set);
-        bt_sw = ( Switch ) findViewById(R.id.bt_sw);
-        newss = ( Button ) findViewById(R.id.newSS);
-        save = ( Button ) findViewById(R.id.next);
-        date_l2 = ( TextView ) findViewById(R.id.date_l2);
-        bt_calendar_l2 = ( Button ) findViewById(R.id.bt_calendar_l2);
-        list_set_detail_l2 = ( ListView ) findViewById(R.id.list_set_detail_l2);
-        list_createdetail_l2 = ( ListView ) findViewById(R.id.list_createdetail_l2);
-        list_docno_l2 = ( ListView ) findViewById(R.id.list_docno_l2);
-        dept_l2 = ( Spinner ) findViewById(R.id.dept_spinner_l2);
-        finddoc_l2 = ( Button ) findViewById(R.id.finddoc_l2);
-        textView19 = ( TextView ) findViewById(R.id.textView19);
-        list_docno_detail = ( ListView ) findViewById(R.id.list_docno_detail);
-        etxt_docno = ( TextView ) findViewById(R.id.etxt_docno);
+        txt_tel_dep = findViewById(R.id.txt_tel_dep);
+        textView47 = findViewById(R.id.textView47);
+        textView48 = findViewById(R.id.textView48);
+        etxt_sumqty = findViewById(R.id.etxt_sumqty);
+        etxt_dept = findViewById(R.id.etxt_dept);
+        bt_search_sendsteril = findViewById(R.id.bt_search_sendsterile);
+        bt_search_sendsteril1 = findViewById(R.id.bt_search_sendsteril1);
+        lv = findViewById(R.id.list_docno);
+        xedit_detail = findViewById(R.id.xedit_detail);
+        L1 = findViewById(R.id.layout_1);
+        L2 = findViewById(R.id.layout_2);
+        txt_menu_set = findViewById(R.id.txt_menu_set);
+        bt_sw = findViewById(R.id.bt_sw);
+        newss = findViewById(R.id.newSS);
+        save = findViewById(R.id.next);
+        date_l2 = findViewById(R.id.date_l2);
+        bt_calendar_l2 = findViewById(R.id.bt_calendar_l2);
+        list_set_detail_l2 = findViewById(R.id.list_set_detail_l2);
+        list_createdetail_l2 = findViewById(R.id.list_createdetail_l2);
+        list_docno_l2 = findViewById(R.id.list_docno_l2);
+        dept_l2 = findViewById(R.id.dept_spinner_l2);
+        finddoc_l2 = findViewById(R.id.finddoc_l2);
+        textView19 = findViewById(R.id.textView19);
+        list_docno_detail = findViewById(R.id.list_docno_detail);
+        etxt_docno = findViewById(R.id.etxt_docno);
 
         xedit_detail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -968,7 +986,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             }
         });
 
-        Button bt_calendar = ( Button ) findViewById(R.id.bt_calendar);
+        Button bt_calendar = findViewById(R.id.bt_calendar);
         bt_calendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -979,7 +997,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             }
         });
 
-        Button bt1 = ( Button ) findViewById(R.id.finddoc);
+        Button bt1 = findViewById(R.id.finddoc);
         bt1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -992,7 +1010,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             }
         });
 
-        Button bt2 = ( Button ) findViewById(R.id.editDetail);
+        Button bt2 = findViewById(R.id.editDetail);
         bt2.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -1138,7 +1156,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             }
         });
 
-        Button searchdoc = ( Button ) findViewById(R.id.searchdoc);
+        Button searchdoc = findViewById(R.id.searchdoc);
         searchdoc.bringToFront();
         searchdoc.setOnClickListener(new View.OnClickListener() {
 
@@ -1150,7 +1168,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         });
 
 
-        Button bt_back = ( Button ) findViewById(R.id.bt_back);
+        Button bt_back = findViewById(R.id.bt_back);
         bt_back.bringToFront();
         bt_back.setOnClickListener(new View.OnClickListener() {
 
@@ -1166,12 +1184,19 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
+
+                            if(CheckScanCodekey(searchbox)){
+                                return true;
+                            }
+
                             getlistdata(deptsp_id, edittext.getText().toString(), searchbox.getText().toString());
                             cleardoc();
                             return true;
                         default:
                             break;
                     }
+                }else if(keyCode==KeyEvent.KEYCODE_ENTER){
+                    return true;
                 }
                 return false;
             }
@@ -1183,23 +1208,16 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
+                            if(CheckScanCodekey(txt_get_ucode)){
+                                return true;
+                            }
+
                             if (txt_usr_receive.getText().toString().equals("")){
                                 Toast.makeText(SendSterile_MainActivity.this, "กรุณาสแกนชื่อผู้รับ(จ่ายกลาง)", Toast.LENGTH_SHORT).show();
                                 txt_get_ucode.setText("");
                                 txt_get_ucode.requestFocus();
                             }else {
-                                if(txt_get_ucode.getText().toString().equals("1")){
-                                    if (basket.getText().toString().equals("")) {
-                                        Toast.makeText(SendSterile_MainActivity.this, "กรุณาสแกนตะกร้า", Toast.LENGTH_SHORT).show();
-                                        basket.setText("");
-                                        basket.requestFocus();
-                                    }else {
-                                        basket_resterile();
-                                    }
-
-                                }else {
-                                    CheckUsageContScan();
-                                }
+                                CheckUsageContScan();
                             }
                             return true;
                         default:
@@ -3624,7 +3642,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
 
     public void CheckUsageCont() {
         class CheckUsageCont extends AsyncTask<String, Void, String> {
-            private ProgressDialog dialog = new ProgressDialog(SendSterile_MainActivity.this);
+            private final ProgressDialog dialog = new ProgressDialog(SendSterile_MainActivity.this);
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -3701,7 +3719,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
 
     public void CheckUsageContScan() {
         class CheckUsageContScan extends AsyncTask<String, Void, String> {
-            private ProgressDialog dialog = new ProgressDialog(SendSterile_MainActivity.this);
+            private final ProgressDialog dialog = new ProgressDialog(SendSterile_MainActivity.this);
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -3781,7 +3799,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
 
     public void CheckUsageContScanToInsert(final String Usagecode) {
         class CheckUsageContScanToInsert extends AsyncTask<String, Void, String> {
-            private ProgressDialog dialog = new ProgressDialog(SendSterile_MainActivity.this);
+            private final ProgressDialog dialog = new ProgressDialog(SendSterile_MainActivity.this);
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -4033,8 +4051,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     public void CheckBasket(final String xBasket,Boolean isDropdown) {
 
         if(xBasket.equals("")){
-            Basket_washtag_code="";
-            basket.setText("");
+            Clear_wash_tag();
             return;
         }
         for(int i=0;i<basket_ar.size();i++){
@@ -4316,8 +4333,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         dialog_qr.setCancelable(true);
         dialog_qr.setTitle("");
 
-        TextView baskettag = (TextView) dialog_qr.findViewById(R.id.washtag_name);
-        gv_washtag_item = (GridView) dialog_qr.findViewById(R.id.washtag_grid);
+        TextView baskettag = dialog_qr.findViewById(R.id.washtag_name);
+        gv_washtag_item = dialog_qr.findViewById(R.id.washtag_grid);
 
         baskettag.setText(basket_name);
         dialog_qr.show();
@@ -4440,7 +4457,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 if(bo){
                     Toast.makeText(SendSterile_MainActivity.this, "เพิ่มรายการในตะกร้าแล้ว", Toast.LENGTH_SHORT).show();
                     if(basket_is_resterile){
-                        basket_resterile();
+                        basket_resterile(1);
                     }else{
                         SelectBasket();
                     }
@@ -4491,7 +4508,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         }
     }
 
-    public void basket_resterile(){
+    public void basket_resterile(final int IsResterile){
         class basket_resterile extends AsyncTask<String, Void, String> {
             // variable
 
@@ -4530,6 +4547,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
                 data.put("BasketID",params[0]);
+                data.put("IsResterile",IsResterile+"");
+
                 String result = ruc.sendPostRequest(getUrl.xUrl+"washtag/resterile_from_washtag.php",data);
                 Log.d("ttest_bk_resterile","basket_resterile xUrl = "+getUrl.xUrl+"washtag/resterile_from_washtag.php");
                 Log.d("ttest_bk_resterile","basket_resterile result = "+result);
@@ -4553,6 +4572,10 @@ public class SendSterile_MainActivity extends AppCompatActivity {
 
                     break;
                 }
+            }
+        }else{
+            if(IsResterile==0){
+                Toast.makeText(SendSterile_MainActivity.this, "ยังไม่ได้เลือกตะกร้า", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -4587,5 +4610,63 @@ public class SendSterile_MainActivity extends AppCompatActivity {
 
     public void ItemSetCheckBoxall(boolean x){
         checkBoxall.setChecked(x);
+    }
+
+    public void Clear_wash_tag(){
+        Log.d("tog_Clear_wash_tag","in func");
+        item_in_basket.clear();
+        basket.setText("");
+        Basket_washtag_code = "";
+        basket_is_resterile = false;
+        BasketExpire.setText("");
+        if(gv_washtag_item!=null){
+            gv_washtag_item.setAdapter(new Adapter_Washtag_SS(SendSterile_MainActivity.this,item_in_basket,true));
+        }
+        textView46_1.setText("Wash Tag");
+    }
+
+    public boolean CheckScanCodekey (EditText Text){
+        String qrcode = Text.getText().toString().toUpperCase();
+        Log.d("tog_ScanCode","qrcode = "+qrcode);
+        if(keyScanCode.CheckKey(qrcode)){
+            int key = keyScanCode.getKey(qrcode);
+            Log.d("tog_ScanCode","key = "+key);
+            switch (key) {
+                case Master.ss_Clear_Expire :
+                    basket_resterile(0);
+                    break;
+                case Master.ss_Clear_Wash_Tag :
+                    Clear_wash_tag();
+                    break;
+                case Master.ss_Focus_Wash_Tag_Box :
+                    basket.requestFocus();
+                    break;
+                case Master.ss_Focus_Itemset_Scan_Box :
+                    txt_get_ucode.requestFocus();
+                    break;
+                case Master.ss_Clear_Button :
+                    newss.callOnClick();
+                    txt_usr_receive.requestFocus();
+                    break;
+                case Master.ss_Done_Button :
+                    save.callOnClick();
+                    txt_usr_receive.requestFocus();
+                    break;
+                case Master.ss_Wash_Tag_Expire :
+                    if (basket.getText().toString().equals("")) {
+                        Toast.makeText(SendSterile_MainActivity.this, "กรุณาสแกนตะกร้า", Toast.LENGTH_SHORT).show();
+                        basket.setText("");
+                        basket.requestFocus();
+                    }else {
+                        basket_resterile(1);
+                    }
+                    break;
+                default:
+                    return false;
+            }
+            Text.setText("");
+            return true;
+        }
+        return false;
     }
 }
