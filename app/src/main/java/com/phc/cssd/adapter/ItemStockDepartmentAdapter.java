@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.phc.cssd.CssdCreateItemStockDepartment;
 import com.phc.cssd.R;
 import com.phc.cssd.model.ModelMasterData;
 
@@ -63,6 +64,12 @@ public class ItemStockDepartmentAdapter extends ArrayAdapter<ModelMasterData> {
         holder.txt_code.setText(DATA_MODEL.get(position).getCode());
         holder.chk.setChecked(DATA_MODEL.get(position).isCheck());
         holder.index = (DATA_MODEL.get(position).getIndex());
+
+        if (DATA_MODEL.get(position).isCheck() == false){
+            ((CssdCreateItemStockDepartment)context).Check_All(false);
+        }else {
+            ((CssdCreateItemStockDepartment)context).Check_All(true);
+        }
         // =========================================================================================
 
         return view;

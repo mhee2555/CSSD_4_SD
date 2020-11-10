@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.phc.core.connect.HTTPConnect;
 import com.phc.core.data.AsonData;
+import com.phc.cssd.adapter.CheckListAdapter;
 import com.phc.cssd.adapter.ItemStockDepartmentAdapter;
 import com.phc.cssd.model.ModelMasterData;
 import com.phc.cssd.url.Url;
@@ -41,6 +43,7 @@ public class CssdCreateItemStockDepartment extends Activity {
     //------------------------------------------------
     private ListView ListData;
     private ImageView image_save;
+    private CheckBox Check_all;
     EditText etxt_searchsendsterile;
 
     @Override
@@ -62,7 +65,34 @@ public class CssdCreateItemStockDepartment extends Activity {
         B_ID = intent.getStringExtra("B_ID");
     }
 
+    public void Check_All(boolean Check){
+        if (Check == true){
+            Check_all.setChecked(true);
+        }else {
+            Check_all.setChecked(false);
+        }
+    }
+
     private void byWidget(){
+        Check_all = (CheckBox) findViewById(R.id.Check_all);
+        Check_all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Check_all.isChecked() == true){
+                    for (int i = 0 ; i < MODEL_ITEM_STOCK_DEPARTMENT.size() ; i ++){
+                        MODEL_ITEM_STOCK_DEPARTMENT.get(i).setCheck(true);
+                        ArrayAdapter<ModelMasterData> adapter = new ItemStockDepartmentAdapter(CssdCreateItemStockDepartment.this, MODEL_ITEM_STOCK_DEPARTMENT);
+                        ListData.setAdapter(adapter);
+                    }
+                }else {
+                    for (int i = 0 ; i < MODEL_ITEM_STOCK_DEPARTMENT.size() ; i ++){
+                        MODEL_ITEM_STOCK_DEPARTMENT.get(i).setCheck(false);
+                        ArrayAdapter<ModelMasterData> adapter = new ItemStockDepartmentAdapter(CssdCreateItemStockDepartment.this, MODEL_ITEM_STOCK_DEPARTMENT);
+                        ListData.setAdapter(adapter);
+                    }
+                }
+            }
+        });
         ListData = (ListView) findViewById(R.id.list);
         image_save = (ImageView) findViewById(R.id.image_save);
         etxt_searchsendsterile = (EditText) findViewById(R.id.etxt_searchsendsterile);

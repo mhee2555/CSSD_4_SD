@@ -2234,7 +2234,6 @@ public class PrintSticker {
                 e.printStackTrace();
             }
         }
-
         Tsc.closeport();
         return getID;
     }
