@@ -1924,9 +1924,9 @@ public class CssdSterile extends AppCompatActivity {
                 displayWashDetail(getSterileProcessId());
                 dialog_qr.show();
                 dialogProgress.dismiss();
-//                if("TL01193N40267".equals(getSerialNumber())||"L203P85U01743".equals(getSerialNumber())){
-//                    Checkuser_packer("em00009",dialog_qr,dialog_item_stock_detail_basket);
-//                }
+                if("TL01193N40267".equals(getSerialNumber())||"L203P85U01743".equals(getSerialNumber())){
+                    Checkuser_packer("em00009",dialog_qr,dialog_item_stock_detail_basket);
+                }
             }
         });
 
