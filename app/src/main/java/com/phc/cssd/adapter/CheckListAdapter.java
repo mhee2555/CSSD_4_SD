@@ -337,6 +337,12 @@ public class CheckListAdapter extends ArrayAdapter {
         });
         txtitemname.setPaintFlags(txtitemname.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         txtitemname.setText(listData.get(position).getItemcode() + " - " + listData.get(position).getItemname());
+        txtitemname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((CssdCheckList)acc).onListClick(listData.get(position).getPicture_set(),listData.get(position).getPicture_detail());
+            }
+        });
         int x1 = Integer.parseInt(listData.get(position).getQty());
         int x2 = Integer.parseInt(listData.get(position).getQtyItemDetail());
         if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){

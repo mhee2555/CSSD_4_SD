@@ -176,10 +176,10 @@ public class SearchItem_Payout extends Activity {
                 data.put("Usage_code",params[0]);
                 data.put("xSel",params[1]);
                 data.put("B_ID",B_ID);
-//                Log.d("OOOO","Sel : "+params[1]);
+                data.put("Dept",SS_DeptID);
                 String result = ruc.sendPostRequest(iFt.Check_usagecode(),data);
-                Log.d("BANK",data+"");
-                Log.d("BANK",result);
+                Log.d("BANKDCDV",data+"");
+                Log.d("BANKDCDV",result);
                 return  result;
             }
         }

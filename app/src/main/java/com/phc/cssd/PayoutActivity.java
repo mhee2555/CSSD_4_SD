@@ -260,10 +260,8 @@ public class PayoutActivity extends AppCompatActivity {
         {
             public boolean onKey(View v, int keyCode, KeyEvent event)
             {
-                if (event.getAction() == KeyEvent.ACTION_DOWN)
-                {
-                    switch (keyCode)
-                    {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
 //                            if(WithdrawMode==1){
@@ -1702,10 +1700,16 @@ public class PayoutActivity extends AppCompatActivity {
                     resultspayout.clear();
                     for(int i=0;i<setRs.length();i++){
                         JSONObject c = setRs.getJSONObject(i);
-                        DocNo=c.getString("DocNo");
-                        textViewDocNo.setText(DocNo);
-                        IsCheckPayout(DocNo);
-                        Insert_PayoutDetail(DocNo,RETURN_ItemCode,RETURN_QTY);
+                        if (c.getString("DocNo").equals("")){
+                            Toast.makeText(PayoutActivity.this,"ไม่พบข้อมูล", Toast.LENGTH_SHORT).show();
+                            eUsageCode.setText("");
+                            eUsageCode.requestFocus();
+                        }else {
+                            DocNo = c.getString("DocNo");
+                            textViewDocNo.setText(DocNo);
+                            IsCheckPayout(DocNo);
+                            Insert_PayoutDetail(DocNo,RETURN_ItemCode,RETURN_QTY);
+                        }
                     }
 
                 } catch (JSONException e) {
@@ -1719,10 +1723,13 @@ public class PayoutActivity extends AppCompatActivity {
                 data.put("UserCode",params[0]);
                 data.put("xdept",params[1]);
                 data.put("mode",WithdrawMode+"");
-                if(B_ID!=null){data.put("B_ID",B_ID);}
-                Log.d("ttest","CreatePayoutDocument : "+data);
+                data.put("itemcode",RETURN_ItemCode);
+                if(B_ID!=null){
+                    data.put("B_ID",B_ID);
+                }
                 String result = ruc.sendPostRequest(getUrl.xUrl+"1/set_createpayoutdocno.php",data);
-                Log.d("ttest: ", result);
+                Log.d("BANK",data+"");
+                Log.d("BANK",result);
                 return  result;
             }
         }

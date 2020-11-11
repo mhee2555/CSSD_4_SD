@@ -182,7 +182,6 @@ public class SearchItem_SendSterile extends Activity {
                             newsData.setIs_Check(true);
                             ArrayData.add( newsData );
                             if(i==0 && !Usage_code.equals("")){
-
                                 etxt_searchsendsterile.requestFocus();
                             }
                             //dialog.dismiss();
@@ -191,10 +190,8 @@ public class SearchItem_SendSterile extends Activity {
                             etxt_searchsendsterile.requestFocus();
                         }
                     }
-
                     ListView lv = (ListView) findViewById(R.id.list_searsendsterile);
                     lv.setAdapter(new search_sendsterileAdapter(SearchItem_SendSterile.this, ArrayData));
-//
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -206,7 +203,7 @@ public class SearchItem_SendSterile extends Activity {
                 data.put("Usage_code",params[0]);
                 data.put("xSel",params[1]);
                 data.put("B_ID",B_ID);
-//                Log.d("OOOO","Sel : "+params[1]);
+                data.put("Dept",SS_DeptID);
                 String result = ruc.sendPostRequest(iFt.Check_usagecode(),data);
                 Log.d("BANK",data+"");
                 Log.d("BANK",result);

@@ -784,9 +784,9 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(sw4.isChecked()){
-                    setboolean("4","1");
+                    setboolean("19","1");
                 }else{
-                    setboolean("4","0");
+                    setboolean("19","0");
                 }
             }
         });
@@ -1336,7 +1336,7 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
-                data.put("data","4");
+                data.put("data","19");
                 String result = null;
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_display_config_type.php", data);

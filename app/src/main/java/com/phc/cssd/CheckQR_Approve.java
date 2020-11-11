@@ -149,13 +149,11 @@ public class CheckQR_Approve extends Activity {
                             startUserSession();
                             etxt_qr.setText("");
                         }
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();

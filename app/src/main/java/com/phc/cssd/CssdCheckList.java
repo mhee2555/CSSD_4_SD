@@ -242,7 +242,7 @@ public class CssdCheckList extends Activity {
                 String getQtyItemDetail = ModelCheckList.getQtyItemDetail();
                 String Itemname = ModelCheckList.getItemname();
                 String Qty = ModelCheckList.getQty();
-                onListClick(img_set,img_detail);
+                //onListClick(img_set,img_detail);
                 if (!Itemname.equals("COMPLY STERIGAGE STEAM (SHORT)")){
                     if (!getQtyItemDetail.equals("0")){
                         OpenDialog(Itemname,"1",Qty,getQtyItemDetail);
