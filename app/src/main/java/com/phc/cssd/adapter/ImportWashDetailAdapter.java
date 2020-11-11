@@ -260,14 +260,14 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
             }else {
                 txt_qty.setVisibility(View.GONE);
 
-                if(ConfigProgram.basket_tag){
-                    relativeLayout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            ((CssdSterile) context).callCheckList(DATA_MODEL.get(position).getI_id());
-                        }
-                    });
-                }
+//                if(ConfigProgram.basket_tag){
+//                    relativeLayout.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            ((CssdSterile) context).callCheckList(DATA_MODEL.get(position).getI_id());
+//                        }
+//                    });
+//                }
 
                 if(isHeadList){
                     imv_add.setOnClickListener(new View.OnClickListener() {

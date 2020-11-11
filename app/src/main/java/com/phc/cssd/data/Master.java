@@ -132,4 +132,14 @@ public class Master {
         }
     }
 
+    //scankeycode
+    //ss
+    public static final int ss_Clear_Expire = 1;
+    public static final int ss_Clear_Wash_Tag = 2;
+    public static final int ss_Focus_Wash_Tag_Box = 3;
+    public static final int ss_Focus_Itemset_Scan_Box = 4;
+    public static final int ss_Clear_Button = 5;
+    public static final int ss_Done_Button = 6;
+    public static final int ss_Wash_Tag_Expire = 7;
+
 }

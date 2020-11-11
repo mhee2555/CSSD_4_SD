@@ -459,7 +459,7 @@
                 android:layout_marginRight="24dp"
                 android:layout_marginBottom="15dp"
                 android:background="@drawable/text_dropdown"
-                android:hint="สแกนตะกร้า"
+                android:hint="Scan QR Code"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:singleLine="true"
