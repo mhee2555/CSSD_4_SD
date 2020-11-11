@@ -1211,7 +1211,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                             if(CheckScanCodekey(txt_get_ucode)){
                                 return true;
                             }
-
                             if (txt_usr_receive.getText().toString().equals("")){
                                 Toast.makeText(SendSterile_MainActivity.this, "กรุณาสแกนชื่อผู้รับ(จ่ายกลาง)", Toast.LENGTH_SHORT).show();
                                 txt_get_ucode.setText("");
@@ -3595,22 +3594,24 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
                         bo = c.getString("flag");
-                        if (bo.equals("false")) {
-
-                            if(Basket_washtag_code!=""){
-                                Log.d("ttest_bk_insert","basket = "+basket_ar.get(spin_basket.getSelectedItemPosition()));
-                                insert_item_to_basket(c.getString("ItemStockID"),c.getString("ssID"));
-                            }else{
-                                Toast.makeText(SendSterile_MainActivity.this, "รายการซ้ำ", Toast.LENGTH_SHORT).show();
+                        if (bo.equals("falsedept")){
+                            Toast.makeText(SendSterile_MainActivity.this, "ไม่พบข้อมูล !!", Toast.LENGTH_SHORT).show();
+                        }else {
+                            if (bo.equals("false")) {
+                                if(Basket_washtag_code!=""){
+                                    insert_item_to_basket(c.getString("ItemStockID"),c.getString("ssID"));
+                                }else{
+                                    Toast.makeText(SendSterile_MainActivity.this, "รายการซ้ำ", Toast.LENGTH_SHORT).show();
+                                }
+                                txt_get_ucode.setText("");
+                                txt_get_ucode.requestFocus();
+                            }else if (bo.equals("false1")){
+                                Toast.makeText(SendSterile_MainActivity.this, "แผนกหรือสถานะรหัสไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
+                                txt_get_ucode.setText("");
+                                txt_get_ucode.requestFocus();
+                            }else if (bo.equals("true")){
+                                InsertDetail2(etxt_docno.getText().toString(), txt_get_ucode.getText().toString().toLowerCase(), etxt_date.getText().toString(), ED_UserCode, ED_Dept, "0");
                             }
-                            txt_get_ucode.setText("");
-                            txt_get_ucode.requestFocus();
-                        }else if (bo.equals("false1")){
-                            Toast.makeText(SendSterile_MainActivity.this, "แผนกหรือสถานะรหัสไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
-                            txt_get_ucode.setText("");
-                            txt_get_ucode.requestFocus();
-                        }else if (bo.equals("true")){
-                            InsertDetail2(etxt_docno.getText().toString(), txt_get_ucode.getText().toString().toLowerCase(), etxt_date.getText().toString(), ED_UserCode, ED_Dept, "0");
                         }
                     }
                 } catch (JSONException e) {
@@ -3624,6 +3625,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 data.put("DocNo",etxt_docno.getText().toString());
                 data.put("B_ID",B_ID);
                 data.put("Usagecode",Usagecode);
+                data.put("Dept", String.valueOf(etxt_dept.getSelectedItem()));
                 String result = null;
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "check_insert_doc.php", data);
@@ -3781,6 +3783,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 HashMap<String, String> data = new HashMap<String,String>();
                 data.put("Usagecode",txt_get_ucode.getText().toString());
                 data.put("B_ID",B_ID);
+                data.put("Dept", String.valueOf(etxt_dept.getSelectedItem()));
                 String result = null;
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_display_usage_count_scan.php", data);
