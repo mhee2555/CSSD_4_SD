@@ -3595,7 +3595,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         JSONObject c = rs.getJSONObject(i);
                         bo = c.getString("flag");
                         if (bo.equals("falsedept")){
-                            Toast.makeText(SendSterile_MainActivity.this, "ไม่พบข้อมูล !!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SendSterile_MainActivity.this, "รายการนี้ไม่ได้ผูกแผนก !!", Toast.LENGTH_SHORT).show();
                         }else {
                             if (bo.equals("false")) {
                                 if(Basket_washtag_code!=""){

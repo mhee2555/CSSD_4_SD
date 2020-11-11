@@ -1684,16 +1684,13 @@ public class PayoutActivity extends AppCompatActivity {
 
     public void CreatePayoutDocument(String UserCode, String xdept, final String RETURN_ItemCode , final String RETURN_QTY) {
         class CreatePayoutDocument extends AsyncTask<String, Void, String> {
-            // ProgressDialog loading;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                // loading = ProgressDialog.show(ApproveStockActivity.this, "Please Wait",null, true, true);
             }
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                // loading.dismiss();
                 try {
                     JSONObject jsonObj = new JSONObject(s);
                     setRs = jsonObj.getJSONArray(TAG_RESULTS);
@@ -1701,7 +1698,7 @@ public class PayoutActivity extends AppCompatActivity {
                     for(int i=0;i<setRs.length();i++){
                         JSONObject c = setRs.getJSONObject(i);
                         if (c.getString("DocNo").equals("")){
-                            Toast.makeText(PayoutActivity.this,"ไม่พบข้อมูล", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PayoutActivity.this,"รายการนี้ไม่ได้ผูกแผนก !!", Toast.LENGTH_SHORT).show();
                             eUsageCode.setText("");
                             eUsageCode.requestFocus();
                         }else {
