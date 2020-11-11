@@ -4569,7 +4569,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         Toast.makeText(SendSterile_MainActivity.this, "ไม่มีรายการในตะกร้า", Toast.LENGTH_SHORT).show();
                     }
 
-
                     break;
                 }
             }
