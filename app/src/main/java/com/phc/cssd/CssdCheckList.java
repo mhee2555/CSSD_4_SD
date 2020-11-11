@@ -354,7 +354,6 @@ public class CssdCheckList extends Activity {
                     switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
-                            Log.d("FKJDHJKDH",COUNT_PROCESS+"");
                             if (COUNT_PROCESS < 2){
                                 checkInput(edt_usage_code.getText().toString());
                                 DIALOG_ACTIVE = true;
@@ -926,10 +925,8 @@ public class CssdCheckList extends Activity {
                 Log.d("LDJCLJVD",result+"");
                 return result;
             }
-
             // =========================================================================================
         }
-
         UpdatePrintStatus obj = new UpdatePrintStatus();
         obj.execute();
     }
@@ -1013,6 +1010,17 @@ public class CssdCheckList extends Activity {
                             }
                         }
                     }
+
+//                    for (int i = 0 ; i < MODEL_CHECK_LIST.size() ; i ++){
+//                        if (ch1.getVisibility() == View.VISIBLE){
+//                            MODEL_CHECK_LIST.get(i).setInternal("1");
+//                        }else {
+//                            MODEL_CHECK_LIST.get(i).setInternal("0");
+//                        }
+//                        ArrayAdapter adapter = new CheckListAdapter(CssdCheckList.this, MODEL_CHECK_LIST);
+//                        list_check.setAdapter(adapter);
+//                    }
+
                     // Model
                     MODEL_CHECK_LIST = list;
                     try {
@@ -1021,6 +1029,11 @@ public class CssdCheckList extends Activity {
                         list_check.setAdapter(adapter);
                         if (resultdata.equals("A")){
                             CheckDialog(edt_usage_code.getText().toString());
+                        }
+                        if (ch1.getVisibility() == View.VISIBLE){
+                            MODEL_CHECK_LIST.get(0).setInternal("1");
+                        }else {
+                            MODEL_CHECK_LIST.get(0).setInternal("0");
                         }
                         Log.d("KDNCVJHD",COUNT_PROCESS+"");
                         if (COUNT_PROCESS == 1){
