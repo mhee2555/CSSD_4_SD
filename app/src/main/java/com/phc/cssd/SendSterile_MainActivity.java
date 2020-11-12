@@ -1048,6 +1048,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 txt_usr_receive.setText("");
                 txt_usr_receive.setContentDescription(null);
                 txt_usr_send.setSelection(0);
+                txt_get_ucode.requestFocus();
+                txt_get_ucode.setText("");
                 showAndhideBlueHead(true);
                 bin_all.setVisibility(View.INVISIBLE);
                 del_multi.setChecked(false);
