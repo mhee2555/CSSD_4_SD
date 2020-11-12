@@ -85,7 +85,6 @@ public class CheckListAdapter extends ArrayAdapter {
 
         Log.d("FKJDHJKDH",listData.get(position).getIsRemarkRound_RemarlAdmin()+" : "+listData.get(position).getIsRemarkRound());
 
-
         if (listData.get(position).getConfiguration().equals("0") && !listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
             if (!model.getNameType().equals("") && model.getAdminApprove().equals("0")){
                 txtitemname.setTextColor(Color.RED);
@@ -298,14 +297,16 @@ public class CheckListAdapter extends ArrayAdapter {
                         }
                     }
                 }else {
+                    un_checkbox.setEnabled(false);
+                    checkbox.setEnabled(false);
                     listData.get(position).setCheck(true);
-                    if (un_checkbox.getVisibility() == View.GONE){
-                        checkbox.setVisibility(View.GONE);
-                        un_checkbox.setVisibility(View.VISIBLE);
-                    }else {
-                        checkbox.setVisibility(View.VISIBLE);
-                        un_checkbox.setVisibility(View.GONE);
-                    }
+//                    if (un_checkbox.getVisibility() == View.GONE){
+//                        checkbox.setVisibility(View.GONE);
+//                        un_checkbox.setVisibility(View.VISIBLE);
+//                    }else {
+//                        checkbox.setVisibility(View.VISIBLE);
+//                        un_checkbox.setVisibility(View.GONE);
+//                    }
                 }
             }
         });
@@ -324,13 +325,15 @@ public class CheckListAdapter extends ArrayAdapter {
                         }
                     }else {
                         listData.get(position).setCheck(true);
-                        if (checkbox.getVisibility() == View.GONE){
-                            checkbox.setVisibility(View.VISIBLE);
-                            un_checkbox.setVisibility(View.GONE);
-                        }else {
-                            checkbox.setVisibility(View.GONE);
-                            un_checkbox.setVisibility(View.VISIBLE);
-                        }
+                        un_checkbox.setEnabled(false);
+                        checkbox.setEnabled(false);
+//                        if (checkbox.getVisibility() == View.GONE){
+//                            checkbox.setVisibility(View.VISIBLE);
+//                            un_checkbox.setVisibility(View.GONE);
+//                        }else {
+//                            checkbox.setVisibility(View.GONE);
+//                            un_checkbox.setVisibility(View.VISIBLE);
+//                        }
                     }
                 }
             }

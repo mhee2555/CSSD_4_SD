@@ -244,28 +244,28 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
         initialize();
     }
 
-    public boolean onTouchEvent(MotionEvent touchEvent){
-        switch (touchEvent.getAction()){
-            case MotionEvent.ACTION_DOWN:
-                x1 = touchEvent.getX();
-                y1 = touchEvent.getY();
-                Log.d("KFDJDL",x1+"");
-                Log.d("KFDJDL",y1+"");
-                break;
-            case MotionEvent.ACTION_UP:
-                Log.d("KFDJDL",x2+"");
-                Log.d("KFDJDL",y2+"");
-                x2 = touchEvent.getX();
-                y2 = touchEvent.getY();
-                if (x1 < x2){
-
-                }else if (x1 > x2){
-                    gotoActivity(PayoutActivity.class);
-                }
-                break;
-        }
-        return false;
-    }
+//    public boolean onTouchEvent(MotionEvent touchEvent){
+//        switch (touchEvent.getAction()){
+//            case MotionEvent.ACTION_DOWN:
+//                x1 = touchEvent.getX();
+//                y1 = touchEvent.getY();
+//                Log.d("KFDJDL",x1+"");
+//                Log.d("KFDJDL",y1+"");
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                Log.d("KFDJDL",x2+"");
+//                Log.d("KFDJDL",y2+"");
+//                x2 = touchEvent.getX();
+//                y2 = touchEvent.getY();
+//                if (x1 < x2){
+//
+//                }else if (x1 > x2){
+//                    gotoActivity(PayoutActivity.class);
+//                }
+//                break;
+//        }
+//        return false;
+//    }
 
     public void initialize(){
         b_Occurance.setOnClickListener(new View.OnClickListener() {
