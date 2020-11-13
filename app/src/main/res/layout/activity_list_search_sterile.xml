@@ -36,6 +36,19 @@
         android:textSize="14dp"></TextView>
 
     <TextView
+        android:id="@+id/batch"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_weight="0.75"
+        android:gravity="center|center_vertical"
+        android:maxLines="1"
+        android:text="1"
+        android:textColor="#505050"
+        android:background="#ffffff"
+        android:layout_marginLeft="4dp"
+        android:textSize="14dp"></TextView>
+
+    <TextView
         android:id="@+id/txt_doc_no"
         android:layout_width="0dp"
         android:layout_height="30dp"

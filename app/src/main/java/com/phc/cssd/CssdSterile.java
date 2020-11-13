@@ -5168,6 +5168,7 @@ public class CssdSterile extends AppCompatActivity {
                                         data.get(i + 25),
                                         data.get(i + 26),
                                         data.get(i + 27),
+                                        data.get(i + 28),
                                         index
                                 )
                         );
@@ -5213,6 +5214,7 @@ public class CssdSterile extends AppCompatActivity {
                     String PrintCount,
                     String TestProgramID,
                     String TestProgramName,
+                    String Batch,
                     int index
             ){
                 return new ModelSterile(
@@ -5244,6 +5246,7 @@ public class CssdSterile extends AppCompatActivity {
                         PrintCount,
                         TestProgramID,
                         TestProgramName,
+                        Batch,
                         index
                 );
             }
@@ -5407,6 +5410,7 @@ public class CssdSterile extends AppCompatActivity {
                                         data.get(i + 25),
                                         data.get(i + 26),
                                         data.get(i + 27),
+                                        data.get(i + 28),
                                         index
                                 )
                         );
@@ -5447,6 +5451,7 @@ public class CssdSterile extends AppCompatActivity {
                     String PrintCount,
                     String TestProgramID,
                     String TestProgramName,
+                    String Batch,
                     int index
             ){
                 return new ModelSterile(
@@ -5478,6 +5483,7 @@ public class CssdSterile extends AppCompatActivity {
                         PrintCount,
                         TestProgramID,
                         TestProgramName,
+                        Batch,
                         index
                 );
             }
@@ -5630,6 +5636,7 @@ public class CssdSterile extends AppCompatActivity {
                                         data.get(i + 25),
                                         data.get(i + 26),
                                         data.get(i + 27),
+                                        data.get(i + 28),
                                         index
                                 )
                         );
@@ -5670,6 +5677,7 @@ public class CssdSterile extends AppCompatActivity {
                     String PrintCount,
                     String TestProgramID,
                     String TestProgramName,
+                    String Batch,
                     int index
             ){
                 return new ModelSterile(
@@ -5701,6 +5709,7 @@ public class CssdSterile extends AppCompatActivity {
                         PrintCount,
                         TestProgramID,
                         TestProgramName,
+                        Batch,
                         index
                 );
             }

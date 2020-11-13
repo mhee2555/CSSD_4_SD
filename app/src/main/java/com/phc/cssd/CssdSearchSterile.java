@@ -474,6 +474,7 @@ public class CssdSearchSterile extends AppCompatActivity {
                                         data.get(i + 25),
                                         data.get(i + 26),
                                         data.get(i + 27),
+                                        data.get(i + 28),
                                         index
                                 )
                         );
@@ -519,6 +520,7 @@ public class CssdSearchSterile extends AppCompatActivity {
                     String PrintCount,
                     String TestProgramID,
                     String TestProgramName,
+                    String Batch,
                     int index
             ){
                 return new ModelSterile(
@@ -550,6 +552,7 @@ public class CssdSearchSterile extends AppCompatActivity {
                         PrintCount,
                         TestProgramID,
                         TestProgramName,
+                        Batch,
                         index
                 );
             }

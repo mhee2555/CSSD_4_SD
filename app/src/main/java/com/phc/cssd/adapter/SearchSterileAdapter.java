@@ -41,6 +41,7 @@ public class SearchSterileAdapter extends ArrayAdapter<ModelSterile> {
             viewHolder.txt_machine = (TextView) view.findViewById(R.id.txt_machine);
             viewHolder.txt_start = (TextView) view.findViewById(R.id.txt_start);
             viewHolder.txt_finish = (TextView) view.findViewById(R.id.txt_finish);
+            viewHolder.batch = (TextView) view.findViewById(R.id.batch);
             viewHolder.txt_usr_sterile = (TextView) view.findViewById(R.id.txt_usr_sterile);
 
             view.setTag(viewHolder);
@@ -64,6 +65,7 @@ public class SearchSterileAdapter extends ArrayAdapter<ModelSterile> {
         holder.txt_machine.setText(DATA_MODEL.get(position).getMachineName());
         holder.txt_start.setText(DATA_MODEL.get(position).getS_time());
         holder.txt_finish.setText(DATA_MODEL.get(position).getF_time());
+        holder.batch.setText(DATA_MODEL.get(position).getBatch());
         holder.txt_usr_sterile.setText(DATA_MODEL.get(position).getUsr_approve());
         holder.index = (DATA_MODEL.get(position).getIndex());
 
@@ -81,6 +83,7 @@ public class SearchSterileAdapter extends ArrayAdapter<ModelSterile> {
         TextView txt_machine;
         TextView txt_start;
         TextView txt_finish;
+        TextView batch;
         TextView txt_usr_sterile;
     }
 

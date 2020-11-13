@@ -285,6 +285,7 @@ public class CssdSterileDraft extends Activity {
                                         data.get(i + 25),
                                         data.get(i + 26),
                                         data.get(i + 27),
+                                        data.get(i + 28),
                                         index
                                 )
                         );
@@ -328,6 +329,7 @@ public class CssdSterileDraft extends Activity {
                     String PrintCount,
                     String TestProgramID,
                     String TestProgramName,
+                    String Batch,
                     int index
             ){
                 return new ModelSterile(
@@ -359,6 +361,7 @@ public class CssdSterileDraft extends Activity {
                         PrintCount,
                         TestProgramID,
                         TestProgramName,
+                        Batch,
                         index
                 );
             }

@@ -31,6 +31,7 @@ public class ModelSterile {
     String PrintCount;
     String TestProgramID;
     String TestProgramName;
+    String Batch;
     private int index = -1;
 
     public ModelSterile(//create_sterile
@@ -67,6 +68,7 @@ public class ModelSterile {
             String PrintCount,
             String TestProgramID,
             String TestProgramName,
+            String Batch,
             int index
     ) {
         this.ID = ID;
@@ -97,6 +99,7 @@ public class ModelSterile {
         this.PrintCount = PrintCount;
         this.TestProgramID = TestProgramID;
         this.TestProgramName = TestProgramName;
+        this.Batch = Batch;
         this.usr_beforeapprove ="-";
         this.index = index;
     }
@@ -135,6 +138,7 @@ public class ModelSterile {
             String PrintCount,
             String TestProgramID,
             String TestProgramName,
+            String Batch,
             String usr_beforeapprove,
             int index
     ) {
@@ -166,9 +170,14 @@ public class ModelSterile {
         this.PrintCount = PrintCount;
         this.TestProgramID = TestProgramID;
         this.TestProgramName = TestProgramName;
+        this.Batch = Batch;
         this.usr_beforeapprove =usr_beforeapprove;
         this.index = index;
     }
+
+    public String getBatch() { return Batch; }
+
+    public void setBatch(String batch) { Batch = batch; }
 
     public String getUsr_beforeapprove() {
         return usr_beforeapprove;
