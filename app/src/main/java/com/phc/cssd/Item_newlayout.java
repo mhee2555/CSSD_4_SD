@@ -166,8 +166,7 @@ public class Item_newlayout extends AppCompatActivity {
     private EditText txt_all_item_stock;
     private Button btn_save_item;
     private Button btn_save_item_1;
-    private Button btn_checklist;
-    private Button btn_checklist1;
+    private ImageView btn_checklist1;
     private Button btn_delete_item;
     private Button btn_open_item_stock;
     private Button btn_create_item_stock;
@@ -330,16 +329,9 @@ public class Item_newlayout extends AppCompatActivity {
 
             btn_save_item_1.setVisibility(View.INVISIBLE);
 
-            btn_checklist = ( Button ) findViewById(R.id.btn_checklist);
-            btn_checklist1 = ( Button ) findViewById(R.id.btn_checklist1);
 
-            btn_checklist.setVisibility(View.INVISIBLE);
-            btn_checklist.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getCheckList();
-                }
-            });
+            btn_checklist1 = ( ImageView ) findViewById(R.id.btn_checklist1);
+
             btn_checklist1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -402,7 +394,7 @@ public class Item_newlayout extends AppCompatActivity {
                     bt_step3.setImageResource(R.drawable.ss_ic_step4_disable_new);
                     layout_listview.setVisibility(View.INVISIBLE);
                     edt_item_code1.setTextColor(Color.BLACK);
-
+                    btn_checklist1.setBackgroundResource(R.drawable.bt_checklist_g);
                 }
             });
 
@@ -806,19 +798,8 @@ public class Item_newlayout extends AppCompatActivity {
             //----------------------------------------------
             // Config Gen_ItemCode == True
             //----------------------------------------------
-            btn_checklist = ( Button ) findViewById(R.id.btn_checklist);
-            btn_checklist1 = ( Button ) findViewById(R.id.btn_checklist1);
-            btn_checklist.setVisibility(View.INVISIBLE);
-            btn_checklist.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!edt_item_code1.getText().toString().equals("")){
-                        getCheckList();
-                    }else {
-                        Toast.makeText(Item_newlayout.this, "กรุณากรอกข้อมูลที่สำคัญให้ครบ!!!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+            btn_checklist1 = ( ImageView ) findViewById(R.id.btn_checklist1);
+
             btn_checklist1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -1015,6 +996,7 @@ public class Item_newlayout extends AppCompatActivity {
                     IsNewSave = 1;
                     btn_save_item_1.setBackgroundResource(R.drawable.bt_save_newitem_disable);
                     bt_displaystockdetail.setBackgroundResource(R.drawable.bt_stock_disable_new);
+                    btn_checklist1.setBackgroundResource(R.drawable.bt_checklist_g);
                 }
             });
 
@@ -1078,6 +1060,7 @@ public class Item_newlayout extends AppCompatActivity {
                     IsSaveDoc = 0;
                     btn_save_item.setBackgroundResource(R.drawable.bt_save_newitem_disable);
                     bt_displaystockdetail.setBackgroundResource(R.drawable.bt_stock_disable_new);
+                    btn_checklist1.setBackgroundResource(R.drawable.bt_checklist_g);
                 }
             });
 
@@ -2338,6 +2321,7 @@ public class Item_newlayout extends AppCompatActivity {
                             save_im.setBackgroundResource(R.drawable.bt_save_newitem_new);
                             bt_displaystockdetail.setBackgroundResource(R.drawable.bt_stock_new);
                             btn_create_item_stock_dept.setBackgroundResource(R.drawable.ss_bt_adddepartment_enable);
+                            btn_checklist1.setBackgroundResource(R.drawable.bt_checklist);
                         }else{
                             //bt_step2.setBackgroundResource(R.drawable.ss_ic_step2_disable);
                             bt_step.setImageResource(R.drawable.ss_ic_step2_enable);
@@ -2354,6 +2338,7 @@ public class Item_newlayout extends AppCompatActivity {
                             btn_create_item_stock.setBackgroundResource(R.drawable.bt_stock_enable2);
                             bt_displaystockdetail.setBackgroundResource(R.drawable.bt_stock_new);
                             btn_create_item_stock_dept.setBackgroundResource(R.drawable.ss_bt_adddepartment_enable);
+                            btn_checklist1.setBackgroundResource(R.drawable.bt_checklist);
                         }
 
                         chkIsSpecial.setEnabled(!list.get(ix).isSet().equals("0"));
@@ -3470,6 +3455,7 @@ public class Item_newlayout extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                             Toast.makeText(Item_newlayout.this, "บันทึกรายการสำเร็จ", Toast.LENGTH_SHORT).show();
+                            btn_checklist1.setBackgroundResource(R.drawable.bt_checklist);
                             edt_item_code1.setText(c.getString("ItemNew"));
                             ItemCode = "";
                             if (IsNewSave == 1){

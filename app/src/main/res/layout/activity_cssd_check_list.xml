@@ -495,7 +495,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="25dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_print_01" />
+        android:src="@drawable/ic_print_02" />
 
     <ImageView
         android:id="@+id/imv_new"
@@ -506,7 +506,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="200dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_detail_blue01" />
+        android:src="@drawable/bt_agin" />
 
 
 </RelativeLayout>

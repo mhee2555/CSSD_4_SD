@@ -592,6 +592,7 @@ public class CssdCheckList extends Activity {
         i.putExtra("itemdetail", itemdetail);
         i.putExtra("RowID", RowID);
         i.putExtra("type", type);
+        i.putExtra("page","checklist");
         startActivityForResult(i,1006);
     }
 
@@ -614,7 +615,7 @@ public class CssdCheckList extends Activity {
                 if (RETURN_ADMIN.equals("1")){
                     CancelRemark(RETURN_ITEMCODE,RETURN_ITEMDETAIL,RETURN_ROWID,RETURN_TYPE);
                 }else {
-                    if (RETURN_INCHARG.equals("2")){
+                    if (RETURN_INCHARG.equals("1")){
                         CancelRemark(RETURN_ITEMCODE,RETURN_ITEMDETAIL,RETURN_ROWID,RETURN_TYPE);
                     }else {
                         if (RETURN_USER.equals("1")){
@@ -1257,6 +1258,7 @@ public class CssdCheckList extends Activity {
         intent.putExtra("DocNo","");
         intent.putExtra("Type",type);
         intent.putExtra("Qty",Qty);
+        intent.putExtra("page","checklist");
         intent.putExtra("Qty_save",Qty_save);
         intent.putExtra("context", String.valueOf(CssdCheckList.this));
         startActivityForResult(intent,1005);

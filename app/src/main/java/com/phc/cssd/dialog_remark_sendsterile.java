@@ -38,7 +38,7 @@ public class dialog_remark_sendsterile extends Activity {
     ImageView close;
 
     String Itemname,Usagecode,DepID,DocNoSend,IsStatus,DocNo;
-    String datacheck,EmpCode,Type,Xqty,Qty_save;
+    String datacheck,EmpCode,Type,Xqty,Qty_save,page;
     String IsSave = "0";
 
     boolean IsAdmin = false;
@@ -51,6 +51,7 @@ public class dialog_remark_sendsterile extends Activity {
     private String RETURN_VALUE = "";
     private String RETURN_ADMIN = "";
     private String RETURN_INCHARG = "";
+    private String RETURN_USER = "";
     private String RETURN_EMCODE = "";
     private String TAG_RESULTS = "result";
     private JSONArray rs = null;
@@ -83,6 +84,7 @@ public class dialog_remark_sendsterile extends Activity {
         DocNo = intent.getStringExtra("DocNo");
         Xqty = intent.getStringExtra("Qty");
         Qty_save = intent.getStringExtra("Qty_save");
+        page = intent.getStringExtra("page");
     }
 
     public void initialize() {
@@ -315,13 +317,14 @@ public class dialog_remark_sendsterile extends Activity {
 
     private void openQR(final String admin){
         Intent i = new Intent(dialog_remark_sendsterile.this, CssdQrUser.class);
-        i.putExtra("data", admin);
+        i.putExtra("page", page);
         startActivityForResult(i,1006);
     }
 
     private void openQR_Save(final String admin){
         Intent i = new Intent(dialog_remark_sendsterile.this, CssdQrUser.class);
         i.putExtra("data", admin);
+        i.putExtra("page", page);
         startActivityForResult(i,1007);
     }
 
@@ -334,15 +337,23 @@ public class dialog_remark_sendsterile extends Activity {
             RETURN_VALUE = data.getStringExtra("RETURN_VALUE");
             RETURN_ADMIN = data.getStringExtra("RETURN_ADMIN");
             RETURN_INCHARG = data.getStringExtra("RETURN_INCHARG");
+            RETURN_USER = data.getStringExtra("RETURN_USER");
             RETURN_EMCODE = data.getStringExtra("RETURN_EMCODE");
+            Log.d("BANK7",RETURN_ADMIN);
+            Log.d("BANK7",RETURN_INCHARG);
+            Log.d("BANK7",RETURN_USER);
             if (resultCode == 1006) {
                 if (RETURN_ADMIN.equals("1")){
                     CancelRemark(datacheck,text_remark.getText().toString(),DocNoSend,Usagecode,Itemname,DepID);
                 }else {
-                    if (RETURN_INCHARG.equals("2")){
+                    if (RETURN_INCHARG.equals("1")){
                         CancelRemark(datacheck,text_remark.getText().toString(),DocNoSend,Usagecode,Itemname,DepID);
                     }else {
-                        Toast.makeText(dialog_remark_sendsterile.this, "สิทธิ์ผู้ใช้งานไม่สามารถเข้าถึงส่วนนี้ได้ !!", Toast.LENGTH_SHORT).show();
+                        if (RETURN_USER.equals("1")){
+                            CancelRemark(datacheck,text_remark.getText().toString(),DocNoSend,Usagecode,Itemname,DepID);
+                        }else {
+                            Toast.makeText(dialog_remark_sendsterile.this, "สิทธิ์ผู้ใช้งานไม่สามารถเข้าถึงส่วนนี้ได้ !!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }else if (resultCode == 1007){
@@ -353,14 +364,22 @@ public class dialog_remark_sendsterile extends Activity {
                         CheckStatusDocNo(DocNoSend);
                     }
                 }else {
-                    if (RETURN_INCHARG.equals("2")){
+                    if (RETURN_INCHARG.equals("1")){
                         if (DocNoSend.equals("")){
                             SaveRemarkDocNo(DocNoSend,Usagecode,Itemname);
                         }else {
                             CheckStatusDocNo(DocNoSend);
                         }
                     }else {
-                        Toast.makeText(dialog_remark_sendsterile.this, "สิทธิ์ผู้ใช้งานไม่สามารถเข้าถึงส่วนนี้ได้ !!", Toast.LENGTH_SHORT).show();
+                        if (RETURN_USER.equals("1")){
+                            if (DocNoSend.equals("")){
+                                SaveRemarkDocNo(DocNoSend,Usagecode,Itemname);
+                            }else {
+                                CheckStatusDocNo(DocNoSend);
+                            }
+                        }else {
+                            Toast.makeText(dialog_remark_sendsterile.this, "สิทธิ์ผู้ใช้งานไม่สามารถเข้าถึงส่วนนี้ได้ !!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }

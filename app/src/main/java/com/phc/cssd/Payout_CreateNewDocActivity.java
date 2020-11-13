@@ -201,6 +201,7 @@ public class Payout_CreateNewDocActivity extends Activity {
                 data.put("mode",mode+"");
                 Log.d("ttest","CreatePayoutDocument : "+data);
                 data.put("B_ID",B_ID+"");
+                data.put("itemcode",RETURN_ItemCode+"");
                 String result = ruc.sendPostRequest(getUrl.xUrl+"1/set_createpayoutdocno.php",data);
                 Log.d("ttest: ", result);
                 return  result;

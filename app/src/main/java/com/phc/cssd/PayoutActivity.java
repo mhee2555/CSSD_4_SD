@@ -795,12 +795,6 @@ public class PayoutActivity extends AppCompatActivity {
         IsInCharg = intent.getStringExtra("IsInCharg");
         IsUser = intent.getStringExtra("IsUser");
 
-        Log.d("VMFVDLE", IsAdmin_T);
-        Log.d("VMFVDLE", IsInCharg);
-        Log.d("VMFVDLE", IsUser);
-        Log.d("VMFVDLE", IsAdmin_Log);
-        Log.d("VMFVDLE", IsInCharg_Log);
-        Log.d("VMFVDLE", IsUser_Log);
     }
 
 //    public boolean onTouchEvent(MotionEvent touchEvent){

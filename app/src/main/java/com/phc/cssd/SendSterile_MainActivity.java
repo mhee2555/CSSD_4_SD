@@ -3462,7 +3462,12 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         if (c.getString("Tel").equals("")){
                             txt_tel_dep.setText("โทร : ไม่มีข้อมูล");
                         }else {
-                            txt_tel_dep.setText("โทร : "+c.getString("Tel"));
+                            if (c.getString("Tel").equals("null")){
+                                getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
+                                clear_l2();
+                            }else {
+                                txt_tel_dep.setText("โทร : "+c.getString("Tel"));
+                            }
                         }
                     }
                 } catch (JSONException e) {
@@ -3508,7 +3513,12 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         if (c.getString("Tel").equals("")){
                             txt_tel_dep.setText("โทร : ไม่มีข้อมูล");
                         }else {
-                            txt_tel_dep.setText("โทร : "+c.getString("Tel"));
+                            if (c.getString("Tel").equals("null")){
+                                getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
+                                clear_l2();
+                            }else {
+                                txt_tel_dep.setText("โทร : "+c.getString("Tel"));
+                            }
                         }
                     }
                 } catch (JSONException e) {
@@ -4028,6 +4038,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         intent.putExtra("IsStatus",IsStatus);
         intent.putExtra("DocNo",etxt_docno.getText().toString());
         intent.putExtra("Type",type);
+        intent.putExtra("page","sendsterile");
         intent.putExtra("Qty",Qty);
         intent.putExtra("Qty_save",Qty_save);
         intent.putExtra("context", String.valueOf(SendSterile_MainActivity.this));
