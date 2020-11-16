@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="800dp"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg">
+
+    <LinearLayout
+        android:layout_width="800dp"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:padding="6dp"
+        >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:padding="0dp">
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="wrap_content" />
+
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_is_new"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:buttonTint="@color/colorBlue"
+                    android:checked="true"
+                    android:text="อุปกรณ์ใหม่"
+                    android:textSize="13dp" />
+
+                <RadioButton
+                    android:id="@+id/radio_no_wash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorBlue"
+                    android:text="ไม่ต้องผ่านการล้าง"
+                    android:textSize="13dp" />
+
+            </RadioGroup>
+
+            <RelativeLayout
+                android:id="@+id/linear_layout_search"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:gravity="center_vertical">
+
+                <EditText
+                    android:id="@+id/txt_search"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/text_dropdown"
+                    android:color="@color/form_label"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="8dp"
+                    android:singleLine="true" />
+
+                <Button
+                    android:id="@+id/btn_search_item"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/search" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/relativeLayout"
+            android:orientation="horizontal"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/tab_master_cyanblue"
+                android:gravity="center_vertical"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_weight="1.5"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="@drawable/tab_master_cyanblue"
+                android:gravity="center_vertical"
+                android:text="รหัส"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="40dp"
+                android:paddingLeft="10dp"
+                android:textSize="14dp"
+                android:background="@drawable/tab_master_cyanblue"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="รายการ"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="@drawable/tab_master_cyanblue"
+                android:textSize="14dp"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="รูปแบบการห่อ"
+                >
+            </TextView>
+
+            <TextView
+                android:id="@+id/txt"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="2"
+                android:background="@drawable/tab_master_cyanblue"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="วันที่สร้าง"
+                android:textSize="14dp"></TextView>
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="70dp"
+            android:background="@color/list_background_color">
+        </ListView>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/image_save"
+        android:layout_width="145dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="30dp"
+        android:src="@drawable/ic_input_txt" />
+
+</RelativeLayout>
+
