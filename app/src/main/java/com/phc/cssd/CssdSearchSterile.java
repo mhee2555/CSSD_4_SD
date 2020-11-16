@@ -59,6 +59,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import static com.phc.cssd.CssdTscPrintLabel.updatePrintStatus;
+import static com.phc.cssd.function.KeyboardUtils.hideKeyboard;
 
 public class CssdSearchSterile extends AppCompatActivity {
 
@@ -603,9 +604,11 @@ public class CssdSearchSterile extends AppCompatActivity {
                         list_sterile_detail.setAdapter(null);
                         e.printStackTrace();
                     }
+                    hideKeyboard(CssdSearchSterile.this);
                 }else {
                     Toast.makeText(CssdSearchSterile.this, "ไม่พบข้อมูล !!", Toast.LENGTH_SHORT).show();
                     scan.setText("");
+                    hideKeyboard(CssdSearchSterile.this);
                 }
             }
 
