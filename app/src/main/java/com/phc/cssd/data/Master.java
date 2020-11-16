@@ -141,5 +141,6 @@ public class Master {
     public static final int ss_Clear_Button = 5;
     public static final int ss_Done_Button = 6;
     public static final int ss_Wash_Tag_Expire = 7;
+    public static final int ss_Clear_Wash_Tag_and_Focus_Wash_Tag = 8;
 
 }

@@ -182,7 +182,7 @@ public class CssdSterile extends AppCompatActivity {
     private Button btn_import_new_item_stock;
     private Button btn_checklist;
     private ImageView imageBack;
-    private int DISPLAY_MODE = 0;
+    private int DISPLAY_MODE = 2;
     private final int i = 0;
     private int STERILE_PROCESS_NUMBER_ACTIVE = 0;
     private int MAX_STERILE_PROCESS = 0;
@@ -6716,8 +6716,12 @@ public class CssdSterile extends AppCompatActivity {
                                     grid_wash_detail.setAdapter(adapter);
                                 }
                             }else if(DISPLAY_MODE == 2) {
-                                adapter = new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR,MAP_MODEL_IMPORT_WASH_DETAIL_SUB,4);
-                                basket_dialog_w_list.setAdapter(adapter);
+
+                                Log.d("tog_isprint","cnt = "+MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR.size());
+                                basket_dialog_w_list.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR,MAP_MODEL_IMPORT_WASH_DETAIL_SUB,4));
+
+//                                adapter = new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR,MAP_MODEL_IMPORT_WASH_DETAIL_SUB,4);
+//                                basket_dialog_w_list.setAdapter(adapter);
 
                                 if(MAP_MODEL_IMPORT_WASH_DETAIL_SUB.containsKey(basket_Code.toLowerCase())){
                                     MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR = MAP_MODEL_IMPORT_WASH_DETAIL_SUB.get(basket_Code.toLowerCase());
@@ -6812,12 +6816,12 @@ public class CssdSterile extends AppCompatActivity {
                     int index = 0;
 
                     for(int i=0;i<data.size();i+=size){
-                        Log.d("ttestdataget","PrintCount = "+data.get(i+1)+"---"+data.get(i+18));
 
                         if(ConfigProgram.basket_tag && !ConfigProgram.pair_basket_2 && data.get(i + 18).equals("0")){
                            continue;
                         }
 
+                        Log.d("tog_isprint","PrintCount = "+data.get(i+14)+"---"+data.get(i+18)+"---"+data.get(i+19));
                         list.add(
                                 new ModelImportWashDetail(
                                         index,
@@ -7619,6 +7623,7 @@ public class CssdSterile extends AppCompatActivity {
     }
 
     public void selectBasket(final String BasketCode, final EditText edt_basketcode) {
+        Log.d("tog_isprint","selectBasket");
         class Basket extends AsyncTask<String, Void, String> {
 
             // variable
