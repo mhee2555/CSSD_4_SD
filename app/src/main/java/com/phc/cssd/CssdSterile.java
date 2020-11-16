@@ -319,6 +319,8 @@ public class CssdSterile extends AppCompatActivity {
         Setting s = CssdSetting.getSetting();
         IsShowBasket = s.isShowBasket();
 
+        btn_import_new_item_stock.setVisibility(View.VISIBLE);
+
         if(!ConfigProgram.basket_tag){
             button_basket.setVisibility(View.INVISIBLE);
             btn_checklist.setVisibility(View.INVISIBLE);
@@ -961,6 +963,7 @@ public class CssdSterile extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        displayWashDetail(getSterileProcessId());
         /*
         mPermissionIntent = PendingIntent.getBroadcast(this, 0, new Intent(ACTION_USB_PERMISSION), 0);
         IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
@@ -1564,36 +1567,37 @@ public class CssdSterile extends AppCompatActivity {
         switch_mode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 String p_SterileProcessID = getSterileProcessId();
+                Log.d("tog_displayWashDetail","switch_mode");
                 displayWashDetail(p_SterileProcessID);
             }
         });
 
 
         group_choices = (SingleSelectToggleGroup) findViewById(R.id.group_choices);
-//        group_choices.setVisibility(View.GONE);
-        group_choices.setOnCheckedChangeListener(new SingleSelectToggleGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(SingleSelectToggleGroup group, int checkedId) {
-
-                CircularToggle c = (CircularToggle) findViewById(checkedId);
-
-                String txt = c.getText().toString();
-
-                if(txt.equals("S")){
-                    DISPLAY_MODE = 3;
-                }else if(txt.equals("M")){
-                    DISPLAY_MODE = 2;
-                }else if(txt.equals("L")){
-                    DISPLAY_MODE = 1;
-                }else{
-                    DISPLAY_MODE = 0;
-                    return;
-                }
-
-                displayMode();
-
-            }
-        });
+        group_choices.setVisibility(View.INVISIBLE);
+//        group_choices.setOnCheckedChangeListener(new SingleSelectToggleGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(SingleSelectToggleGroup group, int checkedId) {
+//
+//                CircularToggle c = (CircularToggle) findViewById(checkedId);
+//
+//                String txt = c.getText().toString();
+//
+//                if(txt.equals("S")){
+//                    DISPLAY_MODE = 3;
+//                }else if(txt.equals("M")){
+//                    DISPLAY_MODE = 2;
+//                }else if(txt.equals("L")){
+//                    DISPLAY_MODE = 1;
+//                }else{
+//                    DISPLAY_MODE = 0;
+//                    return;
+//                }
+//
+//                displayMode();
+//
+//            }
+//        });
 
         imv_AddItem = (ImageView) findViewById(R.id.imv_AddItem);
         imv_AddItem.setOnClickListener(new View.OnClickListener(){
@@ -1691,6 +1695,16 @@ public class CssdSterile extends AppCompatActivity {
         PairBasketBox_basket_Code = (TextView) dialog_item_stock_detail_basket.findViewById(R.id.bastek_name);
         cnt_basket_list = (TextView) dialog_item_stock_detail_basket.findViewById(R.id.cnt_basket_list);
         btn_import_new_item_stock_to_basket = (Button) dialog_item_stock_detail_basket.findViewById(R.id.btn_import_new_item_stock_to_basket);
+
+        btn_import_new_item_stock_to_basket.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+
+                Intent i = new Intent(CssdSterile.this, CssdNewItemStockToWash.class);
+                i.putExtra("B_ID", B_ID);
+                i.putExtra("userid", userid);
+                startActivity(i);
+            }
+        });
 
         cnt_basket_list.setText("");
 
@@ -1920,7 +1934,6 @@ public class CssdSterile extends AppCompatActivity {
 //                }
 //                basket_dialog_w_list.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR,MAP_MODEL_IMPORT_WASH_DETAIL_SUB,4));
                 //ปิดเลือกโปรแกรมก่อน จบ
-//                displayWashDetail("null");
                 displayWashDetail(getSterileProcessId());
                 dialog_qr.show();
                 dialogProgress.dismiss();
@@ -1986,6 +1999,7 @@ public class CssdSterile extends AppCompatActivity {
                 super.onPostExecute(result);
 
                 if(MODEL_IMPORT_WASH_DETAIL != null && MODEL_IMPORT_WASH_DETAIL.size() > 0){
+                    Log.d("tog_displayWashDetail","displayMode");
                     displayWashDetail(getSterileProcessId());
                 }
 
@@ -6615,6 +6629,7 @@ public class CssdSterile extends AppCompatActivity {
     // =============================================================================================
 
     public void displayWashDetail(final String p_SterileProcessID) {
+        Log.d("tog_displayWashDetail","displayWashDetail");
 
         final boolean mode = switch_mode.isChecked();
 
@@ -7753,6 +7768,7 @@ public class CssdSterile extends AppCompatActivity {
                         JSONObject c = rs.getJSONObject(i);
                         if(c.getString("result").equals("A")) {
 
+                            Log.d("tog_displayWashDetail","onPairBasket");
                             displayWashDetail(getSterileProcessId());
                         }
                         Toast.makeText(CssdSterile.this, c.getString("Message"), Toast.LENGTH_SHORT).show();
@@ -7828,6 +7844,7 @@ public class CssdSterile extends AppCompatActivity {
 
                         if(c.getString("result").equals("A")) {
 
+                            Log.d("tog_displayWashDetail","onRemoveBasket");
                             displayWashDetail(getSterileProcessId());
                         }
 
