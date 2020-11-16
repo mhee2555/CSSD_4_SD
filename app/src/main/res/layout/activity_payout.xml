@@ -328,7 +328,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="5dp"
             android:layout_toStartOf="@+id/button02"
-            android:src="@drawable/bt_print_payout"
+            android:src="@drawable/bt_print2_payout"
             android:visibility="visible" />
 
 

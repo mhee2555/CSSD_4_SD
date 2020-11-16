@@ -66,6 +66,9 @@ public class CheckListAdapter extends ArrayAdapter {
         final ImageView un_checkbox = (ImageView) v.findViewById(R.id.un_checkbox);
         final ImageView Open_pic = (ImageView) v.findViewById(R.id.Open_pic);
         final TextView Open_pic_Text = (TextView) v.findViewById(R.id.Open_pic_Text);
+        final TextView user_dep_text = (TextView) v.findViewById(R.id.user_dep_text);
+        final TextView user_dep = (TextView) v.findViewById(R.id.user_dep);
+        final RelativeLayout R1 = (RelativeLayout) v.findViewById(R.id.R1);
         final String img_set = listData.get(position).getPicture_set();
         final String img_detail = listData.get(position).getPicture_detail();
 
@@ -83,15 +86,14 @@ public class CheckListAdapter extends ArrayAdapter {
             }
         });
 
-        Log.d("FKJDHJKDH",listData.get(position).getIsRemarkRound_RemarlAdmin()+" : "+listData.get(position).getIsRemarkRound());
-
-
         if (listData.get(position).getConfiguration().equals("0") && !listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
             if (!model.getNameType().equals("") && model.getAdminApprove().equals("0")){
                 txtitemname.setTextColor(Color.RED);
                 txt_caption_qty.setTextColor(Color.RED);
                 txt_qty.setTextColor(Color.RED);
                 txt_remark.setTextColor(Color.RED);
+                user_dep.setTextColor(Color.RED);
+                user_dep_text.setTextColor(Color.RED);
                 txt_remark_admin.setTextColor(Color.RED);
                 txt_remark_type.setTextColor(Color.RED);
                 txt_remark_date.setTextColor(Color.RED);
@@ -105,7 +107,8 @@ public class CheckListAdapter extends ArrayAdapter {
                 }else {
                     listData.get(position).setCheck(false);
                 }
-                txt_remark.setText(listData.get(position).getRemark());
+                txt_remark.setText(listData.get(position).getNote());
+                user_dep_text.setText(listData.get(position).getRemark());
                 txt_remark_admin.setText(listData.get(position).getAdminRemark());
                 txt_remark_type.setText(listData.get(position).getNameType());
                 txt_remark_date.setText(listData.get(position).getDateRemark());
@@ -113,6 +116,8 @@ public class CheckListAdapter extends ArrayAdapter {
                 txt_caption_qty.setTextColor(Color.GRAY);
                 txt_qty.setTextColor(Color.GRAY);
                 txt_remark.setTextColor(Color.GRAY);
+                user_dep.setTextColor(Color.GRAY);
+                user_dep_text.setTextColor(Color.GRAY);
                 txt_remark_admin.setTextColor(Color.GRAY);
                 txt_remark_type.setTextColor(Color.GRAY);
                 txt_remark_date.setTextColor(Color.GRAY);
@@ -129,17 +134,28 @@ public class CheckListAdapter extends ArrayAdapter {
                 listData.get(position).setAdminRemark("-");
                 listData.get(position).setNameType("-");
                 listData.get(position).setDateRemark("-");
-                txt_remark.setText(listData.get(position).getRemark());
+
+                txt_remark.setVisibility(View.GONE);
+                user_dep.setVisibility(View.GONE);
+                user_dep_text.setVisibility(View.GONE);
+
+                //txt_remark.setText(listData.get(position).getNote());
+                user_dep_text.setText(listData.get(position).getRemark());
                 txt_remark_admin.setText(listData.get(position).getAdminRemark());
                 txt_remark_type.setText(listData.get(position).getNameType());
                 txt_remark_date.setText(listData.get(position).getDateRemark());
+
                 txtitemname.setTextColor(Color.BLACK);
                 txt_caption_qty.setTextColor(Color.BLACK);
                 txt_qty.setTextColor(Color.BLACK);
-                txt_remark.setTextColor(Color.BLACK);
+                //txt_remark.setTextColor(Color.BLACK);
+                //user_dep.setTextColor(Color.BLACK);
+
+                user_dep_text.setTextColor(Color.BLACK);
                 txt_remark_admin.setTextColor(Color.BLACK);
                 txt_remark_type.setTextColor(Color.BLACK);
                 txt_remark_date.setTextColor(Color.BLACK);
+
                 checkbox.setVisibility(View.VISIBLE);
                 un_checkbox.setVisibility(View.GONE);
                 if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
@@ -157,6 +173,8 @@ public class CheckListAdapter extends ArrayAdapter {
                     txt_caption_qty.setTextColor(Color.RED);
                     txt_qty.setTextColor(Color.RED);
                     txt_remark.setTextColor(Color.RED);
+                    user_dep.setTextColor(Color.RED);
+                    user_dep_text.setTextColor(Color.RED);
                     txt_remark_admin.setTextColor(Color.RED);
                     txt_remark_type.setTextColor(Color.RED);
                     txt_remark_date.setTextColor(Color.RED);
@@ -166,6 +184,8 @@ public class CheckListAdapter extends ArrayAdapter {
                         txt_caption_qty.setTextColor(Color.RED);
                         txt_qty.setTextColor(Color.RED);
                         txt_remark.setTextColor(Color.RED);
+                        user_dep.setTextColor(Color.RED);
+                        user_dep_text.setTextColor(Color.RED);
                         txt_remark_admin.setTextColor(Color.RED);
                         txt_remark_type.setTextColor(Color.RED);
                         txt_remark_date.setTextColor(Color.RED);
@@ -175,6 +195,8 @@ public class CheckListAdapter extends ArrayAdapter {
                             txt_caption_qty.setTextColor(Color.RED);
                             txt_qty.setTextColor(Color.RED);
                             txt_remark.setTextColor(Color.RED);
+                            user_dep.setTextColor(Color.RED);
+                            user_dep_text.setTextColor(Color.RED);
                             txt_remark_admin.setTextColor(Color.RED);
                             txt_remark_type.setTextColor(Color.RED);
                             txt_remark_date.setTextColor(Color.RED);
@@ -184,6 +206,8 @@ public class CheckListAdapter extends ArrayAdapter {
                                 txt_caption_qty.setTextColor(Color.RED);
                                 txt_qty.setTextColor(Color.RED);
                                 txt_remark.setTextColor(Color.RED);
+                                user_dep.setTextColor(Color.RED);
+                                user_dep_text.setTextColor(Color.RED);
                                 txt_remark_admin.setTextColor(Color.RED);
                                 txt_remark_type.setTextColor(Color.RED);
                                 txt_remark_date.setTextColor(Color.RED);
@@ -197,7 +221,8 @@ public class CheckListAdapter extends ArrayAdapter {
                                 }else {
                                     listData.get(position).setCheck(false);
                                 }
-                                txt_remark.setText(listData.get(position).getRemark());
+                                txt_remark.setText(listData.get(position).getNote());
+                                user_dep_text.setText(listData.get(position).getRemark());
                                 txt_remark_admin.setText(listData.get(position).getAdminRemark());
                                 txt_remark_type.setText(listData.get(position).getNameType());
                                 txt_remark_date.setText(listData.get(position).getDateRemark());
@@ -205,6 +230,8 @@ public class CheckListAdapter extends ArrayAdapter {
                                 txt_caption_qty.setTextColor(Color.GRAY);
                                 txt_qty.setTextColor(Color.GRAY);
                                 txt_remark.setTextColor(Color.GRAY);
+                                user_dep.setTextColor(Color.GRAY);
+                                user_dep_text.setTextColor(Color.GRAY);
                                 txt_remark_admin.setTextColor(Color.GRAY);
                                 txt_remark_type.setTextColor(Color.GRAY);
                                 txt_remark_date.setTextColor(Color.GRAY);
@@ -225,7 +252,8 @@ public class CheckListAdapter extends ArrayAdapter {
                 }else {
                     listData.get(position).setCheck(false);
                 }
-                txt_remark.setText(listData.get(position).getRemark());
+                txt_remark.setText(listData.get(position).getNote());
+                user_dep_text.setText(listData.get(position).getRemark());
                 txt_remark_admin.setText(listData.get(position).getAdminRemark());
                 txt_remark_type.setText(listData.get(position).getNameType());
                 txt_remark_date.setText(listData.get(position).getDateRemark());
@@ -233,6 +261,8 @@ public class CheckListAdapter extends ArrayAdapter {
                 txt_caption_qty.setTextColor(Color.GRAY);
                 txt_qty.setTextColor(Color.GRAY);
                 txt_remark.setTextColor(Color.GRAY);
+                user_dep.setTextColor(Color.GRAY);
+                user_dep_text.setTextColor(Color.GRAY);
                 txt_remark_admin.setTextColor(Color.GRAY);
                 txt_remark_type.setTextColor(Color.GRAY);
                 txt_remark_date.setTextColor(Color.GRAY);
@@ -245,23 +275,38 @@ public class CheckListAdapter extends ArrayAdapter {
                 }
             }else {
                 listData.get(position).setCheck(false);
+
                 listData.get(position).setRemark("-");
                 listData.get(position).setAdminRemark("-");
                 listData.get(position).setNameType("-");
                 listData.get(position).setDateRemark("-");
-                txt_remark.setText(listData.get(position).getRemark());
+
+                txt_remark.setVisibility(View.GONE);
+                user_dep.setVisibility(View.GONE);
+                user_dep_text.setVisibility(View.GONE);
+
+                //txt_remark.setText(listData.get(position).getNote());
+
+                user_dep_text.setText(listData.get(position).getRemark());
                 txt_remark_admin.setText(listData.get(position).getAdminRemark());
                 txt_remark_type.setText(listData.get(position).getNameType());
                 txt_remark_date.setText(listData.get(position).getDateRemark());
+
                 txtitemname.setTextColor(Color.BLACK);
                 txt_caption_qty.setTextColor(Color.BLACK);
                 txt_qty.setTextColor(Color.BLACK);
-                txt_remark.setTextColor(Color.BLACK);
+
+                //txt_remark.setTextColor(Color.BLACK);
+                //user_dep.setTextColor(Color.BLACK);
+                //user_dep_text.setTextColor(Color.BLACK);
+
                 txt_remark_admin.setTextColor(Color.BLACK);
                 txt_remark_type.setTextColor(Color.BLACK);
                 txt_remark_date.setTextColor(Color.BLACK);
+
                 checkbox.setVisibility(View.VISIBLE);
                 un_checkbox.setVisibility(View.GONE);
+
                 if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
                     listData.get(position).setCheck(true);
                 }else {
@@ -298,14 +343,16 @@ public class CheckListAdapter extends ArrayAdapter {
                         }
                     }
                 }else {
+                    un_checkbox.setEnabled(false);
+                    checkbox.setEnabled(false);
                     listData.get(position).setCheck(true);
-                    if (un_checkbox.getVisibility() == View.GONE){
-                        checkbox.setVisibility(View.GONE);
-                        un_checkbox.setVisibility(View.VISIBLE);
-                    }else {
-                        checkbox.setVisibility(View.VISIBLE);
-                        un_checkbox.setVisibility(View.GONE);
-                    }
+//                    if (un_checkbox.getVisibility() == View.GONE){
+//                        checkbox.setVisibility(View.GONE);
+//                        un_checkbox.setVisibility(View.VISIBLE);
+//                    }else {
+//                        checkbox.setVisibility(View.VISIBLE);
+//                        un_checkbox.setVisibility(View.GONE);
+//                    }
                 }
             }
         });
@@ -324,25 +371,35 @@ public class CheckListAdapter extends ArrayAdapter {
                         }
                     }else {
                         listData.get(position).setCheck(true);
-                        if (checkbox.getVisibility() == View.GONE){
-                            checkbox.setVisibility(View.VISIBLE);
-                            un_checkbox.setVisibility(View.GONE);
-                        }else {
-                            checkbox.setVisibility(View.GONE);
-                            un_checkbox.setVisibility(View.VISIBLE);
-                        }
+                        un_checkbox.setEnabled(false);
+                        checkbox.setEnabled(false);
+//                        if (checkbox.getVisibility() == View.GONE){
+//                            checkbox.setVisibility(View.VISIBLE);
+//                            un_checkbox.setVisibility(View.GONE);
+//                        }else {
+//                            checkbox.setVisibility(View.GONE);
+//                            un_checkbox.setVisibility(View.VISIBLE);
+//                        }
                     }
                 }
             }
         });
         txtitemname.setPaintFlags(txtitemname.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         txtitemname.setText(listData.get(position).getItemcode() + " - " + listData.get(position).getItemname());
+
         txtitemname.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((CssdCheckList)acc).onListClick(listData.get(position).getPicture_set(),listData.get(position).getPicture_detail());
             }
         });
+
+//        R1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ((CssdCheckList)acc).onListClick(listData.get(position).getPicture_set(),listData.get(position).getPicture_detail());
+//            }
+//        });
         int x1 = Integer.parseInt(listData.get(position).getQty());
         int x2 = Integer.parseInt(listData.get(position).getQtyItemDetail());
         if (!listData.get(position).getItemname().equals("COMPLY STERIGAGE STEAM (SHORT)")){
@@ -370,7 +427,8 @@ public class CheckListAdapter extends ArrayAdapter {
                 un_checkbox.setVisibility(View.GONE);
             }
         }
-        txt_remark.setText(listData.get(position).getRemark());
+        txt_remark.setText(listData.get(position).getNote());
+        user_dep_text.setText(listData.get(position).getRemark());
         txt_remark_admin.setText(listData.get(position).getAdminRemark());
         txt_remark_type.setText(listData.get(position).getNameType());
         txt_remark_date.setText(listData.get(position).getDateRemark());

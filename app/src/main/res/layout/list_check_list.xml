@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/R1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="5dp"
@@ -63,7 +64,7 @@
                 android:layout_marginBottom="20dp"
                 android:paddingLeft="12dp"
                 android:layout_toEndOf="@+id/txt_qty"
-                android:text="Remark"
+                android:text="หมายเหตุ : "
                 android:textColor="@android:color/black"
                 android:textSize="12dp" />
 
@@ -93,24 +94,48 @@
                 android:textSize="9dp" />
 
             <TextView
+                android:id="@+id/user_dep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="20dp"
+                android:paddingLeft="10dp"
+                android:layout_toEndOf="@+id/txt_remark_date"
+                android:text="จนท.แผนก :"
+                android:textColor="@android:color/black"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/user_dep_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="20dp"
+                android:paddingLeft="10dp"
+                android:layout_toEndOf="@+id/user_dep"
+                android:text=""
+                android:textColor="@android:color/black"
+                android:textSize="12dp" />
+
+            <TextView
                 android:id="@+id/txt_remark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-               android:layout_marginTop="37dp"
+                android:layout_marginTop="37dp"
                 android:layout_marginBottom="4dp"
                 android:layout_marginLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="Note"
+                android:text="หมายเหตุ : "
                 android:textColor="@android:color/black"
                 android:textSize="12dp" />
 
             <ImageView
                 android:id="@+id/Open_pic"
-                android:layout_width="70dp"
+                android:layout_width="90dp"
                 android:layout_height="27dp"
                 android:layout_marginTop="18dp"
                 android:layout_alignParentBottom="true"
-                android:background="@drawable/button_pic"
+                android:background="@drawable/remark"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="40dp" />
 
@@ -118,10 +143,10 @@
                 android:id="@+id/Open_pic_Text"
                 android:layout_width="70dp"
                 android:layout_height="23dp"
-                android:text="ดูรูปภาพ"
+                android:text="ภาพ Remark"
                 android:textColor="@android:color/black"
                 android:textSize="12dp"
-                android:layout_marginEnd="28dp"
+                android:layout_marginEnd="44dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:textStyle="bold">

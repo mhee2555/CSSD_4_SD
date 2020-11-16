@@ -240,10 +240,10 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
 
         if (!listData.get(position).getIsStatus().equals("0")) {
             ((SendSterile_MainActivity)aActivity).showAndhideBlueHead(false);
-            btdel.setVisibility(View.INVISIBLE);
+            //btdel.setVisibility(View.INVISIBLE);
         }else {
             ((SendSterile_MainActivity)aActivity).showAndhideBlueHead(true);
-            btdel.setVisibility(View.VISIBLE);
+            //btdel.setVisibility(View.VISIBLE);
         }
 
         btdel.setOnClickListener(new View.OnClickListener() {

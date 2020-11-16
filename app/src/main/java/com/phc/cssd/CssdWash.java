@@ -310,60 +310,60 @@ public class CssdWash extends AppCompatActivity {
         edit_wash_type.requestFocus();
     }
 
-    public boolean onTouchEvent(MotionEvent touchEvent){
-        switch (touchEvent.getAction()){
-            case MotionEvent.ACTION_DOWN:
-                x1 = touchEvent.getX();
-                y1 = touchEvent.getY();
-                Log.d("KFDJDL",x1+"");
-                Log.d("KFDJDL",y1+"");
-                break;
-            case MotionEvent.ACTION_UP:
-                Log.d("KFDJDL",x2+"");
-                Log.d("KFDJDL",y2+"");
-                x2 = touchEvent.getX();
-                y2 = touchEvent.getY();
-                if (x1 < x2){
-                    Intent i = new Intent(CssdWash.this, SendSterile_MainActivity.class);
-                    i.putExtra("userid", userid);
-                    i.putExtra("user_name", user_name);
-                    i.putExtra("IsAdmin", IsAdmin);
-                    i.putExtra("EmpCode", EmpCode);
-                    Log.d("FKJDHJKDH",EmpCode+"");
-                    i.putExtra("B_ID", B_ID);
-                    startActivity(i);
-                    finish();
-                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-                    clearForm();
-                    clearMachine(1);
-                    clearMachine(2);
-                    clearMachine(3);
-                    clearMachine(4);
-                    clearMachine(5);
-                    clearMachine(6);
-                    clearMachine(7);
-                    clearMachine(8);
-                    clearMachine(9);
-                    clearMachine(10);
-                    handler_1 . removeCallbacks(runnable_1);
-                    handler_2 . removeCallbacks(runnable_2);
-                    handler_3 . removeCallbacks(runnable_3);
-                    handler_4 . removeCallbacks(runnable_4);
-                    handler_5 . removeCallbacks(runnable_5);
-                    handler_6 . removeCallbacks(runnable_6);
-                    handler_7 . removeCallbacks(runnable_7);
-                    handler_8 . removeCallbacks(runnable_8);
-                    handler_9 . removeCallbacks(runnable_9);
-                    handler_10 . removeCallbacks(runnable_10);
-                    defaultTabMachine();
-                    hideMachineAll();
-                    list_import_send_sterile.setAdapter(null);
-                }else if (x1 > x2){
-                }
-                break;
-        }
-        return false;
-    }
+//    public boolean onTouchEvent(MotionEvent touchEvent){
+//        switch (touchEvent.getAction()){
+//            case MotionEvent.ACTION_DOWN:
+//                x1 = touchEvent.getX();
+//                y1 = touchEvent.getY();
+//                Log.d("KFDJDL",x1+"");
+//                Log.d("KFDJDL",y1+"");
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                Log.d("KFDJDL",x2+"");
+//                Log.d("KFDJDL",y2+"");
+//                x2 = touchEvent.getX();
+//                y2 = touchEvent.getY();
+//                if (x1 < x2){
+//                    Intent i = new Intent(CssdWash.this, SendSterile_MainActivity.class);
+//                    i.putExtra("userid", userid);
+//                    i.putExtra("user_name", user_name);
+//                    i.putExtra("IsAdmin", IsAdmin);
+//                    i.putExtra("EmpCode", EmpCode);
+//                    Log.d("FKJDHJKDH",EmpCode+"");
+//                    i.putExtra("B_ID", B_ID);
+//                    startActivity(i);
+//                    finish();
+//                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+//                    clearForm();
+//                    clearMachine(1);
+//                    clearMachine(2);
+//                    clearMachine(3);
+//                    clearMachine(4);
+//                    clearMachine(5);
+//                    clearMachine(6);
+//                    clearMachine(7);
+//                    clearMachine(8);
+//                    clearMachine(9);
+//                    clearMachine(10);
+//                    handler_1 . removeCallbacks(runnable_1);
+//                    handler_2 . removeCallbacks(runnable_2);
+//                    handler_3 . removeCallbacks(runnable_3);
+//                    handler_4 . removeCallbacks(runnable_4);
+//                    handler_5 . removeCallbacks(runnable_5);
+//                    handler_6 . removeCallbacks(runnable_6);
+//                    handler_7 . removeCallbacks(runnable_7);
+//                    handler_8 . removeCallbacks(runnable_8);
+//                    handler_9 . removeCallbacks(runnable_9);
+//                    handler_10 . removeCallbacks(runnable_10);
+//                    defaultTabMachine();
+//                    hideMachineAll();
+//                    list_import_send_sterile.setAdapter(null);
+//                }else if (x1 > x2){
+//                }
+//                break;
+//        }
+//        return false;
+//    }
 
     @Override
     protected void onResume() {

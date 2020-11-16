@@ -32,6 +32,7 @@ public class CssdQrUser extends Activity {
     private String itemdetail = "";
     private String RowID = "";
     private String type = "";
+    private String page = "";
     private String xSel9 = "";
     private String xSel10 = "";
 
@@ -59,6 +60,7 @@ public class CssdQrUser extends Activity {
         itemdetail = intent.getStringExtra("itemdetail");
         RowID = intent.getStringExtra("RowID");
         type = intent.getStringExtra("type");
+        page = intent.getStringExtra("page");
     }
 
     private void byWidget() {
@@ -164,7 +166,7 @@ public class CssdQrUser extends Activity {
                 }else {
                     data.put("type","");
                 }
-
+                data.put("page",page);
                 String result = null;
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_check_user.php", data);

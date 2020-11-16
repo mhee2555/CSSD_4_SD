@@ -242,7 +242,7 @@ public class CssdCheckList extends Activity {
                 String getQtyItemDetail = ModelCheckList.getQtyItemDetail();
                 String Itemname = ModelCheckList.getItemname();
                 String Qty = ModelCheckList.getQty();
-                //onListClick(img_set,img_detail);
+                onListClick(img_set,img_detail);
                 if (!Itemname.equals("COMPLY STERIGAGE STEAM (SHORT)")){
                     if (!getQtyItemDetail.equals("0")){
                         OpenDialog(Itemname,"1",Qty,getQtyItemDetail);
@@ -262,7 +262,6 @@ public class CssdCheckList extends Activity {
                 final String Itemcode = ModelCheckList.getItemcode();
                 final String Item_Detail_ID = ModelCheckList.getItem_Detail_ID();
                 final String RowID = ModelCheckList.getRowID();
-
                 if (!Itemname.equals("COMPLY STERIGAGE STEAM (SHORT)")){
                     if (NameType.equals("")) {
                         return false;
@@ -322,7 +321,6 @@ public class CssdCheckList extends Activity {
                 finish();
             }
         });
-
         imv_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -396,7 +394,17 @@ public class CssdCheckList extends Activity {
                                         edt_usage_code.requestFocus();
                                     }
                                     return true;
-                                }else {
+                                }else if (!edt_usage_code.getText().toString().equals("1") || !edt_usage_code.getText().toString().equals("2") || !edt_usage_code.getText().toString().equals("3")){
+                                    if (edt_usage_code.getText().toString().equals("SC009") || edt_usage_code.getText().toString().equals("sc009")){
+                                        CheckScanKey(edt_usage_code.getText().toString());
+                                    }else if (edt_usage_code.getText().toString().equals("SC010") || edt_usage_code.getText().toString().equals("sc010")){
+                                        CheckScanKey(edt_usage_code.getText().toString());
+                                    }else {
+                                        Toast.makeText(CssdCheckList.this, "ไม่พบข้อมูล !!", Toast.LENGTH_SHORT).show();
+                                        edt_usage_code.setText("");
+                                        edt_usage_code.requestFocus();
+                                    }
+                                } else {
                                     if (COUNT_PROCESS > 2){
                                         for (int i = 0 ; i < MODEL_CHECK_LIST.size() ; i ++){
                                             MODEL_CHECK_LIST.get(i).getItemcode();
@@ -563,12 +571,12 @@ public class CssdCheckList extends Activity {
     }
 
     private void clearAll(){
-        COUNT_PROCESS = 0;
+        COUNT_PROCESS = 1;
         UsageCode= null;
         img_item_all.setImageResource(R.drawable.ic_preview);
         img_item.setImageResource(R.drawable.ic_preview);
-        txt_packer.setText("ผู้ห่อ : -");
-        txt_packer.setContentDescription("");
+        //txt_packer.setText("ผู้ห่อ : -");
+        //txt_packer.setContentDescription("");
         txt_item_name.setText("ชื่อเซ็ท : -");
         txt_usagecode_scan.setText("");
         txt_item_detail.setText("0 รายการ / 0 ชิ้น");
@@ -592,6 +600,7 @@ public class CssdCheckList extends Activity {
         i.putExtra("itemdetail", itemdetail);
         i.putExtra("RowID", RowID);
         i.putExtra("type", type);
+        i.putExtra("page","checklist");
         startActivityForResult(i,1006);
     }
 
@@ -614,7 +623,7 @@ public class CssdCheckList extends Activity {
                 if (RETURN_ADMIN.equals("1")){
                     CancelRemark(RETURN_ITEMCODE,RETURN_ITEMDETAIL,RETURN_ROWID,RETURN_TYPE);
                 }else {
-                    if (RETURN_INCHARG.equals("2")){
+                    if (RETURN_INCHARG.equals("1")){
                         CancelRemark(RETURN_ITEMCODE,RETURN_ITEMDETAIL,RETURN_ROWID,RETURN_TYPE);
                     }else {
                         if (RETURN_USER.equals("1")){
@@ -999,7 +1008,8 @@ public class CssdCheckList extends Activity {
                                             c.getString("Picture_detail"),
                                             usage_item_code,
                                             usage_item_name,
-                                            c.getString("NameType").equals("-")
+                                            c.getString("NameType").equals("-"),
+                                            c.getString("Note")
                                     )
                             );
                             Total = Integer.parseInt(c.getString("Qty"));
@@ -1011,16 +1021,6 @@ public class CssdCheckList extends Activity {
                             }
                         }
                     }
-
-//                    for (int i = 0 ; i < MODEL_CHECK_LIST.size() ; i ++){
-//                        if (ch1.getVisibility() == View.VISIBLE){
-//                            MODEL_CHECK_LIST.get(i).setInternal("1");
-//                        }else {
-//                            MODEL_CHECK_LIST.get(i).setInternal("0");
-//                        }
-//                        ArrayAdapter adapter = new CheckListAdapter(CssdCheckList.this, MODEL_CHECK_LIST);
-//                        list_check.setAdapter(adapter);
-//                    }
 
                     // Model
                     MODEL_CHECK_LIST = list;
@@ -1036,8 +1036,8 @@ public class CssdCheckList extends Activity {
                         }else {
                             MODEL_CHECK_LIST.get(0).setInternal("0");
                         }
-                        Log.d("KDNCVJHD",COUNT_PROCESS+"");
-                        if (COUNT_PROCESS == 1){
+
+                        if (COUNT_PROCESS == 1 || COUNT_PROCESS == 0){
                             ch1_un.setVisibility(View.VISIBLE);
                             ch2_un.setVisibility(View.VISIBLE);
                             ch3_un.setVisibility(View.VISIBLE);
@@ -1149,6 +1149,8 @@ public class CssdCheckList extends Activity {
                 String result = null;
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_check_packer.php", data);
+                    Log.d("FLJVLFL",data+"");
+                    Log.d("FLJVLFL",result+"");
                 }catch(Exception e){
                     e.printStackTrace();
                 }
@@ -1257,6 +1259,7 @@ public class CssdCheckList extends Activity {
         intent.putExtra("DocNo","");
         intent.putExtra("Type",type);
         intent.putExtra("Qty",Qty);
+        intent.putExtra("page","checklist");
         intent.putExtra("Qty_save",Qty_save);
         intent.putExtra("context", String.valueOf(CssdCheckList.this));
         startActivityForResult(intent,1005);
@@ -1518,6 +1521,60 @@ public class CssdCheckList extends Activity {
         }
 
         CheckValidation obj = new CheckValidation();
+        obj.execute();
+    }
+
+    public void CheckScanKey(final String Key) {
+        class CheckScanKey extends AsyncTask<String, Void, String> {
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+            @Override
+            protected void onPostExecute(String s) {
+                try {
+                    JSONObject jsonObj = new JSONObject(s);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for (int i = 0; i < rs.length(); i++) {
+                        JSONObject c = rs.getJSONObject(i);
+                        if (c.getString("KeyScan").equals("9")){
+                            clearAll();
+                            ReturnApprove();
+                            COUNT_PROCESS = 0;
+                            edt_usage_code.setText("");
+                            edt_usage_code.requestFocus();
+                        }else if (c.getString("KeyScan").equals("10")){
+                            CheckValidation();
+                            edt_usage_code.setText("");
+                            edt_usage_code.requestFocus();
+                        }else {
+                            Toast.makeText(CssdCheckList.this,"ไม่พบข้อมูล !!",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            @SuppressLint("WrongThread")
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("Key", Key);
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_scan_key_checklist.php", data);
+                    Log.d("FKJDHJKDH",data+"");
+                    Log.d("FKJDHJKDH",result+"");
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                return result;
+            }
+            // =========================================================================================
+        }
+
+        CheckScanKey obj = new CheckScanKey();
         obj.execute();
     }
 }

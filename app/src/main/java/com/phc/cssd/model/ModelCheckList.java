@@ -24,9 +24,10 @@ public class ModelCheckList {
     String IsRemarkRound_RemarlAdmin;
     String IsRemarkRound;
     String Internal = "0";
+    String Note;
     boolean IsCheck = false;
 
-    public ModelCheckList(String configuration, String IsRemarkRound_RemarlAdmin, String IsRemarkRound, String RemarkDocNo, String IsPicture, String QtyItemDetail, String AdminApprove, String RowID, String ID, String send_ID, String itemcode, String itemname, String Item_Detail_ID,String qty, String adminRemark, String dateRemark, String remark, String nameType, String picture_set, String picture_detail, String usage_item_code, String usage_item_name, boolean isCheck) {
+    public ModelCheckList(String configuration, String IsRemarkRound_RemarlAdmin, String IsRemarkRound, String RemarkDocNo, String IsPicture, String QtyItemDetail, String AdminApprove, String RowID, String ID, String send_ID, String itemcode, String itemname, String Item_Detail_ID,String qty, String adminRemark, String dateRemark, String remark, String nameType, String picture_set, String picture_detail, String usage_item_code, String usage_item_name, boolean isCheck, String Note) {
         this.configuration = configuration;
         this.IsRemarkRound_RemarlAdmin = IsRemarkRound_RemarlAdmin;
         this.IsRemarkRound = IsRemarkRound;
@@ -50,7 +51,12 @@ public class ModelCheckList {
         this.usage_item_code = usage_item_code;
         this.usage_item_name = usage_item_name;
         IsCheck = isCheck;
+        this.Note = Note;
     }
+
+    public String getNote() { return Note.equals("-") ? "" : ("หมายเหตุ : " + Note);}
+
+    public void setNote(String Note) { Note = Note; }
 
     public String getInternal() {
         return Internal;
@@ -203,7 +209,7 @@ public class ModelCheckList {
     }
 
     public String getRemark() {
-        return Remark.equals("-") ? "" : ("Remark : " + Remark);
+        return Remark;
     }
 
     public void setRemark(String remark) {

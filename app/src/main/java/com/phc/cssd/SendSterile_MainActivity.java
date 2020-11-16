@@ -285,28 +285,28 @@ public class SendSterile_MainActivity extends AppCompatActivity {
 
     }
 
-    public boolean onTouchEvent(MotionEvent touchEvent){
-        switch (touchEvent.getAction()){
-            case MotionEvent.ACTION_DOWN:
-                x1 = touchEvent.getX();
-                y1 = touchEvent.getY();
-                Log.d("KFDJDL",x1+"");
-                Log.d("KFDJDL",y1+"");
-                break;
-            case MotionEvent.ACTION_UP:
-                Log.d("KFDJDL",x2+"");
-                Log.d("KFDJDL",y2+"");
-                x2 = touchEvent.getX();
-                y2 = touchEvent.getY();
-                if (x1 < x2){
-
-                }else if (x1 > x2){
-                    gotoActivity(CssdWash.class);
-                }
-                break;
-        }
-        return false;
-    }
+//    public boolean onTouchEvent(MotionEvent touchEvent){
+//        switch (touchEvent.getAction()){
+//            case MotionEvent.ACTION_DOWN:
+//                x1 = touchEvent.getX();
+//                y1 = touchEvent.getY();
+//                Log.d("KFDJDL",x1+"");
+//                Log.d("KFDJDL",y1+"");
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                Log.d("KFDJDL",x2+"");
+//                Log.d("KFDJDL",y2+"");
+//                x2 = touchEvent.getX();
+//                y2 = touchEvent.getY();
+//                if (x1 < x2){
+//
+//                }else if (x1 > x2){
+//                    gotoActivity(CssdWash.class);
+//                }
+//                break;
+//        }
+//        return false;
+//    }
 
     public String getSerialNumber() {
         try {
@@ -794,7 +794,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     bin_all_black.setVisibility(View.INVISIBLE);
                     Toast.makeText(SendSterile_MainActivity.this, "เลือกลบหลายรายการ", Toast.LENGTH_SHORT).show();
                 }else if (!isChecked){
-                    IsDel = "0";
+                    IsDel = "1";
                     getlistcreate(etxt_docno.getText().toString(), ED_Dept);
                     bin_all.setVisibility(View.INVISIBLE);
                     bin_all_black.setVisibility(View.VISIBLE);
@@ -812,7 +812,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     bin_all_black_1.setVisibility(View.INVISIBLE);
                     Toast.makeText(SendSterile_MainActivity.this, "เลือกลบหลายรายการ", Toast.LENGTH_SHORT).show();
                 }else if (!isChecked){
-                    IsDel = "0";
+                    IsDel = "1";
                     getlistcreate_l2(etxt_docno.getText().toString());
                     bin_all_1.setVisibility(View.INVISIBLE);
                     bin_all_black_1.setVisibility(View.VISIBLE);
@@ -1048,6 +1048,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 txt_usr_receive.setText("");
                 txt_usr_receive.setContentDescription(null);
                 txt_usr_send.setSelection(0);
+                txt_get_ucode.requestFocus();
+                txt_get_ucode.setText("");
                 showAndhideBlueHead(true);
                 bin_all.setVisibility(View.INVISIBLE);
                 del_multi.setChecked(false);
@@ -2028,9 +2030,13 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         cnt++;
                     }
                     etxt_sumqty.setText(cnt + "");
-                    xedit_detail.setAdapter(new sendsterile_washdocdetail_adapte_2(SendSterile_MainActivity.this, pCus,ssStatus,B_ID,IsDel));
-                } catch (JSONException e) {
+                    if (del_multi.isChecked() == true){
+                        xedit_detail.setAdapter(new sendsterile_washdocdetail_adapte_2(SendSterile_MainActivity.this, pCus,ssStatus,B_ID,"1"));
+                    }else {
+                        xedit_detail.setAdapter(new sendsterile_washdocdetail_adapte_2(SendSterile_MainActivity.this, pCus,ssStatus,B_ID,"0"));
+                    }
 
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -2385,8 +2391,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     ShowDetailScan(txtDocno);
                     ShowUserSend();
 
-//                    getlistdata(deptsp_id, edittext.getText().toString(), "");
-//                    getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
+                    getlistdata(deptsp_id, edittext.getText().toString(), "");
+                    getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
                     cleardoc();
                     etxt_docno.setText(txtDocno);
                 } catch (JSONException e) {
@@ -3460,7 +3466,12 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         if (c.getString("Tel").equals("")){
                             txt_tel_dep.setText("โทร : ไม่มีข้อมูล");
                         }else {
-                            txt_tel_dep.setText("โทร : "+c.getString("Tel"));
+                            if (c.getString("Tel").equals("null")){
+                                getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
+                                clear_l2();
+                            }else {
+                                txt_tel_dep.setText("โทร : "+c.getString("Tel"));
+                            }
                         }
                     }
                 } catch (JSONException e) {
@@ -3506,7 +3517,12 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         if (c.getString("Tel").equals("")){
                             txt_tel_dep.setText("โทร : ไม่มีข้อมูล");
                         }else {
-                            txt_tel_dep.setText("โทร : "+c.getString("Tel"));
+                            if (c.getString("Tel").equals("null")){
+                                getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
+                                clear_l2();
+                            }else {
+                                txt_tel_dep.setText("โทร : "+c.getString("Tel"));
+                            }
                         }
                     }
                 } catch (JSONException e) {
@@ -3596,6 +3612,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         bo = c.getString("flag");
                         if (bo.equals("falsedept")){
                             Toast.makeText(SendSterile_MainActivity.this, "รายการนี้ไม่ได้ผูกแผนก !!", Toast.LENGTH_SHORT).show();
+                            txt_get_ucode.setText("");
+                            txt_get_ucode.requestFocus();
                         }else {
                             if (bo.equals("false")) {
                                 if(Basket_washtag_code!=""){
@@ -3959,7 +3977,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                             }else{
                                 txt_get_ucode.requestFocus();
                             }
-
                         }else {
                             Toast.makeText(SendSterile_MainActivity.this, "สิทธิ์ผู้ใช้งานไม่สามารถเข้าถึงส่วนนี้ได้ !!", Toast.LENGTH_SHORT).show();
                             txt_usr_receive.setText("");
@@ -4025,6 +4042,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         intent.putExtra("IsStatus",IsStatus);
         intent.putExtra("DocNo",etxt_docno.getText().toString());
         intent.putExtra("Type",type);
+        intent.putExtra("page","sendsterile");
         intent.putExtra("Qty",Qty);
         intent.putExtra("Qty_save",Qty_save);
         intent.putExtra("context", String.valueOf(SendSterile_MainActivity.this));

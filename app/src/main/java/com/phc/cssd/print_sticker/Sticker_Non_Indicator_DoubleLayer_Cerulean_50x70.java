@@ -71,7 +71,7 @@ public class Sticker_Non_Indicator_DoubleLayer_Cerulean_50x70 {
                 Tsc.sendpicture( x(4) , y(19), TextAsBitmap.getTextBitmap1("Usage Count : " + m.getUsageCount(), 26));
 
                 // ID
-                //Tsc.sendpicture( x(4) , y(24), TextAsBitmap.getTextBitmap1("SD : " + m.getID(), 26));
+                Tsc.sendpicture( x(4) , y(24), TextAsBitmap.getTextBitmap1("SD : " + m.getID(), 26));
 
                 // MFG
                 Tsc.sendpicture(x(21), y(36.5), TextAsBitmap.getTextBitmap(m.getMFG() + " " + m.getAge(), 25));
@@ -80,7 +80,7 @@ public class Sticker_Non_Indicator_DoubleLayer_Cerulean_50x70 {
                 Tsc.sendpicture(x(21), y(40.5) , TextAsBitmap.getTextBitmap1( m.getEXP(), 32));
 
                 //QR_Code
-                Tsc.qrcode(x(4.2), y(33), "H", "6", "A", "0", "M2", "S1", m.getUsageCode());
+                Tsc.qrcode(x(4.2), y(33), "H", "5", "A", "0", "M2", "S1", m.getUsageCode());
 
                 //-----------------------------------------------------------------------------
                 // Part 2
@@ -98,7 +98,7 @@ public class Sticker_Non_Indicator_DoubleLayer_Cerulean_50x70 {
                 Tsc.sendpicture(x(21), y(65), TextAsBitmap.getTextBitmap1( m.getEXP(), 32));
 
                 //Qr code
-                Tsc.qrcode(x(4.6), y(55.6), "H", "5", "A", "0", "M2", "S1", m.getUsageCode());
+                Tsc.qrcode(x(4.6), y(55.6), "H", "4", "A", "0", "M2", "S1", m.getUsageCode());
 
                 Tsc.sendcommand("PRINT 1,1\r\n");
 
