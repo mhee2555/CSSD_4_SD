@@ -751,7 +751,7 @@
                     <ImageView
                         android:id="@+id/bt_step1"
                         android:layout_width="150dp"
-                        android:layout_height="50dp"
+                        android:layout_height="40dp"
                         android:layout_marginTop="10dp"
                         app:srcCompat="@drawable/ss_ic_step1_enable" />
 
@@ -1460,7 +1460,7 @@
                                     <ImageView
                                         android:id="@+id/btn_checklist1"
                                         android:layout_width="150dp"
-                                        android:layout_height="50dp"
+                                        android:layout_height="40dp"
                                         android:background="@drawable/bt_checklist_g"
                                         android:layout_marginLeft="100dp"
                                         android:layout_marginTop="5dp" />
@@ -1468,7 +1468,7 @@
                                     <Button
                                         android:id="@+id/btn_save_item"
                                         android:layout_width="150dp"
-                                        android:layout_height="60dp"
+                                        android:layout_height="40dp"
                                         android:layout_marginLeft="260dp"
                                         android:layout_marginTop="5dp"
                                         android:background="@drawable/bt_save_newitem_disable" />
@@ -1476,7 +1476,7 @@
                                     <Button
                                         android:id="@+id/btn_save_item_1"
                                         android:layout_width="150dp"
-                                        android:layout_height="50dp"
+                                        android:layout_height="40dp"
                                         android:layout_marginLeft="260dp"
                                         android:layout_marginTop="5dp"
                                         android:background="@drawable/bt_save_newitem_disable" />
@@ -1518,20 +1518,21 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
                             android:orientation="horizontal">
 
                             <ImageView
                                 android:id="@+id/bt_step"
                                 android:layout_width="200dp"
                                 android:layout_marginLeft="5dp"
-                                android:layout_height="50dp"
+                                android:layout_height="40dp"
                                 app:srcCompat="@drawable/ss_ic_step2_disable" />
 
                             <Button
                                 android:id="@+id/save_im"
                                 android:layout_width="200dp"
+                                android:layout_height="40dp"
                                 android:layout_marginLeft="5dp"
-                                android:layout_height="50dp"
                                 android:background="@drawable/bt_save_newitem_disable_new" />
 
 
@@ -1589,22 +1590,22 @@
 
                         <ImageView
                             android:id="@+id/bt_step2"
-                            android:layout_width="150dp"
-                            android:layout_height="50dp"
+                            android:layout_width="130dp"
+                            android:layout_height="40dp"
                             app:srcCompat="@drawable/ss_ic_step3_disable" />
 
                         <ImageView
                             android:id="@+id/bt_step3"
-                            android:layout_width="150dp"
-                            android:layout_height="50dp"
-                            android:layout_marginLeft="70dp"
+                            android:layout_width="130dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="100dp"
                             app:srcCompat="@drawable/ss_ic_step4_disable_new" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="170dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="25dp"
                         android:orientation="horizontal">
 
                         <LinearLayout

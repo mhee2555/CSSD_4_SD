@@ -794,7 +794,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     bin_all_black.setVisibility(View.INVISIBLE);
                     Toast.makeText(SendSterile_MainActivity.this, "เลือกลบหลายรายการ", Toast.LENGTH_SHORT).show();
                 }else if (!isChecked){
-                    IsDel = "0";
+                    IsDel = "1";
                     getlistcreate(etxt_docno.getText().toString(), ED_Dept);
                     bin_all.setVisibility(View.INVISIBLE);
                     bin_all_black.setVisibility(View.VISIBLE);
@@ -812,7 +812,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     bin_all_black_1.setVisibility(View.INVISIBLE);
                     Toast.makeText(SendSterile_MainActivity.this, "เลือกลบหลายรายการ", Toast.LENGTH_SHORT).show();
                 }else if (!isChecked){
-                    IsDel = "0";
+                    IsDel = "1";
                     getlistcreate_l2(etxt_docno.getText().toString());
                     bin_all_1.setVisibility(View.INVISIBLE);
                     bin_all_black_1.setVisibility(View.VISIBLE);
@@ -2030,9 +2030,13 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         cnt++;
                     }
                     etxt_sumqty.setText(cnt + "");
-                    xedit_detail.setAdapter(new sendsterile_washdocdetail_adapte_2(SendSterile_MainActivity.this, pCus,ssStatus,B_ID,IsDel));
-                } catch (JSONException e) {
+                    if (del_multi.isChecked() == true){
+                        xedit_detail.setAdapter(new sendsterile_washdocdetail_adapte_2(SendSterile_MainActivity.this, pCus,ssStatus,B_ID,"1"));
+                    }else {
+                        xedit_detail.setAdapter(new sendsterile_washdocdetail_adapte_2(SendSterile_MainActivity.this, pCus,ssStatus,B_ID,"0"));
+                    }
 
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -2387,8 +2391,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     ShowDetailScan(txtDocno);
                     ShowUserSend();
 
-//                    getlistdata(deptsp_id, edittext.getText().toString(), "");
-//                    getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
+                    getlistdata(deptsp_id, edittext.getText().toString(), "");
+                    getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
                     cleardoc();
                     etxt_docno.setText(txtDocno);
                 } catch (JSONException e) {

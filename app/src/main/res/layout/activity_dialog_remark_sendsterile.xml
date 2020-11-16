@@ -303,7 +303,7 @@
             android:layout_marginStart="10dp"
             android:textColor="@color/colorBlack"
             android:textSize="20dp"
-            android:hint=" Remark"
+            android:hint=" หมายเหตุ..."
             android:gravity="left|top"
             android:paddingLeft="15dp"
             android:paddingTop="15dp"
