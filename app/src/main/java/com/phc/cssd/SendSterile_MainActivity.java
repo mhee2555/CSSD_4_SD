@@ -1060,7 +1060,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 DelRowId.clear();
                 DelAlldata.clear();
                 txt_usr_receive.requestFocus();
-                basket.setText("");
+                Clear_wash_tag();
             }
         });
 
@@ -4678,6 +4678,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     }else {
                         basket_resterile(1);
                     }
+                case Master.ss_Clear_Wash_Tag_and_Focus_Wash_Tag :
+                    Clear_wash_tag();
+                    basket.requestFocus();
                     break;
                 default:
                     return false;
