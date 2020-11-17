@@ -1683,8 +1683,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
 //        ru.execute();
 //    }
 
-
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();

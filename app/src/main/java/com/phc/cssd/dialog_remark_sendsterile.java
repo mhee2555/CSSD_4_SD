@@ -38,7 +38,7 @@ public class dialog_remark_sendsterile extends Activity {
     ImageView close;
 
     String Itemname,Usagecode,DepID,DocNoSend,IsStatus,DocNo;
-    String datacheck,EmpCode,Type,Xqty,Qty_save,page;
+    String datacheck = "0",EmpCode,Type,Xqty,Qty_save,page;
     String IsSave = "0";
 
     boolean IsAdmin = false;
@@ -245,8 +245,12 @@ public class dialog_remark_sendsterile extends Activity {
                                     qty_item.setTextColor(Color.RED);
                                     Toast.makeText(dialog_remark_sendsterile.this, "ตัวเลขจำนวนมากกว่าที่กำหนด !!", Toast.LENGTH_SHORT).show();
                                 }else {
-                                    openQR_Save("admin_save");
-                                    qty_item.setTextColor(Color.BLACK);
+                                    if (!datacheck.equals("0")){
+                                        openQR_Save("admin_save");
+                                        qty_item.setTextColor(Color.BLACK);
+                                    }else {
+                                        Toast.makeText(dialog_remark_sendsterile.this, "กรุณากรอกข้อมูลให้ครบถ้วน !!", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }else {
                                 if (Integer.parseInt(Qty) > Integer.parseInt(Qty_save)) {
@@ -259,8 +263,12 @@ public class dialog_remark_sendsterile extends Activity {
                                     qty_item.setTextColor(Color.RED);
                                     Toast.makeText(dialog_remark_sendsterile.this, "ตัวเลขจำนวนมากกว่าที่กำหนด !!", Toast.LENGTH_SHORT).show();
                                 }else {
-                                    openQR_Save("admin_save");
-                                    qty_item.setTextColor(Color.BLACK);
+                                    if (!datacheck.equals("0")){
+                                        openQR_Save("admin_save");
+                                        qty_item.setTextColor(Color.BLACK);
+                                    }else {
+                                        Toast.makeText(dialog_remark_sendsterile.this, "กรุณากรอกข้อมูลให้ครบถ้วน !!", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }
 
@@ -1072,4 +1080,11 @@ public class dialog_remark_sendsterile extends Activity {
         CheckStatusDocNo obj = new CheckStatusDocNo();
         obj.execute();
     }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+
+    }
+
 }
