@@ -184,7 +184,8 @@ public class ImportWashNotPrintDetailAdapter extends ArrayAdapter {
                 public boolean onLongClick(View v) {
                     ((CssdSterile)context).wash_detail_management_pack(
                             w_id,
-                            txt_item_name.getText().toString() );
+                            txt_item_name.getText().toString(),
+                            usageCode);
                     return false;
                 }
             });

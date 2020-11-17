@@ -66,6 +66,7 @@ public class pCustomer {
 
 
     private String basketID;
+    private String basketname;
 
 
     public String getQtyItemDetail() { return QtyItemDetail; }
@@ -492,5 +493,13 @@ public class pCustomer {
 
     public void setBasketID(String basketID) {
         this.basketID = basketID;
+    }
+
+    public String getBasketname() {
+        return basketname;
+    }
+
+    public void setBasketname(String basketname) {
+        this.basketname = basketname;
     }
 }

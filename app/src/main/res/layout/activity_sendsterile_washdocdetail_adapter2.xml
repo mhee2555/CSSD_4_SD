@@ -9,10 +9,11 @@
         android:id="@+id/listmain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_margin="3dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="2dp"
         android:background="@drawable/rectangle">
 
         <RelativeLayout
@@ -51,8 +52,8 @@
                 android:id="@+id/w_remark_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
                 android:layout_alignTop="@+id/textView53"
+                android:layout_alignParentStart="true"
                 android:layout_marginStart="80dp"
                 android:paddingLeft="5dp"
                 android:text="26/07/2018"
@@ -87,9 +88,9 @@
                 android:id="@+id/ucount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/w_date"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="38dp"
+                android:layout_toEndOf="@+id/w_date"
                 android:text="[ ครบรอบส่งคืน ]"
                 android:textColor="@color/colorRedNew"
                 android:textStyle="bold" />
@@ -139,18 +140,29 @@
                 android:layout_height="20dp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginEnd="1dp"
-                android:layout_toStartOf="@+id/itemqty"
+                android:layout_toStartOf="@+id/basket_name"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
                 android:textSize="12sp" />
 
+            <TextView
+                android:id="@+id/basket_name"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_toStartOf="@+id/itemqty"
+                android:textAlignment="center"
+                android:textColor="@color/colorRed"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/itemqty"
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginEnd="-2dp"
                 android:layout_marginBottom="2dp"
                 android:layout_toStartOf="@+id/throw_item_to_washtag"
                 android:text=" [ 1 ] "
@@ -187,12 +199,12 @@
 
             <ImageView
                 android:id="@+id/throw_item_to_washtag"
-                android:layout_width="25dp"
+                android:layout_width="22dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="6dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/ic_right_blue" />
 

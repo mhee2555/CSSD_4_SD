@@ -891,15 +891,19 @@ public class PayoutActivity extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
         }else {
-            if(resultspayoutdetail.size()<=0){
-                builder.setMessage("ต้องการปิดเอกสารเบิกนี้หรือไม่");
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }else {
-                isnewDoc = false;
-                bt_additem.setEnabled(true);
-                bt_createdoc.setEnabled(true);
-            }
+//            if(resultspayoutdetail.size()<=0){
+//                builder.setMessage("ต้องการปิดเอกสารเบิกนี้หรือไม่");
+//                AlertDialog dialog = builder.create();
+//                dialog.show();
+//            }else {
+//                isnewDoc = false;
+//                bt_additem.setEnabled(true);
+//                bt_createdoc.setEnabled(true);
+//            }
+
+            isnewDoc = false;
+            bt_additem.setEnabled(true);
+            bt_createdoc.setEnabled(true);
         }
 
     }

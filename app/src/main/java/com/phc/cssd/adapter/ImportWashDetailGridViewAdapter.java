@@ -57,7 +57,7 @@ public class ImportWashDetailGridViewAdapter extends ArrayAdapter<ModelImportWas
 
             viewHolder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
                 public boolean onLongClick(View v) {
-                    ((CssdSterile)context).openDialogWashManagement( viewHolder.txt_item_code.getText().toString(), viewHolder.txt_item_name.getText().toString());
+                    ((CssdSterile)context).openDialogWashManagement( viewHolder.txt_item_code.getText().toString(), viewHolder.txt_item_name.getText().toString(),null);
                     return false;
                 }
             });

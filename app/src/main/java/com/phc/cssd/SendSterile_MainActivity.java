@@ -517,6 +517,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         spin_basket.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                Log.d("ttest_bb","getBasketCode = "+basket_ar.get(position).getBasketCode());
                 CheckBasket(basket_ar.get(position).getBasketCode(),true);
 
             }
@@ -1064,97 +1066,12 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             }
         });
 
-
         save.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                if (switch_layout) {
-                    if (!etxt_docno.getText().toString().equals("")) {
-                        if (!xIsStatus.equals("1")) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(SendSterile_MainActivity.this);
-                            builder.setCancelable(true);
-                            builder.setTitle("ยืนยัน");
-                            builder.setMessage("ยืนยันการส่งล้างหรือไม่");
-                            builder.setPositiveButton("ยืนยัน",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            createNewSendSterile(etxt_docno.getText().toString(), checkRowID());
-                                            updateIsclean(etxt_docno.getText().toString(), ED_UserCode);
-                                            getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
-                                            updateSendSterile(Master.user_receive, txt_usr_receive.getContentDescription()+"", etxt_docno.getText()+"");
-                                            String emp_id = xDepSend.get(txt_usr_send.getSelectedItem());
-                                            updateSendSterile(Master.user_send, emp_id, etxt_docno.getText().toString());
-                                            clear_l2();
-                                        }
-                                    });
-                            builder.setNegativeButton("ไม่ยืนยัน", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            });
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
-                        } else {
-                            Toast.makeText(SendSterile_MainActivity.this, "เอกสารนี้ได้บันทึกแล้ว", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(SendSterile_MainActivity.this, "ไม่มีเอกสารให้บันทึก", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    if (!IsStatus.equals("1")){
-                        if (!etxt_docno.getText().toString().equals("")) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(SendSterile_MainActivity.this);
-                            builder.setCancelable(true);
-                            builder.setTitle("ยืนยัน");
-                            builder.setMessage("ต้องการสร้างเอกสารหรือไม่");
-                            builder.setPositiveButton("ตกลง",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            System.out.println(txt_usr_receive.getText().toString());
-                                            if ((!txt_usr_receive.getText().toString().trim().equals(""))) {
-                                                if (!IsStatus.equals("1")) {
-                                                    savedoc(etxt_docno.getText().toString());
-                                                    final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
-                                                    //updateSendSterile(Master.user_receive, txt_usr_receive.getContentDescription() + "", etxt_docno.getText() + "");
-                                                    String emp_id = xDepSend.get(txt_usr_send.getSelectedItem());
-                                                    //updateSendSterile(Master.user_send, emp_id, etxt_docno.getText().toString());
-                                                    pCus.clear();
-                                                    selectedArray.clear();
-                                                    xedit_detail.setAdapter(new SendSterile_EditItemAdapter(SendSterile_MainActivity.this, pCus, selectedArray));
-                                                    cleardoc();
-                                                    updateDate2();
-                                                    getlistdata(deptsp_id, edittext.getText().toString(), searchbox.getText().toString());
-                                                    ED_Dept = "";
-                                                    etxt_dept.setSelection(0);
-                                                    Toast.makeText(SendSterile_MainActivity.this, "บันทึกเอกสารแล้ว", Toast.LENGTH_SHORT).show();
-                                                } else {
-                                                    Toast.makeText(SendSterile_MainActivity.this, "เอกสารนี้ได้บันทึกส่งล้างแล้ว", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }else {
-                                                Toast.makeText(SendSterile_MainActivity.this, "กรุณาสแกนชื่อผู้รับ(จ่ายกลาง)", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    });
-                            builder.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            });
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
-                        } else {
-                            Toast.makeText(SendSterile_MainActivity.this, "ไม่มีเอกสารให้บันทึก", Toast.LENGTH_SHORT).show();
-                        }
-                    }else {
-                        Toast.makeText(SendSterile_MainActivity.this, "เอกสารนี้ได้บันทึกส่งล้างแล้ว", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-
+                save_button_function(true);
             }
         });
 
@@ -2013,6 +1930,11 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         xST.setItemCount(c.getString("ItemCount"));
                         xST.setDetailIsStatus(c.getString("ssIsStatus"));
                         xST.setPayoutIsStatus(c.getString("payoutIsStatus"));
+                        if(c.getString("basket").equals("null")){
+                            xST.setBasketname("");
+                        }else {
+                            xST.setBasketname(c.getString("basket"));
+                        }
                         if(c.getString("ssIsStatus").equals("2")){
                             ssStatus = false;
                             ssStatus1 = false;
@@ -4057,6 +3979,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         txt_get_ucode.setEnabled(x);
         bt_search_sendsteril.setEnabled(x);
         bt_search_sendsteril1.setEnabled(x);
+        basket.setEnabled(x);
+        spin_basket.setEnabled(x);
     }
 
     public void UsageCode(String UsageCode,String Depid,String Docnosend) {
@@ -4070,6 +3994,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     }
 
     public void CheckBasket(final String xBasket,Boolean isDropdown) {
+
+        Log.d("ttest_bb",xBasket);
 
         if(xBasket.equals("")){
             Clear_wash_tag();
@@ -4450,6 +4376,16 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         Log.d("ttest_wt_detail","washtag_detail BasketCode = "+BasketCode);
     }
 
+
+    public void insert_item_to_basket_and_re(String ItemStockID,String SSDetailID){
+        if(Basket_washtag_code!=""){
+            basket_is_resterile = true;
+            insert_item_to_basket(ItemStockID,SSDetailID);
+        }else{
+            Toast.makeText(SendSterile_MainActivity.this, "ยังไม่ได้เลือกตะกร้า", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void insert_item_to_basket(String ItemStockID,String SSDetailID){
         class insert_item_to_basket extends AsyncTask<String, Void, String> {
             // variable
@@ -4496,6 +4432,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
 
                 String result = ruc.sendPostRequest(getUrl.xUrl+"washtag/insert_item_in_washtag.php",data);
                 Log.d("insert_to_basket","in_washtag_detail xUrl = "+getUrl.xUrl+"washtag/insert_item_in_washtag.php");
+                Log.d("insert_to_basket","in_washtag_detail data = "+data);
                 Log.d("insert_to_basket","in_washtag_detail result = "+result);
                 return result;
             }
@@ -4645,6 +4582,97 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         textView46_1.setText("Wash Tag");
     }
 
+    public void save_button_function(boolean AlertDialog){
+        if(!AlertDialog){
+            if (switch_layout) {
+                if (!etxt_docno.getText().toString().equals("")) {
+                    if (!xIsStatus.equals("1")) {
+                        createNewSendSterile(etxt_docno.getText().toString(), checkRowID());
+                        updateIsclean(etxt_docno.getText().toString(), ED_UserCode);
+                        getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
+                        updateSendSterile(Master.user_receive, txt_usr_receive.getContentDescription()+"", etxt_docno.getText()+"");
+                        String emp_id = xDepSend.get(txt_usr_send.getSelectedItem());
+                        updateSendSterile(Master.user_send, emp_id, etxt_docno.getText().toString());
+                        clear_l2();
+                    } else {
+                        Toast.makeText(SendSterile_MainActivity.this, "เอกสารนี้ได้บันทึกแล้ว", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(SendSterile_MainActivity.this, "ไม่มีเอกสารให้บันทึก", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                if (!IsStatus.equals("1")){
+                    if (!etxt_docno.getText().toString().equals("")) {
+                        if ((!txt_usr_receive.getText().toString().trim().equals(""))) {
+                            savedoc(etxt_docno.getText().toString());
+                            final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
+                            //updateSendSterile(Master.user_receive, txt_usr_receive.getContentDescription() + "", etxt_docno.getText() + "");
+                            String emp_id = xDepSend.get(txt_usr_send.getSelectedItem());
+                            //updateSendSterile(Master.user_send, emp_id, etxt_docno.getText().toString());
+                            pCus.clear();
+                            selectedArray.clear();
+                            xedit_detail.setAdapter(new SendSterile_EditItemAdapter(SendSterile_MainActivity.this, pCus, selectedArray));
+                            cleardoc();
+                            updateDate2();
+                            getlistdata(deptsp_id, edittext.getText().toString(), searchbox.getText().toString());
+                            ED_Dept = "";
+                            etxt_dept.setSelection(0);
+                            Clear_wash_tag();
+                            Toast.makeText(SendSterile_MainActivity.this, "บันทึกเอกสารแล้ว", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(SendSterile_MainActivity.this, "กรุณาสแกนชื่อผู้รับ(จ่ายกลาง)", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(SendSterile_MainActivity.this, "ไม่มีเอกสารให้บันทึก", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Toast.makeText(SendSterile_MainActivity.this, "เอกสารนี้ได้บันทึกส่งล้างแล้ว", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        }else{
+            if (switch_layout) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(SendSterile_MainActivity.this);
+                builder.setCancelable(true);
+                builder.setTitle("ยืนยัน");
+                builder.setMessage("ยืนยันการส่งล้างหรือไม่");
+                builder.setPositiveButton("ยืนยัน",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                save_button_function(false);
+                            }
+                        });
+                builder.setNegativeButton("ไม่ยืนยัน", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }else{
+                AlertDialog.Builder builder = new AlertDialog.Builder(SendSterile_MainActivity.this);
+                builder.setCancelable(true);
+                builder.setTitle("ยืนยัน");
+                builder.setMessage("ต้องการสร้างเอกสารหรือไม่");
+                builder.setPositiveButton("ตกลง",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                save_button_function(false);
+                            }
+                        });
+                builder.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        }
+    }
+
     public boolean CheckScanCodekey (EditText Text){
         String qrcode = Text.getText().toString().toUpperCase();
         Log.d("tog_ScanCode","qrcode = "+qrcode);
@@ -4669,7 +4697,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     txt_usr_receive.requestFocus();
                     break;
                 case Master.ss_Done_Button :
-                    save.callOnClick();
+//                    save.callOnClick();
+                    save_button_function(false);
                     txt_usr_receive.requestFocus();
                     break;
                 case Master.ss_Wash_Tag_Expire :

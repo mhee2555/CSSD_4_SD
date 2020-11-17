@@ -106,6 +106,7 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
         TextView bt_note = (TextView) v.findViewById(R.id.w_bt_note);
         TextView bt_risk = (TextView) v.findViewById(R.id.w_bt_risk);
         TextView bt_ems = (TextView) v.findViewById(R.id.w_bt_ems);
+        TextView basket_name = (TextView) v.findViewById(R.id.basket_name);
         final ImageView del_multi_un = (ImageView) v.findViewById(R.id.del_multi_un);
         final ImageView del_multi = (ImageView) v.findViewById(R.id.del_multi);
         RelativeLayout back = ( RelativeLayout ) v.findViewById(R.id.back);
@@ -121,7 +122,30 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
         throw_item_to_washtag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((SendSterile_MainActivity) aActivity ).insert_item_to_basket(listData.get(position).getItemID(),listData.get(position).getSs_rowid());
+                if(listData.get(position).getResteriletype().equals("1")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(aActivity);
+                    builder.setCancelable(true);
+                    builder.setTitle("ยืนยัน");
+                    builder.setMessage("ต้องการนำรายการหมดอายุ เข้าตะกร้า Wash Tag หรือไม่");
+                    builder.setPositiveButton("ใช่",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ((SendSterile_MainActivity) aActivity ).insert_item_to_basket_and_re(listData.get(position).getItemID(),listData.get(position).getSs_rowid());
+
+                                }
+                            });
+                    builder.setNegativeButton("ไม่", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
+                }else{
+                    ((SendSterile_MainActivity) aActivity ).insert_item_to_basket(listData.get(position).getItemID(),listData.get(position).getSs_rowid());
+                }
             }
         });
 
@@ -134,7 +158,7 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
         }else {
             bt_risk.setBackgroundResource(R.drawable.ic_risk_icon);
         }
-
+        basket_name.setText(listData.get(position).getBasketname());
         w_itemname.setPaintFlags(w_itemname.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         w_itemname.setText(listData.get(position).getItemname());
         w_itemname.setOnClickListener(new View.OnClickListener() {

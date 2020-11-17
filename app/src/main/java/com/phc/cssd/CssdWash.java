@@ -483,23 +483,38 @@ public class CssdWash extends AppCompatActivity {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
 
-                            Log.d("ttest_scan","txt = "+txt);
-                            if(MAP_MODEL_SEND_STERILE_DETAIL_GROUP_BASKET.containsKey(txt)&&(!txt.equals(""))){//&&chk_mac()
+                            boolean x =true;
 
-                                final List<ModelSendSterileDetail> MODEL_SUB = MAP_MODEL_SEND_STERILE_DETAIL_GROUP_BASKET.get(txt);
+                            if(MAP_MODEL_SEND_STERILE_DETAIL_GROUP_BASKET!=null &&MODEL_SEND_STERILE_DETAIL!=null ) {
+                                Log.d("ttest_scan", "txt = " + txt);
+                                if (MAP_MODEL_SEND_STERILE_DETAIL_GROUP_BASKET.containsKey(txt) && (!txt.equals(""))) {//&&chk_mac()
 
-                                String UsageCode = MODEL_SUB.get(0).getUsageCode();
+                                    final List<ModelSendSterileDetail> MODEL_SUB = MAP_MODEL_SEND_STERILE_DETAIL_GROUP_BASKET.get(txt);
 
-                                if(MODEL_SUB.size()>1){
-                                    for(int i=1;i<MODEL_SUB.size();i++){
-                                        UsageCode += "@"+MODEL_SUB.get(i).getUsageCode();
+                                    String UsageCode = MODEL_SUB.get(0).getUsageCode();
+
+                                    if (MODEL_SUB.size() > 1) {
+                                        for (int i = 1; i < MODEL_SUB.size(); i++) {
+                                            UsageCode += "@" + MODEL_SUB.get(i).getUsageCode();
+                                        }
+                                    }
+
+                                    importSendSterileDetail(UsageCode, MODEL_SUB.get(0).getI_program_id(), MODEL_SUB.get(0).getI_program());
+                                    x = false;
+                                } else {
+                                    final List<ModelSendSterileDetail> MODEL = MODEL_SEND_STERILE_DETAIL;
+                                    for (int i = 1; i < MODEL.size(); i++) {
+                                        if (MODEL.get(i).getUsageCode().equals(txt) && (!txt.equals(""))) {
+                                            importSendSterileDetail(MODEL.get(i).getUsageCode(), MODEL.get(i).getI_program_id(), MODEL.get(i).getI_program());
+                                            x = false;
+                                            break;
+                                        }
                                     }
                                 }
+                            }
 
-                                importSendSterileDetail( UsageCode, MODEL_SUB.get(0).getI_program_id(), MODEL_SUB.get(0).getI_program());
-
-                            }else{
-                                Toast.makeText(CssdWash.this, "ไม่พบตะกร้า ("+txt+")!!", Toast.LENGTH_SHORT).show();
+                            if(x){
+                                Toast.makeText(CssdWash.this, "ไม่พบตะกร้าหรือรหัสรายการ!!", Toast.LENGTH_SHORT).show();
                             }
 
                             scan_basket.setText("");

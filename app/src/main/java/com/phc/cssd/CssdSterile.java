@@ -2921,6 +2921,7 @@ public class CssdSterile extends AppCompatActivity {
 
             List<ModelImportWashDetail> DATA_MODEL = MODEL_IMPORT_WASH_DETAIL;
 
+            Log.d("tog_isprint","size = "+DATA_MODEL.size());
             Iterator li = DATA_MODEL.iterator();
 
             while(li.hasNext()) {
@@ -3303,7 +3304,7 @@ public class CssdSterile extends AppCompatActivity {
         quitDialog.show();
     }
 
-    public void openDialogWashManagement(final String itemcode,final String itemname) {
+    public void openDialogWashManagement(final String itemcode,final String itemname,final String p_usagecode) {
         final String[] option_wash_detail = new String[]{"จัดการรูปแบบการห่อ", "พิมพ์ย้อนหลัง","ออก"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(CssdSterile.this, android.R.layout.select_dialog_item, option_wash_detail );
         AlertDialog.Builder builder = new AlertDialog.Builder(CssdSterile.this);
@@ -3325,7 +3326,7 @@ public class CssdSterile extends AppCompatActivity {
 //                }
 
                 if (which == 0) {
-                    wash_detail_management_pack(itemcode,itemname);
+                    wash_detail_management_pack(itemcode,itemname,p_usagecode);
                 }else if (which == 1) {
                     checkPacker(itemcode);
                 }else {
@@ -7653,6 +7654,7 @@ public class CssdSterile extends AppCompatActivity {
                                 basket_Code = c.getString("BasketCode");
                                 basket_ID = c.getString("ID");
                                 PairBasketBox_basket_Code.setText(c.getString("BasketName"));
+                                cnt_basket_list.setText("");
 
                                 Log.d("tog_cnt_basket_list","cnt_basket_list"+MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size());
                                 basket_dialog_w_list.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR,MAP_MODEL_IMPORT_WASH_DETAIL_SUB,4));
@@ -8470,7 +8472,7 @@ public class CssdSterile extends AppCompatActivity {
     private TextView txt_item_code;
     private TextView txt_item_name;
 
-    public void wash_detail_management_pack(final String usagecode, String itemname) {
+    public void wash_detail_management_pack(final String w_id, String itemname,String usagecode) {
 
         dialog_pack = new Dialog(CssdSterile.this, R.style.DialogCustomTheme);
 
@@ -8488,8 +8490,8 @@ public class CssdSterile extends AppCompatActivity {
         ImageView image_save = (ImageView) dialog_pack.findViewById(R.id.image_save);
         ImageView imageBack_pack = (ImageView) dialog_pack.findViewById(R.id.imageBack);
 
-        txt_item_code.setText("รหัส : " + usagecode);
-        txt_item_name.setText("รายการ : " + itemname);
+        txt_item_code.setText(usagecode);
+        txt_item_name.setText(itemname+" : ");
 
         imageBack_pack.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -8504,7 +8506,7 @@ public class CssdSterile extends AppCompatActivity {
                     return;
                 }
 //                Toast.makeText(CssdSterile.this, txt_item_code.getText().toString()+"-----"+txt_packingmat.getContentDescription().toString() , Toast.LENGTH_SHORT).show();
-                onUpdatePacking(usagecode, txt_packingmat.getContentDescription().toString());
+                onUpdatePacking(w_id, txt_packingmat.getContentDescription().toString());
 
             }
         });

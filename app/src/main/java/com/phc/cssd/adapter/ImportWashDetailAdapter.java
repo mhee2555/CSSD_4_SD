@@ -73,6 +73,7 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
         final TextView txt_no;
         final TextView txt_item_program_id;
         final TextView txt_packingmat;
+        final TextView txt_packingmat2;
         final TextView txt_item_name;
         final TextView txt_qty;
         final TextView txt_basket;
@@ -93,6 +94,11 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
         txt_qty = (TextView) view.findViewById(R.id.txt_qty);
         imv_add = (ImageView) view.findViewById(R.id.imv_add);
         txt_packingmat = (TextView) view.findViewById(R.id.txt_packingmat);
+        txt_packingmat2 = (TextView) view.findViewById(R.id.txt_packingmat_2);
+        if(mode==4||mode==5){
+            txt_packingmat.setVisibility(View.INVISIBLE);
+            txt_packingmat2.setVisibility(View.VISIBLE);
+        }
         txt_basket = (TextView) view.findViewById(R.id.txt_basket);
         txt_IsRemarkems = (ImageView) view.findViewById(R.id.txt_IsRemarkems);
 
@@ -102,6 +108,7 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
         // =========================================================================================
         txt_item_code.setText( DATA_MODEL.get(position).getI_code());
         txt_packingmat.setText( "( " + DATA_MODEL.get(position).getPackingMat() + " : " + DATA_MODEL.get(position).getShelflife() + " วัน )");
+        txt_packingmat2.setText( "( " + DATA_MODEL.get(position).getPackingMat() + " : " + DATA_MODEL.get(position).getShelflife() + " วัน )");
 //        txt_no.setText( DATA_MODEL.get(position).getI_no() + ".");
         txt_no.setText(position+1 + ".");
         txt_item_program_id.setText( DATA_MODEL.get(position).getI_program_id());
@@ -134,7 +141,8 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                 public boolean onLongClick(View v) {
                     ((CssdSterile)context).openDialogWashManagement(
                             txt_item_code.getText().toString(),
-                            txt_item_name.getText().toString() );
+                            txt_item_name.getText().toString(),
+                            usageCode);
                     return false;
                 }
             });
@@ -357,7 +365,8 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                     public boolean onLongClick(View v) {
                         ((CssdSterile)context).openDialogWashManagement(
                                 w_id,
-                                txt_item_name.getText().toString() );
+                                txt_item_name.getText().toString(),
+                                usageCode);
                         return false;
                     }
                 });
@@ -368,7 +377,6 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
                         if(((CssdSterile) context).CheckProgramTypePairBasket(DATA_MODEL.get(position).getI_program_type())){
                             ((CssdSterile)context).importWashDetailToBasket(
                                     usageCode
-
                             );
 //                            ((CssdSterile)context).checkPacker(DATA_MODEL.get(position).getI_id());
                         }else{
