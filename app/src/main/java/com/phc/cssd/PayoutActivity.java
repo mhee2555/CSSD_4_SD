@@ -153,7 +153,6 @@ public class PayoutActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int width = displayMetrics.widthPixels;
@@ -427,10 +426,11 @@ public class PayoutActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(isnewDoc){
                     ArkCancelPayout();
+                    ListDepartment(spinner01,year + "-" + TwoZero((month + 1)+"") + "-" + TwoZero(day+"") , PayoutActivity.this);
                 }else{
                     onSearch();
+                    ListDepartment(spinner01,year + "-" + TwoZero((month + 1)+"") + "-" + TwoZero(day+"") , PayoutActivity.this);
                 }
-
                 //โชว์แผนก
 //                textViewDate1.setText( resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields2() );
 //                xSearch = gDate.getText() +","+ resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields1();
@@ -663,10 +663,10 @@ public class PayoutActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         bt_notfully.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(!DocNo.equals("")){
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(PayoutActivity.this);
                     LayoutInflater inflater = getLayoutInflater();
