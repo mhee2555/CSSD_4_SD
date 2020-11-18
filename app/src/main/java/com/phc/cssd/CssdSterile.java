@@ -279,6 +279,7 @@ public class CssdSterile extends AppCompatActivity {
     Dialog dialog_item_stock_detail_basket;
     private TextView cnt_basket_list;
     private Button btn_import_new_item_stock_to_basket;
+    private EditText edt_basket_code;
 
     public void onDestroy() {
         super.onDestroy();
@@ -1691,7 +1692,7 @@ public class CssdSterile extends AppCompatActivity {
         basket_dialog_list_washtag = (ListView) dialog_item_stock_detail_basket.findViewById(R.id.list_washtag);
         btn_print_bk = (Button) dialog_item_stock_detail_basket.findViewById(R.id.btn_save);
         pair_fin = (Button) dialog_item_stock_detail_basket.findViewById(R.id.btn_cancel);
-        final EditText edt_basket_code = (EditText) dialog_item_stock_detail_basket.findViewById(R.id.edt_basket_code);
+        edt_basket_code = (EditText) dialog_item_stock_detail_basket.findViewById(R.id.edt_basket_code);
         PairBasketBox_basket_Code = (TextView) dialog_item_stock_detail_basket.findViewById(R.id.bastek_name);
         cnt_basket_list = (TextView) dialog_item_stock_detail_basket.findViewById(R.id.cnt_basket_list);
         btn_import_new_item_stock_to_basket = (Button) dialog_item_stock_detail_basket.findViewById(R.id.btn_import_new_item_stock_to_basket);
@@ -1772,7 +1773,7 @@ public class CssdSterile extends AppCompatActivity {
                                             }
 
                                             if(b){
-                                                Toast.makeText(CssdSterile.this, "ไม่พบรหัสรายการ", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(CssdSterile.this, "สแกนรหัสไม่ถูกต้อง", Toast.LENGTH_SHORT).show();
                                             }else{
                                                 Toast.makeText(CssdSterile.this, "สแกนรหัสใช้งานซ้ำ", Toast.LENGTH_SHORT).show();
                                             }
@@ -1791,11 +1792,11 @@ public class CssdSterile extends AppCompatActivity {
                             }
                             
                             edt_basket_code.setText("");
-
-                            return true;
-                        default:
-                            break;
                     }
+                    return true;
+                }else if(keyCode==KeyEvent.KEYCODE_ENTER){
+                    Log.d("tog_basket_setOnKey","keyCode--"+true);
+                    return true;
                 }
 
                 return false;
@@ -8224,11 +8225,11 @@ public class CssdSterile extends AppCompatActivity {
                             packer.setText(c.getString("data"));
                             packer_id = qr_code;
                             dialog.show();
+                            edt_basket_code.requestFocus();
                         }else{
                             packer_id = "";
                             Toast.makeText(CssdSterile.this, "สิทธิ์ผู้ใช้งานไม่สามารถเข้าถึงส่วนนี้ได้ !!", Toast.LENGTH_SHORT).show();
                         }
-
 
                     }
 

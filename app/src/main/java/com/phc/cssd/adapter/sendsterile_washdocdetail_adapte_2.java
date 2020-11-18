@@ -218,21 +218,27 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
             bt_risk.setEnabled(false);
         }
 
-        if (!listData.get(position).getIsStatus().equals("0")) {
-            if (!(IsEdit&&Isadmin)) {
-                btdel.setEnabled(false);
-                btdel.setVisibility(View.INVISIBLE);
-                del_multi_un.setVisibility(View.INVISIBLE);
-                del_multi_un.setEnabled(false);
-            }else {
-                if (Isdel == Isdel1) {
-                    btdel.setVisibility(View.INVISIBLE);
-                    del_multi_un.setVisibility(View.VISIBLE);
-                } else {
-                    btdel.setVisibility(View.VISIBLE);
-                    del_multi_un.setVisibility(View.INVISIBLE);
-                }
-            }
+        if (!listData.get(position).getIsStatus().equals("0")&&!(IsEdit&&Isadmin)) {
+
+            btdel.setEnabled(false);
+            btdel.setVisibility(View.INVISIBLE);
+            del_multi_un.setVisibility(View.INVISIBLE);
+            del_multi_un.setEnabled(false);
+
+//            if (!(IsEdit&&Isadmin)) {
+//                btdel.setEnabled(false);
+//                btdel.setVisibility(View.INVISIBLE);
+//                del_multi_un.setVisibility(View.INVISIBLE);
+//                del_multi_un.setEnabled(false);
+//            }else {
+//                if (Isdel == Isdel1) {
+//                    btdel.setVisibility(View.INVISIBLE);
+//                    del_multi_un.setVisibility(View.VISIBLE);
+//                } else {
+//                    btdel.setVisibility(View.VISIBLE);
+//                    del_multi_un.setVisibility(View.INVISIBLE);
+//                }
+//            }
         }else {
             if (Isdel == Isdel1) {
                 btdel.setVisibility(View.INVISIBLE);
