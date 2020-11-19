@@ -29,6 +29,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import static com.phc.cssd.function.KeyboardUtils.hideKeyboard;
+
 public class dialog_remark_sendsterile extends Activity {
 
     LinearLayout R1,R2,R3;
@@ -718,6 +720,7 @@ public class dialog_remark_sendsterile extends Activity {
                             check4.setChecked(false);
                             check5.setChecked(false);
                         }
+                        hideKeyboard(dialog_remark_sendsterile.this);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

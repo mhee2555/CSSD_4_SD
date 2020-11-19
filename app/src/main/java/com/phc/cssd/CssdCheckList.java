@@ -95,7 +95,7 @@ public class CssdCheckList extends Activity {
 
     private ImageView img_item;
     private ImageView img_item_all;
-    private CheckBox checkbox;
+    private ImageView checkbox,un_checkbox;
     private LinearLayout west;
     private List<ModelCheckList> MODEL_CHECK_LIST = null;
 
@@ -243,6 +243,10 @@ public class CssdCheckList extends Activity {
                 String Itemname = ModelCheckList.getItemname();
                 String Qty = ModelCheckList.getQty();
                 onListClick(img_set,img_detail);
+
+                Log.d("LDVLKD",img_set);
+                Log.d("LDVLKD",img_detail);
+
                 if (!Itemname.equals("COMPLY STERIGAGE STEAM (SHORT)")){
                     if (!getQtyItemDetail.equals("0")){
                         OpenDialog(Itemname,"1",Qty,getQtyItemDetail);
@@ -306,8 +310,9 @@ public class CssdCheckList extends Activity {
         edt_usage_code = ( EditText ) findViewById(R.id.edt_usage_code);
         west = ( LinearLayout ) findViewById(R.id.west);
 
-        checkbox = ( CheckBox ) findViewById(R.id.checkbox);
-
+        checkbox = ( ImageView ) findViewById(R.id.checkbox);
+        un_checkbox = ( ImageView ) findViewById(R.id.un_checkbox);
+        checkbox.setVisibility(View.GONE);
         // west.setVisibility(Is_ById ? View.GONE : View.VISIBLE);
         west.setVisibility(View.GONE);
         imv_new.setVisibility(Is_ById ? View.GONE : View.VISIBLE);
@@ -327,7 +332,7 @@ public class CssdCheckList extends Activity {
                 AlertDialog.Builder quitDialog = new AlertDialog.Builder(CssdCheckList.this);
                 quitDialog.setTitle(Cons.TITLE);
                 quitDialog.setIcon(R.drawable.pose_favicon_2x);
-                quitDialog.setMessage("ค้นหา Usage Code เพื่อทำการเช็คอุปกรณ์ใหม่ ?");
+                quitDialog.setMessage("ต้องการจัดเซ็ทใหม่(Check List) ใช่หรือไม่ ?");
                 quitDialog.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -352,6 +357,7 @@ public class CssdCheckList extends Activity {
                     switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
+                            Log.d("KFNGLMV",COUNT_PROCESS+"");
                             if (COUNT_PROCESS < 2){
                                 checkInput(edt_usage_code.getText().toString());
                                 DIALOG_ACTIVE = true;
@@ -479,9 +485,31 @@ public class CssdCheckList extends Activity {
         checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                checkbox.setVisibility(View.GONE);
+                un_checkbox.setVisibility(View.VISIBLE);
                 try {
                     for (int i = 0; i < MODEL_CHECK_LIST.size(); i++) {
-                        MODEL_CHECK_LIST.get(i).setCheck(checkbox.isChecked());
+                        MODEL_CHECK_LIST.get(i).setCheck(false);
+                    }
+                    ArrayAdapter<ModelCheckList> adapter;
+                    adapter = new CheckListAdapter(CssdCheckList.this, MODEL_CHECK_LIST);
+                    list_check.setAdapter(adapter);
+                }catch (Exception e){
+
+                }finally {
+                    focus_();
+                }
+            }
+        });
+
+        un_checkbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkbox.setVisibility(View.VISIBLE);
+                un_checkbox.setVisibility(View.GONE);
+                try {
+                    for (int i = 0; i < MODEL_CHECK_LIST.size(); i++) {
+                        MODEL_CHECK_LIST.get(i).setCheck(true);
                     }
                     ArrayAdapter<ModelCheckList> adapter;
                     adapter = new CheckListAdapter(CssdCheckList.this, MODEL_CHECK_LIST);
@@ -572,6 +600,7 @@ public class CssdCheckList extends Activity {
 
     private void clearAll(){
         COUNT_PROCESS = 1;
+        ID = null;
         UsageCode= null;
         img_item_all.setImageResource(R.drawable.ic_preview);
         img_item.setImageResource(R.drawable.ic_preview);
@@ -580,7 +609,7 @@ public class CssdCheckList extends Activity {
         txt_item_name.setText("ชื่อเซ็ท : -");
         txt_usagecode_scan.setText("");
         txt_item_detail.setText("0 รายการ / 0 ชิ้น");
-        checkbox.setChecked(false);
+        un_checkbox.setVisibility(View.VISIBLE);
         list_check.setAdapter(null);
         ch1_un.setVisibility(View.GONE);
         ch2_un.setVisibility(View.GONE);
@@ -793,9 +822,11 @@ public class CssdCheckList extends Activity {
                 }
 
                 if (!MODEL_CHECK_LIST.get(i).getNameType().equals("")) {
-                    MsgCheck = "มีบางรายการถูก Remark ไว้ !!";
-                    IsCheck = false;
-                    break;
+                    if (!MODEL_CHECK_LIST.get(i).getAdminApprove().equals("1")){
+                        MsgCheck = "มีบางรายการถูก Remark ไว้ !!";
+                        IsCheck = false;
+                        break;
+                    }
                 }
             }
 
@@ -1086,7 +1117,7 @@ public class CssdCheckList extends Activity {
                 if(ID != null) {
                     data.put("ID", ID);
                 }else if(UsageCode != null) {
-                    data.put("p_usage_code", UsageCode);
+                    data.put("p_usage_code", UsageCode.toUpperCase());
                 }
                 if(B_ID != null){
                     data.put("p_bid", B_ID);
@@ -1201,6 +1232,9 @@ public class CssdCheckList extends Activity {
             checkPacker(Input);
             return;
         }
+
+        Log.d("KFNGLMV",ID+"");
+
         // Check Usage
         if(ID == null){
             UsageCode = Input;
@@ -1266,7 +1300,7 @@ public class CssdCheckList extends Activity {
     }
 
     private void focus(){
-        checkbox.setChecked(false);
+        un_checkbox.setVisibility(View.VISIBLE);
         final Handler h = new Handler();
         h.postDelayed(new Runnable() {
             @Override
