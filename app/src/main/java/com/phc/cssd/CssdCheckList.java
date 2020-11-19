@@ -1050,6 +1050,8 @@ public class CssdCheckList extends Activity {
                             }else {
                                 cnt++;
                             }
+                        }else {
+                            Toast.makeText(CssdCheckList.this, "ไม่พบข้อมูล !!", Toast.LENGTH_SHORT).show();
                         }
                     }
 

@@ -328,6 +328,7 @@ public class dialog_remark_sendsterile extends Activity {
     private void openQR(final String admin){
         Intent i = new Intent(dialog_remark_sendsterile.this, CssdQrUser.class);
         i.putExtra("page", page);
+        i.putExtra("data", admin);
         startActivityForResult(i,1006);
     }
 
@@ -352,6 +353,8 @@ public class dialog_remark_sendsterile extends Activity {
             Log.d("BANK7",RETURN_ADMIN);
             Log.d("BANK7",RETURN_INCHARG);
             Log.d("BANK7",RETURN_USER);
+            Log.d("BANK7",RETURN_EMCODE);
+            Log.d("BANK7",resultCode+"");
             if (resultCode == 1006) {
                 if (RETURN_ADMIN.equals("1")){
                     CancelRemark(datacheck,text_remark.getText().toString(),DocNoSend,Usagecode,Itemname,DepID);
@@ -631,7 +634,7 @@ public class dialog_remark_sendsterile extends Activity {
                 HashMap<String, String> data = new HashMap<String,String>();
                 data.put("usagecode",usagecode);
                 data.put("itemname",itemname);
-                data.put("EmpCode",RETURN_VALUE);
+                data.put("EmpCode",RETURN_EMCODE);
                 String result = null;
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_delete_remark_send.php", data);
@@ -771,6 +774,7 @@ public class dialog_remark_sendsterile extends Activity {
                         }else {
                             R1.setVisibility(View.GONE);
                         }
+                        hideKeyboard(dialog_remark_sendsterile.this);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -819,6 +823,7 @@ public class dialog_remark_sendsterile extends Activity {
                         }else {
                             check2.setVisibility(View.GONE);
                         }
+                        hideKeyboard(dialog_remark_sendsterile.this);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -867,6 +872,7 @@ public class dialog_remark_sendsterile extends Activity {
                         }else {
                             R2.setVisibility(View.GONE);
                         }
+                        hideKeyboard(dialog_remark_sendsterile.this);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -915,6 +921,7 @@ public class dialog_remark_sendsterile extends Activity {
                         }else {
                             check4.setVisibility(View.GONE);
                         }
+                        hideKeyboard(dialog_remark_sendsterile.this);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -963,6 +970,7 @@ public class dialog_remark_sendsterile extends Activity {
                         }else {
                             R3.setVisibility(View.GONE);
                         }
+                        hideKeyboard(dialog_remark_sendsterile.this);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1011,6 +1019,7 @@ public class dialog_remark_sendsterile extends Activity {
                         }else {
                             check6.setVisibility(View.GONE);
                         }
+                        hideKeyboard(dialog_remark_sendsterile.this);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1057,6 +1066,7 @@ public class dialog_remark_sendsterile extends Activity {
                         }else {
                             Toast.makeText(dialog_remark_sendsterile.this, "ไม่สามารถแก้ไข Remark ได้เนื่องจากเอกสารถูกบันทึกแล้ว !!", Toast.LENGTH_SHORT).show();
                         }
+                        hideKeyboard(dialog_remark_sendsterile.this);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1087,7 +1097,6 @@ public class dialog_remark_sendsterile extends Activity {
     @Override
     public void onBackPressed() {
 //        super.onBackPressed();
-
     }
 
 }

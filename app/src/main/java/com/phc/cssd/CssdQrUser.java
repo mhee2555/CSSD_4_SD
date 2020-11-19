@@ -116,6 +116,7 @@ public class CssdQrUser extends Activity {
                                 intent.putExtra("RETURN_ADMIN", c.getString("admin"));
                                 intent.putExtra("RETURN_INCHARG", c.getString("IsInCharg"));
                                 intent.putExtra("RETURN_USER", c.getString("IsUser"));
+                                intent.putExtra("RETURN_EMCODE", c.getString("EmpCode"));
                                 intent.putExtra("RETURN_ITEMCODE", itemcode);
                                 intent.putExtra("RETURN_ITEMDETAIL", itemdetail);
                                 intent.putExtra("RETURN_ROWID", RowID);
