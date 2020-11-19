@@ -723,6 +723,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 }else{
                     list_docno_detail.setAdapter(null);
                 }
+                txt_get_ucode.requestFocus();
             }
         });
 
@@ -771,7 +772,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 IsItemClick = true;
                 ShowDetail();
                 ShowUserSend();
-
+                txt_get_ucode.requestFocus();
             }
         });
 
