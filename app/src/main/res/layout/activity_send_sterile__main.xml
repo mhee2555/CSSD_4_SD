@@ -55,13 +55,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:layout_weight="1"
-                        android:text="เอกสารส่งล้าง"
+                        android:text=""
                         android:textColor="@android:color/white"
                         android:textColorLink="@color/colorSwitchBlue"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:theme="@style/SwitchTheme"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
 
                     <Switch
                         android:id="@+id/bt_sw"
@@ -73,7 +73,8 @@
                         android:textColorLink="@color/colorSwitchBlue"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:theme="@style/SwitchTheme" />
+                        android:theme="@style/SwitchTheme"
+                        android:visibility="gone"/>
 
                 </LinearLayout>
 
@@ -262,13 +263,13 @@
                     android:orientation="vertical">
 
                     <RelativeLayout
-                        android:layout_width="300dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
                         <Button
                             android:id="@+id/bt_search_sendsteril1"
-                            android:layout_width="200dp"
+                            android:layout_width="match_parent"
                             android:layout_height="35dp"
                             android:text="เพิ่มรายการ"
                             android:textColor="@color/colorWhite"
@@ -281,9 +282,9 @@
 
                         <Button
                             android:id="@+id/bt_search_sendsterile"
-                            android:layout_width="200dp"
+                            android:layout_width="match_parent"
                             android:layout_height="35dp"
-                            android:layout_marginLeft="140dp"
+                            android:layout_marginLeft="130dp"
                             android:layout_marginTop="10dp"
                             android:background="@drawable/bt_create03"
                             android:gravity="center"
@@ -456,28 +457,34 @@
                                 android:textColor="#000000"
                                 android:textSize="16sp" />
 
-                            <TextView
-                                android:id="@+id/Birthday"
-                                android:layout_width="180dp"
-                                android:layout_height="35dp"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true"
-                                android:layout_marginLeft="5dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginRight="10dp"
-                                android:background="@drawable/text_edit"
-                                android:gravity="center"
-                                android:paddingLeft="5dp"
-                                android:textColor="@android:color/black"
-                                android:textSize="16sp" />
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
 
-                            <Button
-                                android:id="@+id/bt_calendar"
-                                android:layout_width="35dp"
-                                android:layout_height="35dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginRight="15dp"
-                                android:background="@drawable/ic_calendar" />
+                                <TextView
+                                    android:id="@+id/Birthday"
+                                    android:layout_width="280dp"
+                                    android:layout_height="35dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginRight="10dp"
+                                    android:background="@drawable/text_edit"
+                                    android:gravity="center"
+                                    android:paddingLeft="5dp"
+                                    android:textColor="@android:color/black"
+                                    android:textSize="16sp" />
+
+                                <Button
+                                    android:id="@+id/bt_calendar"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginRight="15dp"
+                                    android:layout_marginLeft="245dp"
+                                    android:background="@drawable/calendar01" />
+
+                            </RelativeLayout>
 
                         </LinearLayout>
 
@@ -503,8 +510,10 @@
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                                 android:id="@+id/dept_spinner"
                                 style="@style/spinner_style"
-                                android:layout_width="180dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="35dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="5dp"
                                 android:layout_alignStart="@+id/Birthday"
                                 android:layout_alignTop="@+id/textView3" />
 
@@ -516,7 +525,8 @@
                                 android:layout_alignParentEnd="true"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/bt_search"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:visibility="gone"/>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -842,28 +852,34 @@
                                 android:textColor="#000000"
                                 android:textSize="16sp" />
 
-                            <TextView
-                                android:id="@+id/date_l2"
-                                android:layout_width="180dp"
-                                android:layout_height="35dp"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true"
-                                android:layout_marginLeft="5dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginRight="10dp"
-                                android:background="@drawable/text_edit"
-                                android:gravity="center"
-                                android:paddingLeft="5dp"
-                                android:textColor="@android:color/black"
-                                android:textSize="16sp" />
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
 
-                            <Button
-                                android:id="@+id/bt_calendar_l2"
-                                android:layout_width="35dp"
-                                android:layout_height="35dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginRight="15dp"
-                                android:background="@drawable/ic_calendar" />
+                                <TextView
+                                    android:id="@+id/date_l2"
+                                    android:layout_width="280dp"
+                                    android:layout_height="35dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginRight="10dp"
+                                    android:background="@drawable/text_edit"
+                                    android:gravity="center"
+                                    android:paddingLeft="5dp"
+                                    android:textColor="@android:color/black"
+                                    android:textSize="16sp" />
+
+                                <Button
+                                    android:id="@+id/bt_calendar_l2"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginRight="15dp"
+                                    android:layout_marginLeft="230dp"
+                                    android:background="@drawable/calendar01" />
+
+                            </RelativeLayout>
 
                         </LinearLayout>
 
@@ -889,8 +905,10 @@
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                                 android:id="@+id/dept_spinner_l2"
                                 style="@style/spinner_style"
-                                android:layout_width="180dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="35dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="5dp"
                                 android:layout_alignStart="@+id/Birthday"
                                 android:layout_alignTop="@+id/textView3" />
 
@@ -902,7 +920,8 @@
                                 android:layout_alignParentEnd="true"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/bt_search"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:visibility="gone"/>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -1306,9 +1325,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="โทร : 9-2368"
-        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="700dp"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="490dp"
         android:layout_marginTop="20dp"
         android:gravity="center|center_vertical"
         android:textColor="@color/colorWhite"
@@ -1322,7 +1340,7 @@
         android:text=""
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="115dp"
+        android:layout_marginEnd="130dp"
         android:layout_marginTop="20dp"
         android:gravity="center|center_vertical"
         android:textColor="@color/colorWhite"

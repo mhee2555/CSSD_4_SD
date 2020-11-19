@@ -409,7 +409,7 @@ public class PayoutActivity extends AppCompatActivity {
         textViewDate1.setText("");
         // textViewDate1.setText( resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields2() );
 
-        gDate.setText( year + "-" + TwoZero((month + 1)+"") + "-" + TwoZero(day+"" ) );
+        gDate.setText(TwoZero(day+"" )+ "-" + TwoZero((month + 1)+"") + "-" + year);
 
         bDate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -1059,14 +1059,12 @@ public class PayoutActivity extends AppCompatActivity {
         @Override
         public void onDateSet(DatePicker view, int selectedYear,
                               int selectedMonth, int selectedDay) {
-
             year  = selectedYear;
             month = selectedMonth;
             day   = selectedDay;
-
             Log.d("ttestDate","in DatePickerDialog");
             // Show selected date
-            gDate.setText( year + "-" + TwoZero((month + 1)+"") + "-" + TwoZero(day+"" ) );
+            gDate.setText(TwoZero(day+"" )+ "-" + TwoZero((month + 1)+"") + "-" + year);
             xSearch = gDate.getText() +","+ resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields1();
             ListDepartment(spinner01,year + "-" + TwoZero((month + 1)+"") + "-" + TwoZero(day+"") , PayoutActivity.this);
             ListPayoutDocument("0",xSearch);

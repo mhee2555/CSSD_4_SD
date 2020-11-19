@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -1098,29 +1100,51 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        searchbox.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                    switch (keyCode) {
-                        case KeyEvent.KEYCODE_DPAD_CENTER:
-                        case KeyEvent.KEYCODE_ENTER:
 
-                            if(CheckScanCodekey(searchbox)){
-                                return true;
-                            }
+        searchbox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                            getlistdata(deptsp_id, edittext.getText().toString(), searchbox.getText().toString());
-                            cleardoc();
-                            return true;
-                        default:
-                            break;
-                    }
-                }else if(keyCode==KeyEvent.KEYCODE_ENTER){
-                    return true;
-                }
-                return false;
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                if(CheckScanCodekey(searchbox)){
+//                    return true;
+//                }
+                getlistdata(deptsp_id, edittext.getText().toString(), searchbox.getText().toString());
+                cleardoc();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
+
+//        searchbox.setOnKeyListener(new View.OnKeyListener() {
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+//                    switch (keyCode) {
+//                        case KeyEvent.KEYCODE_DPAD_CENTER:
+//                        case KeyEvent.KEYCODE_ENTER:
+//
+//                            if(CheckScanCodekey(searchbox)){
+//                                return true;
+//                            }
+//
+//                            getlistdata(deptsp_id, edittext.getText().toString(), searchbox.getText().toString());
+//                            cleardoc();
+//                            return true;
+//                        default:
+//                            break;
+//                    }
+//                }else if(keyCode==KeyEvent.KEYCODE_ENTER){
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
 
         txt_get_ucode.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
