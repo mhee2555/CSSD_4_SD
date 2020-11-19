@@ -347,6 +347,11 @@ public class CssdNewItemStockToWash extends Activity {
 
                         if (c.getString("flag").equals("true")) {
                             Toast.makeText(CssdNewItemStockToWash.this, "นำเข้าอุปกรณ์สำเร็จ !!", Toast.LENGTH_SHORT).show();
+//                            Intent intent = new Intent();
+//                            intent.putExtra("RETURN_VALUE", DATA);
+//
+//                            setResult(Master.CssdNewItemStockToWash, intent);
+
                             finish();
                         }else{
                             Toast.makeText(CssdNewItemStockToWash.this, "นำเข้าอุปกรณ์ไม่สำเร็จ !!", Toast.LENGTH_SHORT).show();

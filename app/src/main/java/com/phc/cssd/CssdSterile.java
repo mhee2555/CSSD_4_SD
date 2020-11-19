@@ -218,6 +218,7 @@ public class CssdSterile extends AppCompatActivity {
     private List<ModelImportWashDetail> MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR = new ArrayList<>();
     private List<ModelImportWashDetail> MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR = new ArrayList<>();
 
+    private List<String> MODEL_IMPORT_WASH_DETAIL_ischeck = new ArrayList<>();;
     //    HashMap <String ,ArrayList<String>>model_head_show_Usagecode = new HashMap<String ,ArrayList<String>>();
     HashMap<String,List<ModelImportWashDetail>> MAP_MODEL_IMPORT_WASH_DETAIL_SUB = new HashMap<String,List<ModelImportWashDetail>>();
     private Handler handler_1 = new Handler();
@@ -1687,9 +1688,9 @@ public class CssdSterile extends AppCompatActivity {
 
         dialog_item_stock_detail_basket.setTitle("");
 
-        basket_dialog_list_basket = (ListView) dialog_item_stock_detail_basket.findViewById(R.id.list_basket);
-        basket_dialog_w_list = (ListView) dialog_item_stock_detail_basket.findViewById(R.id.list);
         basket_dialog_list_washtag = (ListView) dialog_item_stock_detail_basket.findViewById(R.id.list_washtag);
+        basket_dialog_w_list = (ListView) dialog_item_stock_detail_basket.findViewById(R.id.list);
+        basket_dialog_list_basket = (ListView) dialog_item_stock_detail_basket.findViewById(R.id.list_basket);
         btn_print_bk = (Button) dialog_item_stock_detail_basket.findViewById(R.id.btn_save);
         pair_fin = (Button) dialog_item_stock_detail_basket.findViewById(R.id.btn_cancel);
         edt_basket_code = (EditText) dialog_item_stock_detail_basket.findViewById(R.id.edt_basket_code);
@@ -1792,8 +1793,11 @@ public class CssdSterile extends AppCompatActivity {
                             }
                             
                             edt_basket_code.setText("");
+
+                            return true;
+                        default:
+                            break;
                     }
-                    return true;
                 }else if(keyCode==KeyEvent.KEYCODE_ENTER){
                     Log.d("tog_basket_setOnKey","keyCode--"+true);
                     return true;
@@ -2922,7 +2926,7 @@ public class CssdSterile extends AppCompatActivity {
 
             List<ModelImportWashDetail> DATA_MODEL = MODEL_IMPORT_WASH_DETAIL;
 
-            Log.d("tog_isprint","size = "+DATA_MODEL.size());
+            Log.d("tog_create_sterile","size = "+DATA_MODEL.size());
             Iterator li = DATA_MODEL.iterator();
 
             while(li.hasNext()) {
@@ -2940,6 +2944,7 @@ public class CssdSterile extends AppCompatActivity {
                 }
             }
 
+            Log.d("tog_create_sterile","Go addSterileDetail");
             addSterileDetail(DocNo, DATA, null,"0",null);
 
         }catch(Exception e){
@@ -2976,8 +2981,6 @@ public class CssdSterile extends AppCompatActivity {
 
                     // =============================================================================
                     if (DocNo == null || DocNo.equals("-") || DocNo.equals("")) {
-
-
 
                         if (isBowiedick() && (MODEL_STERILE_DETAIL == null || MODEL_STERILE_DETAIL.size() < 1)) {
 
@@ -5184,7 +5187,7 @@ public class CssdSterile extends AppCompatActivity {
                                         data.get(i + 25),
                                         data.get(i + 26),
                                         data.get(i + 27),
-                                        data.get(i + 28),
+                                        "",
                                         index
                                 )
                         );
@@ -5353,9 +5356,11 @@ public class CssdSterile extends AppCompatActivity {
                             // SetData Machine
                             setMachine(p_doc_no);
                             if(DATA == null) {
+                                Log.d("tog_create_sterile","Wash");
                                 // Add Sterile Detail (Import Wash Detail)
                                 addSterileDetail(p_doc_no);
                             }else{
+                                Log.d("tog_create_sterile","new");
                                 // Add Sterile Detail (Import New Item)
                                 if(IsNew) {
                                     addSterileDetailAdvance(p_doc_no, DATA, "cssd_add_sterile_detail_by_import_new_item_stock.php");
@@ -5364,6 +5369,7 @@ public class CssdSterile extends AppCompatActivity {
                                 }
                             }
                         }catch(Exception e){
+                            Log.d("tog_create_sterile","e = "+e);
                             e.printStackTrace();
                             return;
                         }
@@ -5386,8 +5392,8 @@ public class CssdSterile extends AppCompatActivity {
                     data.put("p_bid", B_ID);
                 }
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_create_sterile.php", data);
-                Log.d("BANK123",data+"");
-                Log.d("BANK123",result);
+                Log.d("tog_create_sterile",data+"");
+                Log.d("tog_create_sterile",result);
                 return result;
             }
 
@@ -5426,7 +5432,7 @@ public class CssdSterile extends AppCompatActivity {
                                         data.get(i + 25),
                                         data.get(i + 26),
                                         data.get(i + 27),
-                                        data.get(i + 28),
+                                        "",
                                         index
                                 )
                         );
@@ -5434,6 +5440,7 @@ public class CssdSterile extends AppCompatActivity {
                     }
                     // //////System.out.println("list = " + list.size());
                 }catch(Exception e){
+                    Log.d("tog_create_sterile","e = "+e);
                     e.printStackTrace();
                 }
                 return list;
@@ -6052,6 +6059,7 @@ public class CssdSterile extends AppCompatActivity {
                 Log.d("tog_create_sterile","data :: "+data);
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_add_sterile_detail_json.php", data);
                 Log.d("tog_create_sterile","result :: "+result);
+
                 return result;
             }
 
@@ -6997,10 +7005,19 @@ public class CssdSterile extends AppCompatActivity {
 
                     for(int i=0;i<data.size();i+=size){
                         Log.d("ttestdataget","data.get("+i+") = "+data.get(i+2)+"---"+data.get(i+19));
+
+                        boolean ischeck = false;
+
+//                        if(data.get(i + 20).equals("0")){
+//                            ischeck = false;
+//                        }else{
+//                            ischeck = true;
+//                        }
+
                         list.add(
                                 new ModelImportWashDetail(
                                         index,
-                                        false,
+                                        ischeck,
                                         data.get(i),
                                         data.get(i + 1),
                                         data.get(i + 2),

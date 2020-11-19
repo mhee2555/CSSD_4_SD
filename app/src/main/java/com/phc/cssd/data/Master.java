@@ -38,6 +38,7 @@ public class Master {
     public static final int wash_type = 27;
     public static final int no_wash_type = 205;
     public static final int no_wash_num = 206;
+    public static final int CssdNewItemStockToWash = 208;
 
     public static final String s_item = "item";
     public static final String s_special = "special";

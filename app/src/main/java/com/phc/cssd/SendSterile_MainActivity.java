@@ -350,6 +350,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     }
 
     public void SelectBasket() {
+        Log.d("tog_select_basket","Basket_washtag_code = "+Basket_washtag_code);
         class Add extends AsyncTask<String, Void, String> {
 
             int pos = 0;
@@ -429,7 +430,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String, String>();
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_select_basket_send.php", data);
-                Log.d("KDFJDKJ",result);
+                Log.d("tog_select_basket",result);
                 return result;
             }
         }
@@ -4486,9 +4487,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         JSONObject c = setRs.getJSONObject(i);
                         bo=c.getString("result");
                         if (bo.equals("A")){
-
                             SelectBasket();
-
                         }
 
                     }
@@ -4707,6 +4706,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     }else {
                         basket_resterile(1);
                     }
+                    break;
                 case Master.ss_Clear_Wash_Tag_and_Focus_Wash_Tag :
                     Clear_wash_tag();
                     basket.requestFocus();
