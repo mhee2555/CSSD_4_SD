@@ -426,10 +426,10 @@ public class PayoutActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(isnewDoc){
                     ArkCancelPayout();
-                    ListDepartment(spinner01,year + "-" + TwoZero((month + 1)+"") + "-" + TwoZero(day+"") , PayoutActivity.this);
+                    ListDepartment(spinner01,TwoZero(day+"" )+ "-" + TwoZero((month + 1)+"") + "-" + year , PayoutActivity.this);
                 }else{
                     onSearch();
-                    ListDepartment(spinner01,year + "-" + TwoZero((month + 1)+"") + "-" + TwoZero(day+"") , PayoutActivity.this);
+                    ListDepartment(spinner01,TwoZero(day+"" )+ "-" + TwoZero((month + 1)+"") + "-" + year , PayoutActivity.this);
                 }
                 //โชว์แผนก
 //                textViewDate1.setText( resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields2() );
@@ -824,7 +824,7 @@ public class PayoutActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        ListDepartment(spinner01,year + "-" + TwoZero((month + 1)+"") + "-" + TwoZero(day+"") , PayoutActivity.this);
+        ListDepartment(spinner01,TwoZero(day+"" )+ "-" + TwoZero((month + 1)+"") + "-" + year , PayoutActivity.this);
         if(!Resume1st){
             onSearch();
         }
@@ -1066,7 +1066,7 @@ public class PayoutActivity extends AppCompatActivity {
             // Show selected date
             gDate.setText(TwoZero(day+"" )+ "-" + TwoZero((month + 1)+"") + "-" + year);
             xSearch = gDate.getText() +","+ resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields1();
-            ListDepartment(spinner01,year + "-" + TwoZero((month + 1)+"") + "-" + TwoZero(day+"") , PayoutActivity.this);
+            ListDepartment(spinner01,TwoZero(day+"" )+ "-" + TwoZero((month + 1)+"") + "-" + year, PayoutActivity.this);
             ListPayoutDocument("0",xSearch);
 
         }
@@ -1222,9 +1222,10 @@ public class PayoutActivity extends AppCompatActivity {
                 data.put("xSel",params[0]);
                 data.put("xSearch",params[1]);
                 Log.d("B_ID: ", B_ID+"");
-
                 if(B_ID!=null){data.put("B_ID",B_ID);}
                 String result = ruc.sendPostRequest(iFt.getpayoutdocument(),data);
+                Log.d("FLKVFPK",data+"");
+                Log.d("FLKVFPK",result+"");
                 return  result;
             }
         }

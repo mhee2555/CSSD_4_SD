@@ -1084,7 +1084,7 @@ public class CssdCheckList extends Activity {
 
                         int Sum = sum_qty - sum_qty_Detail;
                         txt_item_name.setText("ชื่อเซ็ท : " + usage_item_code + " - " + usage_item_name);
-                        txt_item_detail.setText("  [ "+cnt+" รายการ  /  "+Sum +" ชิ้น ]");
+                        txt_item_detail.setText(" [ "+cnt+" รายการ  /  "+Sum +" ชิ้น ]");
                         try {
                             URL url = new URL(Url.getImageURL() + img_set);
                             Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
@@ -1106,6 +1106,8 @@ public class CssdCheckList extends Activity {
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(CssdCheckList.this, "ไม่พบข้อมูล !!", Toast.LENGTH_SHORT).show();
+                    edt_usage_code.requestFocus();
+                    edt_usage_code.setText("");
                     COUNT_PROCESS = 1;
                     list_check.setAdapter(null);
                     return;

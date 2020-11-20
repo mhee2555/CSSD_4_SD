@@ -943,6 +943,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 updateDate();
+                getlistdata(deptsp_id, edittext.getText().toString(), searchbox.getText().toString());
+                cleardoc();
             }
 
         };
@@ -957,6 +959,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 updateDate_l2();
+                getlistdata(deptsp_id, edittext.getText().toString(), searchbox.getText().toString());
+                cleardoc();
             }
 
         };
@@ -968,6 +972,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 new DatePickerDialog(SendSterile_MainActivity.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                getlistdata(deptsp_id, edittext.getText().toString(), searchbox.getText().toString());
+                cleardoc();
             }
         });
 
@@ -978,6 +984,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 new DatePickerDialog(SendSterile_MainActivity.this, date2, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                getlistdata(deptsp_id, edittext.getText().toString(), searchbox.getText().toString());
+                cleardoc();
             }
         });
 
@@ -989,6 +997,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 new DatePickerDialog(SendSterile_MainActivity.this, date2, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                getlistdata(deptsp_id, edittext.getText().toString(), searchbox.getText().toString());
+                cleardoc();
             }
         });
 
@@ -1000,6 +1010,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 new DatePickerDialog(SendSterile_MainActivity.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                getlistdata(deptsp_id, edittext.getText().toString(), searchbox.getText().toString());
+                cleardoc();
             }
         });
 
@@ -1720,7 +1732,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         edittext.setText(sdf.format(myCalendar.getTime()));
         cleardoc();
-
+        getlistdata(dept_search_l2, date_l2.getText().toString(), "");
     }
 
     private void updateDate_l2() {
@@ -1728,7 +1740,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         date_l2.setText(sdf.format(myCalendar.getTime()));
         getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
-
+        getlistdata(dept_search_l2, date_l2.getText().toString(), "");
     }
 
     public void getlistdata(String department_id, String Date, String sreach) {

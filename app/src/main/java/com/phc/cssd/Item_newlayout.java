@@ -42,6 +42,7 @@ import com.phc.cssd.config.ConfigProgram;
 import com.phc.cssd.data.Master;
 import com.phc.cssd.master_data.MachineAndSterile;
 import com.phc.cssd.master_data.MachineAndWash;
+import com.phc.cssd.model.ModelCheckList;
 import com.phc.cssd.model.ModelDepartment;
 import com.phc.cssd.model.ModelItemDetail;
 import com.phc.cssd.model.ModelItems;
@@ -103,6 +104,7 @@ public class Item_newlayout extends AppCompatActivity {
     private ArrayList<String> data = null;
     private int size = 0;
     private int summenuset = 0;
+    private String summenusetqty = "0";
     private String userid;
     Bitmap bitmap1 = null;
     int width = 1000;
@@ -201,6 +203,7 @@ public class Item_newlayout extends AppCompatActivity {
     private String B_ID = null;
     ArrayAdapter<String> adapter_spinner;
     private ArrayList<String> array_deptsp = new ArrayList<String>();
+    private List<ModelItemDetail> MODEL_ITEM_DETAIL = null;
     private ArrayList<String> list_sp = new ArrayList<String>();
     CheckBox denger;
     String StatusDenger = "";
@@ -1651,8 +1654,9 @@ public class Item_newlayout extends AppCompatActivity {
         }
     }
     private void setsumzero(){
-        summenuset=0;
-        txt_summenuset.setText("รายการ [ "+summenuset+" ] ชิ้น");
+        summenuset = 0;
+        summenusetqty = "0";
+        txt_summenuset.setText("[ "+summenuset+" รายการ "+"/ "+summenusetqty+" ชิ้น ]");
         txt_summenuset.setTextColor(Color.WHITE);
     }
 
@@ -2433,7 +2437,11 @@ public class Item_newlayout extends AppCompatActivity {
                         setsumzero();
                         ArrayAdapter<ModelItemDetail> adapter = new ItemDetailAdapter(Item_newlayout.this, getItemDetailModel());
                         list_set_item.setAdapter(adapter);
-                        txt_summenuset.setText("รายการ [ "+summenuset+" ] ชิ้น");
+//                        for (int i = 0 ; i < MODEL_ITEM_DETAIL.size() ; i ++){
+//                            summenusetqty = MODEL_ITEM_DETAIL.get(i).getQtyAll();
+//                        }
+                        //txt_summenuset.setText("[ "+summenuset+" รายการ "+"/ "+summenusetqty+" ชิ้น ]");
+                        txt_summenuset.setText("[ "+summenuset+" รายการ "+"/ "+getItemDetailModel().get(1).getQtyAll()+" ชิ้น ]");
                         txt_summenuset.setTextColor(Color.WHITE);
                     } catch (Exception e) {
                         list_set_item.setAdapter(null);
@@ -2635,7 +2643,10 @@ public class Item_newlayout extends AppCompatActivity {
                                     data.get(i + 10),
                                     data.get(i + 11),
                                     data.get(i + 12),
-                                    data.get(i + 13)
+                                    data.get(i + 13),
+                                    data.get(i + 14),
+                                    data.get(i + 15),
+                                    data.get(i + 16)
                             )
                     );
 
@@ -2652,7 +2663,24 @@ public class Item_newlayout extends AppCompatActivity {
             return list;
         }
 
-        private ModelItemDetail getItemDegtail(int index, String ID, String itemcode, String itemname, String alternatename, String barcode, String setCount, String unitName, String ID_set, String itemDetailID, String qty, String itemcode_set, String itemname_set, String alternatename_set, String barcode_set) {
+        private ModelItemDetail getItemDegtail(int index,
+                                               String ID,
+                                               String itemcode,
+                                               String itemname,
+                                               String alternatename,
+                                               String barcode,
+                                               String setCount,
+                                               String unitName,
+                                               String ID_set,
+                                               String itemDetailID,
+                                               String qty,
+                                               String itemcode_set,
+                                               String itemname_set,
+                                               String alternatename_set,
+                                               String barcode_set,
+                                               String Picture_set,
+                                               String Picture_detail,
+                                               String QtyAll) {
             return new ModelItemDetail(
                     index,
                     ID,
@@ -2668,7 +2696,10 @@ public class Item_newlayout extends AppCompatActivity {
                     itemcode_set,
                     itemname_set,
                     alternatename_set,
-                    barcode_set
+                    barcode_set,
+                    Picture_set,
+                    Picture_detail,
+                    QtyAll
             );
         }
         // =========================================================================================
@@ -2954,7 +2985,10 @@ public class Item_newlayout extends AppCompatActivity {
                         setsumzero();
                         ArrayAdapter<ModelItemDetail> adapter = new ItemDetailAdapter(Item_newlayout.this, getItemDetailModel());
                         list_set_item.setAdapter(adapter);
-                        txt_summenuset.setText("รายการ [ "+summenuset+" ] ชิ้น");
+//                        for (int i = 0 ; i < MODEL_ITEM_DETAIL.size() ; i ++){
+//                            summenusetqty = MODEL_ITEM_DETAIL.get(i).getQtyAll();
+//                        }
+                        txt_summenuset.setText("[ "+summenuset+" รายการ "+"/ "+getItemDetailModel().get(1).getQtyAll()+" ชิ้น ]");
                         txt_summenuset.setTextColor(Color.WHITE);
 
                     } catch (Exception e) {
@@ -3175,7 +3209,10 @@ public class Item_newlayout extends AppCompatActivity {
                                     data.get(i + 10),
                                     data.get(i + 11),
                                     data.get(i + 12),
-                                    data.get(i + 13)
+                                    data.get(i + 13),
+                                    data.get(i + 14),
+                                    data.get(i + 15),
+                                    data.get(i + 16)
                             )
                     );
 
@@ -3192,7 +3229,24 @@ public class Item_newlayout extends AppCompatActivity {
             return list;
         }
 
-        private ModelItemDetail getItemDegtail(int index, String ID, String itemcode, String itemname, String alternatename, String barcode, String setCount, String unitName, String ID_set, String itemDetailID, String qty, String itemcode_set, String itemname_set, String alternatename_set, String barcode_set) {
+        private ModelItemDetail getItemDegtail(int index,
+                                               String ID,
+                                               String itemcode,
+                                               String itemname,
+                                               String alternatename,
+                                               String barcode,
+                                               String setCount,
+                                               String unitName,
+                                               String ID_set,
+                                               String itemDetailID,
+                                               String qty,
+                                               String itemcode_set,
+                                               String itemname_set,
+                                               String alternatename_set,
+                                               String barcode_set,
+                                               String Picture_set,
+                                               String Picture_detail,
+                                               String QtyAll) {
             return new ModelItemDetail(
                     index,
                     ID,
@@ -3208,7 +3262,10 @@ public class Item_newlayout extends AppCompatActivity {
                     itemcode_set,
                     itemname_set,
                     alternatename_set,
-                    barcode_set
+                    barcode_set,
+                    Picture_set,
+                    Picture_detail,
+                    QtyAll
             );
         }
         // =========================================================================================

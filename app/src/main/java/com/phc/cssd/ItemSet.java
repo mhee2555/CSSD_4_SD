@@ -423,7 +423,24 @@ public class ItemSet extends Activity {
                 return result;
             }
 
-            private ModelItemDetail getItemDegtail(int index, String ID, String itemcode, String itemname, String alternatename, String barcode, String setCount, String unitName, String ID_set, String itemDetailID, String qty, String itemcode_set, String itemname_set, String alternatename_set, String barcode_set) {
+            private ModelItemDetail getItemDegtail(int index,
+                                                   String ID,
+                                                   String itemcode,
+                                                   String itemname,
+                                                   String alternatename,
+                                                   String barcode,
+                                                   String setCount,
+                                                   String unitName,
+                                                   String ID_set,
+                                                   String itemDetailID,
+                                                   String qty,
+                                                   String itemcode_set,
+                                                   String itemname_set,
+                                                   String alternatename_set,
+                                                   String barcode_set,
+                                                   String Picture_set,
+                                                   String Picture_detail,
+                                                   String QtyAll) {
                 return new ModelItemDetail(
                         index,
                         ID,
@@ -439,7 +456,10 @@ public class ItemSet extends Activity {
                         itemcode_set,
                         itemname_set,
                         alternatename_set,
-                        barcode_set
+                        barcode_set,
+                        Picture_set,
+                        Picture_detail,
+                        QtyAll
                 );
             }
 
@@ -468,7 +488,10 @@ public class ItemSet extends Activity {
                                             data.get(i + 10),
                                             data.get(i + 11),
                                             data.get(i + 12),
-                                            data.get(i + 13)
+                                            data.get(i + 13),
+                                            data.get(i + 14),
+                                            data.get(i + 15),
+                                            data.get(i + 16)
                                     )
                             );
 
