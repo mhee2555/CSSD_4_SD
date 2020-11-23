@@ -44,6 +44,7 @@ public class SearchSterileDetailAdapter extends ArrayAdapter<ModelSterileDetail>
             viewHolder.txt_no = (TextView) view.findViewById(R.id.txt_no);
             viewHolder.txt_barcode = (TextView) view.findViewById(R.id.txt_barcode);
             viewHolder.txt_item_code = (TextView) view.findViewById(R.id.txt_item_code);
+            viewHolder.txt_sd = (TextView) view.findViewById(R.id.txt_sd);
             viewHolder.txt_item_name = (TextView) view.findViewById(R.id.txt_item_name);
             viewHolder.txt_qty = (TextView) view.findViewById(R.id.txt_qty);
             viewHolder.chk_ = (ImageView) view.findViewById(R.id.chk_);
@@ -102,13 +103,13 @@ public class SearchSterileDetailAdapter extends ArrayAdapter<ModelSterileDetail>
         holder.txt_no.setText((DATA_MODEL.get(position).getIndex()+1) + ".");
         holder.txt_barcode.setText(DATA_MODEL.get(position).getItemcode());
         holder.txt_item_code.setText(DATA_MODEL.get(position).getUsageCode());
+        holder.txt_sd.setText(DATA_MODEL.get(position).getID());
         holder.txt_item_name.setText(DATA_MODEL.get(position).getItemname());
         holder.txt_qty.setText(DATA_MODEL.get(position).getQty());
         holder.chk_.setImageResource(DATA_MODEL.get(position).getCheck() );
         holder.chk.setChecked(DATA_MODEL.get(position).isCheck());
         holder.index = (DATA_MODEL.get(position).getIndex());
         holder.edit_print_qty.setText("");
-
         return view;
     }
 
@@ -118,14 +119,12 @@ public class SearchSterileDetailAdapter extends ArrayAdapter<ModelSterileDetail>
         TextView txt_no;
         TextView txt_barcode;
         TextView txt_item_code;
+        TextView txt_sd;
         TextView txt_item_name;
         TextView txt_qty;
         ImageView chk_;
         CheckBox chk;
-
         EditText edit_print_qty;
-
-
     }
 
 }

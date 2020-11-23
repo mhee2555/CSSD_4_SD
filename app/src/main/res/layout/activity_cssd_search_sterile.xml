@@ -233,6 +233,17 @@
                     android:textSize="14dp"></TextView>
 
                 <TextView
+                    android:layout_width="125dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="0.05"
+                    android:background="#e5e5e5"
+                    android:gravity="center|center_vertical"
+                    android:maxLines="1"
+                    android:text="SterileDetail(SD)"
+                    android:textColor="#505050"
+                    android:textSize="14dp"></TextView>
+
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_weight="0.7"

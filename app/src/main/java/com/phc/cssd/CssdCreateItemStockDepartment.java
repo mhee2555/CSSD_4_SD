@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.phc.core.connect.HTTPConnect;
@@ -40,10 +41,12 @@ public class CssdCreateItemStockDepartment extends Activity {
     private String Item_Code;
     private String Item_Name;
     private String Item_Stock;
+    private int check_true;
     //------------------------------------------------
     private ListView ListData;
     private ImageView image_save;
     private CheckBox Check_all;
+    private RadioButton use_1,use_2;
     EditText etxt_searchsendsterile;
 
     @Override
@@ -74,6 +77,15 @@ public class CssdCreateItemStockDepartment extends Activity {
     }
 
     private void byWidget(){
+        use_1 = (RadioButton) findViewById(R.id.use_1);
+        use_2 = (RadioButton) findViewById(R.id.use_2);
+
+        for (int i = 0 ; i < MODEL_ITEM_STOCK_DEPARTMENT.size() ; i ++){
+            if (MODEL_ITEM_STOCK_DEPARTMENT.get(i).isCheck() == true){
+                check_true ++;
+            }
+        }
+
         Check_all = (CheckBox) findViewById(R.id.Check_all);
         Check_all.setOnClickListener(new View.OnClickListener() {
             @Override
