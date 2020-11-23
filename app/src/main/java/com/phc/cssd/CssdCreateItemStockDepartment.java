@@ -80,11 +80,11 @@ public class CssdCreateItemStockDepartment extends Activity {
         use_1 = (RadioButton) findViewById(R.id.use_1);
         use_2 = (RadioButton) findViewById(R.id.use_2);
 
-        for (int i = 0 ; i < MODEL_ITEM_STOCK_DEPARTMENT.size() ; i ++){
-            if (MODEL_ITEM_STOCK_DEPARTMENT.get(i).isCheck() == true){
-                check_true ++;
-            }
-        }
+//        for (int i = 0 ; i < MODEL_ITEM_STOCK_DEPARTMENT.size() ; i ++){
+//            if (MODEL_ITEM_STOCK_DEPARTMENT.get(i).isCheck() == true){
+//                check_true ++;
+//            }
+//        }
 
         Check_all = (CheckBox) findViewById(R.id.Check_all);
         Check_all.setOnClickListener(new View.OnClickListener() {
@@ -240,6 +240,26 @@ public class CssdCreateItemStockDepartment extends Activity {
                             ListData.setAdapter(null);
                             e.printStackTrace();
                         }
+
+                        int chk = 0;
+                        int unchk = 0;
+
+                        for (int i = 0 ; i < MODEL_ITEM_STOCK_DEPARTMENT.size() ; i ++){
+                            if (MODEL_ITEM_STOCK_DEPARTMENT.get(i).isCheck() == true){
+                                chk ++;
+                            }else {
+                                unchk ++;
+                            }
+                        }
+
+                        if (chk == 1){
+                            use_1.setChecked(true);
+                            use_2.setChecked(false);
+                        }else {
+                            use_1.setChecked(false);
+                            use_2.setChecked(true);
+                        }
+
                     } catch (Exception e) {
                         e.printStackTrace();
                         return;

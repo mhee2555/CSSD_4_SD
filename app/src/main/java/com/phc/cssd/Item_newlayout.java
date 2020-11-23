@@ -1656,7 +1656,7 @@ public class Item_newlayout extends AppCompatActivity {
     private void setsumzero(){
         summenuset = 0;
         summenusetqty = "0";
-        txt_summenuset.setText("[ "+summenuset+" รายการ "+"/ "+summenusetqty+" ชิ้น ]");
+        txt_summenuset.setText(summenuset+" รายการ "+"/ "+summenusetqty+" ชิ้น");
         txt_summenuset.setTextColor(Color.WHITE);
     }
 
@@ -2441,7 +2441,7 @@ public class Item_newlayout extends AppCompatActivity {
 //                            summenusetqty = MODEL_ITEM_DETAIL.get(i).getQtyAll();
 //                        }
                         //txt_summenuset.setText("[ "+summenuset+" รายการ "+"/ "+summenusetqty+" ชิ้น ]");
-                        txt_summenuset.setText("[ "+summenuset+" รายการ "+"/ "+getItemDetailModel().get(1).getQtyAll()+" ชิ้น ]");
+                        txt_summenuset.setText(summenuset+" รายการ "+"/ "+getItemDetailModel().get(1).getQtyAll()+" ชิ้น");
                         txt_summenuset.setTextColor(Color.WHITE);
                     } catch (Exception e) {
                         list_set_item.setAdapter(null);
@@ -2988,7 +2988,7 @@ public class Item_newlayout extends AppCompatActivity {
 //                        for (int i = 0 ; i < MODEL_ITEM_DETAIL.size() ; i ++){
 //                            summenusetqty = MODEL_ITEM_DETAIL.get(i).getQtyAll();
 //                        }
-                        txt_summenuset.setText("[ "+summenuset+" รายการ "+"/ "+getItemDetailModel().get(1).getQtyAll()+" ชิ้น ]");
+                        txt_summenuset.setText(summenuset+" รายการ "+"/ "+getItemDetailModel().get(1).getQtyAll()+" ชิ้น");
                         txt_summenuset.setTextColor(Color.WHITE);
 
                     } catch (Exception e) {
@@ -3546,14 +3546,14 @@ public class Item_newlayout extends AppCompatActivity {
                                 btn_create_item_stock_dept.setBackgroundResource(R.drawable.ss_bt_adddepartment_disable);
                             }
                             if (getF_radio_type_set().equals("1")){
-                                bt_step3.setImageResource(R.drawable.ss_ic_step4_enable);
+                                bt_step3.setImageResource(R.drawable.ss_ic_step4_enable_new);
                                 tab_2.setBackgroundResource(R.drawable.ss_bt_addset_enable);
                                 tab_2.setEnabled(true);
                                 txt_summenuset.setBackgroundResource(R.drawable.textview_column);
                                 txt_manuqty.setBackgroundResource(R.drawable.textview_column);
                                 txt_manuunit.setBackgroundResource(R.drawable.textview_column);
                             }else{
-                                bt_step3.setImageResource(R.drawable.ss_ic_step4_disable);
+                                bt_step3.setImageResource(R.drawable.ss_ic_step4_disable_new);
                                 tab_2.setBackgroundResource(R.drawable.ss_bt_addset_disable);
                                 tab_2.setEnabled(false);
                                 txt_summenuset.setBackgroundResource(R.drawable.text_view);

@@ -166,7 +166,7 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
         year  = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
         day   = c.get(Calendar.DAY_OF_MONTH);
-        gDate =  year + "-" + TwoZero((month + 1)+"") + "-" + TwoZero(day+"" );
+        gDate =  TwoZero(day+"" )+ "-" + TwoZero((month + 1)+"") + "-" + year;
         tDate.setText(gDate);
         ListMachineCount( gDate );
         String[] partsCollArr;
@@ -396,7 +396,7 @@ public class SterileSeachActivity extends AppCompatActivity implements View.OnCl
             year  = selectedYear;
             month = selectedMonth;
             day   = selectedDay;
-            gDate = year + "-" + TwoZero((month + 1)+"") + "-" + TwoZero(day+"" ) ;
+            gDate = TwoZero(day+"" )+ "-" + TwoZero((month + 1)+"") + "-" + year ;
             tDate.setText(gDate);
             ListMachineCount( gDate );
         }

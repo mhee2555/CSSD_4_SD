@@ -1234,7 +1234,8 @@ public class PayoutActivity extends AppCompatActivity {
     }
 
     private void initData(ArrayList<Response_Aux> getData) {
-        String xDate = gDate.getText().toString().substring(8,10)+"-"+gDate.getText().toString().substring(5,7)+"-"+gDate.getText().toString().substring(0,4);
+        String xDate = gDate.getText().toString().substring(0,2)+"-"+gDate.getText().toString().substring(3,5)+"-"+gDate.getText().toString().substring(6,10);
+        Log.d("GFPKVF",xDate);
         expandableListDetail = ExpandableListDataPump.getData(getData,xDate,WithdrawMode);
         List<Map.Entry<String,List<String>>> entries = new ArrayList<Map.Entry<String,List<String>>>(expandableListDetail.entrySet());
         Collections.sort(entries, new Comparator<Map.Entry<String,List<String>>>() {

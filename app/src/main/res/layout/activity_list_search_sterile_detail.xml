@@ -2,155 +2,165 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:paddingTop="2dp"
-    android:background="#FFFFFF"
-    android:paddingBottom="2dp"
-    android:paddingRight="4dp"
-    android:paddingLeft="4dp">
+    android:gravity="center_vertical">
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingTop="2dp"
+    <TextView
+        android:id="@+id/txt_no"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_weight="0.5"
+        android:gravity="center|center_vertical"
+        android:maxLines="1"
+        android:text="วันที่"
+        android:textColor="#505050"
         android:background="#ffffff"
-        android:paddingBottom="2dp">
+        android:textSize="14dp"></TextView>
 
-        <TextView
-            android:id="@+id/txt_id"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="1dp"
-            android:layout_weight="0.5"
-            android:gravity="center|center_vertical"
-            android:maxLines="1"
-            android:textColor="@color/list_text_color"
-            android:visibility="gone"
-            android:textSize="14dp"></TextView>
+    <TextView
+        android:id="@+id/txt_barcode"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_weight="1"
+        android:gravity="center|center_vertical"
+        android:maxLines="1"
+        android:text="1"
+        android:textColor="#505050"
+        android:background="#ffffff"
+        android:textSize="14dp"></TextView>
 
-        <TextView
-            android:id="@+id/txt_no"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight="0.5"
-            android:gravity="center|center_vertical"
-            android:maxLines="1"
-            android:text="1."
-            android:textColor="#505050"
-            android:background="#ffffff"
-            android:layout_marginLeft="4dp"
-            android:textSize="14dp"></TextView>
+    <TextView
+        android:id="@+id/txt_item_code"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_weight="1"
+        android:gravity="center|center_vertical"
+        android:maxLines="1"
+        android:text="เลขที่เอกสาร"
+        android:textColor="#505050"
+        android:background="#ffffff"
+        android:textSize="14dp"></TextView>
 
-        <TextView
-            android:id="@+id/txt_barcode"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:gravity="center|center_vertical"
-            android:maxLines="1"
-            android:text="I00001"
-            android:textColor="#505050"
-            android:background="#ffffff"
-            android:textSize="14dp"></TextView>
+    <TextView
+        android:id="@+id/txt_sd"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="โปรแกรมฆ่าเชื้อ"
+        android:textColor="#505050"
+        android:background="#ffffff"
+        android:textSize="14dp"></TextView>
 
-        <TextView
-            android:id="@+id/txt_item_code"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:gravity="center|center_vertical"
-            android:maxLines="1"
-            android:text="I00001"
-            android:textColor="#505050"
-            android:background="#ffffff"
-            android:textSize="14dp"></TextView>
+    <TextView
+        android:id="@+id/txt_item_name"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_weight="3"
+        android:gravity="left|center_vertical"
+        android:maxLines="1"
+        android:text="1"
+        android:textColor="#505050"
+        android:background="#ffffff"
+        android:textSize="14dp"></TextView>
 
-        <TextView
-            android:id="@+id/txt_sd"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:gravity="center|center_vertical"
-            android:maxLines="1"
-            android:text="1"
-            android:textColor="#505050"
-            android:background="#ffffff"
-            android:textSize="14dp"></TextView>
+    <TextView
+        android:id="@+id/txt_qty"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center|center_vertical"
+        android:maxLines="1"
+        android:text="รอบ"
+        android:textColor="#505050"
+        android:background="#ffffff"
+        android:textSize="14dp"></TextView>
 
-        <TextView
-            android:id="@+id/txt_item_name"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight="3"
-            android:gravity="left|center_vertical"
-            android:maxLines="1"
-            android:text="I00001"
-            android:textColor="#505050"
-            android:background="#ffffff"
-            android:textSize="14dp"></TextView>
+<!--    <EditText-->
+<!--        android:id="@+id/edit_print_qty"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_marginTop="2dp"-->
+<!--        android:layout_marginBottom="2dp"-->
+<!--        android:layout_weight="1"-->
+<!--        android:background="@drawable/edit_text_listview"-->
+<!--        android:gravity="center|center_vertical"-->
+<!--        android:inputType="number|numberDecimal"-->
+<!--        android:maxLines="1"-->
+<!--        android:textColor="#505050"-->
+<!--        android:textSize="14dp"-->
+<!--        android:visibility="gone"> </EditText>-->
 
-        <TextView
-            android:id="@+id/txt_qty"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:gravity="center|center_vertical"
-            android:maxLines="1"
-            android:text="0"
-            android:textColor="#505050"
-            android:background="#ffffff"
-            android:textSize="14dp"></TextView>
+    <RelativeLayout
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="10dp">
 
-        <EditText
-            android:id="@+id/edit_print_qty"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:layout_weight="1"
-            android:background="@drawable/edit_text_listview"
-            android:gravity="center|center_vertical"
-            android:inputType="number|numberDecimal"
-            android:maxLines="1"
-            android:textColor="#505050"
-            android:textSize="14dp"
-            android:visibility="gone"></EditText>
-
-        <CheckBox
+        <ImageView
             android:id="@+id/chk"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="3dp"
+            android:layout_alignParentEnd="true"
             android:buttonTint="@color/colorBlue"
+            android:src="@drawable/ic_box_normal_blue"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="15dp"
-            android:gravity="center"
-            android:scaleX="1.5"
-            android:scaleY="1.5"
-            />
+            android:gravity="center" />
 
         <ImageView
             android:id="@+id/chk_"
-            android:layout_height="30dp"
-            android:layout_width="0dp"
-            android:layout_weight="0.5"
-            android:gravity="center"
-            android:scaleType="fitCenter"
-            android:layout_gravity="center|center_horizontal"
-            android:layout_margin="4dp"
-            android:background="#ffffff"
-            android:src="@drawable/ic_box_normal_blue"
-            android:visibility="gone"
-            />
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="3dp"
+            android:layout_alignParentEnd="true"
+            android:buttonTint="@color/colorBlue"
+            android:src="@drawable/ic_box_check_blue"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"  />
 
-    </LinearLayout>
+    </RelativeLayout>
+
+
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/txt_start"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="30dp"-->
+    <!--        android:layout_weight="0.75"-->
+    <!--        android:gravity="center|center_vertical"-->
+    <!--        android:maxLines="1"-->
+    <!--        android:text="เวลาเริ่ม"-->
+    <!--        android:textColor="#505050"-->
+    <!--        android:background="#ffffff"-->
+    <!--        android:textSize="14dp"></TextView>-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/txt_finish"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="30dp"-->
+    <!--        android:layout_weight="0.75"-->
+    <!--        android:gravity="center|center_vertical"-->
+    <!--        android:maxLines="1"-->
+    <!--        android:text="เวลาเสร็จ"-->
+    <!--        android:textColor="#505050"-->
+    <!--        android:background="#ffffff"-->
+    <!--        android:textSize="14dp"></TextView>-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/txt_usr_sterile"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="30dp"-->
+    <!--        android:layout_weight="1"-->
+    <!--        android:gravity="left|center_vertical"-->
+    <!--        android:maxLines="1"-->
+    <!--        android:text="ผู้ดำเเนินงาน"-->
+    <!--        android:textColor="#505050"-->
+    <!--        android:background="#ffffff"-->
+    <!--        android:layout_marginRight="4dp"-->
+    <!--        android:textSize="14dp"></TextView>-->
 
 </LinearLayout>
-
-
-
-

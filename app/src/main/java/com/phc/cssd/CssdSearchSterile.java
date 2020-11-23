@@ -591,7 +591,7 @@ public class CssdSearchSterile extends AppCompatActivity {
                     }
 
                     try {
-                        ArrayAdapter<ModelSterileDetail> adapter = new SearchSterileDetailAdapter(CssdSearchSterile.this, MODEL_STERILE_DETAIL);
+                        ArrayAdapter<ModelSterileDetail> adapter = new SearchSterileDetailAdapter(CssdSearchSterile.this, MODEL_STERILE_DETAIL,type);
                         list_sterile_detail.setAdapter(adapter);
                         scan.setText("");
                         if (type.equals("1")){
@@ -609,6 +609,7 @@ public class CssdSearchSterile extends AppCompatActivity {
                     Toast.makeText(CssdSearchSterile.this, "ไม่พบข้อมูล !!", Toast.LENGTH_SHORT).show();
                     scan.setText("");
                     hideKeyboard(CssdSearchSterile.this);
+                    list_sterile_detail.setAdapter(null);
                 }
             }
 
@@ -1198,7 +1199,7 @@ public class CssdSearchSterile extends AppCompatActivity {
                                 }
                                 for (int a = 0 ; a < MODEL_STERILE_DETAIL.size() ; a ++){
                                     MODEL_STERILE_DETAIL.get(a).setCheck(false);
-                                    ArrayAdapter<ModelSterileDetail> adapter = new SearchSterileDetailAdapter(CssdSearchSterile.this, MODEL_STERILE_DETAIL);
+                                    ArrayAdapter<ModelSterileDetail> adapter = new SearchSterileDetailAdapter(CssdSearchSterile.this, MODEL_STERILE_DETAIL,"0");
                                     list_sterile_detail.setAdapter(adapter);
                                 }
                             }
@@ -1206,6 +1207,8 @@ public class CssdSearchSterile extends AppCompatActivity {
                             WashID.clear();
                             WashallID.clear();
                         }
+                        WashID.clear();
+                        WashallID.clear();
                     } catch (Exception e) {
                         e.printStackTrace();
                         return;

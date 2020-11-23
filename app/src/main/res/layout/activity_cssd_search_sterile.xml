@@ -261,6 +261,7 @@
                     android:layout_weight="0.15"
                     android:gravity="center|center_vertical"
                     android:maxLines="1"
+                    android:paddingStart="70dp"
                     android:text="จำนวน"
                     android:textColor="#505050"
                     android:textSize="14dp"></TextView>
@@ -301,6 +302,7 @@
                 android:listSelector="#02fff6"></ListView>
 
         </LinearLayout>
+
     </LinearLayout>
 
     <ImageView

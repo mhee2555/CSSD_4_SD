@@ -132,7 +132,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp">
+                    android:layout_height="35dp">
 
                     <TextView
                         android:id="@+id/txt_packer"
@@ -151,8 +151,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:layout_marginStart="0dp"
-                        android:layout_marginTop="-4dp"
-                        android:layout_marginEnd="-2dp"
+
                         android:background="@drawable/text_standard"
                         android:color="@color/form_label"
                         android:gravity="center_vertical"
@@ -167,7 +166,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginEnd="6dp"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="5dp"
                         android:background="@drawable/ic_qrcode2" />
 
                 </RelativeLayout>
@@ -230,7 +229,8 @@
                         android:id="@+id/ch3_un"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginLeft="430dp"
+                        android:layout_toEndOf="@+id/test_ch2"
+                        android:layout_marginLeft="70dp"
                         android:layout_marginTop="85dp"
                         android:background="@drawable/uncheck"
                         android:buttonTint="@color/colorBlack"
@@ -244,7 +244,8 @@
                         android:id="@+id/ch3"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginLeft="430dp"
+                        android:layout_toEndOf="@+id/test_ch2"
+                        android:layout_marginLeft="70dp"
                         android:layout_marginTop="85dp"
                         android:background="@drawable/check"
                         android:buttonTint="@color/colorBlack"
@@ -256,9 +257,10 @@
 
                     <TextView
                         android:id="@+id/test_ch3"
+                        android:layout_toEndOf="@+id/test_ch2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="450dp"
+                        android:layout_marginLeft="90dp"
                         android:text="Labeling Check"
                         android:paddingStart="10dp"
                         android:layout_marginTop="85dp"
@@ -271,7 +273,8 @@
                         android:id="@+id/ch2"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginLeft="250dp"
+                        android:layout_toEndOf="@+id/test_ch1"
+                        android:layout_marginLeft="55dp"
                         android:layout_marginTop="85dp"
                         android:background="@drawable/check"
                         android:buttonTint="@color/colorBlack"
@@ -285,7 +288,8 @@
                         android:id="@+id/ch2_un"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginLeft="250dp"
+                        android:layout_toEndOf="@+id/test_ch1"
+                        android:layout_marginLeft="55dp"
                         android:layout_marginTop="85dp"
                         android:background="@drawable/uncheck"
                         android:buttonTint="@color/colorBlack"
@@ -297,9 +301,10 @@
 
                     <TextView
                         android:id="@+id/test_ch2"
+                        android:layout_toEndOf="@+id/test_ch1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="270dp"
+                        android:layout_marginLeft="75dp"
                         android:text="Fillter Check"
                         android:paddingStart="10dp"
                         android:layout_marginTop="85dp"
@@ -312,6 +317,7 @@
                         android:id="@+id/ch1"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
+                        android:layout_toEndOf="@+id/start"
                         android:buttonTint="@color/colorBlack"
                         android:textColor="@color/colorBlack"
                         android:checked="false"
@@ -326,6 +332,7 @@
                         android:id="@+id/ch1_un"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
+                        android:layout_toEndOf="@+id/start"
                         android:buttonTint="@color/colorBlack"
                         android:textColor="@color/colorBlack"
                         android:checked="false"
@@ -341,7 +348,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="35dp"
+                        android:layout_toEndOf="@+id/start"
                         android:text="Internal Indicator Check"
+                        android:layout_marginTop="85dp"
+                        android:textSize="15dp"
+                        android:textColor="@color/colorBlack">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
                         android:layout_marginTop="85dp"
                         android:textSize="15dp"
                         android:textColor="@color/colorBlack">
