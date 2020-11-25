@@ -49,6 +49,15 @@
                     android:paddingStart="45dp">
 
                     <TextView
+                        android:id="@+id/textView89"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="วันที่..."
+                        android:textColor="@color/colorWhite"
+                        android:textSize="18sp" />
+
+                    <TextView
                         android:id="@+id/textView72"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
@@ -80,14 +89,6 @@
                         android:textColor="@color/colorWhite"
                         android:textSize="18sp" />
 
-                    <TextView
-                        android:id="@+id/textView89"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="วันที่..."
-                        android:textColor="@color/colorWhite"
-                        android:textSize="18sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -95,6 +96,33 @@
                     android:layout_height="40dp"
                     android:orientation="horizontal"
                     android:paddingStart="45dp">
+
+                    <RelativeLayout
+                        android:layout_width="205dp"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/tDate"
+                            android:layout_width="200dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/text_edit"
+                            android:gravity="center"
+                            android:paddingStart="-20dp"
+                            android:textSize="18sp"
+                            android:text="2020-11-23"
+                            android:textColor="@color/colorBlack"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/bDate"
+                            android:layout_width="35dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/calendar01" />
+
+                    </RelativeLayout>
 
                     <TextView
                         android:id="@+id/textView01"
@@ -127,33 +155,6 @@
                         android:textColor="@color/colorWhite"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-
-                    <RelativeLayout
-                        android:layout_width="170dp"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/tDate"
-                            android:layout_width="170dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/text_edit"
-                            android:gravity="center"
-                            android:paddingStart="-20dp"
-                            android:textSize="18sp"
-                            android:text="2020-11-23"
-                            android:textColor="@color/colorBlack"
-                            android:textStyle="bold" />
-
-                        <ImageView
-                            android:id="@+id/bDate"
-                            android:layout_width="35dp"
-                            android:layout_height="30dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="5dp"
-                            android:layout_alignParentEnd="true"
-                            android:src="@drawable/calendar01" />
-
-                    </RelativeLayout>
 
                 </LinearLayout>
 

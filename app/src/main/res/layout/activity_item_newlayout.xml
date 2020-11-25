@@ -1634,7 +1634,7 @@
                             <Button
                                 android:id="@+id/btn_open_wash_program_item"
                                 android:layout_width="match_parent"
-                                android:layout_height="40dp"
+                                android:layout_height="45dp"
                                 android:layout_marginTop="15dp"
                                 android:background="@drawable/ss_bt_program_wash2"
                                 android:textAlignment="center"
@@ -1644,7 +1644,7 @@
                             <Button
                                 android:id="@+id/btn_create_item_stock"
                                 android:layout_width="match_parent"
-                                android:layout_height="40dp"
+                                android:layout_height="45dp"
                                 android:layout_marginTop="10dp"
                                 android:background="@drawable/bt_stock_disable2"
                                 android:textColor="@android:color/white"
@@ -1653,7 +1653,7 @@
                             <Button
                                 android:id="@+id/btn_create_item_stock_dept"
                                 android:layout_width="match_parent"
-                                android:layout_height="40dp"
+                                android:layout_height="45dp"
                                 android:layout_marginTop="10dp"
                                 android:background="@drawable/ss_bt_adddepartment_disable"
                                 android:textColor="@android:color/white"
