@@ -229,6 +229,7 @@
                     android:gravity="center|center_vertical"
                     android:maxLines="1"
                     android:text="รหัสใช้งาน"
+                    android:paddingStart="40dp"
                     android:textColor="#505050"
                     android:textSize="14dp"></TextView>
 
@@ -239,6 +240,7 @@
                     android:background="#e5e5e5"
                     android:gravity="center|center_vertical"
                     android:maxLines="1"
+                    android:paddingStart="40dp"
                     android:text="SterileDetail(SD)"
                     android:textColor="#505050"
                     android:textSize="14dp"></TextView>
@@ -251,6 +253,7 @@
                     android:gravity="left|center_vertical"
                     android:maxLines="1"
                     android:text="รายการ"
+                    android:paddingStart="40dp"
                     android:textColor="#505050"
                     android:textSize="14dp"></TextView>
 
@@ -261,7 +264,7 @@
                     android:layout_weight="0.15"
                     android:gravity="center|center_vertical"
                     android:maxLines="1"
-                    android:paddingStart="70dp"
+                    android:paddingStart="100dp"
                     android:text="จำนวน"
                     android:textColor="#505050"
                     android:textSize="14dp"></TextView>

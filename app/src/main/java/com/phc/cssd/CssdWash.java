@@ -45,6 +45,7 @@ import com.phc.cssd.config.ConfigProgram;
 import com.phc.cssd.config.CssdSetting;
 import com.phc.cssd.config.Setting;
 import com.phc.cssd.data.Master;
+import com.phc.cssd.function.ScanCode;
 import com.phc.cssd.loaner.LoanerMainActivity;
 import com.phc.cssd.model.Model;
 import com.phc.cssd.model.ModelImportWashDetail;
@@ -283,6 +284,8 @@ public class CssdWash extends AppCompatActivity {
         handler_10.removeCallbacks(runnable_10);
     }
 
+    ScanCode keyScanCode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -295,6 +298,8 @@ public class CssdWash extends AppCompatActivity {
         }
 
         getSupportActionBar().hide();
+
+        SetScanCode();
 
         byIntent();
 
@@ -369,6 +374,43 @@ public class CssdWash extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         displayImportSendSterile("0");
+    }
+
+    private void SetScanCode(){
+        keyScanCode = new ScanCode();
+        keyScanCode.get_key();
+    }
+
+    public boolean CheckScanCodekey (EditText Text){
+        String qrcode = Text.getText().toString().toUpperCase();
+        Log.d("tog_ScanCode","qrcode = "+qrcode);
+        if(keyScanCode.CheckKey(qrcode)){
+            int key = keyScanCode.getKey(qrcode);
+            Log.d("tog_ScanCode","key = "+key);
+            switch (key) {
+                case Master.ss_Start_Mac_Wash :
+                    String DocNo = txt_doc_no.getText().toString();
+                    if (DocNo == null || DocNo.equals("-") || DocNo.equals("")){
+                        Toast.makeText(CssdWash.this, "ไม่พบเอกสารการล้าง !!", Toast.LENGTH_SHORT).show();
+                    }else {
+                        try {
+                            if (IsQR) {
+                                getQR(DocNo, "w1", "");
+                            } else {
+                                startMachine(DocNo);
+                            }
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+                default:
+                    return false;
+            }
+            Text.setText("");
+            return true;
+        }
+        return false;
     }
 
     private void byIntent(){
@@ -484,6 +526,10 @@ public class CssdWash extends AppCompatActivity {
                         case KeyEvent.KEYCODE_ENTER:
 
                             boolean x =true;
+
+                            if(CheckScanCodekey(scan_basket)){
+                                return true;
+                            }
 
                             if(MAP_MODEL_SEND_STERILE_DETAIL_GROUP_BASKET!=null &&MODEL_SEND_STERILE_DETAIL!=null ) {
                                 Log.d("ttest_scan", "txt = " + txt);

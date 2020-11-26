@@ -143,5 +143,11 @@ public class Master {
     public static final int ss_Done_Button = 6;
     public static final int ss_Wash_Tag_Expire = 7;
     public static final int ss_Clear_Wash_Tag_and_Focus_Wash_Tag = 8;
+    public static final int ss_Clear_Check_List = 9;
+    public static final int ss_Check_List_Print = 10;
+    public static final int ss_Check_Clear_Basket = 11;
+    public static final int ss_Start_Mac_Wash = 12;
+    public static final int ss_Start_Mac_Sterile = 13;
+
 
 }

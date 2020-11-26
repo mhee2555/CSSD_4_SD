@@ -605,11 +605,15 @@ public class CssdSearchSterile extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     hideKeyboard(CssdSearchSterile.this);
+                    WashID.clear();
+                    WashallID.clear();
                 }else {
                     Toast.makeText(CssdSearchSterile.this, "ไม่พบข้อมูล !!", Toast.LENGTH_SHORT).show();
                     scan.setText("");
                     hideKeyboard(CssdSearchSterile.this);
                     list_sterile_detail.setAdapter(null);
+                    WashID.clear();
+                    WashallID.clear();
                 }
             }
 

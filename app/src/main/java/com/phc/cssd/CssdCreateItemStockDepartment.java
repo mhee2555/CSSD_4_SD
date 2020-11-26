@@ -255,7 +255,10 @@ public class CssdCreateItemStockDepartment extends Activity {
                         if (chk == 1){
                             use_1.setChecked(true);
                             use_2.setChecked(false);
-                        }else {
+                        }else if (chk == 0){
+                            use_1.setChecked(false);
+                            use_2.setChecked(false);
+                        } else {
                             use_1.setChecked(false);
                             use_2.setChecked(true);
                         }
