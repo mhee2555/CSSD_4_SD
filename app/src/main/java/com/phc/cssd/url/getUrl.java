@@ -49,8 +49,9 @@ public class getUrl {
 //        return "http://192.168.1.104/cssd_vcy_test/";
         // PRESENT
 //        return "http://poseintelligence.dyndns.biz/cssd_siriraj_dev/";
-        return "http://poseintelligence.dyndns.biz/cssd_siriraj_new/";
+//        return "http://poseintelligence.dyndns.biz/cssd_siriraj_new/";
 //        return "http://poseintelligence.dyndns.biz/cssd_vejthani_test/";
+        return "http://poseintelligence.dyndns.biz:8181/cssd_siriraj_new_server/";
     }
     // ----------------------------------------------------
     // Get Project Setting
