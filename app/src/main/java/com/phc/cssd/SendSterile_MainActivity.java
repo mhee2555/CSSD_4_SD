@@ -367,7 +367,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 ArrayList<String> basket_ar_text = new ArrayList<>();
                 ArrayList<String> dummy_basket_ar_text = new ArrayList<>();
 
-
                 ArrayList<BasketTag> dummy_basket_ar = new ArrayList<>();
 
                 basket_ar_text.add("");
@@ -522,7 +521,10 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 Log.d("ttest_bb","getBasketCode = "+basket_ar.get(position).getBasketCode());
-                CheckBasket(basket_ar.get(position).getBasketCode(),true);
+                if(position!=0){
+                    CheckBasket(basket_ar.get(position).getBasketCode(),true);
+                    spin_basket.setSelection(0);
+                }
 
             }
 
@@ -873,8 +875,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                             DelRowId.add(key);
                                     }
                                     DeleteDetail_l2(DelDocNo, String.valueOf(DelRowId));
-                                    DelRowId.clear();
-                                    DelAlldata.clear();
+//                                    DelRowId.clear();
+//                                    DelAlldata.clear();
                                 }
                             });
                     builder.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
@@ -890,44 +892,44 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             }
         });
 
-        bin_all_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int cnt=0;
-                for (String key : DelAlldata.keySet()) {
-                    if (DelAlldata.get(key) == "0")
-                        cnt++;
-                }
-                if (cnt != 0) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
-                    builder.setCancelable(true);
-                    builder.setTitle("ยืนยัน");
-                    builder.setMessage("ต้องการลบรายการหรือไม่");
-                    builder.setPositiveButton("ตกลง",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    for (String key : DelAlldata.keySet()) {
-                                        if (DelAlldata.get(key) == "0")
-                                            DelRowId.add(key);
-                                    }
-                                    DeleteDetail_l2(DelDocNo, String.valueOf(DelRowId));
-                                    DelRowId.clear();
-                                    DelAlldata.clear();
-                                }
-                            });
-                    builder.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }else {
-                    Toast.makeText(SendSterile_MainActivity.this, "กรุณาเลือกอย่างน้อย 1 รายการ", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        bin_all_1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int cnt=0;
+//                for (String key : DelAlldata.keySet()) {
+//                    if (DelAlldata.get(key) == "0")
+//                        cnt++;
+//                }
+//                if (cnt != 0) {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+//                    builder.setCancelable(true);
+//                    builder.setTitle("ยืนยัน");
+//                    builder.setMessage("ต้องการลบรายการหรือไม่");
+//                    builder.setPositiveButton("ตกลง",
+//                            new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    for (String key : DelAlldata.keySet()) {
+//                                        if (DelAlldata.get(key) == "0")
+//                                            DelRowId.add(key);
+//                                    }
+//                                    DeleteDetail_l2(DelDocNo, String.valueOf(DelRowId));
+//                                    DelRowId.clear();
+//                                    DelAlldata.clear();
+//                                }
+//                            });
+//                    builder.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                        }
+//                    });
+//                    AlertDialog dialog = builder.create();
+//                    dialog.show();
+//                }else {
+//                    Toast.makeText(SendSterile_MainActivity.this, "กรุณาเลือกอย่างน้อย 1 รายการ", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
         getdept_spinner();
         updateDate();
@@ -2385,48 +2387,75 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                try {
-                    JSONObject jsonObj = new JSONObject(s);
-                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
-                    final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
-                    String bo = "";
-                    String txtDocno = "";
-                    for (int i = 0; i < setRs.length(); i++) {
-                        JSONObject c = setRs.getJSONObject(i);
-                        pCustomer xST = new pCustomer();
-                        bo = c.getString("flag");
-                        xST.setUsageCode(c.getString("UsageCode"));
-                        xST.setItemcode(c.getString("ItemCode"));
-                        xST.setItemname(c.getString("itemname"));
-                        xST.setXqty(c.getString("Qty"));
-                        xST.setIsSterile(c.getString("IsSterile"));
-                        xST.setXremark(c.getString("Remark"));
-                        xST.setDocno(c.getString("DocNo"));
-                        txtDocno = c.getString("DocNo");
-                        pCus.add(xST);
-                    }
-
-//                    getlistcreate(txtDocno, ED_Dept);
-//                    getlistcreate_l2(txtDocno);
-//                    getlistdata(deptsp_id, edittext.getText().toString(), "");
-//                    getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
+//                try {
+////                    JSONObject jsonObj = new JSONObject(s);
+////                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
+////                    final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
+////                    String bo = "";
+////                    String txtDocno = "";
+////                    for (int i = 0; i < setRs.length(); i++) {
+////                        JSONObject c = setRs.getJSONObject(i);
+////                        pCustomer xST = new pCustomer();
+////                        bo = c.getString("flag");
+////                        xST.setUsageCode(c.getString("UsageCode"));
+////                        xST.setItemcode(c.getString("ItemCode"));
+////                        xST.setItemname(c.getString("itemname"));
+////                        xST.setXqty(c.getString("Qty"));
+////                        xST.setIsSterile(c.getString("IsSterile"));
+////                        xST.setXremark(c.getString("Remark"));
+////                        xST.setDocno(c.getString("DocNo"));
+////                        txtDocno = c.getString("DocNo");
+////                        pCus.add(xST);
+////                    }
+//
+////                    getlistcreate(txtDocno, ED_Dept);
+////                    getlistcreate_l2(txtDocno);
+////                    getlistdata(deptsp_id, edittext.getText().toString(), "");
+////                    getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
+////                    cleardoc();
+////                    etxt_docno.setText(txtDocno);
+////                    DelRowId.clear();
+////                    DelAlldata.clear();
+//
+//                    for (String key : DelAlldata.keySet()) {
+//                        if (DelAlldata.get(key) == "0"){
+//
+//                            basket_detail_delete(key);
+//                            Log.d("BANKUTU1",key+"");
+//                        }
+//                    }
+//
+//                    getlistcreate(DocNo, ED_Dept);
+//                    getlistcreate_l2(DocNo);
+//                    ShowDetailScan(DocNo);
+//                    ShowUserSend();
+////                    getlistdata(deptsp_id, edittext.getText().toString(), "");
+////                    getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
 //                    cleardoc();
-//                    etxt_docno.setText(txtDocno);
+//                    etxt_docno.setText(DocNo);
 //                    DelRowId.clear();
 //                    DelAlldata.clear();
+//                } catch (JSONException e) {
+//                }
 
-                    getlistcreate(DocNo, ED_Dept);
-                    getlistcreate_l2(DocNo);
-                    ShowDetailScan(DocNo);
-                    ShowUserSend();
+                for (String key : DelAlldata.keySet()) {
+                    if (DelAlldata.get(key) == "0"){
+
+                        basket_detail_delete(key);
+                        Log.d("BANKUTU1",key+"");
+                    }
+                }
+
+                getlistcreate(DocNo, ED_Dept);
+                getlistcreate_l2(DocNo);
+                ShowDetailScan(DocNo);
+                ShowUserSend();
 //                    getlistdata(deptsp_id, edittext.getText().toString(), "");
 //                    getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
-                    cleardoc();
-                    etxt_docno.setText(DocNo);
-                    DelRowId.clear();
-                    DelAlldata.clear();
-                } catch (JSONException e) {
-                }
+                cleardoc();
+                etxt_docno.setText(DocNo);
+                DelRowId.clear();
+                DelAlldata.clear();
             }
 
             //class connect php RegisterUserClass important !!!!!!!
