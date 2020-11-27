@@ -118,36 +118,41 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
             throw_item_to_washtag.getLayoutParams().width = 0;
         }
 
-        throw_item_to_washtag.setVisibility(View.VISIBLE);
-        throw_item_to_washtag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(listData.get(position).getResteriletype().equals("1")){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(aActivity);
-                    builder.setCancelable(true);
-                    builder.setTitle("ยืนยัน");
-                    builder.setMessage("ต้องการนำรายการหมดอายุ เข้าตะกร้า Wash Tag หรือไม่");
-                    builder.setPositiveButton("ใช่",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    ((SendSterile_MainActivity) aActivity ).insert_item_to_basket_and_re(listData.get(position).getItemID(),listData.get(position).getSs_rowid());
+        if(!listData.get(position).getBasketname().equals("")){
+            throw_item_to_washtag.setVisibility(View.INVISIBLE);
+        }else{
+            throw_item_to_washtag.setVisibility(View.VISIBLE);
+            throw_item_to_washtag.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listData.get(position).getResteriletype().equals("1")){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(aActivity);
+                        builder.setCancelable(true);
+                        builder.setTitle("ยืนยัน");
+                        builder.setMessage("ต้องการนำรายการหมดอายุ เข้าตะกร้า Wash Tag หรือไม่");
+                        builder.setPositiveButton("ใช่",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ((SendSterile_MainActivity) aActivity ).insert_item_to_basket_and_re(listData.get(position).getItemID(),listData.get(position).getSs_rowid());
 
-                                }
-                            });
-                    builder.setNegativeButton("ไม่", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+                                    }
+                                });
+                        builder.setNegativeButton("ไม่", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
 
-                }else{
-                    ((SendSterile_MainActivity) aActivity ).insert_item_to_basket(listData.get(position).getItemID(),listData.get(position).getSs_rowid());
+                    }else{
+                        ((SendSterile_MainActivity) aActivity ).insert_item_to_basket(listData.get(position).getItemID(),listData.get(position).getSs_rowid());
+                    }
                 }
-            }
-        });
+            });
+        }
+
 
         del_multi.setVisibility(View.INVISIBLE);
 

@@ -28,8 +28,9 @@
         android:layout_marginStart="35dp"
         android:layout_marginBottom="0dp"
         android:layout_toEndOf="@+id/textView14"
-        android:text="Packer : "
-        android:textColor="@color/colorwhite" />
+        android:text="Pack By : "
+        android:textColor="@color/colorwhite"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/packer"
@@ -39,7 +40,8 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/textView192"
-        android:textColor="@color/colorwhite" />
+        android:textColor="@color/colorwhite"
+        android:textStyle="bold" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -144,6 +146,7 @@
                     android:color="@color/form_label"
                     android:gravity="center_vertical"
                     android:hint="Scan Basket tag or Usagecode"
+                    android:focusableInTouchMode="true"
                     android:paddingLeft="14dp"
                     android:singleLine="true"
                     android:textSize="14dp" />

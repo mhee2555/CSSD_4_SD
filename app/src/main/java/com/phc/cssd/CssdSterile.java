@@ -15,6 +15,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -93,8 +95,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
-import static com.phc.cssd.function.KeyboardUtils.hideKeyboard;
 
 public class CssdSterile extends AppCompatActivity {
 
@@ -1768,6 +1768,8 @@ public class CssdSterile extends AppCompatActivity {
         btn_print_bk = (Button) dialog_item_stock_detail_basket.findViewById(R.id.btn_save);
         pair_fin = (Button) dialog_item_stock_detail_basket.findViewById(R.id.btn_cancel);
         edt_basket_code = (EditText) dialog_item_stock_detail_basket.findViewById(R.id.edt_basket_code);
+        edt_basket_code.setInputType(InputType.TYPE_NULL);
+        edt_basket_code.setShowSoftInputOnFocus(false);
         PairBasketBox_basket_Code = (TextView) dialog_item_stock_detail_basket.findViewById(R.id.bastek_name);
         cnt_basket_list = (TextView) dialog_item_stock_detail_basket.findViewById(R.id.cnt_basket_list);
         btn_import_new_item_stock_to_basket = (Button) dialog_item_stock_detail_basket.findViewById(R.id.btn_import_new_item_stock_to_basket);
@@ -2021,7 +2023,7 @@ public class CssdSterile extends AppCompatActivity {
                 dialog_qr.show();
                 dialogProgress.dismiss();
                 if("TL01193N40267".equals(getSerialNumber())||"L203P85U01743".equals(getSerialNumber())){
-                    Checkuser_packer("em00009",dialog_qr,dialog_item_stock_detail_basket);
+                    Checkuser_packer("em00003",dialog_qr,dialog_item_stock_detail_basket);
                 }
             }
         });
@@ -6808,7 +6810,6 @@ public class CssdSterile extends AppCompatActivity {
                                 }else{
                                     set_num_btn_print_bk(0);
                                     basket_dialog_list_basket.setAdapter(null);
-                                    hideKeyboard(CssdSterile.this);
                                 }
 
                                 if(p_SterileProcessID!=null){
@@ -6816,7 +6817,6 @@ public class CssdSterile extends AppCompatActivity {
                                     list_wash_detail.setAdapter(adapter);
                                 }
 
-                                hideKeyboard(CssdSterile.this);
                             }else if(DISPLAY_MODE == 1) {
                                 adapter = new ImportWashDetailBigSizeAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET);
                                 if(p_SterileProcessID!=null){
@@ -6831,7 +6831,6 @@ public class CssdSterile extends AppCompatActivity {
                         }
 
                         displayWashDetailNotPrint(p_SterileProcessID);
-                        hideKeyboard(CssdSterile.this);
                     } catch (Exception e) {
                         e.printStackTrace();
                         return;
@@ -7012,11 +7011,9 @@ public class CssdSterile extends AppCompatActivity {
                         try {
                             ImportWashNotPrintDetailAdapter adapter = new ImportWashNotPrintDetailAdapter(CssdSterile.this,MODEL_IMPORT_WASH_DETAIL_NOT_PRINT, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_TO_PAIR_NOT_PRINT,MAP_MODEL_IMPORT_WASH_DETAIL_SUB_NOT_PRINT);
                             basket_dialog_list_washtag.setAdapter(adapter);
-                            hideKeyboard(CssdSterile.this);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        hideKeyboard(CssdSterile.this);
                     } catch (Exception e) {
                         e.printStackTrace();
                         return;
@@ -7753,7 +7750,6 @@ public class CssdSterile extends AppCompatActivity {
                                     cnt_basket_list.setText(" [ "+MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size()+" รายการ ]");
                                     Log.d("tog_cnt_basket_list","cnt_basket_list"+MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size());
                                     basket_dialog_list_basket.setAdapter(new ImportWashDetailAdapter(CssdSterile.this, MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR,5));
-                                    hideKeyboard(CssdSterile.this);
                                     int xn=0;
                                     for(int ii=0;ii<MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size();ii++){
                                         if(MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(ii).getPrint_count()<=0){
@@ -7764,9 +7760,7 @@ public class CssdSterile extends AppCompatActivity {
                                 }else{
                                     set_num_btn_print_bk(0);
                                     basket_dialog_list_basket.setAdapter(null);
-                                    hideKeyboard(CssdSterile.this);
                                 }
-                                hideKeyboard(CssdSterile.this);
                             }
 
                         }else{
@@ -8309,11 +8303,9 @@ public class CssdSterile extends AppCompatActivity {
                             packer_id = qr_code;
                             dialog.show();
                             edt_basket_code.requestFocus();
-                            hideKeyboard(CssdSterile.this);
                         }else{
                             packer_id = "";
                             Toast.makeText(CssdSterile.this, "สิทธิ์ผู้ใช้งานไม่สามารถเข้าถึงส่วนนี้ได้ !!", Toast.LENGTH_SHORT).show();
-                            hideKeyboard(CssdSterile.this);
                         }
 
                     }
@@ -8322,7 +8314,6 @@ public class CssdSterile extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 dialog_qr.dismiss();
-                hideKeyboard(CssdSterile.this);
             }
 
             @Override
