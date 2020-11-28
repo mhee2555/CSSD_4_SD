@@ -73,8 +73,12 @@ public class CheckQR_Approve extends Activity {
                             //finish();
                             return true;
                         default:
+                            etxt_qr.requestFocus();
                             break;
                     }
+                }else {
+                    etxt_qr.requestFocus();
+                    return true;
                 }
                 return false;
             }

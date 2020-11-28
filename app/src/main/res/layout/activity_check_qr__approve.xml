@@ -53,6 +53,7 @@
                 android:layout_marginLeft="50dp"
                 android:background="@drawable/txt_edit_graywhite"
                 android:ems="10"
+                android:focusable="true"
                 android:inputType="textPersonName"
                 android:textAlignment="center" />
         </LinearLayout>
