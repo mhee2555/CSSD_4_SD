@@ -56,6 +56,7 @@ public class CheckQR_Approve extends Activity {
 
     public void init(){
         etxt_qr = (EditText) findViewById(R.id.etxt_qr);
+        etxt_qr.requestFocus();
         bt_cancel = (Button) findViewById(R.id.bt_cancel);
 
         etxt_qr.setOnKeyListener(new View.OnKeyListener()
@@ -72,8 +73,12 @@ public class CheckQR_Approve extends Activity {
                             //finish();
                             return true;
                         default:
+                            etxt_qr.requestFocus();
                             break;
                     }
+                }else {
+                    etxt_qr.requestFocus();
+                    return true;
                 }
                 return false;
             }

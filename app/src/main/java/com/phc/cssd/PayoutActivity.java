@@ -2169,7 +2169,7 @@ public class PayoutActivity extends AppCompatActivity {
 
                 if(B_ID!=null){data.put("B_ID",B_ID);}
                 String result = ruc.sendPostRequest(getUrl.xUrl+"1/set_finishPayout.php",data);
-                Log.d("result finish: ", result);
+                Log.d("result finish", result);
                 return  result;
             }
         }

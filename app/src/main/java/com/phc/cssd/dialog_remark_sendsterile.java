@@ -566,7 +566,7 @@ public class dialog_remark_sendsterile extends Activity {
                 data.put("usagecode",usagecode);
                 data.put("itemname",itemname);
                 data.put("depname",userdep.getText().toString());
-                if (EmpCode != null){
+                if (RETURN_EMCODE != null){
                     data.put("EmpCode",RETURN_EMCODE);
                 }else {
                     data.put("EmpCode","");
