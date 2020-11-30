@@ -887,7 +887,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }else {
-                    Toast.makeText(SendSterile_MainActivity.this, "กรุณาเลือกอย่างน้อย 1 รายการ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SendSterile_MainActivity.this,
+
+                            "กรุณาเลือกอย่างน้อย 1 รายการ", Toast.LENGTH_SHORT).show();
                 }
             }
         });
