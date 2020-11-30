@@ -1301,6 +1301,7 @@ public class CssdCheckList extends Activity {
         intent.putExtra("Qty_save",Qty_save);
         intent.putExtra("context", String.valueOf(CssdCheckList.this));
         startActivityForResult(intent,1005);
+        Log.d("SDDVDFV",txt_usagecode_scan.getText().toString());
     }
 
     private void focus(){

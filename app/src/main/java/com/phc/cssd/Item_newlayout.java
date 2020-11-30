@@ -1906,12 +1906,12 @@ public class Item_newlayout extends AppCompatActivity {
 
             if (requestCode == 1695 && null != data) {
                 Uri selectedImage = data.getData();
-
+                Log.d("VFDKCNX",selectedImage+"");
                 try {
                     Bitmap bitmap = null;
                     bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                     img_item1.setImageBitmap(bitmap);
-
+                    //onDisplay(edt_item_code1.getText().toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
