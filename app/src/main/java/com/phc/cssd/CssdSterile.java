@@ -391,15 +391,13 @@ public class CssdSterile extends AppCompatActivity {
         Setting s = CssdSetting.getSetting();
         IsShowBasket = s.isShowBasket();
 
-        btn_import_new_item_stock.setVisibility(View.VISIBLE);
-
         if(!ConfigProgram.basket_tag){
             button_basket.setVisibility(View.INVISIBLE);
             btn_checklist.setVisibility(View.INVISIBLE);
-            txt_test_program.setVisibility(View.INVISIBLE);
+//            txt_test_program.setVisibility(View.INVISIBLE);
 
             TextView textview_test_program = (TextView) findViewById(R.id.textview_test_program);
-            textview_test_program.setVisibility(View.INVISIBLE);
+//            textview_test_program.setVisibility(View.INVISIBLE);
             scan_basket.setVisibility(View.INVISIBLE);
 
             TextView txt_usr_prepare_h = (TextView) findViewById(R.id.txt_usr_prepare_h);
@@ -419,25 +417,7 @@ public class CssdSterile extends AppCompatActivity {
             btn_import_new_item_stock.setVisibility(View.VISIBLE);
         }
 
-        //rollback pair basket
-        if(ConfigProgram.pair_basket_2){
-            LinearLayout lin_list_washtag = (LinearLayout) dialog_item_stock_detail_basket.findViewById(R.id.lin_list_washtag);
-            lin_list_washtag.setVisibility(View.GONE);
-            btn_import_new_item_stock_to_basket.setVisibility(View.GONE);
-            btn_import_new_item_stock.setVisibility(View.VISIBLE);
-
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                    dp_to_px(114), dp_to_px(50));
-            layoutParams.setMargins(dp_to_px(35), dp_to_px(585), dp_to_px(951), dp_to_px(20));
-            pair_fin.setLayoutParams(layoutParams);
-
-           layoutParams = new RelativeLayout.LayoutParams(
-                    dp_to_px(70), dp_to_px(70));
-            layoutParams.setMargins(dp_to_px(990), dp_to_px(572), dp_to_px(40), dp_to_px(13));
-            btn_print_bk.setLayoutParams(layoutParams);
-        }else{
-            pair_fin.setBackgroundResource(R.drawable.btn_completed);
-        }
+        pair_fin.setBackgroundResource(R.drawable.btn_completed);
     }
 
     private void newProcess(int ProcessNo, String ProcessId , int SterileR ){
@@ -1823,8 +1803,7 @@ public class CssdSterile extends AppCompatActivity {
                                 return true;
                             }
 
-                            if(!ConfigProgram.pair_basket_2){
-                                if(edt.length()>6){
+                            if(edt.length()>6){
                                     final String basket = basket_ID;
 
                                     if(!basket.equals("")){
@@ -1867,10 +1846,6 @@ public class CssdSterile extends AppCompatActivity {
                                 }else{
                                     selectBasket(edt,edt_basket_code);
                                 }
-
-                            }else{
-                                selectBasket(edt,edt_basket_code);
-                            }
                             
                             edt_basket_code.setText("");
 
@@ -1951,26 +1926,25 @@ public class CssdSterile extends AppCompatActivity {
         btn_print_bk.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 int xn =0;
+                btn_print_bk.setBackgroundResource(R.drawable.ic_print_grey);
+                btn_print_bk.setEnabled(false);
+
+                final Handler h = new Handler();
+                h.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        btn_print_bk.setBackgroundResource(R.drawable.ic_print_blue);
+                        btn_print_bk.setEnabled(true);
+                    }
+                }, 10000);
 
                 print_w_id = "";
-                if(ConfigProgram.pair_basket_2){
+                for(int i=0;i<MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.size();i++){
 
-                    for(int i=0;i<MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.size();i++){
-
-                        Log.d("ttest_for_print","w_id"+MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(i).getI_id());
-                        if(MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(i).getPrint_count()<=0){
-                            print_w_id=print_w_id+","+MODEL_IMPORT_WASH_DETAIL_GROUP_BASKET_IN_PAIR.get(i).getI_id();
-                            xn = xn+1;
-                        }
-                    }
-                }else{
-                    for(int i=0;i<MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.size();i++){
-
-                        Log.d("ttest_for_print","w_id"+MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.get(i).getI_id());
-                        if(MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.get(i).isCheck()){
-                            print_w_id=print_w_id+","+MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.get(i).getI_id();
-                            xn = xn+1;
-                        }
+                    Log.d("ttest_for_print","w_id"+MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.get(i).getI_id());
+                    if(MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.get(i).isCheck()){
+                        print_w_id=print_w_id+","+MODEL_IMPORT_WASH_DETAIL_NOT_PRINT.get(i).getI_id();
+                        xn = xn+1;
                     }
                 }
 
@@ -2626,6 +2600,8 @@ public class CssdSterile extends AppCompatActivity {
             String Usr_beforeapprove
     ) {
 
+        Log.d("tog_displaySterile",TestProgramID+"---"+TestProgramName);
+
         // Display Sterile
         txt_doc_no.setText(DocNo);
         txt_doc_date.setText(DocDate);
@@ -3013,19 +2989,20 @@ public class CssdSterile extends AppCompatActivity {
                 try {
                     ModelImportWashDetail m = (ModelImportWashDetail) li.next();
 
-                    LIST_ID = m.getI_code();
+//                    LIST_ID = m.getI_UsageCode();
 
                     //if (m.isCheck()) {
-                    DATA += LIST_ID + "@";
+//                    DATA += LIST_ID + "@";
                     //}
 
+                    Log.d("tog_create_sterile","Go addSterileDetail");
+                    addSterileDetail(DocNo, m.getI_code(), m.getPackingMatID(),"1",m.getI_UsageCode());
                 }catch(Exception e){
                     continue;
                 }
+
             }
 
-            Log.d("tog_create_sterile","Go addSterileDetail");
-            addSterileDetail(DocNo, DATA, null,"0",null);
 
         }catch(Exception e){
             e.printStackTrace();
@@ -6888,7 +6865,7 @@ public class CssdSterile extends AppCompatActivity {
 
                     for(int i=0;i<data.size();i+=size){
 
-                        if(ConfigProgram.basket_tag && !ConfigProgram.pair_basket_2 && data.get(i + 18).equals("0")){
+                        if(ConfigProgram.basket_tag && data.get(i + 18).equals("0")){
                            continue;
                         }
 
@@ -6916,6 +6893,7 @@ public class CssdSterile extends AppCompatActivity {
                                         data.get(i + 16),
                                         data.get(i + 17),
                                         data.get(i + 18),
+                                        data.get(i + 19),
                                         data.get(i + 19)
                                 )
                         );
@@ -7064,15 +7042,15 @@ public class CssdSterile extends AppCompatActivity {
                     int index = 0;
 
                     for(int i=0;i<data.size();i+=size){
-                        Log.d("ttestdataget","data.get("+i+") = "+data.get(i+2)+"---"+data.get(i+19));
+                        Log.d("ttestdataget","data.get("+i+") = "+data.get(i+2)+"---"+data.get(i+20));
 
                         boolean ischeck = false;
 
-//                        if(data.get(i + 20).equals("0")){
-//                            ischeck = false;
-//                        }else{
-//                            ischeck = true;
-//                        }
+                        if(data.get(i + 20).equals("0")){
+                            ischeck = false;
+                        }else{
+                            ischeck = true;
+                        }
 
                         list.add(
                                 new ModelImportWashDetail(
@@ -7097,10 +7075,12 @@ public class CssdSterile extends AppCompatActivity {
                                         data.get(i + 16),
                                         data.get(i + 17),
                                         data.get(i + 18),
-                                        data.get(i + 19)
+                                        data.get(i + 19),
+                                        data.get(i + 20)
                                 )
                         );
 
+                        Log.d("ttestdataget","data.get("+i+") = "+data.get(i+2)+"---"+!list.get(index).isNewItem().equals("0"));
                         index++;
                     }
 
@@ -8022,6 +8002,7 @@ public class CssdSterile extends AppCompatActivity {
 
                             JSONObject c = rs.getJSONObject(i);
 
+                            Log.d("ttest_for_print","list = "+i);
                             if (c.getString("result").equals("A")) {
                                 list.add(
                                         new ModelWashDetailForPrint(
@@ -8043,6 +8024,7 @@ public class CssdSterile extends AppCompatActivity {
                         }
 
                     } catch (Exception e) {
+                        Log.d("ttest_for_print","e = "+e);
                         e.printStackTrace();
                         return;
                     }finally {
@@ -8058,6 +8040,7 @@ public class CssdSterile extends AppCompatActivity {
                     list_2 = getWashDetailLabelForPrint(list, "2");
                     list_3 = getWashDetailLabelForPrint(list, "3");
 
+                    Log.d("ttest_for_print","list_2.size() = " + list_2.size()+" --- "+"list_3.size() = " + list_3.size());
                     System.out.println("list_2.size() = " + list_2.size());
                     System.out.println("list_3.size() = " + list_3.size());
 
@@ -8078,6 +8061,9 @@ public class CssdSterile extends AppCompatActivity {
                     // Update Print Status
                     if(p_data != null && !p_data.equals("")){
                         updatePrintWashStatus(p_data);
+
+                        btn_print_bk.setBackgroundResource(R.drawable.ic_print_blue);
+                        btn_print_bk.setEnabled(true);
 
                     }else{
                         displayWashDetail(getSterileProcessId());
@@ -8791,6 +8777,51 @@ public class CssdSterile extends AppCompatActivity {
         }
 
         UpdateBaskettag obj = new UpdateBaskettag();
+        obj.execute();
+    }
+
+    public void  remove_no_wash_or_new(final String W_id){
+        Log.d("tog_remove_wash_newitem","W_id = "+W_id);
+
+        class remove_no_wash_or_new extends AsyncTask<String, Void, String> {
+
+            // variable
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+
+                displayWashDetail(getSterileProcessId());
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+
+                data.put("W_id", W_id);
+
+                String result = null;
+
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "remove_wash_detail_newitem_and_nowash.php", data);
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+                Log.d("tog_remove_wash_newitem","data = "+data);
+                Log.d("tog_remove_wash_newitem","result = "+result);
+                return result;
+            }
+
+            // =========================================================================================
+        }
+
+        remove_no_wash_or_new obj = new remove_no_wash_or_new();
         obj.execute();
     }
 

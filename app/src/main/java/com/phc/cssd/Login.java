@@ -9,11 +9,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +23,7 @@ import android.widget.Toast;
 
 import com.phc.core.connect.HTTPConnect;
 import com.phc.core.string.Cons;
+import com.phc.cssd.config.ConfigProgram;
 import com.phc.cssd.url.Url;
 import com.phc.cssd.url.getUrl;
 
@@ -97,6 +96,8 @@ public class Login extends AppCompatActivity {
         byEvent();
 
         addBuilding();
+
+        get_config();
 
         DeviceMode = setDeviceMode();
 
@@ -329,6 +330,52 @@ public class Login extends AppCompatActivity {
         Add ru = new Add();
 
         ru.execute();
+    }
+
+    public void get_config() {
+        class get_config extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                try {
+                    JSONObject jsonObj = new JSONObject(s);
+                    setRs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for (int i = 0; i < setRs.length(); i++) {
+
+                        JSONObject c = setRs.getJSONObject(i);
+
+                        Log.d("tog_get_config",c.getInt("WashBasket")+"---"+c.getInt("SterileBasket"));
+                        ConfigProgram.basket_tag = bitToBool(c.getInt("SterileBasket"));
+                        ConfigProgram.wash_tag = bitToBool(c.getInt("WashBasket"));
+
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String, String>();
+                String result = httpConnect.sendPostRequest(Url.URL + "get_config.php", data);
+                Log.d("tog_get_config",result);
+                return result;
+            }
+        }
+
+        get_config ru = new get_config();
+
+        ru.execute();
+    }
+
+    public boolean bitToBool(int x){
+        if(x==0){
+            return false;
+        }
+        return true;
     }
 
 //    public void VersionApp() {

@@ -85,6 +85,7 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
         final ListView sub_item;
         final String usageCode;
         final String w_id = DATA_MODEL.get(position).getI_id();
+        final Button btn_del;
 
         relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeLayout);
         txt_item_code = (TextView) view.findViewById(R.id.txt_item_code);
@@ -393,9 +394,6 @@ public class ImportWashDetailAdapter extends ArrayAdapter<ModelImportWashDetail>
             ImageView imv_remove = (ImageView) view.findViewById(R.id.imv_remove);
             RadioButton isPrint = (RadioButton) view.findViewById(R.id.isPrint);
             imv_remove.setVisibility(View.VISIBLE);
-            if(ConfigProgram.pair_basket_2){
-                isPrint.setVisibility(View.VISIBLE);
-            }
             imv_remove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

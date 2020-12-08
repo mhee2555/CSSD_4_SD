@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:layout_margin="2dp"
@@ -68,14 +69,19 @@
             android:layout_toEndOf="@id/check_no"
             android:background="@drawable/uncheck02_32"
             android:gravity="center_vertical"
-            android:visibility="gone"></ImageView><![CDATA[
+            android:visibility="gone"></ImageView>
 
-
-
-        " />
-
-
-    ]]>
+        <Button
+            android:id="@+id/del"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="2dp"
+            android:background="@android:drawable/ic_delete"
+            android:text=""
+            android:visibility="gone" />
     </RelativeLayout>
 
     <ListView
