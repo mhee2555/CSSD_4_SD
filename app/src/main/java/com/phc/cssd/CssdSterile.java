@@ -7419,6 +7419,20 @@ public class CssdSterile extends AppCompatActivity {
 
     private void onPrint() throws Exception {
 
+        packer_id = txt_usr_prepare.getContentDescription().toString();
+        print_w_id = "";
+
+        for(int i=0;i<MODEL_STERILE_DETAIL.size();i++){
+
+            Log.d("ttest_for_print","w_id"+MODEL_STERILE_DETAIL.get(i).getImportID());
+            print_w_id =","+ MODEL_STERILE_DETAIL.get(i).getImportID();
+
+        }
+
+        print_w_id = print_w_id.substring(1);
+
+        checkPacker(print_w_id);
+
         final List<ModelSterileDetail> Label_1 = getItemLabel("1");
         final List<ModelSterileDetail> Label_2 = getItemLabel("2");
         final List<ModelSterileDetail> Label_3 = getItemLabel("3");
@@ -8219,7 +8233,9 @@ public class CssdSterile extends AppCompatActivity {
                         JSONObject c = rs.getJSONObject(i);
 
                         if (c.getString("result").equals("A")) {
-                            onPrintWash(W_ID);
+                            if(ConfigProgram.basket_tag){
+                                onPrintWash(W_ID);
+                            }
                         }else{
                             Toast.makeText(CssdSterile.this, "ไม่พบรหัสพนักงาน !!", Toast.LENGTH_SHORT).show();
                         }

@@ -310,7 +310,7 @@ public class SterileDetailAdapter extends ArrayAdapter<ModelSterileDetail> {
                     }
                 });
 
-                if(ConfigProgram.basket_tag){
+                if(!ConfigProgram.basket_tag){
                     relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
                         public boolean onLongClick(View v) {
                             Intent intent = new Intent(context, CssdPrintSterile.class);
