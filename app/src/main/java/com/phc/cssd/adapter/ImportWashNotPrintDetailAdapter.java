@@ -1,8 +1,10 @@
 package com.phc.cssd.adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.phc.core.string.Cons;
 import com.phc.cssd.CssdEditSterile;
 import com.phc.cssd.CssdSterile;
 import com.phc.cssd.R;
@@ -46,9 +49,7 @@ public class ImportWashNotPrintDetailAdapter extends ArrayAdapter {
         this.DATA_MODEL = DATA_MODEL;
         this.DATA_MODEL_MASTER = DATA_MODEL_MASTER;
         this.MODEL_IMPORT_WASH_DETAIL_SUB = MODEL_IMPORT_WASH_DETAIL_SUB;
-        if(!ConfigProgram.pair_basket_2){
-            set_num_btn_print_bk();
-        }
+        set_num_btn_print_bk();
     }
 
     public ImportWashNotPrintDetailAdapter(Activity context,List<ModelImportWashDetail> DATA_MODEL_MASTER, List<ModelImportWashDetail> DATA_MODEL,CheckBox chk_basket) {
@@ -108,6 +109,31 @@ public class ImportWashNotPrintDetailAdapter extends ArrayAdapter {
 
         txt_item_name.setText(DATA_MODEL.get(position).getI_name());
         txt_basket.setText(usageCode);
+
+        Log.d("ttest_DATA_MODEL","DATA_MODEL getI_id = "+DATA_MODEL.get(position).getI_id());
+        Button btn_del = (Button) view.findViewById(R.id.del);
+        if(!(DATA_MODEL.get(position).isNewItem().equals("0"))){
+            btn_del.setVisibility(View.VISIBLE);
+            btn_del.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle(Cons.TITLE);
+                    builder.setIcon(R.drawable.pose_favicon_2x);
+                    builder.setMessage("ยืนยันลบรายการ");
+                    builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            ((CssdSterile)context).remove_no_wash_or_new(DATA_MODEL.get(position).getI_id());
+                        }
+                    }); builder.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.show();
+                }
+            });
+        }
 
         if (!DATA_MODEL.get(position).getIsRemarkExpress().equals("0")){
             txt_IsRemarkems.setVisibility(View.VISIBLE);

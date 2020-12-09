@@ -9,6 +9,7 @@ import android.app.Service;
 import android.app.TaskStackBuilder;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.IBinder;
@@ -60,6 +61,8 @@ public class Menu extends AppCompatActivity {
     private ImageView img_take_back;
     private ImageView img_edit_sterile;
     private ImageView key_hack;
+
+    private Boolean[] basket = {false, false, false, false};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,15 +177,60 @@ public class Menu extends AppCompatActivity {
         }
     }
 
+//    private void basket_back_door(int x){
+//        if( basket[0]&& basket[1]&& basket[2]&& basket[3]){
+//            final SharedPreferences mPrefs = getSharedPreferences("label", 0);
+//            String deviceId =  mPrefs.getString("deviceNumber", "false");
+//            return;
+//        }
+//
+//        if(x==-1){
+//            if(basket[1]){
+//                basket_back_door(1);
+//            }else{
+//                basket_back_door(2);
+//            }
+//        }else if(x==-2){
+//            if(basket[2]){
+//                basket_back_door(3);
+//            }else{
+//                basket_back_door(0);
+//            }
+//        }else{
+//            if(x==0){
+//                basket[0]=true;
+//            }else if(basket[x-1]){
+//                basket[x]=true;
+//            }else{
+//                basket[0]=false;
+//                basket[1]=false;
+//                basket[2]=false;
+//                basket[3]=false;
+//            }
+//        }
+//
+//    }
+
     private void byWidget() {
         imv_logo = (ImageView) findViewById(R.id.imv_logo);
         imv_logo.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+
+//                basket_back_door(1);
+
                 openQR();
                 return false;
             }
         });
+//        imv_logo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                basket_back_door(2);
+//
+//            }
+//        });
         txt_version = (TextView) findViewById(R.id.txt_version);
         txt_username = (TextView) findViewById(R.id.txt_username);
         txt_wash_remain = (TextView) findViewById(R.id.txt_wash_remain);

@@ -24,6 +24,5 @@ public class ConfigProgram {
   //basket tag
   //------------------------------------------------
   public static boolean basket_tag = true ;
-  public static boolean pair_basket_2 = false ;
 
 }
