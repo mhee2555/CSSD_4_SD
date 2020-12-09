@@ -605,8 +605,8 @@ public class CssdSearchSterile extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     hideKeyboard(CssdSearchSterile.this);
-                    WashID.clear();
-                    WashallID.clear();
+//                    WashID.clear();
+//                    WashallID.clear();
                 }else {
                     Toast.makeText(CssdSearchSterile.this, "ไม่พบข้อมูล !!", Toast.LENGTH_SHORT).show();
                     scan.setText("");
