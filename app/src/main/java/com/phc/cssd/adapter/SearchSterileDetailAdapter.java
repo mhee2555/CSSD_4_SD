@@ -35,6 +35,7 @@ public class SearchSterileDetailAdapter extends ArrayAdapter<ModelSterileDetail>
     }
 
 
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
