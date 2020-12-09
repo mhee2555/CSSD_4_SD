@@ -301,6 +301,7 @@ public class PrintSticker {
                 Tsc.sendpicture(25, 80, TextAsBitmap.getTextBitmap(m.getUsageCode(), 26));
                 Tsc.sendpicture(25, 125, TextAsBitmap.getTextBitmap(m.getUsr_prepare()+" - เตรียม ", 26));
                 Tsc.sendpicture(25, 170, TextAsBitmap.getTextBitmap(m.getUsr_approve()+" - ตรวจ ", 26));
+                Tsc.sendpicture(25, 215, TextAsBitmap.getTextBitmap("SD : " + m.getImportID(), 26));
                 Tsc.qrcode(25, 275, "H", "5", "A", "0", "M2", "S1", m.getUsageCode());
                 String yy1 = (Integer.parseInt( m.getSterileDate().substring(6,10) )+543)+"";
                 String mfc1 = m.getSterileDate().substring(0,2) +"/"+m.getSterileDate().substring(3,5)+"/"+ yy1.substring(2,4);
