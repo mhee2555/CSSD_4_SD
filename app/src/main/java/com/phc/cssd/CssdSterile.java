@@ -7425,7 +7425,7 @@ public class CssdSterile extends AppCompatActivity {
         for(int i=0;i<MODEL_STERILE_DETAIL.size();i++){
 
             Log.d("ttest_for_print","w_id"+MODEL_STERILE_DETAIL.get(i).getImportID());
-            print_w_id =","+ MODEL_STERILE_DETAIL.get(i).getImportID();
+            print_w_id =print_w_id+","+ MODEL_STERILE_DETAIL.get(i).getImportID();
 
         }
 

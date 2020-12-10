@@ -167,7 +167,13 @@ public class CssdQrUser extends Activity {
                 }else {
                     data.put("type","");
                 }
-                data.put("page",page);
+
+                if (page != null){
+                    data.put("page",page);
+                }else {
+                    data.put("page","");
+                }
+
                 String result = null;
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_check_user.php", data);

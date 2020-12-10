@@ -59,7 +59,7 @@ public class Sticker_Indicator_DoubleLayer_Cerulean_50x70 {
                 // Part 1
 
                 // ItemName
-                Tsc.sendpicture(x(4), y(2), TextAsBitmap.getTextBitmap1(m.getItemname(), 32));
+                Tsc.sendpicture(x(4), y(2), TextAsBitmap.getTextBitmap1(m.getItemname(), 27));
 
                 // Usage
                 Tsc.sendpicture(x(4), y(8.5), TextAsBitmap.getTextBitmap(m.getUsageCode(), 26));
