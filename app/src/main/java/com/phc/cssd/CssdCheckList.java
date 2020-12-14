@@ -1,9 +1,11 @@
 package com.phc.cssd;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,6 +15,10 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.os.Bundle;
+import android.print.PrintAttributes;
+import android.print.PrintDocumentAdapter;
+import android.print.PrintManager;
+import android.printservice.PrintDocument;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -27,9 +33,28 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.draw.LineSeparator;
+import com.itextpdf.text.pdf.draw.VerticalPositionMark;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 import com.phc.core.connect.HTTPConnect;
 import com.phc.core.string.Cons;
 import com.phc.cssd.adapter.CheckListAdapter;
+import com.phc.cssd.adapter.PdfDocumentAdapter;
 import com.phc.cssd.model.ModelCheckList;
 import com.phc.cssd.model.ModelWashDetailForPrint;
 import com.phc.cssd.print_sticker.PrintWash;
@@ -40,6 +65,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -1534,6 +1563,31 @@ public class CssdCheckList extends Activity {
 
                     if (Check1 == true && Check2 == true && Check3 == true){
                         onPrint();
+//                        Dexter.withActivity(CssdCheckList.this)
+//                                .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                                .withListener(new PermissionListener() {
+//                                    @Override
+                        
+//                                    public void onPermissionGranted(PermissionGrantedResponse response) {
+//                                        imv_print.setOnClickListener(new View.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(View view) {
+//                                                createPDFFile(Common.getAppPath(CssdCheckList.this)+"test_pdf.pdf");
+//                                            }
+//                                        });
+//                                    }
+//
+//                                    @Override
+//                                    public void onPermissionDenied(PermissionDeniedResponse response) {
+//
+//                                    }
+//
+//                                    @Override
+//                                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+//
+//                                    }
+//                                })
+//                                .check();
                     }else {
                         Toast.makeText(CssdCheckList.this, "กรุณาเช็ค / สแกน VALIDATION SHEET ให้ครบ !!", Toast.LENGTH_SHORT).show();
                     }
@@ -1561,6 +1615,120 @@ public class CssdCheckList extends Activity {
 
         CheckValidation obj = new CheckValidation();
         obj.execute();
+    }
+
+    private void createPDFFile(String path) {
+        if (new File(path).exists())
+            new File(path).delete();
+        try{
+            Document document = new Document();
+            PdfWriter.getInstance(document,new FileOutputStream(path));
+            document.open();
+            document.setPageSize(PageSize.A4);
+            document.addCreationDate();
+            document.addAuthor("EDMTDev");
+            document.addCreator("Eddy Lee");
+
+            BaseColor baseColor = new BaseColor(0,153,204,255);
+            float fontSize = 20.0f;
+            float valueFontSize = 26.0f;
+
+            BaseFont fontName = BaseFont.createFont("assets/fonts/BrannbollSS_PERSONAL.ttf","UTF-8",BaseFont.EMBEDDED);
+
+            Font titleFont = new Font(fontName,36.0f,Font.NORMAL,BaseColor.BLACK);
+            addNewItem(document,"Order Details", Element.ALIGN_CENTER,titleFont);
+
+            Font orderNumberFont = new Font(fontName,fontSize,Font.NORMAL,BaseColor.RED);
+            addNewItem(document,"Order No :",Element.ALIGN_LEFT,orderNumberFont);
+
+            Font orderNumberValueFont = new Font(fontName,valueFontSize,Font.NORMAL,BaseColor.BLACK);
+            addNewItem(document,"#717171",Element.ALIGN_LEFT,orderNumberValueFont);
+
+            addLineSeperator(document);
+
+            addNewItem(document,"Order Date",Element.ALIGN_LEFT,orderNumberFont);
+            addNewItem(document,"3/8/2019",Element.ALIGN_LEFT,orderNumberValueFont);
+
+            addLineSeperator(document);
+
+            addNewItem(document,"Account Name :",Element.ALIGN_LEFT,orderNumberFont);
+            addNewItem(document,"Eddy Lee",Element.ALIGN_LEFT,orderNumberValueFont);
+
+            addLineSeperator(document);
+
+            addLineSpace(document);
+            addNewItem(document,"Product Detail",Element.ALIGN_CENTER,titleFont);
+            addLineSeperator(document);
+
+            addNewItemWithLeftAndRight(document,"Pizza 25","(0.0%)",titleFont,orderNumberValueFont);
+            addNewItemWithLeftAndRight(document,"12.0*1000","12000.0",titleFont,orderNumberValueFont);
+
+            addLineSeperator(document);
+
+            addNewItemWithLeftAndRight(document,"Pizza 26","(0.0%)",titleFont,orderNumberValueFont);
+            addNewItemWithLeftAndRight(document,"12.0*1000","12000.0",titleFont,orderNumberValueFont);
+
+            addLineSeperator(document);
+
+            addLineSpace(document);
+            addLineSpace(document);
+
+            addNewItemWithLeftAndRight(document,"Total","24000.0",titleFont,orderNumberValueFont);
+
+            document.close();
+
+            Toast.makeText(this,"Success",Toast.LENGTH_SHORT).show();
+
+            PrintPDF();
+            
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void PrintPDF() {
+        PrintManager printManager = (PrintManager)getSystemService(Context.PRINT_SERVICE);
+        try{
+            PrintDocumentAdapter printDocumentAdapter = new PdfDocumentAdapter1(CssdCheckList.this,Common.getAppPath(CssdCheckList.this)+"test_pdf.pdf");
+            printManager.print("Document",printDocumentAdapter,new PrintAttributes.Builder().build());
+        }catch (Exception ex){
+            Log.e("EDMTDev",""+ex.getMessage());
+
+        }
+    }
+
+    private void addNewItemWithLeftAndRight(Document document, String textLeft, String textRight, Font textLeftFont, Font textRightFont) throws DocumentException {
+        Chunk chunkTextLeft = new Chunk(textLeft,textLeftFont);
+        Chunk chunkTextRight = new Chunk(textRight,textRightFont);
+        Paragraph p = new Paragraph(chunkTextLeft);
+        p.add(new Chunk(new VerticalPositionMark()));
+        p.add(chunkTextRight);
+        document.add(p);
+
+    }
+
+    private void addLineSeperator(Document document) throws DocumentException {
+        LineSeparator lineSeparator = new LineSeparator();
+        lineSeparator.setLineColor(new BaseColor(0,0,0,68));
+        addLineSpace(document);
+        document.add(new Chunk(lineSeparator));
+        addLineSpace(document);
+    }
+
+    private void addLineSpace(Document document) throws DocumentException {
+        document.add(new Paragraph(""));
+    }
+
+    private void addNewItem(Document document, String text, int align, Font font) throws DocumentException {
+        Chunk chunk = new Chunk(text,font);
+        Paragraph paragraph = new Paragraph(chunk);
+        paragraph.setAlignment(align);
+        document.add(paragraph);
     }
 
     public void CheckScanKey(final String Key) {
