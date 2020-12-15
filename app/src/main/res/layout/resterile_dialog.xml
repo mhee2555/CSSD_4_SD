@@ -12,7 +12,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="25dp"
         android:layout_marginTop="20dp"
-        android:text="Resterile"
+        android:text="Waste Product"
         android:textAlignment="viewStart"
         android:textColor="@color/colorWhite"
         android:textSize="18sp"

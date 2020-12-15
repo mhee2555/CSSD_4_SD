@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.phc.core.connect.HTTPConnect;
@@ -30,9 +31,10 @@ import java.util.HashMap;
 public class dialog_Load_Img_Remark extends Activity {
 
     String itemcode,sel,usagecode,itemname,type;
-    TextView itemname_set,usagecode_set,sub_itemname_set,unit_set;
+    TextView itemname_set,usagecode_set,sub_itemname_set,unit_set,text_remark;
     ImageView img;
     LinearLayout L1;
+    LinearLayout P1;
     String codeData_pic1;
     String codeData_pic2;
 
@@ -59,13 +61,17 @@ public class dialog_Load_Img_Remark extends Activity {
         type = intent.getStringExtra("type");
     }
 
+    @SuppressLint("WrongViewCast")
     public void initialize() {
         itemname_set = (TextView) findViewById(R.id.itemname_set);
         usagecode_set = (TextView) findViewById(R.id.usagecode_set);
         sub_itemname_set = (TextView) findViewById(R.id.sub_itemname_set);
+        text_remark = (TextView) findViewById(R.id.text_remark);
         unit_set = (TextView) findViewById(R.id.unit_set);
         img = (ImageView) findViewById(R.id.img);
         L1 = (LinearLayout) findViewById(R.id.L1);
+        P1 = (LinearLayout) findViewById(R.id.P1);
+        P1.setVisibility(View.GONE);
     }
 
     public void ShowDetail() {
@@ -100,6 +106,8 @@ public class dialog_Load_Img_Remark extends Activity {
                                 }
                             }else {
                                 L1.setVisibility(View.GONE);
+                                //P1.setVisibility(View.VISIBLE);
+                                //text_remark.setText("");
                             }
                             if (!type.equals("remark")){
                                 URL imageUrl = new URL(Url.URL + "cssd_image/"+c.getString("Picture"));

@@ -642,6 +642,9 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 }
                 UsageCode(Usage,Dep,DocNo);
 
+                if(newsData.getBasketID()!=null){
+                    CheckBasket(newsData.getBasketID());
+                }
 //                if (textView46_1.getVisibility() == View.VISIBLE){
 //                    textView46_1.setVisibility(View.GONE);
 //                    BasketExpire.setVisibility(View.GONE);
@@ -727,7 +730,12 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 }else{
                     list_docno_detail.setAdapter(null);
                 }
-                txt_get_ucode.requestFocus();
+                Log.d("tog_receive",txt_usr_receive.getText().toString()+"---"+txt_usr_receive.getText().toString().replace(" ","").equals(""));
+                if(txt_usr_receive.getText().toString().replace(" ","").equals("")){
+                    txt_usr_receive.requestFocus();
+                }else{
+                    txt_get_ucode.requestFocus();
+                }
             }
         });
 
@@ -776,7 +784,12 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 IsItemClick = true;
                 ShowDetail();
                 ShowUserSend();
-                txt_get_ucode.requestFocus();
+                Log.d("tog_receive",txt_usr_receive.getText().toString()+"---"+txt_usr_receive.getText().toString().replace(" ","").equals(""));
+                if(txt_usr_receive.getText().toString().replace(" ","").equals("")){
+                    txt_usr_receive.requestFocus();
+                }else{
+                    txt_get_ucode.requestFocus();
+                }
             }
         });
 
