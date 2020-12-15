@@ -433,9 +433,15 @@ public class sendsterile_washdocdetail_adapte_2 extends ArrayAdapter {
             }
         });
 
+        Log.d("VVDVRFV" + "Remark",listData.get(position).getRemarkSend());
+        Log.d("VVDVRFV" + "Send",listData.get(position).getSs_rowid());
 
         if (listData.get(position).getXremark().equals("")){
-            bt_note.setBackgroundResource(R.drawable.ic_list_grey);
+            if(listData.get(position).getRemarkSend().equals("1")){
+                bt_note.setBackgroundResource(R.drawable.ic_list_blue);
+            }else {
+                bt_note.setBackgroundResource(R.drawable.ic_list_grey);
+            }
         }else {
             bt_note.setBackgroundResource(R.drawable.ic_list_blue);
         }

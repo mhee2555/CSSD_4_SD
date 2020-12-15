@@ -67,7 +67,12 @@ public class pCustomer {
 
     private String basketID;
     private String basketname;
+    private String RemarkSend;
 
+
+    public String getRemarkSend() { return RemarkSend; }
+
+    public void setRemarkSend(String remarkSend) { RemarkSend = remarkSend; }
 
     public String getQtyItemDetail() { return QtyItemDetail; }
 

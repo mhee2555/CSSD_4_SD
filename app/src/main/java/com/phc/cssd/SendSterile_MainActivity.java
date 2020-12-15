@@ -1964,6 +1964,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         JSONObject c = setRs.getJSONObject(i);
                         pCustomer xST = new pCustomer();
                         bo = c.getString("flag");
+                        xST.setRemarkSend(c.getString("RemarkSend"));
                         xST.setUsageCode(c.getString("UsageCode"));
                         xST.setItemcode(c.getString("ItemCode"));
                         xST.setItemname(c.getString("itemname"));
