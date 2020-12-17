@@ -1428,7 +1428,7 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
-                data.put("data","5");
+                data.put("data","20");
                 String result = null;
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_display_config_type.php", data);
@@ -1524,7 +1524,7 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
-                data.put("data","6");
+                data.put("data","21");
                 String result = null;
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_display_config_type.php", data);
@@ -1628,7 +1628,7 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
-                data.put("data","7");
+                data.put("data","22");
                 String result = null;
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_display_config_type.php", data);
@@ -1744,7 +1744,7 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(String... params) {
                 HashMap<String, String> data = new HashMap<String,String>();
-                data.put("data","8");
+                data.put("data","23");
                 String result = null;
                 try {
                     result = httpConnect.sendPostRequest(Url.URL + "cssd_display_config_type.php", data);

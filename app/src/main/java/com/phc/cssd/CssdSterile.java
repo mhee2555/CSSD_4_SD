@@ -236,6 +236,7 @@ public class CssdSterile extends AppCompatActivity {
     String condition3 = "";
     String condition4 = "";
     String condition5 = "";
+    String config = "";
     private Runnable runnable_1;
     private Runnable runnable_2;
     private Runnable runnable_3;
@@ -7637,23 +7638,28 @@ public class CssdSterile extends AppCompatActivity {
                         condition3 = c.getString("condition3");
                         condition4 = c.getString("condition4");
                         condition5 = c.getString("condition5");
+                        config = c.getString("IsStatus");
                     }
                     if (DIALOG_ACTIVE == true){
                         if (!condition1.equals("0") || !condition2.equals("0") || !condition3.equals("0") || !condition4.equals("0") || !condition5.equals("0")){
-                            Intent intent = new Intent(CssdSterile.this, dialog_check_usage_count.class);
-                            intent.putExtra("UsageCode", UsageCode);
-                            intent.putExtra("cnt", Cnt);
-                            intent.putExtra("DocNo",getDocNo());
-                            intent.putExtra("B_ID",B_ID);
-                            intent.putExtra("sel","1");
-                            intent.putExtra("page","1");
-                            intent.putExtra("condition1",condition1);
-                            intent.putExtra("condition2",condition2);
-                            intent.putExtra("condition3",condition3);
-                            intent.putExtra("condition4",condition4);
-                            intent.putExtra("condition5",condition5);
-                            startActivity(intent);
-                            DIALOG_ACTIVE = false;
+                            if (config.equals("1")){
+                                Intent intent = new Intent(CssdSterile.this, dialog_check_usage_count.class);
+                                intent.putExtra("UsageCode", UsageCode);
+                                intent.putExtra("cnt", Cnt);
+                                intent.putExtra("DocNo",getDocNo());
+                                intent.putExtra("B_ID",B_ID);
+                                intent.putExtra("sel","1");
+                                intent.putExtra("page","1");
+                                intent.putExtra("condition1",condition1);
+                                intent.putExtra("condition2",condition2);
+                                intent.putExtra("condition3",condition3);
+                                intent.putExtra("condition4",condition4);
+                                intent.putExtra("condition5",condition5);
+                                startActivity(intent);
+                                DIALOG_ACTIVE = false;
+                            }else {
+                                SetIsstatus();
+                            }
                         }
                     }
                 } catch (JSONException e) {
@@ -7683,6 +7689,60 @@ public class CssdSterile extends AppCompatActivity {
             // =========================================================================================
         }
         CheckUsageEms obj = new CheckUsageEms();
+        obj.execute();
+    }
+
+    public void SetIsstatus() {
+        class SetIsstatus extends AsyncTask<String, Void, String> {
+            private ProgressDialog dialog = new ProgressDialog(CssdSterile.this);
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                this.dialog.setMessage(Cons.WAIT_FOR_PROCESS);
+                this.dialog.show();
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+                try {
+                    JSONObject jsonObj = new JSONObject(result);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<rs.length();i++){
+                        JSONObject c = rs.getJSONObject(i);
+                        if (c.getString("finish").equals("true")){
+                            //finish();
+                        }else {
+                            //finish();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }finally {
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            }
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("DOC_NO", getDocNo());
+                String result = null;
+                try {
+                    result = httpConnect.sendPostRequest(Url.URL + "cssd_set_status_ems.php", data);
+                    Log.d("KJDGDK",data+"");
+                    Log.d("KJDGDK",result);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+                return result;
+            }
+            // =========================================================================================
+        }
+        SetIsstatus obj = new SetIsstatus();
         obj.execute();
     }
 
