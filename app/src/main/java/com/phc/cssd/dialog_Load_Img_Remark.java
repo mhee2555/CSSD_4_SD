@@ -106,8 +106,14 @@ public class dialog_Load_Img_Remark extends Activity {
                                 }
                             }else {
                                 L1.setVisibility(View.GONE);
-                                //P1.setVisibility(View.VISIBLE);
-                                //text_remark.setText("");
+                                if (c.getString("Note").equals("null") || c.getString("Note").equals("")){
+                                    P1.setVisibility(View.VISIBLE);
+                                    text_remark.setText("("+c.getString("NameType")+")");
+                                }else {
+                                    P1.setVisibility(View.VISIBLE);
+                                    text_remark.setText(c.getString("Note")+"("+c.getString("NameType")+")");
+                                }
+
                             }
                             if (!type.equals("remark")){
                                 URL imageUrl = new URL(Url.URL + "cssd_image/"+c.getString("Picture"));

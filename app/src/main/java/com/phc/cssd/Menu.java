@@ -43,6 +43,7 @@ public class Menu extends AppCompatActivity {
     private String B_ID = "1";
     private String B_Name = null;
     private String EmpCode = null;
+    String RETURN_EM = null;
 
     private String IsAdmin = "";
     private String IsInCharg = "";
@@ -159,6 +160,7 @@ public class Menu extends AppCompatActivity {
             try {
                 RETURN_DATA = data.getStringExtra("RETURN_DATA");
                 RETURN_VALUE = data.getStringExtra("RETURN_VALUE");
+                RETURN_EM = data.getStringExtra("RETURN_EM");
             }catch(Exception e){
                 return;
             }
@@ -361,6 +363,7 @@ public class Menu extends AppCompatActivity {
     private void gotoActivity(Class c){
         Intent intent = new Intent(Menu.this, c);
         intent.putExtra("userid", userid);
+        intent.putExtra("RETURN_EM", RETURN_EM);
         intent.putExtra("user_name", user_name);
         intent.putExtra("IsAdmin", IsAdmin);
         intent.putExtra("IsInCharg", IsInCharg);

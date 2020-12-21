@@ -57,6 +57,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static com.phc.cssd.function.KeyboardUtils.hideKeyboard;
+
 public class PayoutActivity extends AppCompatActivity {
     ArrayList<String> UserCode = new ArrayList<>();
     String RefDocNo = "";
@@ -82,7 +84,7 @@ public class PayoutActivity extends AppCompatActivity {
     JSONArray setRs = null;
     getUrl iFt = new getUrl();
     HTTPConnect ruc = new HTTPConnect();
-//    xControl xCtl = new xControl();
+    //    xControl xCtl = new xControl();
     static final int DATE_PICKER_ID = 1111;
     private int year;
     private int month;
@@ -105,6 +107,7 @@ public class PayoutActivity extends AppCompatActivity {
     TextView textViewDocNo;
     DateThai Dthai;
     EditText eUsageCode;
+    int CountScan = 0;
     String xIsStatus = "0";
     Button bt_additem;
     Button bt_createdoc;
@@ -294,28 +297,34 @@ public class PayoutActivity extends AppCompatActivity {
 //                                eUsageCode.requestFocus();
 //                                return true;
 //                            }
-
-                            String itemCode = (eUsageCode.getText().toString().toUpperCase()).substring(0,5);
-                            if(textViewDocNo.getText().toString().equals("")){
-                                CreatePayoutDocument(userid,resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields1(),itemCode,"1");
-                                isnewDoc = true;
-                                bt_additem.setEnabled(false);
-                                bt_createdoc.setEnabled(false);
-                            }else{
-                                if(isnewDoc){
-                                    Insert_PayoutDetail(DocNo,itemCode,"1");
+                            if(CountScan == 0){
+                                int NumDep = Integer.parseInt(eUsageCode.getText().toString());
+                                spinner01.setSelection(NumDep);
+                                eUsageCode.setText("");
+                                CountScan = 1;
+                                hideKeyboard(PayoutActivity.this);
+                            }else {
+                                String itemCode = (eUsageCode.getText().toString().toUpperCase()).substring(0,5);
+                                if(textViewDocNo.getText().toString().equals("")){
+                                    CreatePayoutDocument(userid,resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields1(),itemCode,"1");
+                                    isnewDoc = true;
+                                    bt_additem.setEnabled(false);
+                                    bt_createdoc.setEnabled(false);
                                 }else{
-                                    if(mode_check){
-                                        payoutInSertSub( DocNo,resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields1(),eUsageCode.getText().toString().toUpperCase());
+                                    if(isnewDoc){
+                                        Insert_PayoutDetail(DocNo,itemCode,"1");
                                     }else{
-                                        payoutIsCheckPay(DocNo,eUsageCode.getText().toString());
+                                        if(mode_check){
+                                            payoutInSertSub( DocNo,resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields1(),eUsageCode.getText().toString().toUpperCase());
+                                        }else{
+                                            payoutIsCheckPay(DocNo,eUsageCode.getText().toString());
+                                        }
+                                        eUsageCode.setText("");
+                                        eUsageCode.requestFocus();
+                                        return true;
                                     }
-                                    eUsageCode.setText("");
-                                    eUsageCode.requestFocus();
-                                    return true;
                                 }
                             }
-
                         default:
                             break;
                     }
@@ -1089,6 +1098,7 @@ public class PayoutActivity extends AppCompatActivity {
                         JSONObject c = setRs.getJSONObject(i);
                         if( c.getString("Finish").equals("true")){
                             ListPayoutDocument("0",xSearch);
+                            CountScan = 0;
                         }
                     }
                 } catch (JSONException e) {
@@ -1811,7 +1821,6 @@ public class PayoutActivity extends AppCompatActivity {
         }
         eUsageCode.setText("");
         eUsageCode.requestFocus();
-
     }*/
 
     public boolean checkSavepayout(){
@@ -1897,14 +1906,12 @@ public class PayoutActivity extends AppCompatActivity {
         if(refDocNo.equals("-")){
             url = "http://poseintelligence.com/cssd_dev/report/Report_Payout_no_ss.php?DocNo="+xDocNo+"&UserID="+xuser+"&DeptID="+DeptID;
             //url2 = " http://poseintelligence.com/cssd/report/Report_Payout_Detail.php?DocNo="+xDocNo+"&UserID="+xuser;
-
             //url = "192.168.1.103:8181/cssd/report/Report_Payout_no_ss.php?DocNo="+xDocNo+"&UserID="+xuser+"&DeptID="+DeptID;
         }else{
             url = "http://poseintelligence.com/cssd_dev/report/Report_Payout.php?DocNo="+xDocNo+"&UserID="+xuser+"&DeptID="+DeptID;
             //url2 = " http://poseintelligence.com/cssd/report/Report_Payout_Detail.php?DocNo="+xDocNo+"&UserID="+xuser;
             //url = "192.168.1.103:8181/cssd/report/Report_Payout.php?DocNo="+xDocNo+"&UserID="+xuser+"&DeptID="+DeptID;
         }
-
         Log.d("GetReport: ", url);
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
@@ -2451,36 +2458,28 @@ public class PayoutActivity extends AppCompatActivity {
                 TextView textView174 = (TextView) dialog.findViewById(R.id.textView174);
                 TextView textView182 = (TextView) dialog.findViewById(R.id.textView182);
                 TextView textView179 = (TextView) dialog.findViewById(R.id.textView179);
-
                 LinearLayout LL1 = (LinearLayout) dialog.findViewById(R.id.LL1);
                 LinearLayout LL2 = (LinearLayout) dialog.findViewById(R.id.LL2);
-
                 Button bt_ok = (Button) dialog.findViewById(R.id.bt_ok);
                 txt_qty.setText(chk_txt_qty + "");
                 txt_xqty.setText(chk_txt_xqty + "");
-
                 if(!bt_switch.isChecked()) {
                     LL1.setVisibility(View.GONE);
-
                     textView168.setVisibility(View.GONE);
                     textView181.setVisibility(View.GONE);
                     textView174.setVisibility(View.GONE);
                     textView182.setVisibility(View.GONE);
-
                     txt_qty.setVisibility(View.GONE);
                     txt_xqty.setVisibility(View.GONE);
-
                     textView179.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                     textView179.setText("ต้องการจ่ายเอกสารนี้ใช่หรือไม่ ?");
                 }
-
                 bt_ok.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         if(bt_switch.isChecked())
                             ImportPayout("1",DocNo);
                         else
                             ImportPayout("2",DocNo);
-
                         GetReport(DocNo, userid, resultsDepartment.get(spinner01.getSelectedItemPosition()).getFields1(), "1");
                         textViewDocNo.setText("");
                         ListPayoutDetail("");
@@ -2488,14 +2487,12 @@ public class PayoutActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
-
                 Button bt_cancel = (Button) dialog.findViewById(R.id.bt_cancel);
                 bt_cancel.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         dialog.dismiss();
                     }
                 });
-
                 dialog.show();
             } else {
                 final Dialog dialog = new Dialog(PayoutActivity.this);
@@ -2510,24 +2507,19 @@ public class PayoutActivity extends AppCompatActivity {
                 TextView textView174 = (TextView) dialog.findViewById(R.id.textView174);
                 TextView textView182 = (TextView) dialog.findViewById(R.id.textView182);
                 TextView textView179 = (TextView) dialog.findViewById(R.id.textView179);
-
                 LinearLayout LL1 = (LinearLayout) dialog.findViewById(R.id.LL1);
                 LinearLayout LL2 = (LinearLayout) dialog.findViewById(R.id.LL2);
-
                 Button bt_ok = (Button) dialog.findViewById(R.id.bt_ok);
                 txt_qty.setText(chk_txt_qty + "");
                 txt_xqty.setText(chk_txt_xqty + "");
                 if(!bt_switch.isChecked()) {
                     LL1.setVisibility(View.GONE);
-
                     textView168.setVisibility(View.GONE);
                     textView181.setVisibility(View.GONE);
                     textView174.setVisibility(View.GONE);
                     textView182.setVisibility(View.GONE);
-
                     txt_qty.setVisibility(View.GONE);
                     txt_xqty.setVisibility(View.GONE);
-
                     textView179.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                     textView179.setText("ต้องการจ่ายเอกสารนี้ใช่หรือไม่ ?");
                 }
@@ -2537,7 +2529,6 @@ public class PayoutActivity extends AppCompatActivity {
                             ImportPayout("1",DocNo);
                         else
                             ImportPayout("2",DocNo);
-
                         GetReport(DocNo, userid, resultsDepartment.get(spinner01.getSelectedItemPosition()).getFields1(), "1");
                         textViewDocNo.setText("");
                         ListPayoutDetail("");
@@ -2545,16 +2536,13 @@ public class PayoutActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
-
                 Button bt_cancel = (Button) dialog.findViewById(R.id.bt_cancel);
                 bt_cancel.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         dialog.dismiss();
                     }
                 });
-
                 dialog.show();
-
             }
             //====================================
         }

@@ -599,7 +599,7 @@ public class CssdSearchSterile extends AppCompatActivity {
                             for (int a = 0 ; a < MODEL_STERILE_DETAIL.size() ; a ++) {
                                 MODEL_STERILE_DETAIL.get(a).setCheck(true);
                             }
-                            WashID_Row(MODEL_STERILE_DETAIL.get(0).getUsageCode());
+                            WashID_Row(MODEL_STERILE_DETAIL.get(0).getImportID());
                         }
                     } catch (Exception e) {
                         list_sterile_detail.setAdapter(null);

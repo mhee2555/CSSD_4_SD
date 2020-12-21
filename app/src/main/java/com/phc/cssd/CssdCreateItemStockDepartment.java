@@ -48,6 +48,7 @@ public class CssdCreateItemStockDepartment extends Activity {
     private CheckBox Check_all;
     private RadioButton use_1,use_2;
     EditText etxt_searchsendsterile;
+    String RETURN_EM = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,7 @@ public class CssdCreateItemStockDepartment extends Activity {
         Item_Name = intent.getStringExtra("Item_Name");
         Item_Stock = intent.getStringExtra("Item_Stock");
         userid = intent.getStringExtra("userid");
+        RETURN_EM = intent.getStringExtra("RETURN_EM");
         B_ID = intent.getStringExtra("B_ID");
     }
 
@@ -191,6 +193,7 @@ public class CssdCreateItemStockDepartment extends Activity {
                 data.put("p_data", p_data);
                 data.put("key", etxt_searchsendsterile.getText().toString());
                 data.put("userid", userid);
+                data.put("RETURN_EM", RETURN_EM);
                 if(B_ID != null){
                     data.put("p_bid", B_ID);
                 }

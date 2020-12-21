@@ -74,6 +74,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     String userid="";
     String user_name="";
     String page="";
+    String RETURN_EM = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +90,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             Bundle bd = getIntent().getExtras();
             if (bd != null) {
                 userid = bd.getString("userid");
+                RETURN_EM = bd.getString("RETURN_EM");
                 user_name = bd.getString("user_name");
                 txt_username = (TextView)findViewById(R.id.txt_username2);
                 Log.d("user_name: ", user_name);
@@ -306,6 +309,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     private void gotoActivity(Class c){
         Intent intent = new Intent(SettingActivity.this, c);
         intent.putExtra("userid", userid);
+        intent.putExtra("RETURN_EM", RETURN_EM);
         intent.putExtra("B_ID",B_ID);
         startActivity(intent);
     }

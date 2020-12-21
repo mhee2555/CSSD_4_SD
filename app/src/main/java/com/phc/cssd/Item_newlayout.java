@@ -207,6 +207,7 @@ public class Item_newlayout extends AppCompatActivity {
     private ArrayList<String> list_sp = new ArrayList<String>();
     CheckBox denger;
     String StatusDenger = "";
+    String RETURN_EM = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -230,6 +231,7 @@ public class Item_newlayout extends AppCompatActivity {
         // Argument
         Intent intent = getIntent();
         userid = intent.getStringExtra("userid");
+        RETURN_EM = intent.getStringExtra("RETURN_EM");
         B_ID = intent.getStringExtra("B_ID");
     }
 
@@ -1790,6 +1792,7 @@ public class Item_newlayout extends AppCompatActivity {
             i.putExtra("Item_Name", edt_item_name.getText().toString());
             i.putExtra("Item_Stock", txt_all_item_stock.getText().toString());
             i.putExtra("userid", userid);
+            i.putExtra("RETURN_EM", RETURN_EM);
             this.startActivity(i);
         }else{
             Toast.makeText(Item_newlayout.this, "ยังไม่ได้เลือกรายการ !!", Toast.LENGTH_SHORT).show();

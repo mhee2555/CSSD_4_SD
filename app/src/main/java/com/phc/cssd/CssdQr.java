@@ -128,6 +128,7 @@ public class CssdQr extends Activity {
                                     Intent intent = new Intent();
                                     intent.putExtra("RETURN_DATA", c.getString("data"));
                                     intent.putExtra("RETURN_VALUE", c.getString("value"));
+                                    intent.putExtra("RETURN_EM", qr);
                                     setResult(1112, intent);
                                     finish();
                                 }else {
