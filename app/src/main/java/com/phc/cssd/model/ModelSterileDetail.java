@@ -43,6 +43,7 @@ public class ModelSterileDetail implements Cloneable {
     String BasketCode;
     boolean IsBasket = false;
     String IsRemarkExpress;
+    String IsCheckList;
 
     private int index = -1;
 
@@ -168,7 +169,7 @@ public class ModelSterileDetail implements Cloneable {
         this.index = index;
     }
 
-    public ModelSterileDetail(String ID, String docNo, String itemStockID, String qty, String itemname, String itemcode, String usageCode, String age, String importID, String sterileDate, String expireDate, String isStatus, String occuranceQty, String depName, String depName2, String labelID, String usr_sterile, String usr_prepare, String usr_approve, String sterileRoundNumber, String machineName, String price, String time, String sterileProcessID, String qty_Print, String printer, String usageCount, String itemSetData, int index, String IsRemarkExpress) {
+    public ModelSterileDetail(String ID, String docNo, String itemStockID, String qty, String itemname, String itemcode, String usageCode, String age, String importID, String sterileDate, String expireDate, String isStatus, String occuranceQty, String depName, String depName2, String labelID, String usr_sterile, String usr_prepare, String usr_approve, String sterileRoundNumber, String machineName, String price, String time, String sterileProcessID, String qty_Print, String printer, String usageCount, String itemSetData, int index, String IsRemarkExpress, String IsCheckList) {
         this.ID = ID;
         DocNo = docNo;
         ItemStockID = itemStockID;
@@ -199,6 +200,7 @@ public class ModelSterileDetail implements Cloneable {
         ItemSetData = itemSetData;
         this.index = index;
         this.IsRemarkExpress = IsRemarkExpress;
+        this.IsCheckList = IsCheckList;
     }
 
     public ModelSterileDetail(String ID, String docNo, String itemStockID, String qty, String itemname, String itemcode, String usageCode, String age, String importID, String sterileDate, String expireDate, String isStatus, String occuranceQty, String depName, String depName2, String labelID, String usr_sterile, String usr_prepare, String usr_approve, String sterileRoundNumber, String machineName, String price, String time, String sterileProcessID, String qty_Print, String printer, String usageCount, String itemSetData, String BasketName, String  IsRemarkExpress,int index) {
@@ -269,6 +271,11 @@ public class ModelSterileDetail implements Cloneable {
         this.BasketCode = BasketCode;
         this.IsRemarkExpress = IsRemarkExpress;
     }
+
+
+    public String getIsCheckList() { return IsCheckList; }
+
+    public void setIsCheckList(String isCheckList) { IsCheckList = isCheckList; }
 
     public boolean getIsBasket() {
         return IsBasket;

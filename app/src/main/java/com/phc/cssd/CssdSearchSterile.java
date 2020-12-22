@@ -356,7 +356,8 @@ public class CssdSearchSterile extends AppCompatActivity {
                                     m.getUsageCount(),
                                     m.getItemSetData(),
                                     m.getIndex(),
-                                    m.getIsRemarkExpress()
+                                    m.getIsRemarkExpress(),
+                                    m.getIsCheckList()
                             )
                     );
                 }
@@ -667,7 +668,8 @@ public class CssdSearchSterile extends AppCompatActivity {
                                         data.get(i + 26),
                                         data.get(i + 27),
                                         index,
-                                        data.get(i + 28)
+                                        data.get(i + 28),
+                                        data.get(i + 29)
                                 )
                         );
                         index++;
@@ -714,7 +716,8 @@ public class CssdSearchSterile extends AppCompatActivity {
                     String UsageCount,
                     String ItemSetData,
                     int index,
-                    String IsRemarkExpress
+                    String IsRemarkExpress,
+                    String IsCheckList
             ){
                 return new ModelSterileDetail(
                         ID,
@@ -751,7 +754,8 @@ public class CssdSearchSterile extends AppCompatActivity {
                         UsageCount,
                         ItemSetData,
                         index,
-                        IsRemarkExpress
+                        IsRemarkExpress,
+                        IsCheckList
                 );
             }
 
@@ -797,7 +801,8 @@ public class CssdSearchSterile extends AppCompatActivity {
             String UsageCount,
             String ItemSetData,
             int index,
-            String IsRemarkExpress
+            String IsRemarkExpress,
+            String IsCheckList
     ){
         return new ModelSterileDetail(
                 ID,
@@ -834,7 +839,8 @@ public class CssdSearchSterile extends AppCompatActivity {
                 UsageCount,
                 ItemSetData,
                 index,
-                IsRemarkExpress
+                IsRemarkExpress,
+                IsCheckList
         );
     }
 
@@ -1323,7 +1329,7 @@ public class CssdSearchSterile extends AppCompatActivity {
         }
     }
 
-    private void callCheckListPaper(String WashID) {
+    public void callCheckListPaper(String WashID) {
         String url = Url.URL + "report/Report_checklist_sterile.php?WashID=" + WashID;
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
