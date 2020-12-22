@@ -532,7 +532,7 @@ public class CssdWash extends AppCompatActivity {
                                 return true;
                             }
 
-                            if(MAP_MODEL_SEND_STERILE_DETAIL_GROUP_BASKET!=null &&MODEL_SEND_STERILE_DETAIL!=null ) {
+                            if(MAP_MODEL_SEND_STERILE_DETAIL_GROUP_BASKET!=null) {
                                 Log.d("ttest_scan", "txt = " + txt);
                                 if (MAP_MODEL_SEND_STERILE_DETAIL_GROUP_BASKET.containsKey(txt) && (!txt.equals(""))) {//&&chk_mac()
 
@@ -548,14 +548,16 @@ public class CssdWash extends AppCompatActivity {
 
                                     importSendSterileDetail(UsageCode, MODEL_SUB.get(0).getI_program_id(), MODEL_SUB.get(0).getI_program());
                                     x = false;
-                                } else {
-                                    final List<ModelSendSterileDetail> MODEL = MODEL_SEND_STERILE_DETAIL;
-                                    for (int i = 1; i < MODEL.size(); i++) {
-                                        if (MODEL.get(i).getUsageCode().equals(txt) && (!txt.equals(""))) {
-                                            importSendSterileDetail(MODEL.get(i).getUsageCode(), MODEL.get(i).getI_program_id(), MODEL.get(i).getI_program());
-                                            x = false;
-                                            break;
-                                        }
+                                }
+                            }
+
+                            if(MODEL_SEND_STERILE_DETAIL!=null && x){
+                                final List<ModelSendSterileDetail> MODEL = MODEL_SEND_STERILE_DETAIL;
+                                for (int i = 1; i < MODEL.size(); i++) {
+                                    if (MODEL.get(i).getUsageCode().equals(txt) && (!txt.equals(""))) {
+                                        importSendSterileDetail(MODEL.get(i).getUsageCode(), MODEL.get(i).getI_program_id(), MODEL.get(i).getI_program());
+                                        x = false;
+                                        break;
                                     }
                                 }
                             }
