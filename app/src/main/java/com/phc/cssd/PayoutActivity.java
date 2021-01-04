@@ -266,6 +266,27 @@ public class PayoutActivity extends AppCompatActivity {
                     switch (keyCode) {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
+
+                            String itemCode = (eUsageCode.getText().toString().toUpperCase()).substring(0,5);
+                            if(textViewDocNo.getText().toString().equals("")){
+                                CreatePayoutDocument(userid,resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields1(),itemCode,"1");
+                                isnewDoc = true;
+                                bt_additem.setEnabled(false);
+                                bt_createdoc.setEnabled(false);
+                            }else{
+                                if(isnewDoc){
+                                    Insert_PayoutDetail(DocNo,itemCode,"1");
+                                }else{
+                                    if(mode_check){
+                                        payoutInSertSub( DocNo,resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields1(),eUsageCode.getText().toString().toUpperCase());
+                                    }else{
+                                        payoutIsCheckPay(DocNo,eUsageCode.getText().toString());
+                                    }
+                                    eUsageCode.setText("");
+                                    eUsageCode.requestFocus();
+                                    return true;
+                                }
+                            }
 //                            if(WithdrawMode==1){
 //                                String itemCode = (eUsageCode.getText().toString().toUpperCase()).substring(0,6);
 //                                if(textViewDocNo.getText().toString().equals("")){
@@ -297,34 +318,34 @@ public class PayoutActivity extends AppCompatActivity {
 //                                eUsageCode.requestFocus();
 //                                return true;
 //                            }
-                            if(CountScan == 0){
-                                int NumDep = Integer.parseInt(eUsageCode.getText().toString());
-                                spinner01.setSelection(NumDep);
-                                eUsageCode.setText("");
-                                CountScan = 1;
-                                hideKeyboard(PayoutActivity.this);
-                            }else {
-                                String itemCode = (eUsageCode.getText().toString().toUpperCase()).substring(0,5);
-                                if(textViewDocNo.getText().toString().equals("")){
-                                    CreatePayoutDocument(userid,resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields1(),itemCode,"1");
-                                    isnewDoc = true;
-                                    bt_additem.setEnabled(false);
-                                    bt_createdoc.setEnabled(false);
-                                }else{
-                                    if(isnewDoc){
-                                        Insert_PayoutDetail(DocNo,itemCode,"1");
-                                    }else{
-                                        if(mode_check){
-                                            payoutInSertSub( DocNo,resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields1(),eUsageCode.getText().toString().toUpperCase());
-                                        }else{
-                                            payoutIsCheckPay(DocNo,eUsageCode.getText().toString());
-                                        }
-                                        eUsageCode.setText("");
-                                        eUsageCode.requestFocus();
-                                        return true;
-                                    }
-                                }
-                            }
+//                            if(CountScan == 0){
+//                                int NumDep = Integer.parseInt(eUsageCode.getText().toString());
+//                                spinner01.setSelection(NumDep);
+//                                eUsageCode.setText("");
+//                                CountScan = 1;
+//                                hideKeyboard(PayoutActivity.this);
+//                            }else {
+//                                String itemCode = (eUsageCode.getText().toString().toUpperCase()).substring(0,5);
+//                                if(textViewDocNo.getText().toString().equals("")){
+//                                    CreatePayoutDocument(userid,resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields1(),itemCode,"1");
+//                                    isnewDoc = true;
+//                                    bt_additem.setEnabled(false);
+//                                    bt_createdoc.setEnabled(false);
+//                                }else{
+//                                    if(isnewDoc){
+//                                        Insert_PayoutDetail(DocNo,itemCode,"1");
+//                                    }else{
+//                                        if(mode_check){
+//                                            payoutInSertSub( DocNo,resultsDepartment.get( spinner01.getSelectedItemPosition() ).getFields1(),eUsageCode.getText().toString().toUpperCase());
+//                                        }else{
+//                                            payoutIsCheckPay(DocNo,eUsageCode.getText().toString());
+//                                        }
+//                                        eUsageCode.setText("");
+//                                        eUsageCode.requestFocus();
+//                                        return true;
+//                                    }
+//                                }
+//                            }
                         default:
                             break;
                     }

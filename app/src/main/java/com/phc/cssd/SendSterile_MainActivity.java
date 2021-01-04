@@ -1849,6 +1849,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         xST.setRemarkItemCode(c.getString("RemarkItemCode"));
                         xST.setRemarkDocNo(c.getString("DocNo"));
                         xST.setQtyItemDetail(c.getString("QtyItemDetail"));
+                        xST.setMutiPic_Remark(c.getString("MutiPic_Remark"));
                         pCus.add(xST);
                         Total = Integer.parseInt(c.getString("Qty"));
                         Total1 = Integer.parseInt(c.getString("QtyItemDetail"));

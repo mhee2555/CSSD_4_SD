@@ -68,7 +68,12 @@ public class pCustomer {
     private String basketID;
     private String basketname;
     private String RemarkSend;
+    private String MutiPic_Remark;
 
+
+    public String getMutiPic_Remark() { return MutiPic_Remark; }
+
+    public void setMutiPic_Remark(String mutiPic_Remark) { MutiPic_Remark = mutiPic_Remark; }
 
     public String getRemarkSend() { return RemarkSend; }
 

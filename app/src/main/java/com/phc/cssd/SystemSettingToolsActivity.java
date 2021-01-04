@@ -2632,22 +2632,28 @@ public class SystemSettingToolsActivity extends AppCompatActivity {
                     for(int i=0;i<rs.length();i++) {
                         JSONObject c = rs.getJSONObject(i);
                         text15_1.setText(c.getString("Name"));
-                        if (c.getString("IsUser").equals("0")){
-                            ch15_1.setChecked(false);
+                        if(c.getString("finish").equals("false")){
+                            ch15_1.setVisibility(View.GONE);
+                            ch15_2.setVisibility(View.GONE);
+                            ch15_3.setVisibility(View.GONE);
                         }else {
-                            ch15_1.setChecked(true);
-                        }
+                            if (c.getString("IsUser").equals("0")){
+                                ch15_1.setChecked(false);
+                            }else {
+                                ch15_1.setChecked(true);
+                            }
 
-                        if (c.getString("IsInCharg").equals("0")){
-                            ch15_2.setChecked(false);
-                        }else {
-                            ch15_2.setChecked(true);
-                        }
+                            if (c.getString("IsInCharg").equals("0")){
+                                ch15_2.setChecked(false);
+                            }else {
+                                ch15_2.setChecked(true);
+                            }
 
-                        if (c.getString("IsAdmin").equals("0")){
-                            ch15_3.setChecked(false);
-                        }else {
-                            ch15_3.setChecked(true);
+                            if (c.getString("IsAdmin").equals("0")){
+                                ch15_3.setChecked(false);
+                            }else {
+                                ch15_3.setChecked(true);
+                            }
                         }
                     }
                 } catch (JSONException e) {

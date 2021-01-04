@@ -3,6 +3,7 @@
     android:layout_width="400dp"
     android:layout_height="400dp"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
@@ -164,6 +165,16 @@
                     android:padding="5dp">
 
                 </ImageView>
+
+                <com.denzcoskun.imageslider.ImageSlider
+                    android:id="@+id/imageslide"
+                    app:placeholder="@drawable/camera"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:corner_radius="1"
+                    android:visibility="gone">
+
+                </com.denzcoskun.imageslider.ImageSlider>
 
             </RelativeLayout>
 
