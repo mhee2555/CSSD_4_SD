@@ -73,8 +73,9 @@
                         android:textColorLink="@color/colorSwitchBlue"
                         android:textSize="16sp"
                         android:textStyle="bold"
+                        android:layout_marginRight="1030dp"
                         android:theme="@style/SwitchTheme"
-                        android:visibility="gone"/>
+                        android:visibility="visible"/>
 
                 </LinearLayout>
 
@@ -271,14 +272,14 @@
                             android:id="@+id/bt_search_sendsteril1"
                             android:layout_width="match_parent"
                             android:layout_height="35dp"
+                            android:layout_marginLeft="130dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/bt_create03"
+                            android:gravity="center"
                             android:text="เพิ่มรายการ"
                             android:textColor="@color/colorWhite"
-                            android:gravity="center"
-                            android:textStyle="bold"
                             android:textSize="16dp"
-                            android:layout_marginLeft="140dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@drawable/bt_create03" />
+                            android:textStyle="bold"  />
 
                         <Button
                             android:id="@+id/bt_search_sendsterile"
@@ -876,7 +877,7 @@
                                     android:layout_height="30dp"
                                     android:layout_marginTop="10dp"
                                     android:layout_marginRight="15dp"
-                                    android:layout_marginLeft="230dp"
+                                    android:layout_marginLeft="245dp"
                                     android:background="@drawable/calendar01" />
 
                             </RelativeLayout>
@@ -1067,7 +1068,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_alignParentTop="true"
                             android:layout_marginLeft="170dp"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginBottom="5dp"
                             android:textColor="@android:color/black"
                             android:textSize="16sp"
@@ -1079,9 +1080,22 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:layout_alignParentTop="true"
-                            android:layout_marginLeft="250dp"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginLeft="270dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginBottom="5dp"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <CheckBox
+                            android:id="@+id/checkBoxall_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginLeft="195dp"
+                            android:layout_marginTop="35dp"
+                            android:text=" เลือกทั้งหมด"
                             android:textColor="@android:color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -1092,11 +1106,36 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:layout_alignParentTop="true"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="17dp"
+                            android:layout_marginLeft="7dp"
                             android:layout_marginBottom="5dp"
                             android:text="รายละเอียดเซ็ท"
                             android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView46_1_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:text="Wash"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/BasketExpire_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/textView46_1_1"
+                            android:layout_alignTop="@id/textView46_1_1"
+                            android:text=""
+                            android:textColor="@color/colorRedNew"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 

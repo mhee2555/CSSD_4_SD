@@ -236,7 +236,6 @@ public class SearchItem_SendSterile extends Activity {
                         JSONObject c = setRs.getJSONObject(i);
                         if(c.getString("bool").equals("true")) {
                             senditemandqty(getID,getQty,getdeptID);
-
                         }
                     }
                     ListView lv = (ListView) findViewById(R.id.list_searsendsterile);

@@ -168,7 +168,6 @@
 
                 <com.denzcoskun.imageslider.ImageSlider
                     android:id="@+id/imageslide"
-                    app:placeholder="@drawable/camera"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:corner_radius="1"

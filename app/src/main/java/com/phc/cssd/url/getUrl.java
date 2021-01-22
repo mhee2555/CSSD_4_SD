@@ -11,7 +11,7 @@ public class getUrl {
     // Version
     // ----------------------------------------------------
     public static final int appversion = 12;
-    public static final String VERSION = "4U" + "20201127 B";
+    public static final String VERSION = "4U" + "20210122 B";
     // ----------------------------------------------------
     // Var UR
     // ----------------------------------------------------
@@ -51,8 +51,11 @@ public class getUrl {
 //        return "http://poseintelligence.dyndns.biz:8181/cssd_siriraj_dev/";
 //        return "http://poseintelligence.dyndns.biz/cssd_siriraj_new/";
 //        return "http://poseintelligence.dyndns.biz/cssd_vejthani_test/";
-        return "http://poseintelligence.dyndns.biz:8181/cssd_siriraj_new_server/";
 //        return "http://poseintelligence.dyndns.biz:8181/cssd_siriraj_dev/";
+
+        return "http://poseintelligence.dyndns.biz:8181/cssd_siriraj_new_server/";
+        //return "http://poseintelligence.dyndns.biz:8181/cssd_siriraj_new_server_siriraj/";
+        //return "http://poseintelligence.dyndns.biz/cssd_siriraj_new/";
     }
     // ----------------------------------------------------
     // Get Project Setting

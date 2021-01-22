@@ -181,7 +181,7 @@ public class SendSterile_EditDetailAdapter extends ArrayAdapter {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                ( (SendSterile_MainActivity)aActivity ).getlistdetail_l2(listData.get(position).getUsageCode());
+                ( (SendSterile_MainActivity)aActivity ).getlistdetail_l2(listData.get(position).getUsageCode(),listData.get(position).getDocno());
 
             }
         });

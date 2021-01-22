@@ -1,7 +1,6 @@
 package com.phc.cssd.util
 
 import android.app.DownloadManager
-import android.arch.core.BuildConfig
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -68,7 +67,7 @@ class DownloadController(private val context: Context, private val url: String) 
                 intent: Intent
             ) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    Log.d("ttestoy", "contentUri bef : "+context+"--"+ BuildConfig.APPLICATION_ID + PROVIDER_PATH+"--"+File(destination))
+                    //Log.d("ttestoy", "contentUri bef : "+context+"--"+ BuildConfig.APPLICATION_ID + PROVIDER_PATH+"--"+File(destination))
                     val contentUri = FileProvider.getUriForFile(
                         context,
                             "com.phc.cssd" + PROVIDER_PATH,
