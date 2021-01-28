@@ -53,9 +53,9 @@ public class getUrl {
 //        return "http://poseintelligence.dyndns.biz/cssd_vejthani_test/";
 //        return "http://poseintelligence.dyndns.biz:8181/cssd_siriraj_dev/";
 
-        return "http://poseintelligence.dyndns.biz:8181/cssd_siriraj_new_server/";
+        //return "http://poseintelligence.dyndns.biz:8181/cssd_siriraj_new_server/";
         //return "http://poseintelligence.dyndns.biz:8181/cssd_siriraj_new_server_siriraj/";
-        //return "http://poseintelligence.dyndns.biz/cssd_siriraj_new/";
+        return "http://poseintelligence.dyndns.biz/cssd_siriraj_new_server/";
     }
     // ----------------------------------------------------
     // Get Project Setting

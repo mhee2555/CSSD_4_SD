@@ -17,6 +17,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,16 +26,25 @@ import android.widget.Toast;
 import com.phc.core.connect.HTTPConnect;
 import com.phc.core.data.AsonData;
 import com.phc.core.string.Cons;
+import com.phc.cssd.config.ConfigProgram;
 import com.phc.cssd.data.Master;
 import com.phc.cssd.url.Url;
 import com.phc.cssd.url.getUrl;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrInterface;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Menu extends AppCompatActivity {
+
+    String TAG_RESULTS = "result";
+    JSONArray setRs = null;
+    getUrl iFt = new getUrl();
 
     private HTTPConnect httpConnect = new HTTPConnect();
     final Handler h = new Handler();
@@ -48,6 +58,7 @@ public class Menu extends AppCompatActivity {
     private String IsAdmin = "";
     private String IsInCharg = "";
     private String IsUser = "";
+    private String chkwashdep = "";
 
     private String IsAdmin_Log = "";
     private String IsInCharg_Log = "";
@@ -72,8 +83,15 @@ public class Menu extends AppCompatActivity {
         getSupportActionBar().hide();
         byWidget();
         byIntent();
+        get_config();
         stockDaily();
         txt_version.setText(getUrl.PROJECT + " " + getUrl.VERSION);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        get_config();
     }
 
     public void onDestroy() {
@@ -100,6 +118,7 @@ public class Menu extends AppCompatActivity {
         IsAdmin = intent.getStringExtra("IsAdmin");
         IsInCharg = intent.getStringExtra("IsInCharg");
         IsUser = intent.getStringExtra("IsUser");
+        chkwashdep = intent.getStringExtra("chkwashdep");
         if (IsUser.equals("1") && IsUser_Log.equals("1")) {
             img_edit_sterile.setVisibility(View.VISIBLE);
         } else if (IsInCharg.equals("1") && IsInCharg_Log.equals("1")) {
@@ -373,6 +392,7 @@ public class Menu extends AppCompatActivity {
         intent.putExtra("IsUser_Log", IsUser_Log);
         intent.putExtra("B_ID", B_ID);
         intent.putExtra("EmpCode", EmpCode);
+        intent.putExtra("chkwashdep", chkwashdep);
         startActivity(intent);
     }
 
@@ -482,6 +502,41 @@ public class Menu extends AppCompatActivity {
 
         Daily obj = new Daily();
         obj.execute();
+    }
+
+    public void get_config() {
+        class get_config extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                try {
+                    JSONObject jsonObj = new JSONObject(s);
+                    setRs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for (int i = 0; i < setRs.length(); i++) {
+
+                        JSONObject c = setRs.getJSONObject(i);
+                        chkwashdep = c.getString("chkwashdep");
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String, String>();
+                String result = httpConnect.sendPostRequest(Url.URL + "get_config.php", data);
+                Log.d("tog_get_config",result);
+                return result;
+            }
+        }
+
+        get_config ru = new get_config();
+
+        ru.execute();
     }
 
 }

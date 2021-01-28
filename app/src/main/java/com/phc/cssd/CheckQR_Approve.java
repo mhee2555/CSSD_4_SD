@@ -37,6 +37,7 @@ public class CheckQR_Approve extends Activity {
     String DocNo;
     String xSel;
     String MacNo;
+    String Usercode;
     String check="false";
 
     Intent intent = new Intent();
@@ -114,6 +115,7 @@ public class CheckQR_Approve extends Activity {
         intent.putExtra("RETURN_xsel",xSel);
         intent.putExtra("RETURN_DocNo",DocNo);
         intent.putExtra("RETURN_MacNo",MacNo);
+        intent.putExtra("RETURN_User",Usercode);
         super.finish();
     }
 
@@ -127,7 +129,7 @@ public class CheckQR_Approve extends Activity {
         }, 2000);
     }
 
-    public void Checkuser(String qr_code,String docno,String xsel) {
+    public void Checkuser(final String qr_code, String docno, String xsel) {
         class Checkuser extends AsyncTask<String, Void, String> {
             @Override
             protected void onPreExecute() {
@@ -143,6 +145,7 @@ public class CheckQR_Approve extends Activity {
                         JSONObject c = rs.getJSONObject(i);
                         if(c.getString("check").equals("true")){
                             check = c.getString("check");
+                            Usercode = qr_code;
                             finish();
                         }else{
                             AlertDialog.Builder builder = new AlertDialog.Builder(CheckQR_Approve.this);

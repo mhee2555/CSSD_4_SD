@@ -128,7 +128,11 @@ public class SearchSterileDetailAdapter extends ArrayAdapter<ModelSterileDetail>
         txt_no.setText((DATA_MODEL.get(position).getIndex()+1) + ".");
         txt_barcode.setText(DATA_MODEL.get(position).getItemcode());
         txt_item_code.setText(DATA_MODEL.get(position).getUsageCode());
-        txt_sd.setText(DATA_MODEL.get(position).getID());
+        if(DATA_MODEL.get(position).getID().equals("null") || DATA_MODEL.get(position).getID().equals("") || DATA_MODEL.get(position).getID().equals("0") || DATA_MODEL.get(position).getID().equals("-1")){
+            txt_sd.setText("-");
+        }else {
+            txt_sd.setText(DATA_MODEL.get(position).getID());
+        }
         txt_item_name.setText(DATA_MODEL.get(position).getItemname());
         txt_qty.setText(DATA_MODEL.get(position).getQty());
 

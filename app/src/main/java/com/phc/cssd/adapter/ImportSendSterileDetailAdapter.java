@@ -3,6 +3,7 @@ package com.phc.cssd.adapter;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,8 +80,9 @@ public class ImportSendSterileDetailAdapter extends ArrayAdapter<ModelSendSteril
         final ListView list_sub = (ListView) view.findViewById(R.id.basket_detail);
 
         txt_item_code.setText( DATA_MODEL.get(position).getUsageCode());
-//        txt_no.setText(  DATA_MODEL.get(position).getIsWashDept() + (DATA_MODEL.get(position).getIndex()+1) + ".");
-        txt_no.setText(position+1+"");
+        Log.d("KCHKCHD",DATA_MODEL.get(position).getIsWashDept());
+        txt_no.setText(DATA_MODEL.get(position).getIsWashDept() + (DATA_MODEL.get(position).getIndex()+1) + ".");
+
         txt_item_program_id.setText( DATA_MODEL.get(position).getI_program_id());
         txt_item_name.setText(DATA_MODEL.get(position).getI_name());
         txt_qty.setText(DATA_MODEL.get(position).getI_qty());

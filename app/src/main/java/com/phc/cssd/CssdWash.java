@@ -77,6 +77,7 @@ public class CssdWash extends AppCompatActivity {
     String condition5 = "";
     String config = "";
     String user_name = "";
+    String chkwashdep = "";
     int cnt = 0;
     Boolean WASH = true;
     private TextView occupancy_rate;
@@ -312,7 +313,6 @@ public class CssdWash extends AppCompatActivity {
 
         //generateMachine();
 
-
         edit_wash_type.requestFocus();
     }
 
@@ -375,6 +375,7 @@ public class CssdWash extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         displayImportSendSterile("0");
+        get_config();
     }
 
     private void SetScanCode(){
@@ -422,6 +423,7 @@ public class CssdWash extends AppCompatActivity {
         IsAdmin = intent.getBooleanExtra("IsAdmin", false);
         B_ID = intent.getStringExtra("B_ID");
         EmpCode = intent.getStringExtra("EmpCode");
+        chkwashdep = intent.getStringExtra("chkwashdep");
     }
 
     private void byConfig(){
@@ -4212,6 +4214,7 @@ public class CssdWash extends AppCompatActivity {
         i.putExtra("user_name", user_name);
         i.putExtra("IsAdmin", IsAdmin);
         i.putExtra("EmpCode", EmpCode);
+        i.putExtra("chkwashdep", chkwashdep);
         Log.d("FKJDHJKDH",EmpCode+"");
         i.putExtra("B_ID", B_ID);
         startActivity(i);
@@ -6659,6 +6662,41 @@ public class CssdWash extends AppCompatActivity {
 
         onCheck_wasg_type obj = new onCheck_wasg_type();
         obj.execute();
+    }
+
+    public void get_config() {
+        class get_config extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                try {
+                    JSONObject jsonObj = new JSONObject(s);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for (int i = 0; i < rs.length(); i++) {
+
+                        JSONObject c = rs.getJSONObject(i);
+                        chkwashdep = c.getString("chkwashdep");
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String, String>();
+                String result = httpConnect.sendPostRequest(Url.URL + "get_config.php", data);
+                Log.d("tog_get_config",result);
+                return result;
+            }
+        }
+
+        get_config ru = new get_config();
+
+        ru.execute();
     }
 }
 

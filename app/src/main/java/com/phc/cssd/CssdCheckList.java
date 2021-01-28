@@ -342,6 +342,7 @@ public class CssdCheckList extends Activity {
 
         checkbox = ( ImageView ) findViewById(R.id.checkbox);
         un_checkbox = ( ImageView ) findViewById(R.id.un_checkbox);
+        un_checkbox.setVisibility(View.GONE);
         checkbox.setVisibility(View.GONE);
         // west.setVisibility(Is_ById ? View.GONE : View.VISIBLE);
         west.setVisibility(View.GONE);
@@ -516,7 +517,7 @@ public class CssdCheckList extends Activity {
             @Override
             public void onClick(View view) {
                 checkbox.setVisibility(View.GONE);
-                un_checkbox.setVisibility(View.VISIBLE);
+                //un_checkbox.setVisibility(View.VISIBLE);
                 try {
                     for (int i = 0; i < MODEL_CHECK_LIST.size(); i++) {
                         MODEL_CHECK_LIST.get(i).setCheck(false);
@@ -535,8 +536,8 @@ public class CssdCheckList extends Activity {
         un_checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkbox.setVisibility(View.VISIBLE);
-                un_checkbox.setVisibility(View.GONE);
+                //checkbox.setVisibility(View.VISIBLE);
+                //un_checkbox.setVisibility(View.GONE);
                 try {
                     for (int i = 0; i < MODEL_CHECK_LIST.size(); i++) {
                         MODEL_CHECK_LIST.get(i).setCheck(true);
@@ -642,7 +643,7 @@ public class CssdCheckList extends Activity {
         txt_item_name.setText("ชื่อเซ็ท : -");
         txt_usagecode_scan.setText("");
         txt_item_detail.setText("0 รายการ / 0 ชิ้น");
-        un_checkbox.setVisibility(View.VISIBLE);
+        //un_checkbox.setVisibility(View.VISIBLE);
         list_check.setAdapter(null);
         ch1_un.setVisibility(View.GONE);
         ch2_un.setVisibility(View.GONE);
@@ -1338,7 +1339,7 @@ public class CssdCheckList extends Activity {
     }
 
     private void focus(){
-        un_checkbox.setVisibility(View.VISIBLE);
+        //un_checkbox.setVisibility(View.VISIBLE);
         final Handler h = new Handler();
         h.postDelayed(new Runnable() {
             @Override

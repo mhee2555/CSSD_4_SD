@@ -121,6 +121,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     String DelRowId_Text;
     String DelDocNo;
     String RowId;
+    String chkwashdep;
     String txt_usr_send_detail = "";
     public ArrayList<String> DelRowId = new ArrayList<String>();
     public ArrayList<String> RowId_ID = new ArrayList<String>();
@@ -244,6 +245,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
 
     TextView txt_set_list;
 
+    RelativeLayout R1_Send,R2_Send;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -255,6 +258,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         //slidr = Slidr.attach(this);
         SetScanCode();
+        get_config();
         byIntent();
         initialize();
         SelectBasket();
@@ -281,9 +285,6 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         if(!ConfigProgram.wash_tag){
             TextView textViewHead = findViewById(R.id.textViewHead);
             textViewHead.setVisibility(View.VISIBLE);
-
-            Switch bt_sw = findViewById(R.id.bt_sw);
-            bt_sw.setVisibility(View.VISIBLE);
 
             LinearLayout Lin_Scan_Basket = findViewById(R.id.Lin_Scan_Basket);
             Lin_Scan_Basket.setVisibility(View.GONE);
@@ -343,6 +344,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         getuserCode();
+        get_config();
     }
 
     public void byIntent() {
@@ -356,6 +358,21 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         EmpCode = intent.getStringExtra("EmpCode");
         userid = intent.getStringExtra("userid");
         user_name = intent.getStringExtra("user_name");
+        chkwashdep = intent.getStringExtra("chkwashdep");
+    }
+
+    public void Clear_Switch1(){
+        textView46.setText("รายละเอียดเซ็ท");
+        textView46_1.setText("");
+        BasketExpire.setText("");
+        checkBoxall.setVisibility(View.GONE);
+    }
+
+    public void Clear_Switch2(){
+        txt_setdetail_l2.setText("รายละเอียดเซ็ท");
+        textView46_1_1.setText("");
+        BasketExpire_1.setText("");
+        checkBoxall_1.setVisibility(View.GONE);
     }
 
     public void SelectBasket() {
@@ -448,6 +465,15 @@ public class SendSterile_MainActivity extends AppCompatActivity {
 
     public void initialize() {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        bt_sw = findViewById(R.id.bt_sw);
+        if (chkwashdep.equals("1")){
+            bt_sw.setVisibility(View.VISIBLE);
+        }else {
+            bt_sw.setVisibility(View.GONE);
+        }
+        R1_Send = findViewById(R.id.R1_Send);
+        R2_Send = findViewById(R.id.R2_Send);
+
         checkBoxall = findViewById(R.id.checkBoxall);
         checkBoxall_1 = findViewById(R.id.checkBoxall_1);
         checkBoxall.setChecked(true);
@@ -729,6 +755,29 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             }
         });
 
+        list_set_detail_l2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                Log.d("ttest_s_to", "OnItem = "+Count_left);
+
+                if(Count_left==1){
+
+                    Log.d("ttest_s_to", "OnItem = "+Count_left);
+
+                    Object o = list_set_detail_l2.getItemAtPosition(position);
+                    pCustomer newsData = ( pCustomer ) o;
+                    String RemarkAdmin = newsData.getRemarkAdmin();
+                    String Itemname = newsData.getItemname();
+                    String Xqty = newsData.getXqty();
+                    String QtyItemDetail = newsData.getQtyItemDetail();
+                    if (!RemarkAdmin.equals("0")){
+                        OpenDialog(Itemname,"1",Xqty,QtyItemDetail);
+                    }
+                }
+
+            }
+        });
+
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
@@ -934,7 +983,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                                         if (DelAlldata.get(key) == "0")
                                             DelRowId.add(key);
                                     }
-                                    DeleteDetail_l2(DelDocNo, String.valueOf(DelRowId));
+                                    DeleteDetail_l3(DelDocNo, String.valueOf(DelRowId));
 //                                    DelRowId.clear();
 //                                    DelAlldata.clear();
                                 }
@@ -954,44 +1003,44 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             }
         });
 
-//        bin_all_1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int cnt=0;
-//                for (String key : DelAlldata.keySet()) {
-//                    if (DelAlldata.get(key) == "0")
-//                        cnt++;
-//                }
-//                if (cnt != 0) {
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
-//                    builder.setCancelable(true);
-//                    builder.setTitle("ยืนยัน");
-//                    builder.setMessage("ต้องการลบรายการหรือไม่");
-//                    builder.setPositiveButton("ตกลง",
-//                            new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    for (String key : DelAlldata.keySet()) {
-//                                        if (DelAlldata.get(key) == "0")
-//                                            DelRowId.add(key);
-//                                    }
-//                                    DeleteDetail_l2(DelDocNo, String.valueOf(DelRowId));
-//                                    DelRowId.clear();
-//                                    DelAlldata.clear();
-//                                }
-//                            });
-//                    builder.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                        }
-//                    });
-//                    AlertDialog dialog = builder.create();
-//                    dialog.show();
-//                }else {
-//                    Toast.makeText(SendSterile_MainActivity.this, "กรุณาเลือกอย่างน้อย 1 รายการ", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
+        bin_all_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int cnt=0;
+                for (String key : DelAlldata.keySet()) {
+                    if (DelAlldata.get(key) == "0")
+                        cnt++;
+                }
+                if (cnt != 0) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+                    builder.setCancelable(true);
+                    builder.setTitle("ยืนยัน");
+                    builder.setMessage("ต้องการลบรายการหรือไม่");
+                    builder.setPositiveButton("ตกลง",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    for (String key : DelAlldata.keySet()) {
+                                        if (DelAlldata.get(key) == "0")
+                                            DelRowId.add(key);
+                                    }
+                                    DeleteDetail_l2(DelDocNo, String.valueOf(DelRowId));
+                                    DelRowId.clear();
+                                    DelAlldata.clear();
+                                }
+                            });
+                    builder.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }else {
+                    Toast.makeText(SendSterile_MainActivity.this, "กรุณาเลือกอย่างน้อย 1 รายการ", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         getdept_spinner();
         updateDate();
@@ -1049,6 +1098,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
                 getlistdata(deptsp_id, edittext.getText().toString(), searchbox.getText().toString());
+                getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
                 cleardoc();
             }
         });
@@ -1062,6 +1112,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
                 getlistdata(deptsp_id, edittext.getText().toString(), searchbox.getText().toString());
+                getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
                 cleardoc();
             }
         });
@@ -1143,6 +1194,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                 DelAlldata.clear();
                 txt_usr_receive.requestFocus();
                 Clear_wash_tag();
+                getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
+                getlistdata(dept_search_l2, date_l2.getText().toString(), "");
             }
         });
 
@@ -1294,6 +1347,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (!etxt_docno.getText().toString().equals("")) {
                     if (bt_sw.isChecked()) {
+                        from_slie(from_slie_left,"1");
                         L1.setVisibility(View.GONE);
                         L2.setVisibility(View.VISIBLE);
                         txt_menu_set.setVisibility(View.VISIBLE);
@@ -1317,6 +1371,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
                         switch_layout = true;
                     } else {
+                        from_slie(from_slie_left,"1");
                         L1.setVisibility(View.VISIBLE);
                         L2.setVisibility(View.GONE);
                         txt_menu_set.setVisibility(View.VISIBLE);
@@ -1349,6 +1404,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     del_multi_1.setChecked(false);
                     del_multi.setChecked(false);
                     if (bt_sw.isChecked()) {
+                        from_slie(from_slie_left,"1");
                         L1.setVisibility(View.GONE);
                         L2.setVisibility(View.VISIBLE);
                         txt_menu_set.setVisibility(View.VISIBLE);
@@ -1372,6 +1428,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                         getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
                         switch_layout = true;
                     } else {
+                        from_slie(from_slie_left,"1");
                         L1.setVisibility(View.VISIBLE);
                         L2.setVisibility(View.GONE);
                         txt_menu_set.setVisibility(View.VISIBLE);
@@ -1767,7 +1824,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         });
     }
 
-    public void from_slie(Animation from_slie){
+    public void from_slie(Animation from_slie ,String Status){
         Log.d("ttest_s_to","s_to_left");
         Log.d("ttest_s_to","Count_left = "+Count_left);
 
@@ -1775,10 +1832,27 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             return;
         }
 
+        if (Status.equals("1")){
+            Count_left = 0;
+            item_in_basket.clear();
+            pCus.clear();
+            textView48.setText("");
+            txt_setdetail_l4.setText("");
+            textView47.setText("");
+            txt_setdetail_l3.setText("");
+
+            textView46_1.setText("Wash Tag");
+            textView46_1_1.setText("Wash Tag");
+        }
+
         if(Count_left==0){
-            getlistdetailqty(Usagecode);
-            getlistdetail(Usagecode,DocNo);
-            UsageCode(Usagecode,DepID,DocNo);
+            if (!Status.equals("1")){
+                getlistdetailqty(Usagecode);
+                getlistdetail(Usagecode,DocNo);
+                UsageCode(Usagecode,DepID,DocNo);
+            }
+
+            list_set_detail_l2.setVisibility(View.VISIBLE);
 
             textView46_1.setVisibility(View.GONE);
             txt_setdetail_l2.setVisibility(View.GONE);
@@ -1843,19 +1917,19 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             txt_setdetail_l3.setVisibility(View.GONE);
 
             list_docno_detail.setAdapter(new Adapter_Washtag_SS(SendSterile_MainActivity.this,item_in_basket));
-            list_set_detail_l2.setAdapter(new Adapter_Washtag_SS(SendSterile_MainActivity.this,item_in_basket));
-
+            //list_set_detail_l2.setAdapter(new Adapter_Washtag_SS(SendSterile_MainActivity.this,item_in_basket));
+            list_set_detail_l2.setVisibility(View.GONE);
             Count_left = 0;
         }
     }
 
 
     public void s_to_left(){
-        from_slie(from_slie_left);
+        from_slie(from_slie_left,"0");
 
     }
     public void s_to_right(){
-        from_slie(from_slie_right);
+        from_slie(from_slie_right,"0");
 
     }
 
@@ -2545,8 +2619,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     ShowDetailScan(txtDocno);
                     ShowUserSend();
 
-                    getlistdata(deptsp_id, edittext.getText().toString(), "");
-                    getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
+//                    getlistdata(deptsp_id, edittext.getText().toString(), "");
+//                    getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
                     cleardoc();
                     etxt_docno.setText(txtDocno);
                 } catch (JSONException e) {
@@ -2571,7 +2645,7 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         ru.execute(DocNo, RowID);
     }
 
-    public void DeleteDetail_l2(final String DocNo, String RowID) {
+    public void DeleteDetail_l2(final String DocNo,final String RowID) {
         class DeleteDetail_l2 extends AsyncTask<String, Void, String> {
             @Override
             protected void onPreExecute() {
@@ -2581,75 +2655,37 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-//                try {
-////                    JSONObject jsonObj = new JSONObject(s);
-////                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
-////                    final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
-////                    String bo = "";
-////                    String txtDocno = "";
-////                    for (int i = 0; i < setRs.length(); i++) {
-////                        JSONObject c = setRs.getJSONObject(i);
-////                        pCustomer xST = new pCustomer();
-////                        bo = c.getString("flag");
-////                        xST.setUsageCode(c.getString("UsageCode"));
-////                        xST.setItemcode(c.getString("ItemCode"));
-////                        xST.setItemname(c.getString("itemname"));
-////                        xST.setXqty(c.getString("Qty"));
-////                        xST.setIsSterile(c.getString("IsSterile"));
-////                        xST.setXremark(c.getString("Remark"));
-////                        xST.setDocno(c.getString("DocNo"));
-////                        txtDocno = c.getString("DocNo");
-////                        pCus.add(xST);
-////                    }
-//
-////                    getlistcreate(txtDocno, ED_Dept);
-////                    getlistcreate_l2(txtDocno);
-////                    getlistdata(deptsp_id, edittext.getText().toString(), "");
-////                    getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
-////                    cleardoc();
-////                    etxt_docno.setText(txtDocno);
-////                    DelRowId.clear();
-////                    DelAlldata.clear();
-//
-//                    for (String key : DelAlldata.keySet()) {
-//                        if (DelAlldata.get(key) == "0"){
-//
-//                            basket_detail_delete(key);
-//                            Log.d("BANKUTU1",key+"");
-//                        }
-//                    }
-//
-//                    getlistcreate(DocNo, ED_Dept);
-//                    getlistcreate_l2(DocNo);
-//                    ShowDetailScan(DocNo);
-//                    ShowUserSend();
-////                    getlistdata(deptsp_id, edittext.getText().toString(), "");
-////                    getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
-//                    cleardoc();
-//                    etxt_docno.setText(DocNo);
-//                    DelRowId.clear();
-//                    DelAlldata.clear();
-//                } catch (JSONException e) {
-//                }
-
-                for (String key : DelAlldata.keySet()) {
-                    if (DelAlldata.get(key) == "0"){
-
-                        basket_detail_delete(key);
-                        Log.d("BANKUTU1",key+"");
+                try {
+                    JSONObject jsonObj = new JSONObject(s);
+                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
+//                    final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
+                    String bo = "";
+                    String txtDocno = "";
+                    for (int i = 0; i < setRs.length(); i++) {
+                        JSONObject c = setRs.getJSONObject(i);
+//                        pCustomer xST = new pCustomer();
+//                        bo = c.getString("flag");
+//                        xST.setUsageCode(c.getString("UsageCode"));
+//                        xST.setItemcode(c.getString("ItemCode"));
+//                        xST.setItemname(c.getString("itemname"));
+//                        xST.setXqty(c.getString("Qty"));
+//                        xST.setIsSterile(c.getString("IsSterile"));
+//                        xST.setXremark(c.getString("Remark"));
+//                        xST.setDocno(c.getString("DocNo"));
+                        txtDocno = c.getString("DocNo");
+//                        pCus.add(xST);
                     }
-                }
+                    basket_detail_delete(RowID);
 
-                getlistcreate(DocNo, ED_Dept);
-                getlistcreate_l2(DocNo);
-                ShowDetailScan(DocNo);
-                ShowUserSend();
-//                    getlistdata(deptsp_id, edittext.getText().toString(), "");
-//                    getlistdata_l2(dept_search_l2, date_l2.getText().toString(), "");
-                cleardoc();
-                etxt_docno.setText(DocNo);
-                DelRowId.clear();
-                DelAlldata.clear();
+                    ShowDetailScan(txtDocno);
+                    ShowUserSend();
+                    ShowDetail();
+
+                    getlistcreate_l2(DocNo);
+                    //cleardoc();
+                    etxt_docno.setText(txtDocno);
+                } catch (JSONException e) {
+                }
             }
 
             //class connect php RegisterUserClass important !!!!!!!
@@ -2668,6 +2704,68 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             }
         }
         DeleteDetail_l2 ru = new DeleteDetail_l2();
+        ru.execute(DocNo,RowID);
+    }
+
+    public void DeleteDetail_l3(final String DocNo,final String RowID) {
+        class DeleteDetail_l3 extends AsyncTask<String, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                try {
+                    JSONObject jsonObj = new JSONObject(s);
+                    JSONArray setRs = jsonObj.getJSONArray(iFt.getTAG_RESULTS());
+//                    final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
+                    String bo = "";
+                    String txtDocno = "";
+                    for (int i = 0; i < setRs.length(); i++) {
+                        JSONObject c = setRs.getJSONObject(i);
+//                        pCustomer xST = new pCustomer();
+//                        bo = c.getString("flag");
+//                        xST.setUsageCode(c.getString("UsageCode"));
+//                        xST.setItemcode(c.getString("ItemCode"));
+//                        xST.setItemname(c.getString("itemname"));
+//                        xST.setXqty(c.getString("Qty"));
+//                        xST.setIsSterile(c.getString("IsSterile"));
+//                        xST.setXremark(c.getString("Remark"));
+//                        xST.setDocno(c.getString("DocNo"));
+                        txtDocno = c.getString("DocNo");
+//                        pCus.add(xST);
+                    }
+                    basket_detail_delete(RowID);
+
+                    ShowDetailScan(txtDocno);
+                    ShowUserSend();
+                    ShowDetail();
+
+                    getlistcreate(etxt_docno.getText().toString().trim(), ED_Dept);
+                    //cleardoc();
+                    etxt_docno.setText(DocNo);
+                } catch (JSONException e) {
+                }
+            }
+
+            //class connect php RegisterUserClass important !!!!!!!
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String, String>();
+                data.put("DocNo",params[0]);
+                data.put("RowID",params[1]);
+                data.put("B_ID",B_ID);
+                String result = ruc.sendPostRequest(Url.URL + "sendsterile/DeleteDetail_sendsterile_all.php", data);
+                Log.d("BANKUTU1",data+"");
+                Log.d("BANKUTU1",result);
+                Log.d("BANKUTU1", Url.URL + "sendsterile/DeleteDetail_sendsterile_all.php");
+
+                return result;
+            }
+        }
+        DeleteDetail_l3 ru = new DeleteDetail_l3();
         ru.execute(DocNo,RowID);
     }
 
@@ -2796,6 +2894,12 @@ public class SendSterile_MainActivity extends AppCompatActivity {
         final ArrayList<pCustomer> pCus = new ArrayList<pCustomer>();
         xedit_detail.setAdapter(new SendSterile_EditDetailAdapter(SendSterile_MainActivity.this, pCus,IsAdmin));
         list_docno_detail.setAdapter(new SendSterile_DocListDetailAdapter(SendSterile_MainActivity.this, pCus, "0"));
+        list_createdetail_l2.setAdapter(null);
+        list_set_detail_l2.setAdapter(null);
+        textView48.setText("" + "0" + " ชิ้น" + " ]");
+        txt_setdetail_l4.setText("" + "0" + " ชิ้น" + " ]");
+        textView47.setText("[ " +"0"+ "  รายการ  /");
+        txt_setdetail_l3.setText("[ " +"0"+ "  รายการ  /");
     }
 
 
@@ -3568,6 +3672,8 @@ public class SendSterile_MainActivity extends AppCompatActivity {
                     getlistdetail(usagecode,DocNoSend);
                     getlistdetail_l2(usagecode,DocNoSend);
                     getlistdetailqty(usagecode);
+                    getlistcreate(etxt_docno.getText().toString().trim(), ED_Dept);
+                    getlistcreate_l2(etxt_docno.getText().toString().trim());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -5072,5 +5178,40 @@ public class SendSterile_MainActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    public void get_config() {
+        class get_config extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                try {
+                    JSONObject jsonObj = new JSONObject(s);
+                    rs = jsonObj.getJSONArray(TAG_RESULTS);
+                    for (int i = 0; i < rs.length(); i++) {
+
+                        JSONObject c = rs.getJSONObject(i);
+                        chkwashdep = c.getString("chkwashdep");
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                HashMap<String, String> data = new HashMap<String, String>();
+                String result = httpConnect.sendPostRequest(Url.URL + "get_config.php", data);
+                Log.d("tog_get_config",result);
+                return result;
+            }
+        }
+
+        get_config ru = new get_config();
+
+        ru.execute();
     }
 }

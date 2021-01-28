@@ -289,6 +289,7 @@ public class CssdSterile extends AppCompatActivity {
     private EditText edt_basket_code;
 
     ScanCode keyScanCode;
+    String Usercode;
 
     public void onDestroy() {
         super.onDestroy();
@@ -2580,6 +2581,7 @@ public class CssdSterile extends AppCompatActivity {
 
     // =========================================================================================
     // Form
+
     private void displaySterile(
             String DocNo,
             String DocDate,
@@ -2601,7 +2603,10 @@ public class CssdSterile extends AppCompatActivity {
             String Usr_beforeapprove
     ) {
 
-        Log.d("tog_displaySterile",TestProgramID+"---"+TestProgramName);
+        Log.d("tog_displaySterile",Usr_beforeapprove);
+        Log.d("tog_displaySterile",Usr_prepare);
+        Log.d("tog_displaySterile",Usr_approve);
+        Log.d("tog_displaySterile",Usr_sterile);
 
         // Display Sterile
         txt_doc_no.setText(DocNo);
@@ -2615,7 +2620,7 @@ public class CssdSterile extends AppCompatActivity {
         txt_usr_prepare.setText(Usr_prepare);
         txt_usr_sterile.setText(Usr_sterile);
         txt_usr_approve.setText(Usr_approve);
-        txt_usr_beforeapprove.setText(TestProgramName);
+        txt_usr_beforeapprove.setText(Usr_approve);
         txt_test_program.setText(TestProgramName);
 
         ProgramTest = TestProgramName;
@@ -3718,6 +3723,7 @@ public class CssdSterile extends AppCompatActivity {
                 String xsel= data.getStringExtra("RETURN_xsel");
                 String xDocNo= data.getStringExtra("RETURN_DocNo");
                 String MacNo= data.getStringExtra("RETURN_MacNo");
+                Usercode = data.getStringExtra("RETURN_User");
 
                 if(xData.equals("true")){
                     if(xsel.equals("s1")&&!MacNo.equals("bowiedick")){
@@ -4495,6 +4501,7 @@ public class CssdSterile extends AppCompatActivity {
                 HashMap<String, String> data = new HashMap<String,String>();
 
                 data.put("p_docno", p_doc_no);
+                data.put("Usercode", Usercode);
 
                 if(B_ID != null){
                     data.put("p_bid", B_ID);
@@ -5661,6 +5668,7 @@ public class CssdSterile extends AppCompatActivity {
                 }
 
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_create_test_machine_sterile.php", data);
+
                 return result;
             }
 
@@ -6238,8 +6246,8 @@ public class CssdSterile extends AppCompatActivity {
                 }
 
                 String result = httpConnect.sendPostRequest(Url.URL + "cssd_update_sterile_program.php", data);
-
-
+                Log.d("LJDLJDL",data+"");
+                Log.d("LJDLJDL",result+"");
                 return result;
             }
 

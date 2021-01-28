@@ -65,6 +65,7 @@ public class Login extends AppCompatActivity {
     DownloadManager dm;
     long downloadId;
     String  pendingDownloadUrl ;
+    String chkwashdep;
     final int storagePermissionRequestCode = 101;
     private String downloadUrl = "", downloadFileName = "";
     //private const val PROVIDER_PATH = ".provider"
@@ -240,6 +241,7 @@ public class Login extends AppCompatActivity {
                             intent.putExtra("IsInCharg_Log", c.getString("IsInCharg_Log"));
                             intent.putExtra("IsUser_Log", c.getString("IsUser_Log"));
                             intent.putExtra("EmpCode",c.getString("EmpCode"));
+                            intent.putExtra("chkwashdep",chkwashdep);
                             intent.putExtra("B_ID", "1");
                             intent.putExtra("B_Name", building_ar_text.get(spinner_building.getSelectedItemPosition()));
                             startActivity(intent);
@@ -348,7 +350,7 @@ public class Login extends AppCompatActivity {
                         Log.d("tog_get_config",c.getInt("WashBasket")+"---"+c.getInt("SterileBasket"));
                         ConfigProgram.basket_tag = bitToBool(c.getInt("SterileBasket"));
                         ConfigProgram.wash_tag = bitToBool(c.getInt("WashBasket"));
-
+                        chkwashdep = c.getString("chkwashdep");
                     }
 
 
